@@ -1,0 +1,16 @@
+{
+  "name": "svg24",
+  "private": true,
+  "workspaces": [
+    "wss/*"
+  ],
+  "scripts": {
+    "lint:editor": "editorconfig-checker",
+    "pre-commit": "lint-staged"
+  },
+  "devDependencies": {
+    "editorconfig-checker": "^4.0.2",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.2.2"
+  }
+}
