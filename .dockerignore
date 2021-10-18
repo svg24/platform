@@ -1,0 +1,3 @@
+wss/*/dist
+wss/*/node_modules
+wss/*/tsconfig.tsbuildinfo

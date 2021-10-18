@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    build:
+      context: .
+      target: db
+    container_name: svg24-db
+    volumes:
+      - svg24-db:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=init
+      - MONGO_DB=svg24
+
+  api:
+    build:
+      context: .
+      target: api
+    container_name: svg24-api
+    user: app
+    networks:
+      nginx:
+    depends_on:
+      - svg24-db
+    working_dir: /srv/api
+    environment:
+      - PORT=3000
+
+  nginx:
+    build:
+      context: .
+      target: nginx
+      args:
+        - DOMAIN=svg24.com
+    container_name: svg24-nginx
+    ports:
+      - '80:80'
+    networks:
+      nginx:
+    depends_on:
+      - api
+    command: nginx -g 'daemon off;'
+    # TODO: pass env vars to nginx.conf
+    # environment:
+    #   - API_SERVICE_NAME=api
+    #   - API_SERVICE_PORT=3000
+
+networks:
+  nginx:
+
+volumes:
+  svg24-db:

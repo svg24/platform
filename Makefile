@@ -1,0 +1,7 @@
+dev:
+	docker-compose -f compose-base.yml -f compose-dev.yml build
+	docker-compose -f compose-base.yml -f compose-dev.yml up -d
+
+clear:
+	docker-compose -f compose-base.yml -f compose-dev.yml down
+	docker image rm svg24_api svg24_db svg24_nginx

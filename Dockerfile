@@ -1,0 +1,140 @@
+#
+# Node
+#
+
+FROM node:16-alpine3.14 as node
+
+ENV \
+  TERM=xterm-256color \
+  USER_NAME=app \
+  USER_UID=1001 \
+  GROUP_NAME=docker \
+  GROUP_GID=999
+
+RUN \
+  # Create docker group
+  delgroup ping && addgroup -g 998 ping \
+  && addgroup -g $GROUP_GID $GROUP_NAME \
+  # Create app user
+  && mkdir -p /home/$USER_NAME \
+  && adduser -s /bin/sh -D -u $USER_UID $USER_NAME \
+  && chown -R $USER_NAME:$USER_NAME /home/$USER_NAME \
+  && addgroup $USER_NAME $GROUP_NAME \
+  # Create app dir
+  && mkdir -p /srv \
+  && chown -R $USER_NAME:$USER_NAME /srv
+
+#
+# API deps
+#
+
+FROM node as api-deps
+
+WORKDIR /srv/api
+
+COPY wss/api/package.json .
+
+RUN npm i
+
+COPY wss/api .
+
+#
+# API
+#
+
+FROM node as api
+
+COPY --from=api-deps /srv/api /srv/api
+
+RUN chown -R $USER_NAME:$USER_NAME /srv/api
+
+#
+# Brotli
+#
+
+FROM alpine:3.14 as brotli
+
+ENV \
+  NGINX_VERSION=1.21.3 \
+  # NGX_BROTLI_VERSION=1.0.9
+  NGX_BROTLI_COMMIT=9aec15e2aa6feea2113119ba06460af70ab3ea62
+
+RUN \
+  # Install deps
+  apk add --no-cache --virtual .deps \
+    curl \
+    gcc \
+    git \
+    libc-dev \
+    make \
+    pcre-dev \
+    zlib-dev \
+  # Nginx dirs
+  && mkdir -p /usr/lib/nginx/modules \
+  && mkdir -p /usr/local/nginx/modules \
+  # Download srcs
+  && mkdir /usr/tmp \
+  && cd /usr/tmp \
+    && curl -LSs \
+      https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
+      | tar zx \
+    && mkdir ngx_brotli-$NGX_BROTLI_COMMIT \
+    && cd ngx_brotli-$NGX_BROTLI_COMMIT \
+      && git clone --recursive https://github.com/google/ngx_brotli.git . \
+      && git checkout $NGX_BROTLI_COMMIT \
+      && git reset --hard \
+    # Add module
+    && cd ../nginx-$NGINX_VERSION \
+      && ./configure \
+        --with-compat \
+        --add-dynamic-module=../ngx_brotli-$NGX_BROTLI_COMMIT \
+      && make modules \
+      && cp ./objs/*.so /usr/lib/nginx/modules
+
+#
+# Nginx
+#
+
+FROM nginx:1.21.3-alpine as nginx
+
+ARG DOMAIN
+
+COPY --from=brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
+COPY --from=brotli /usr/local/nginx/modules /usr/local/nginx/modules
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+RUN \
+  mkdir -p /etc/nginx/sites-available/ \
+  && mkdir -p /etc/nginx/sites-enabled/ \
+  && touch /etc/nginx/sites-available/$DOMAIN.conf \
+  && ln -s /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enabled/
+
+#
+# DB deps
+#
+
+FROM alpine:3.14 as db-deps
+
+ENV COLLECTION_URL=https://raw.githubusercontent.com/vanyauhalin/svg24/db
+
+RUN \
+  # Install deps
+  apk add --no-cache --virtual .deps \
+    curl \
+    jq \
+  # Download collections
+  && mkdir /srv/db \
+    && cd /srv/db/ \
+    && curl -Ss $COLLECTION_URL/logos/logos.json -o logos.json \
+    && echo $(jq -r '.[]' logos.json) > logos.json
+
+#
+# DB
+#
+
+FROM mongo:5.0.3 as db
+
+COPY --from=db-deps /srv/db /srv/db
+COPY ci/db-init.sh /docker-entrypoint-initdb.d/init.sh
+
+RUN chmod +x /docker-entrypoint-initdb.d/init.sh
