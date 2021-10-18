@@ -1,0 +1,28 @@
+{
+  "name": "@svg24/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "nodemon"
+  },
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "koa": "^2.13.3",
+    "nodemon": "^2.0.13"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa__router": "^8.0.8",
+    "@types/node": "^16.10.3",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "typescript": "^4.4.3"
+  },
+  "engines": {
+    "node": ">=16.6.2",
+    "npm": ">=7.20.6"
+  }
+}

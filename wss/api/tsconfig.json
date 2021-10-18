@@ -1,0 +1,73 @@
+{
+  "compilerOptions": {
+    /**
+     * Type Checking
+     */
+
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+
+    /**
+     * Modules
+     */
+
+    "baseUrl": ".",
+    "module": "es6",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "typeRoots": [
+      "src/types"
+    ],
+    "types": [
+      "koa__router",
+      "koa",
+      "node"
+    ],
+
+    /**
+     * Emit
+     */
+
+    "outDir": "dist",
+    "removeComments": true,
+
+    /**
+     * Interop Constraints
+     */
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /**
+     * Backwards Compatibility
+     */
+
+    "keyofStringsOnly": true,
+
+    /**
+     * Language and Environment
+     */
+
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
+    "target": "es2021",
+
+    /**
+     * Projects
+     */
+
+    "composite": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+}
