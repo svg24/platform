@@ -30,7 +30,10 @@
     "types": [
       "koa__router",
       "koa",
-      "node"
+      "mocha",
+      "mongoose",
+      "node",
+      "supertest"
     ],
 
     /**
@@ -68,6 +71,7 @@
     "composite": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.d.ts"
   ],
 }

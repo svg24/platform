@@ -1,7 +1,0 @@
-{
-  "exec": "tsc && node --experimental-specifier-resolution=node dist/main",
-  "ext": "ts",
-  "watch": [
-    "src"
-  ]
-}

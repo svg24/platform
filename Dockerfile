@@ -1,4 +1,34 @@
 #
+# DB deps
+#
+
+FROM alpine:3.14 as db-deps
+
+ENV COLLECTION_URL=https://raw.githubusercontent.com/vanyauhalin/svg24/db
+
+RUN \
+  # Install deps
+  apk add --no-cache --virtual .deps \
+    curl \
+    jq \
+  # Download collections
+  && mkdir /srv/db \
+    && cd /srv/db/ \
+    && curl -Ss $COLLECTION_URL/logos/logos.json -o logos.json \
+    && echo $(jq -r '.[]' logos.json) > logos.json
+
+#
+# DB
+#
+
+FROM mongo:5.0.3 as db
+
+COPY --from=db-deps /srv/db /srv/db
+COPY ci/db-init.sh /docker-entrypoint-initdb.d/init.sh
+
+RUN chmod +x /docker-entrypoint-initdb.d/init.sh
+
+#
 # Node
 #
 
@@ -44,9 +74,13 @@ COPY wss/api .
 
 FROM node as api
 
+ARG NODE_ENV
+
 COPY --from=api-deps /srv/api /srv/api
 
-RUN chown -R $USER_NAME:$USER_NAME /srv/api
+RUN \
+  chown -R $USER_NAME:$USER_NAME /srv/api \
+  && if [ "$NODE_ENV" = "production" ]; then cd /srv/api && npm run test; fi
 
 #
 # Brotli
@@ -108,33 +142,3 @@ RUN \
   && mkdir -p /etc/nginx/sites-enabled/ \
   && touch /etc/nginx/sites-available/$DOMAIN.conf \
   && ln -s /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enabled/
-
-#
-# DB deps
-#
-
-FROM alpine:3.14 as db-deps
-
-ENV COLLECTION_URL=https://raw.githubusercontent.com/vanyauhalin/svg24/db
-
-RUN \
-  # Install deps
-  apk add --no-cache --virtual .deps \
-    curl \
-    jq \
-  # Download collections
-  && mkdir /srv/db \
-    && cd /srv/db/ \
-    && curl -Ss $COLLECTION_URL/logos/logos.json -o logos.json \
-    && echo $(jq -r '.[]' logos.json) > logos.json
-
-#
-# DB
-#
-
-FROM mongo:5.0.3 as db
-
-COPY --from=db-deps /srv/db /srv/db
-COPY ci/db-init.sh /docker-entrypoint-initdb.d/init.sh
-
-RUN chmod +x /docker-entrypoint-initdb.d/init.sh
