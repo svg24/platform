@@ -58,10 +58,12 @@ RUN \
   && chown -R $USER_NAME:$USER_NAME /srv
 
 #
-# API deps
+# API
 #
 
-FROM node as api-deps
+FROM node as api
+
+ARG NODE_ENV
 
 WORKDIR /srv/api
 
@@ -71,19 +73,9 @@ RUN npm i
 
 COPY wss/api .
 
-#
-# API
-#
-
-FROM node as api
-
-ARG NODE_ENV
-
-COPY --from=api-deps /srv/api /srv/api
-
 RUN \
-  chown -R $USER_NAME:$USER_NAME /srv/api \
-  && if [ "$NODE_ENV" = "production" ]; then cd /srv/api && npm run test; fi
+  chown -R $USER_NAME:$USER_NAME . \
+  && if [ "$NODE_ENV" = "production" ]; then npm run test; fi
 
 #
 # Brotli
