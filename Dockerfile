@@ -4,7 +4,7 @@
 
 FROM alpine:3.14 as db-deps
 
-ENV COLLECTION_URL=https://raw.githubusercontent.com/vanyauhalin/svg24/db
+ENV COLLECTIONS=logos
 
 RUN \
   # Install deps
@@ -12,10 +12,13 @@ RUN \
     curl \
     jq \
   # Download collections
-  && mkdir /srv/db \
-    && cd /srv/db/ \
-    && curl -Ss $COLLECTION_URL/logos/logos.json -o logos.json \
-    && echo $(jq -r '.[]' logos.json) > logos.json
+  && cd /srv \
+    && curl -LSs https://github.com/vanyauhalin/svg24/tarball/db | tar zx \
+    && find . -depth -name vanyauhalin-svg24-* -exec mv {} db \; \
+    && cd /srv/db \
+      && for cl in $COLLECTIONS; do \
+        cd /srv/db/$c \
+        && echo $(jq -r '.[]' $cl.json) > $c.json; done
 
 #
 # DB

@@ -1,7 +1,9 @@
 #!/bin/sh
 
-mongoimport \
-  --db $MONGO_DB \
-  --collection logos \
-  --file /srv/db/logos.json \
-  --drop
+for cl in $(find . -type d -maxdepth 1 | sed 's/^\.\///g' | sort); do
+  mongoimport \
+    --db $MONGO_DB \
+    --collection $cl \
+    --file /srv/db/$cl/$cl.json \
+    --drop;
+done
