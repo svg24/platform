@@ -16,7 +16,7 @@ RUN \
     && curl -LSs https://github.com/vanyauhalin/svg24/tarball/db | tar zx \
     && find . -depth -name vanyauhalin-svg24-* -exec mv {} db \; \
     && for cl in $COLLECTIONS; do \
-      && echo $(jq -r '.[]' /srv/db/$cl/$cl.json) > /srv/db/$cl/$cl.json; done
+      echo $(jq -r '.[]' /srv/db/$cl/$cl.json) > /srv/db/$cl/$cl.json; done
 
 #
 # DB
@@ -27,7 +27,9 @@ FROM mongo:5.0.3 as db
 COPY --from=db-deps /srv/db /srv/db
 COPY ci/db-init.sh /docker-entrypoint-initdb.d/init.sh
 
-RUN chmod +x /docker-entrypoint-initdb.d/init.sh
+RUN \
+  chmod -R +x /srv/db \
+  && chmod +x /docker-entrypoint-initdb.d/init.sh
 
 #
 # Node
