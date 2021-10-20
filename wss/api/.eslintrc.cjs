@@ -1,5 +1,3 @@
-const isProd = process.env.NODE_ENV === 'production';
-
 module.exports = {
   root: true,
   env: {
@@ -21,7 +19,7 @@ module.exports = {
       devDependencies: ['**/*.test.ts'],
     }],
     'import/prefer-default-export': 'off',
-    'no-console': isProd ? 'error' : 'off',
+    'no-console': 'off',
     'no-shadow': 'off',
   },
   settings: {
