@@ -15,10 +15,8 @@ RUN \
   && cd /srv \
     && curl -LSs https://github.com/vanyauhalin/svg24/tarball/db | tar zx \
     && find . -depth -name vanyauhalin-svg24-* -exec mv {} db \; \
-    && cd /srv/db \
-      && for cl in $COLLECTIONS; do \
-        cd /srv/db/$c \
-        && echo $(jq -r '.[]' $cl.json) > $c.json; done
+    && for cl in $COLLECTIONS; do \
+      && echo $(jq -r '.[]' /srv/db/$cl/$cl.json) > /srv/db/$cl/$cl.json; done
 
 #
 # DB
