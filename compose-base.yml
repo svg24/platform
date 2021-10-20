@@ -6,12 +6,16 @@ services:
       context: .
       target: db
     container_name: svg24-db
+    networks:
+      nginx:
+    working_dir: /srv/db
     volumes:
       - svg24-db-data:/data/db
       - svg24-db-srv:/srv/db
     environment:
-      - MONGO_INITDB_DATABASE=init
-      - MONGO_DB=svg24
+      - DB_NAME=svg24
+      - MONGO_INITDB_ROOT_USERNAME=app
+      - MONGO_INITDB_ROOT_PASSWORD=app
 
   api:
     build:
@@ -27,7 +31,11 @@ services:
     volumes:
       - svg24-db-srv:/srv/db
     environment:
-      - PORT=3000
+      - API_PORT=3000
+      - DB_NAME=svg24
+      - DB_PASS=app
+      - DB_PORT=27017
+      - DB_USER=app
 
   nginx:
     build:

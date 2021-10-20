@@ -1,3 +1,5 @@
-import app from './app';
+import { listen } from './app';
+import { connect } from './db';
 
-app.listen(process.env.PORT);
+connect();
+listen();

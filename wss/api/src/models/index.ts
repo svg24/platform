@@ -1,5 +1,5 @@
-import { model } from 'mongoose';
-import { MODEL_NAMES } from '../constants';
+import db from 'mongoose';
+import { DB_MODEL_NAMES } from '../constants/db';
 import { logoScheme } from '../schemes';
 
-export const LogoModel = model<Logo>(MODEL_NAMES.LOGO, logoScheme);
+export const LogoModel = db.model<Logo>(DB_MODEL_NAMES.LOGO, logoScheme);

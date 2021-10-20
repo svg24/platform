@@ -1,11 +1,6 @@
 version: '3.8'
 
 services:
-  db:
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=app
-      - MONGO_INITDB_ROOT_PASSWORD=app
-
   api:
     build:
       args:
@@ -15,5 +10,6 @@ services:
       - NODE_ENV=production
 
   nginx:
-    volumes:
-      - ./nginx/dev.conf:/etc/nginx/sites-available/svg24.com.conf:ro
+    build:
+      args:
+        - NODE_ENV=production

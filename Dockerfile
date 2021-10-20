@@ -22,14 +22,14 @@ RUN \
 # DB
 #
 
-FROM mongo:5.0.3 as db
+FROM mongo:5.0 as db
 
-COPY --from=db-deps /srv/db /srv/db
-COPY ci/db-init.sh /docker-entrypoint-initdb.d/init.sh
+WORKDIR /srv/db
 
-RUN \
-  chmod -R +x /srv/db \
-  && chmod +x /docker-entrypoint-initdb.d/init.sh
+COPY --from=db-deps /srv/db .
+COPY ci/db-init.sh init.sh
+
+RUN chmod +x init.sh
 
 #
 # Node
@@ -74,7 +74,8 @@ RUN npm i
 COPY wss/api .
 
 RUN \
-  chown -R $USER_NAME:$USER_NAME . \
+  apk add mongodb-tools \
+  && chown -R $USER_NAME:$USER_NAME . \
   && if [ "$NODE_ENV" = "production" ]; then npm run test; fi
 
 #
@@ -126,14 +127,24 @@ RUN \
 
 FROM nginx:1.21.3-alpine as nginx
 
-ARG DOMAIN
+ARG \
+  DOMAIN \
+  NODE_ENV
 
 COPY --from=brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
 COPY --from=brotli /usr/local/nginx/modules /usr/local/nginx/modules
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/base.conf /etc/nginx/nginx.conf
+COPY nginx/dev.conf /srv/nginx/dev.conf
+COPY nginx/prod.conf /srv/nginx/prod.conf
 
 RUN \
   mkdir -p /etc/nginx/sites-available/ \
   && mkdir -p /etc/nginx/sites-enabled/ \
-  && touch /etc/nginx/sites-available/$DOMAIN.conf \
-  && ln -s /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enabled/
+  && if [ "$NODE_ENV" = "production" ]; \
+    then \
+      mv /srv/nginx/prod.conf /etc/nginx/sites-available/$DOMAIN.conf; \
+    else \
+      mv /srv/nginx/dev.conf /etc/nginx/sites-available/$DOMAIN.conf; \
+    fi \
+  && ln -s /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enabled/ \
+  && rm -rf /srv/nginx

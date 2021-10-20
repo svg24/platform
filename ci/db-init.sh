@@ -1,9 +1,15 @@
 #!/bin/sh
 
-for cl in $(find . -type d -maxdepth 1 | sed 's/^\.\///g' | sort); do
+cd /srv/db
+
+for cl in $(find . -maxdepth 1 ! -path . -type d | sed 's/^\.\///g' | sort); do
   mongoimport \
-    --db $MONGO_DB \
+    --host db \
+    --authenticationDatabase admin \
+    --username $DB_USER \
+    --password $DB_PASS \
+    --db $DB_NAME \
     --collection $cl \
-    --file /srv/db/$cl/$cl.json \
+    --file $cl/$cl.json \
     --drop;
 done

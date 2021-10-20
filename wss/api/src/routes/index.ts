@@ -1,11 +1,8 @@
 import Router from '@koa/router';
-import { DB_FILES, ROUTER_PATHS } from '../constants';
-import readJson from '../utils/read-json';
+import { APP_ROUTER_PATHS } from '../constants/app';
+import home from '../middleware/home';
+import * as logos from '../middleware/logos';
 
-const router = new Router();
-
-router.get(ROUTER_PATHS.HOME, (ctx) => {
-  ctx.body = readJson(DB_FILES.INFO);
-});
-
-export default router;
+export default new Router()
+  .get(APP_ROUTER_PATHS.HOME, home)
+  .get(APP_ROUTER_PATHS.LOGOS, logos.list);
