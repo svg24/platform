@@ -1,5 +1,11 @@
 {
-  "extension": ["js"],
-  "node-option": ["experimental-specifier-resolution=node"],
-  "watch-files": ["dist/**/*.js"]
+  "extension": [
+    "js"
+  ],
+  "node-option": [
+    "experimental-specifier-resolution=node"
+  ],
+  "watch-files": [
+    "dist/**/*.js"
+  ]
 }
