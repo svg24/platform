@@ -7,3 +7,5 @@ export const beautifyJson = (buf: Buffer): string => (
 export const readJson = (path: string): string => (
   beautifyJson(fs.readFileSync(`/srv/db/${path}.json`))
 );
+
+export const isProd = (): boolean => process.env.NODE_ENV === 'production';
