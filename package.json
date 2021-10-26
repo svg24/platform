@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "lint:editor": "editorconfig-checker",
-    "prepare": "lint-staged"
+    "pre-commit": "lint-staged"
   },
   "devDependencies": {
     "editorconfig-checker": "^4.0.2",
