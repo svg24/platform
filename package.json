@@ -6,11 +6,11 @@
   ],
   "scripts": {
     "lint:editor": "editorconfig-checker",
-    "pre-commit": "lint-staged"
+    "prepare": "lint-staged"
   },
   "devDependencies": {
     "editorconfig-checker": "^4.0.2",
-    "husky": "^7.0.2",
+    "husky": "^7.0.4",
     "lint-staged": "^11.2.2"
   }
 }
