@@ -58,8 +58,6 @@
      * Language and Environment
      */
 
-    "emitDecoratorMetadata": false,
-    "experimentalDecorators": false,
     "target": "es2021",
 
     /**
