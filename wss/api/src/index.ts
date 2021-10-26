@@ -1,5 +1,9 @@
-import { listen } from './app';
-import { connect } from './db';
+import { db, server } from './core';
+import * as modules from './modules';
 
-connect();
-listen();
+db.connect();
+server.listen();
+
+Object.values(modules).forEach((module) => {
+  server.inst.register(module.plugin, module.opts);
+});

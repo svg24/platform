@@ -1,18 +1,17 @@
-import db from 'mongoose';
-import { connect } from '../db';
-import { isProd } from '../utils';
+import mongoose from 'mongoose';
+import { db, node } from '../core';
 
 export const mochaHooks: Mocha.RootHookObject = {
   beforeAll(done) {
-    if (isProd()) {
-      connect();
+    if (node.isProd) {
+      db.connect();
     }
 
     done();
   },
   afterAll(done) {
-    if (isProd()) {
-      db.connection.close();
+    if (node.isProd) {
+      mongoose.connection.close();
     }
 
     done();

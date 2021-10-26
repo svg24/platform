@@ -28,8 +28,6 @@
       "src/types"
     ],
     "types": [
-      "koa__router",
-      "koa",
       "mocha",
       "mongoose",
       "node",

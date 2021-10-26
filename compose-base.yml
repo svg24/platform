@@ -31,6 +31,7 @@ services:
     volumes:
       - svg24-db-srv:/srv/db
     environment:
+      - API_HOST=0.0.0.0
       - API_PORT=3000
       - DB_NAME=svg24
       - DB_PASS=app
