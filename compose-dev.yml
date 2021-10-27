@@ -2,9 +2,35 @@ version: '3.8'
 
 services:
   api:
+    build:
+      context: .
+      target: api-deps
     command: npm run dev
+    user: node
     volumes:
       - ./wss/api:/srv/api
       - /srv/api/node_modules
     environment:
       - NODE_ENV=development
+
+  www:
+    build:
+      context: .
+      target: www-deps
+    command: npm run dev
+    user: node
+    volumes:
+      - ./wss/www:/srv/www
+      - /srv/www/node_modules
+    environment:
+      - NODE_ENV=development
+      - WWW_HMR_HOST=localhost
+      - WWW_HMR_PATH=ws
+      - WWW_HMR_PORT=80
+      - WWW_HMR_PROTOCOL=ws
+      - WWW_HOST=0.0.0.0
+      - WWW_PORT=3000
+
+  nginx:
+    ports:
+      - '3000:3000'

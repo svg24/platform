@@ -18,11 +18,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=app
 
   api:
-    build:
-      context: .
-      target: api
     container_name: svg24-api
-    user: app
     networks:
       nginx:
     depends_on:
@@ -38,6 +34,12 @@ services:
       - DB_PORT=27017
       - DB_USER=app
 
+  www:
+    container_name: svg24-www
+    networks:
+      nginx:
+    working_dir: /srv/www
+
   nginx:
     build:
       context: .
@@ -51,6 +53,7 @@ services:
       nginx:
     depends_on:
       - api
+      - www
     command: nginx -g 'daemon off;'
     # TODO: pass env vars to nginx.conf
     # environment:

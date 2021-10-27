@@ -1,5 +1,5 @@
 {
-  "exec": "tsc && node --experimental-specifier-resolution=node dist",
+  "exec": "npm run build && node --experimental-specifier-resolution=node dist",
   "ext": "ts",
   "watch": [
     "src"

@@ -6,9 +6,7 @@ export class Home {
     infoFile: '/srv/db/info.json',
   }
 
-  opts = {
-    prefix: '/',
-  }
+  opts = {}
 
   plugin = async (inst: typeof server.inst): Promise<void> => {
     this.#regHome(inst);

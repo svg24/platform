@@ -8,4 +8,4 @@ prod:
 
 clear:
 	docker-compose -f compose-base.yml -f compose-dev.yml down
-	docker image rm svg24_api svg24_db svg24_nginx
+	docker image rm svg24_api svg24_db svg24_nginx svg24_www

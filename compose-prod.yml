@@ -3,9 +3,22 @@ version: '3.8'
 services:
   api:
     build:
+      context: .
+      target: api-prod
       args:
         - NODE_ENV=production
+    user: node
     command: npm run prod
+    environment:
+      - NODE_ENV=production
+
+  www:
+    build:
+      context: .
+      target: www-prod
+      args:
+        - NODE_ENV=production
+    user: app
     environment:
       - NODE_ENV=production
 

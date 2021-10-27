@@ -32,10 +32,10 @@ COPY ci/db-init.sh init.sh
 RUN chmod +x init.sh
 
 #
-# Node
+# Base
 #
 
-FROM node:16-alpine3.14 as node
+FROM alpine:3.14 as base
 
 ENV \
   TERM=xterm-256color \
@@ -58,31 +58,90 @@ RUN \
   && chown -R $USER_NAME:$USER_NAME /srv
 
 #
-# API
+# API deps
 #
 
-FROM node as api
+FROM node:16-alpine3.14 as api-deps
 
 ARG NODE_ENV
 
 WORKDIR /srv/api
 
-COPY wss/api/package.json .
-
-RUN npm i
-
 COPY wss/api .
 
 RUN \
   apk add mongodb-tools \
-  && chown -R $USER_NAME:$USER_NAME . \
-  && if [ "$NODE_ENV" = "production" ]; then npm run test; fi
+  && if [ "$NODE_ENV" = "production" ]; \
+    then \
+      npm i --include dev \
+      && npm run test \
+      && npm run build; \
+    else \
+      npm i; \
+    fi \
+  && chown -R node:node .
 
 #
-# Brotli
+# API prod
 #
 
-FROM alpine:3.14 as brotli
+FROM node:16-alpine3.14 as api-prod
+
+ARG NODE_ENV
+
+WORKDIR /srv/api
+
+COPY --from=api-deps /srv/api/dist dist
+COPY wss/api/.nodemon-prod.json .nodemon-prod.json
+COPY wss/api/package.json package.json
+
+RUN \
+  apk add mongodb-tools \
+  && npm i \
+  && chown -R node:node .
+
+#
+# WWW deps
+#
+
+FROM node:16-alpine3.14 as www-deps
+
+ARG NODE_ENV
+
+WORKDIR /srv/www
+
+COPY wss/www .
+
+RUN \
+  if [ "$NODE_ENV" = "production" ]; \
+    then \
+      npm i --include dev \
+      && npm run test \
+      && npm run build; \
+    else \
+      npm i ; \
+    fi \
+  && chown -R node:node .
+
+#
+# WWW prod
+#
+
+FROM base as www-prod
+
+ARG NODE_ENV
+
+WORKDIR /srv/www
+
+COPY --from=www-deps /srv/www/dist .
+
+RUN chown -R $USER_NAME:$USER_NAME .
+
+#
+# Nginx brotli
+#
+
+FROM alpine:3.14 as nginx-brotli
 
 ENV \
   NGINX_VERSION=1.21.3 \
@@ -131,8 +190,8 @@ ARG \
   DOMAIN \
   NODE_ENV
 
-COPY --from=brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
-COPY --from=brotli /usr/local/nginx/modules /usr/local/nginx/modules
+COPY --from=nginx-brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
+COPY --from=nginx-brotli /usr/local/nginx/modules /usr/local/nginx/modules
 COPY nginx/base.conf /etc/nginx/nginx.conf
 COPY nginx/dev.conf /srv/nginx/dev.conf
 COPY nginx/prod.conf /srv/nginx/prod.conf
