@@ -6,6 +6,7 @@ services:
       context: .
       target: db
     container_name: svg24-db
+    restart: unless-stopped
     networks:
       nginx:
     working_dir: /srv/db
@@ -19,6 +20,7 @@ services:
 
   api:
     container_name: svg24-api
+    restart: unless-stopped
     networks:
       nginx:
     depends_on:
@@ -36,6 +38,7 @@ services:
 
   www:
     container_name: svg24-www
+    restart: unless-stopped
     networks:
       nginx:
     working_dir: /srv/www
@@ -45,20 +48,17 @@ services:
       context: .
       target: nginx
       args:
-        - DOMAIN=svg24.com
+        - DOMAIN=svg24.dev
     container_name: svg24-nginx
+    restart: unless-stopped
     ports:
-      - '80:80'
+      - 80:80
     networks:
       nginx:
     depends_on:
       - api
       - www
     command: nginx -g 'daemon off;'
-    # TODO: pass env vars to nginx.conf
-    # environment:
-    #   - API_SERVICE_NAME=api
-    #   - API_SERVICE_PORT=3000
 
 networks:
   nginx:

@@ -1,0 +1,7 @@
+.layout-header {
+  @apply container relative flex justify-between max-w-screen-xl p-4 mx-auto;
+}
+
+.layout-header__logo {
+  @apply self-center text-sm font-medium;
+}

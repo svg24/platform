@@ -1,10 +1,14 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [
-    react(),
-  ],
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@svg24/www': path.resolve(__dirname),
+    },
+  },
   server: {
     host: process.env.WWW_HOST,
     port: parseInt(process.env.WWW_PORT, 10),

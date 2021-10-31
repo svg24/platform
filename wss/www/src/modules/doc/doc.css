@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.doc_fixed {
+  @apply overflow-hidden;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-up-in-6 {
+  from {
+    @apply mt-6;
+  }
+
+  to {
+    @apply mt-0;
+  }
+}
+
+@keyframes slide-up-out-6 {
+  from {
+    @apply mt-0;
+  }
+
+  to {
+    @apply mt-6;
+  }
+}

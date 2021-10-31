@@ -197,13 +197,17 @@ COPY nginx/dev.conf /srv/nginx/dev.conf
 COPY nginx/prod.conf /srv/nginx/prod.conf
 
 RUN \
-  mkdir -p /etc/nginx/sites-available/ \
-  && mkdir -p /etc/nginx/sites-enabled/ \
+  mkdir -p /etc/nginx/sites \
   && if [ "$NODE_ENV" = "production" ]; \
     then \
-      mv /srv/nginx/prod.conf /etc/nginx/sites-available/$DOMAIN.conf; \
+      mv /srv/nginx/prod.conf /etc/nginx/sites/$DOMAIN.conf; \
     else \
-      mv /srv/nginx/dev.conf /etc/nginx/sites-available/$DOMAIN.conf; \
+      mv /srv/nginx/dev.conf /etc/nginx/sites/$DOMAIN.conf; \
     fi \
-  && ln -s /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enabled/ \
   && rm -rf /srv/nginx
+
+#
+# Certbot
+#
+
+FROM certbot/certbot as certbot

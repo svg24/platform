@@ -1,14 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "@svg24/api": [
-        "wss/api/src"
-      ],
-      "@svg24/www": [
-        "wss/www/src"
-      ]
-    }
   },
   "exclude": [
     "node_modules"

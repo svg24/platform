@@ -1,0 +1,55 @@
+.layout-nav .layout-nav__toggle {
+  @apply hidden;
+}
+
+@media (max-width: 481px) {
+  .layout-nav .layout-nav__toggle {
+    @apply block;
+  }
+}
+
+.layout-nav__icon {
+  @apply w-6 h-6 duration-300;
+}
+
+.layout-nav__toggle:hover .layout-nav__icon {
+  @apply text-gray-400;
+}
+
+.layout-nav_show-list .layout-nav__icon:first-of-type {
+  @apply hidden;
+}
+
+.layout-nav_show-list .layout-nav__icon:last-of-type {
+  @apply visible;
+}
+
+.layout-nav:not(.layout-nav_show-list) .layout-nav__icon:first-of-type {
+  @apply visible;
+}
+
+.layout-nav:not(.layout-nav_show-list) .layout-nav__icon:last-of-type {
+  @apply hidden;
+}
+
+.layout-nav__list {
+  @apply flex gap-6;
+}
+
+@media (max-width: 481px) {
+  .layout-nav__list {
+    @apply absolute invisible p-4 bg-gray-100 rounded-md opacity-0 top-full inset-x-4;
+
+    transition: visibility 0s linear 300ms, opacity 300ms;
+  }
+
+  .layout-nav_show-list .layout-nav__list {
+    @apply visible opacity-100;
+
+    transition: visibility 0s linear 0s, opacity 300ms;
+  }
+}
+
+.layout-nav__el {
+  @apply text-sm font-medium duration-300 hover:text-gray-500 focus:text-gray-500;
+}

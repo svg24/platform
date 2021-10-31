@@ -30,7 +30,3 @@ services:
       - WWW_HMR_PROTOCOL=ws
       - WWW_HOST=0.0.0.0
       - WWW_PORT=3000
-
-  nginx:
-    ports:
-      - '3000:3000'

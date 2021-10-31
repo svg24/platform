@@ -1,0 +1,27 @@
+.logos-list__list {
+  @apply grid gap-6 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1;
+}
+
+.logos-list__no-found {
+  @apply text-sm text-center text-gray-500;
+}
+
+.logos-list__sentinel {
+  @apply flex items-center justify-center invisible py-4 text-sm text-center text-gray-400 gap-x-2;
+}
+
+.logos-list_loading .logos-list__sentinel {
+  @apply visible;
+}
+
+.logos-list__spin {
+  @apply w-4 h-4 animate-spin;
+}
+
+.logos-list__spin > :first-child {
+  @apply opacity-25;
+}
+
+.logos-list__spin > :last-child {
+  @apply opacity-75;
+}
