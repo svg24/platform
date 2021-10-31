@@ -56,25 +56,17 @@ export class Logos {
             type: 'object',
             properties: {
               total: {
-                type: 'object',
-                properties: {
-                  count: {
-                    type: 'number',
-                    default: 0,
-                  },
-                },
+                type: 'number',
               },
             },
           },
         },
       },
       handler: async () => {
-        const count = await this.#model.count();
+        const total = await this.#model.count();
 
         return Server.beatifyBody({
-          total: {
-            count,
-          },
+          total,
         });
       },
     });
@@ -82,6 +74,7 @@ export class Logos {
 
   #regList(inst: typeof server.inst): void {
     interface ListQuery {
+      name?: string,
       category?: string,
       page?: number,
       sortBy?: 'date' | 'name',
@@ -99,6 +92,9 @@ export class Logos {
       url: '/list',
       schema: {
         querystring: {
+          name: {
+            type: 'string',
+          },
           category: {
             type: 'string',
           },
@@ -149,7 +145,7 @@ export class Logos {
                   },
                 },
               },
-              isNext: {
+              isMore: {
                 type: 'boolean',
               },
             },
@@ -161,7 +157,10 @@ export class Logos {
         const skip = req.query.page
           ? (req.query.page - 1) * limit
           : DEFAULT_SKIP;
-        const items = await this.#model.find({}, null, {
+        const filter = {
+          ...req.query.name ? { name: new RegExp(req.query.name, 'i') } : {},
+        };
+        const items = await this.#model.find(filter, null, {
           limit,
           skip,
           lean: true,
@@ -175,11 +174,11 @@ export class Logos {
 
           return Object.assign(item, { content });
         }));
-        const count = await this.#model.count();
+        const count = await this.#model.find(filter).count();
 
         return Server.beatifyBody({
           data,
-          isNext: count - (skip + limit) > 0,
+          isMore: count - (skip + limit) > 0,
         });
       },
     });
