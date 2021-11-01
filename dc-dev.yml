@@ -5,8 +5,8 @@ services:
     build:
       context: .
       target: api-deps
-    command: npm run dev
     user: node
+    command: npm run dev
     volumes:
       - ./wss/api:/srv/api
       - /srv/api/node_modules
@@ -17,8 +17,9 @@ services:
     build:
       context: .
       target: www-deps
-    command: npm run dev
+    restart: unless-stopped
     user: node
+    command: npm run dev
     volumes:
       - ./wss/www:/srv/www
       - /srv/www/node_modules
@@ -30,3 +31,8 @@ services:
       - WWW_HMR_PROTOCOL=ws
       - WWW_HOST=0.0.0.0
       - WWW_PORT=3000
+
+  nginx:
+    build:
+      args:
+        - IS_DEV
