@@ -3,7 +3,8 @@
 #
 
 FROM alpine:3.14 as db-deps
-ARG DB_COLLECTION DB_TARBALL
+ARG DB_COLLECTION
+ARG DB_TARBALL
 
 RUN \
   apk add --no-cache --virtual .deps curl jq \
@@ -20,7 +21,8 @@ RUN \
 #
 
 FROM mongo:5.0 as db
-ARG DB_COLLECTION DB_TARBALL
+ARG DB_COLLECTION
+ARG DB_TARBALL
 WORKDIR /srv/db
 
 COPY --from=db-deps /srv/db .
@@ -160,7 +162,10 @@ RUN \
 #
 
 FROM nginx:1.21.3-alpine as nginx
-ARG DOMAIN IS_DEV IS_PREV IS_PROD
+ARG DOMAIN
+ARG IS_DEV
+ARG IS_PREV
+ARG IS_PROD
 WORKDIR /srv/nginx
 
 COPY --from=nginx-brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
@@ -172,7 +177,7 @@ COPY nginx/prev.conf .
 COPY nginx/prod.conf .
 RUN \
   mkdir -p /etc/nginx/sites \
-  && if [ -z $IS_DEV ]; then mv dev.conf /etc/nginx/sites/$DOMAIN.conf; fi \
-  && if [ -z $IS_PROD ]; then mv prod.conf /etc/nginx/sites/$DOMAIN.conf; fi \
-  && if [ -z $IS_PREV ]; then mv prev.conf /etc/nginx/sites/$DOMAIN.conf; fi \
+  && if [ -z "$IS_DEV" ]; then mv dev.conf /etc/nginx/sites/$DOMAIN.conf; fi \
+  && if [ -z "$IS_PREV" ]; then mv prev.conf /etc/nginx/sites/$DOMAIN.conf; fi \
+  && if [ -z "$IS_PROD" ]; then mv prod.conf /etc/nginx/sites/$DOMAIN.conf; fi \
   && rm -rf /srv/nginx

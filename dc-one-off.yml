@@ -1,33 +1,21 @@
 version: '3.8'
 
 services:
-  nginx:
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-lib:/var/lib/letsencrypt
-      - certbot-www:/var/www/html
-
   certbot:
-    build:
-      context: .
-      target: certbot
+    image: certbot/certbot
     container_name: svg24-certbot
     networks:
       nginx:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-lib:/var/lib/letsencrypt
-      - certbot-www:/var/www/html
+      - svg24_www-srv:/srv/www
     depends_on:
       - nginx
-    command: certonly --webroot --webroot-path=/var/www/html --email vanyauhalin@gmail.com --agree-tos --no-eff-email --staging -d svg24.dev -d www.svg24.dev
+    command: certonly --webroot --webroot-path=/srv/www --email vanyauhalin@gmail.com --agree-tos --no-eff-email -d svg24.dev -d www.svg24.dev
 
 volumes:
   certbot-etc:
   certbot-lib:
-  certbot-www:
-    driver: local
-    driver_opts:
-      type: none
-      device: /srv/svg24/wss/www
-      o: bind
+  svg24_www-srv:
+    external: true

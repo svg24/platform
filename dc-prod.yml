@@ -1,37 +1,25 @@
 version: '3.8'
 
 services:
-  api:
-    build:
-      context: .
-      target: api-prod
-      args:
-        - NODE_ENV=production
-    user: node
-    command: npm run prod
-    environment:
-      - NODE_ENV=production
-
-  www:
-    build:
-      context: .
-      target: www-prod
-      args:
-        - NODE_ENV=production
-    user: app
-    volumes:
-      - www-srv:/srv/www
-    environment:
-      - NODE_ENV=production
-
   nginx:
     build:
       args:
         - IS_PROD
     volumes:
-      - www-srv:/srv/www
+      - dhparam:/etc/ssl/certs
+      - svg24_certbot-etc:/etc/letsencrypt
+      - svg24_certbot-lib:/var/lib/letsencrypt
     ports:
       - 443:443
 
 volumes:
-  www-srv:
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /etc/ssl/certs
+      o: bind
+  svg24_certbot-etc:
+    external: true
+  svg24_certbot-lib:
+    external: true
