@@ -1,68 +1,35 @@
-# svg24
+# SVG24
 
 **Warning:** at the moment everything described below is under development.
 
-svg24 — is compilation of SVG content according to the following rules:
+SVG24 is a collection of predictable optimized logos designed to be rendered at 24x24. Available on the [svg24.dev](https://svg24.dev), the database can be accessed through the [api.svg24.com](https://api.svg24.com/), sources located in the [db](https://github.com/vanyauhalin/svg24/tree/db) branch.
 
-- No `transform`.
-- `viewBox="0 0 24 24"` with 2 of the content padding.
+![Preview image](https://github.com/vanyauhalin/svg24/tree/main/docs/preview.jpg)
 
-The site is available at [svg24.com](https://svg24.com/), the dashboard is at [board.svg24.com](https://board.svg24.com/), and the database can be accessed through [api.svg24.com](https://api.svg24.com/).
+## Optimization
 
-## Install
+### Manually with Inkscape
 
-### Editor
+- Collapse useless elements (e.g. `<doctype>`, `<metadata>`, `<g>`, `<title>`) and attributes (e.g. `id`, `stroke`, `fill`).
+- Remove any `transform`'s.
+- Correct `viewBox` to 24x24 and resize content to 20x20.
+- Correct styles and convert colors to `#rrggbb` or `#rgb`.
 
-When developing in VSCode, it is recommended to add `.vscode/settings.json` to the root of the project:
+### Automatically with SVGO
 
-```json
-{
-  "eslint.workingDirectories": [
-    "api",
-    "board",
-    "www"
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib"
-}
-```
+- Convert Path data to relative or absolute (whichever is shorter), convert one segment to another, trim useless delimiters, smart rounding, and much more.
+- Convert some base shapes to `<path>`.
+- Sort element attributes for epic readability.
 
-### Development
+## Support
 
-```
-make dev
-```
+Feel free suggest any logos to add to the collection via [email](mailto:vanyauhalin@gmail.com?subject=SVG24%20|%20New%20idea) or [issue](https://github.com/vanyauhalin/vanyauhalin.ru/issues). In addition, you can offer any ideas for project development.
 
-### Production
+## Policy
 
-```
-make prod
-```
-
-## Api
-
-### Logos collection
-
-```json
-{
-  "_id": "",
-  "meta": {
-    "name": "",
-    "category": "",
-    "tags": [""],
-    "date": "",
-    "src": "",
-  },
-  "versions": [{
-    "date": "",
-    "content": "",
-    "colors": [""],
-  }],
-  "stats": {
-    "downloads": 0,
-  }
-}
-```
+[MIT License](https://github.com/vanyauhalin/svg24/tree/main/LICENSE). All logos on the [svg24.dev](https://svg24.dev) (hence in the [db](https://github.com/vanyauhalin/svg24/tree/db) branch) are the property of their respective owners. If you believe that your copyright has been infringed, please contact me by [email](mailto:vanyauhalin@gmail.com?subject=SVG24%20|%20Copyright%20infringe).
 
 ## References
 
-- [logos](https://github.com/gilbarbara/logos) — huge collection of SVG logos.
+- [Inkscape](http://inkscape.org) — vector graphics editor.
+- [SVGO](https://github.com/svg/svgo) — Node.js tool for optimizing SVG files.
