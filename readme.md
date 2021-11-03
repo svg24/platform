@@ -4,7 +4,7 @@
 
 SVG24 is a collection of predictable optimized logos designed to be rendered at 24x24. Available on the [svg24.dev](https://svg24.dev), the database can be accessed through the [api.svg24.com](https://api.svg24.com/), sources located in the [db](https://github.com/vanyauhalin/svg24/tree/db) branch.
 
-![Preview image](https://github.com/vanyauhalin/svg24/tree/main/docs/preview.jpg)
+![Preview image](./docs/preview.jpg)
 
 ## Optimization
 
