@@ -4,7 +4,7 @@ services:
   nginx:
     build:
       args:
-        - IS_PROD
+        - IS_PROD=true
     volumes:
       - dhparam:/etc/ssl/certs
       - svg24_certbot-etc:/etc/letsencrypt

@@ -35,4 +35,4 @@ services:
   nginx:
     build:
       args:
-        - IS_DEV
+        - IS_DEV=true

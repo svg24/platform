@@ -27,7 +27,7 @@ services:
   nginx:
     build:
       args:
-        - IS_PREV
+        - IS_PREV=true
     volumes:
       - www-srv:/srv/www
 

@@ -140,22 +140,21 @@ RUN \
   && mkdir -p /usr/lib/nginx/modules \
   && mkdir -p /usr/local/nginx/modules \
   # Download srcs
-  && mkdir /usr/tmp \
-  && cd /usr/tmp \
+  && mkdir /srv/nginx-brotli \
+  && cd /srv/nginx-brotli \
     && curl -LSs \
       https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz | tar zx \
-    && mkdir ngx_brotli-$NGX_BROTLI_COMMIT \
-    && cd ngx_brotli-$NGX_BROTLI_COMMIT \
-      && git clone --recursive https://github.com/google/ngx_brotli.git . \
+    && git clone --recursive https://github.com/google/ngx_brotli.git \
+    && cd ngx_brotli \
       && git checkout $NGX_BROTLI_COMMIT \
       && git reset --hard \
     # Add module
-    && cd ../nginx-$NGINX_VERSION \
-      && ./configure \
-        --with-compat \
-        --add-dynamic-module=../ngx_brotli-$NGX_BROTLI_COMMIT \
-      && make modules \
-      && cp ./objs/*.so /usr/lib/nginx/modules
+      && cd ../nginx-$NGINX_VERSION \
+        && ./configure \
+          --with-compat \
+          --add-dynamic-module=../ngx_brotli \
+        && make modules \
+        && cp ./objs/*.so /usr/lib/nginx/modules
 
 #
 # Nginx
@@ -170,14 +169,17 @@ WORKDIR /srv/nginx
 
 COPY --from=nginx-brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
 COPY --from=nginx-brotli /usr/local/nginx/modules /usr/local/nginx/modules
-COPY nginx/base.conf /etc/nginx/nginx.conf
-COPY nginx/ssl.conf /etc/nginx/snippets/ssl.conf
-COPY nginx/dev.conf .
-COPY nginx/prev.conf .
-COPY nginx/prod.conf .
+COPY nginx/* .
 RUN \
-  mkdir -p /etc/nginx/sites \
-  && if [ -z "$IS_DEV" ]; then mv dev.conf /etc/nginx/sites/$DOMAIN.conf; fi \
-  && if [ -z "$IS_PREV" ]; then mv prev.conf /etc/nginx/sites/$DOMAIN.conf; fi \
-  && if [ -z "$IS_PROD" ]; then mv prod.conf /etc/nginx/sites/$DOMAIN.conf; fi \
+  mv base.conf /etc/nginx/nginx.conf \
+  && mkdir -p /etc/nginx/sites \
+  && SITE_CONFIG=/etc/nginx/sites/$DOMAIN.conf \
+  && if [ "$IS_DEV" = true ]; then mv dev.conf $SITE_CONFIG; fi \
+  && if [ "$IS_PREV" = true ]; then mv prev.conf $SITE_CONFIG; fi \
+  && if [ "$IS_PROD" = true ]; \
+    then \
+      mv prod.conf $SITE_CONFIG \
+      && mkdir -p /etc/nginx/snippets \
+      && mv ssl.conf /etc/nginx/snippets; \
+    fi \
   && rm -rf /srv/nginx
