@@ -56,21 +56,11 @@ export default () => {
     content: (
       <div>
         <p>
-          <b>
-            svg24
-          </b>
-          {' '}
-          — is a collection of predictable optimized logos
+          SVG24 is a collection of predictable optimized logos
           designed to be rendered at 24x24.
         </p>
         <p>
-          Sizes of logos are corrected manually,
-          and then optimization is performed using the
-          {' '}
-          <a href="https://github.com/svg/svgo">
-            SVGO
-          </a>
-          .
+          Logos are first optimized manually and then automatically.
         </p>
       </div>
     ),
