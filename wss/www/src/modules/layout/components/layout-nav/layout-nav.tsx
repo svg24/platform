@@ -125,6 +125,7 @@ export default () => {
   const btns = [um, support].map((item) => (
     <li key={item.slug}>
       <button
+        aria-haspopup="true"
         aria-label={`Open "${item.label}" modal`}
         className="layout-nav__el"
         type="button"
