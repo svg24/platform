@@ -1,0 +1,25 @@
+.select {
+  @apply grid gap-x-2;
+}
+
+.select__legend {
+  @apply sr-only;
+}
+
+.select__select {
+  @apply appearance-none text-sm text-gray-500 col-span-full row-span-full rounded-md pl-3 pr-9 py-1 bg-gray-100 duration-300 hover:text-black focus:text-black cursor-pointer;
+}
+
+.select__select:hover,
+.select__select:focus {
+  box-shadow: 0 0 0 2px rgba(228, 228, 231, var(--tw-bg-opacity));
+}
+
+.select__icon {
+  @apply box-content self-center w-3 h-3 px-3 text-center text-gray-500 duration-300 pointer-events-none justify-self-end col-span-full row-span-full;
+}
+
+.select__select:hover + .select__icon,
+.select__select:focus + .select__icon {
+  @apply text-black;
+}
