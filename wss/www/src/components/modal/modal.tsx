@@ -14,7 +14,7 @@ export default ({
   children: ReactElement;
   description: string;
   label: string;
-  onClose(): void;
+  onClose: () => void;
   slug: string;
 }): JSX.Element => {
   const docInst = docStore.inst;

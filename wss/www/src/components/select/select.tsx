@@ -11,7 +11,7 @@ export default ({
 }: {
   defaultValue: string;
   legend: string;
-  onChange(ev: BaseSyntheticEvent): void;
+  onChange: (ev: BaseSyntheticEvent) => void;
   options: {
     id: string;
     text: string;

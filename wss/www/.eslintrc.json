@@ -55,7 +55,7 @@
           "order": "alphabetically"
         }
       }],
-      "@typescript-eslint/method-signature-style": ["error", "method"],
+      "@typescript-eslint/method-signature-style": ["error", "property"],
       "@typescript-eslint/no-confusing-void-expression": ["error"],
       "@typescript-eslint/no-use-before-define": ["error"],
       "@typescript-eslint/semi": ["error"],
