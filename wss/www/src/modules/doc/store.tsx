@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { createContext, useContext } from 'react';
+import type { ReactElement } from 'react';
 
 export class DocStore {
   /**
    * React
    */
 
-  readonly ctx = React.createContext<DocStore | null>(null);
+  readonly ctx = createContext<DocStore | null>(null);
 
-  readonly provider = ({ children }: { children: React.ReactElement }) => (
+  readonly provider = ({ children }: {
+    children: ReactElement;
+  }): JSX.Element => (
     <this.ctx.Provider value={this}>
       {children}
     </this.ctx.Provider>
   );
 
-  get inst() {
-    return React.useContext(this.ctx);
+  get inst(): DocStore {
+    return useContext(this.ctx);
   }
 
   /**
@@ -23,24 +26,24 @@ export class DocStore {
 
   el = document.documentElement;
 
-  fix() {
+  fix(): void {
     this.el.classList.add('doc_fixed');
   }
 
-  unFix() {
+  unFix(): void {
     this.el.classList.remove('doc_fixed');
   }
 
-  get isFixed() {
+  get isFixed(): boolean {
     return this.el.classList.contains('doc_fixed');
   }
 
-  touch() {
+  touch(): void {
     this.el.classList.add('doc_touch');
   }
 
-  static get isTouchDevice() {
-    return window.ontouchstart || navigator.maxTouchPoints > 0;
+  static get isTouchDevice(): boolean {
+    return !!window.ontouchstart || navigator.maxTouchPoints > 0;
   }
 }
 

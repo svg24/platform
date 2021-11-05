@@ -1,5 +1,6 @@
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import React from 'react';
+import type { BaseSyntheticEvent } from 'react';
 import './select.css';
 
 export default ({
@@ -8,14 +9,14 @@ export default ({
   onChange,
   options,
 }: {
-  defaultValue: string,
-  legend: string,
-  onChange: (ev: React.BaseSyntheticEvent) => void,
+  defaultValue: string;
+  legend: string;
+  onChange(ev: BaseSyntheticEvent): void;
   options: {
-    id: string,
-    text: string,
-  }[],
-}) => (
+    id: string;
+    text: string;
+  }[];
+}): JSX.Element => (
   <fieldset className="select">
     <legend className="select__legend">
       {legend}

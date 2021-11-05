@@ -1,7 +1,7 @@
 import React from 'react';
 import './layout-footer.css';
 
-export default () => (
+export default (): JSX.Element => (
   <footer className="layout-footer">
     <p className="layout-footer__by">
       {'Made by '}

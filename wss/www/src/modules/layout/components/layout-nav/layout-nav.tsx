@@ -5,7 +5,7 @@ import './layout-nav.css';
 
 const GITHUB = 'https://github.com/vanyauhalin/svg24';
 
-export default () => {
+export default (): JSX.Element => {
   const nav = {
     el: useRef<HTMLUnknownElement>(),
     get isListShowed() {

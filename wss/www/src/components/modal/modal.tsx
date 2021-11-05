@@ -1,6 +1,7 @@
 import { XIcon } from '@heroicons/react/outline';
 import docStore from '@svg24/www/src/modules/doc/store';
-import React, { ReactElement, useEffect, useRef } from 'react';
+import React, { cloneElement, useEffect, useRef } from 'react';
+import type { ReactElement } from 'react';
 import './modal.css';
 
 export default ({
@@ -10,12 +11,12 @@ export default ({
   onClose,
   slug,
 }: {
-  children: ReactElement,
-  description: string,
-  label: string,
-  onClose: () => void,
-  slug: string,
-}) => {
+  children: ReactElement;
+  description: string;
+  label: string;
+  onClose(): void;
+  slug: string;
+}): JSX.Element => {
   const docInst = docStore.inst;
 
   useEffect(() => {
@@ -27,7 +28,9 @@ export default ({
   });
 
   const modal = {
-    el: useRef<HTMLDivElement>(),
+    click: (ev: MouseEvent) => {
+      if (ev.target === modal.el.current) modal.close();
+    },
     close: () => {
       modal.el.current.classList.add('modal_reverse');
 
@@ -36,21 +39,21 @@ export default ({
         onClose();
       }, 300);
     },
-    click: (ev: MouseEvent) => {
-      if (ev.target === modal.el.current) modal.close();
-    },
+    el: useRef<HTMLDivElement>(),
     focusout: () => {
       if (modal.el.current) modal.close();
     },
-    mount: () => useEffect(() => {
-      modal.el.current.addEventListener('click', modal.click);
-      modal.el.current.addEventListener('focusout', modal.focusout);
-    }),
+    mount: () => {
+      useEffect(() => {
+        modal.el.current.addEventListener('click', modal.click);
+        modal.el.current.addEventListener('focusout', modal.focusout);
+      });
+    },
   };
 
   modal.mount();
 
-  const content = React.cloneElement(children, {
+  const content = cloneElement(children, {
     className: children.props.className
       ? `modal__content ${children.props.className}`
       : 'modal__content',

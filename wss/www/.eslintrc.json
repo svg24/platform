@@ -7,9 +7,58 @@
   "overrides": [{
     "files": ["*.ts", "*.tsx"],
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "project": ["tsconfig.json"],
+      "sourceType": "module"
+    },
     "extends": ["plugin:@typescript-eslint/recommended"],
     "rules": {
+      "@typescript-eslint/array-type": ["error", {
+        "default": "array"
+      }],
+      "@typescript-eslint/consistent-type-imports": ["error", {
+        "prefer": "type-imports"
+      }],
+      "@typescript-eslint/explicit-function-return-type": ["error", {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": true,
+        "allowDirectConstAssertionInArrowFunctions": true,
+        "allowConciseArrowFunctionExpressionsStartingWithVoid": true
+      }],
+      "@typescript-eslint/explicit-module-boundary-types": ["error", {
+        "allowArgumentsExplicitlyTypedAsAny": false,
+        "allowDirectConstAssertionInArrowFunctions": true,
+        "allowHigherOrderFunctions": true,
+        "allowTypedFunctionExpressions": true
+      }],
+      "@typescript-eslint/member-delimiter-style": ["error", {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false
+        },
+        "multilineDetection": "brackets"
+      }],
+      "@typescript-eslint/member-ordering": ["warn", {
+        "default": {
+          "order": "as-written"
+        },
+        "interfaces": {
+          "order": "alphabetically"
+        },
+        "typeLiterals": {
+          "order": "alphabetically"
+        }
+      }],
+      "@typescript-eslint/method-signature-style": ["error", "method"],
+      "@typescript-eslint/no-confusing-void-expression": ["error"],
       "@typescript-eslint/no-use-before-define": ["error"],
+      "@typescript-eslint/semi": ["error"],
       "no-use-before-define": "off",
       "react/jsx-filename-extension": [1, {
         "extensions": ["tsx"]
@@ -21,7 +70,8 @@
         "callbacksLast": true,
         "shorthandLast": true
       }],
-      "react/no-danger": "off"
+      "react/no-danger": "off",
+      "semi": "off"
     }
   }],
   "root": true,
@@ -31,10 +81,15 @@
       "tsx": "never"
     }],
     "import/no-extraneous-dependencies": "off",
-    "lines-between-class-members": ["error", "always", {
-      "exceptAfterSingleLine": true
+    "import/order": ["error", {
+      "alphabetize": {
+        "order": "asc"
+      }
     }],
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "sort-imports": ["warn", {
+      "ignoreDeclarationSort": true
+    }]
   },
   "settings": {
     "import/resolver": {
