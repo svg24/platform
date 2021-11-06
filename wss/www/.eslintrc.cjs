@@ -63,6 +63,7 @@ module.exports = {
       }],
       '@typescript-eslint/method-signature-style': ['error', 'property'],
       '@typescript-eslint/no-confusing-void-expression': ['error'],
+      '@typescript-eslint/no-explicit-any': ['off'],
       'import/no-extraneous-dependencies': 'off',
       'react/jsx-filename-extension': [1, {
         extensions: ['tsx'],
@@ -79,6 +80,7 @@ module.exports = {
   }],
   root: true,
   rules: {
+    'func-names': ['warn', 'never'],
     'import/no-extraneous-dependencies': ['error', {
       devDependencies: [path.resolve(__dirname, 'tailwind.config.cjs')],
     }],
