@@ -1,0 +1,20 @@
+.logos-filter {
+  @apply mb-6;
+}
+
+.logos-filter__row {
+  @apply flex flex-wrap items-center gap-x-4;
+}
+
+.logos-filter__clear {
+  @apply p-2 ml-auto text-gray-500 duration-300 bg-gray-100 rounded-md hover:text-black focus:text-black;
+}
+
+.logos-filter__clear:hover,
+.logos-filter__clear:focus {
+  box-shadow: 0 0 0 2px rgba(228, 228, 231, var(--tw-bg-opacity));
+}
+
+.logos-filter__icon {
+  @apply w-3 h-3;
+}

@@ -30,8 +30,16 @@
   @apply flex items-center justify-center row-start-1 row-end-3 p-4 bg-white rounded-md;
 }
 
-.logos-item__container > svg {
+.logos-output__list_sm .logos-item__container > svg {
+  @apply w-8 h-8;
+}
+
+.logos-output__list_base .logos-item__container > svg {
   @apply w-14 h-14;
+}
+
+.logos-output__list_lg .logos-item__container > svg {
+  @apply w-20 h-20;
 }
 
 .logos-item__meta {
@@ -56,14 +64,14 @@
   @apply flex justify-end col-start-2 gap-3 px-1;
 }
 
-html:not(.doc_touch) .logos-item__actions-container {
+.doc:not(.doc_touch) .logos-item__actions-container {
   @apply invisible opacity-0;
 
   transition: visibility 0s linear 300ms, opacity 300ms;
 }
 
-html:not(.doc_touch) .logos-item:hover .logos-item__actions-container,
-html:not(.doc_touch) .logos-item:focus-within .logos-item__actions-container {
+.doc:not(.doc_touch) .logos-item:hover .logos-item__actions-container,
+.doc:not(.doc_touch) .logos-item:focus-within .logos-item__actions-container {
   @apply visible opacity-100;
 
   transition: visibility 0s linear 0s, opacity 300ms;

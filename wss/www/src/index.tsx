@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Doc from './modules/doc';
 import LayoutRoot from './modules/layout/components/layout-root/layout-root';
-import LogosRoot from './modules/logos/components/logos-root/logos-root';
+import Logos from './modules/logos';
 
 ReactDOM.render(
   <React.StrictMode>
     <Doc>
       <LayoutRoot>
-        <LogosRoot />
+        <Logos />
       </LayoutRoot>
     </Doc>
   </React.StrictMode>,

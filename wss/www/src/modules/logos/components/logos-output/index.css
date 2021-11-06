@@ -1,27 +1,27 @@
-.logos-list__list {
+.logos-output__list {
   @apply grid gap-6 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1;
 }
 
-.logos-list__no-found {
+.logos-output__no-found {
   @apply text-sm text-center text-gray-500;
 }
 
-.logos-list__sentinel {
+.logos-output__sentinel {
   @apply flex items-center justify-center invisible py-4 text-sm text-center text-gray-400 gap-x-2;
 }
 
-.logos-list_loading .logos-list__sentinel {
+.logos-output_loading .logos-output__sentinel {
   @apply visible;
 }
 
-.logos-list__spin {
+.logos-output__spin {
   @apply w-4 h-4 animate-spin;
 }
 
-.logos-list__spin > :first-child {
+.logos-output__spin > :first-child {
   @apply opacity-25;
 }
 
-.logos-list__spin > :last-child {
+.logos-output__spin > :last-child {
   @apply opacity-75;
 }

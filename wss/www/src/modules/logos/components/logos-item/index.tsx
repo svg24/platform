@@ -1,52 +1,60 @@
 import { ClipboardIcon, DownloadIcon } from '@heroicons/react/outline';
-import { LogosItem } from '@svg24/www/src/types/logos';
-import { delay } from '@svg24/www/src/utils';
-import React, { MutableRefObject, useRef } from 'react';
-import './logos-item.css';
+import { useRef } from 'react';
+import type { RefObject } from 'react';
+import type { LogosItem } from 'src/types';
+import { delay } from 'src/utils';
+import './index.css';
 
-export default ({ item }: { item: LogosItem }) => {
+export default ({ item }: { item: LogosItem }): JSX.Element => {
   const complete = {
-    el: useRef<HTMLDivElement>(),
-    mouseleave: null,
-    show: async (actionEl: MutableRefObject<HTMLButtonElement>, msg: string) => {
+    el: useRef<HTMLDivElement>(null),
+    mouseleave: null as ((value: unknown) => void) | null,
+    show: async (actionEl: RefObject<HTMLButtonElement>, msg: string) => {
       await Promise.race([delay(3000), new Promise((resolve) => {
         const { current } = complete.el;
 
-        current.setAttribute('data-msg', msg);
-        current.classList.add('logos-item_complete');
+        current?.setAttribute('data-msg', msg);
+        current?.classList.add('logos-item_complete');
 
         complete.mouseleave = resolve;
 
-        current.addEventListener('mouseleave', complete.mouseleave);
+        current?.addEventListener('mouseleave', complete.mouseleave);
       })]);
 
       complete.close(actionEl);
     },
-    close: (actionEl: MutableRefObject<HTMLButtonElement>) => {
+    close: (actionEl: RefObject<HTMLButtonElement>) => {
       const { current } = complete.el;
 
-      actionEl.current.blur();
-      current.classList.remove('logos-item_complete');
-      current.removeAttribute('data-msg');
-      current.removeEventListener('mouseleave', complete.mouseleave);
+      actionEl.current?.blur();
+      current?.classList.remove('logos-item_complete');
+      current?.removeAttribute('data-msg');
+
+      if (complete.mouseleave) {
+        current?.removeEventListener('mouseleave', complete.mouseleave);
+      }
     },
   };
 
   const content = {
-    container: useRef<HTMLDivElement>(),
+    container: useRef<HTMLDivElement>(null),
     get html() {
-      return content.container.current.firstElementChild.outerHTML;
+      return content.container.current?.firstElementChild?.outerHTML;
     },
-    copy: async (actionEl: MutableRefObject<HTMLButtonElement>) => {
+    copy: async (actionEl: RefObject<HTMLButtonElement>) => {
       try {
+        if (!content.html) return;
+
         await navigator.clipboard.writeText(content.html);
         complete.show(actionEl, 'Copied');
       } catch (err) {
         complete.show(actionEl, 'Copy error');
       }
     },
-    download: (actionEl: MutableRefObject<HTMLButtonElement>) => {
+    download: (actionEl: RefObject<HTMLButtonElement>) => {
       try {
+        if (!content.html) return;
+
         const blob = new Blob([content.html]);
         const link = document.createElement('a');
 
@@ -67,13 +75,13 @@ export default ({ item }: { item: LogosItem }) => {
   const actions = {
     els: [{
       id: 'download',
-      el: useRef<HTMLButtonElement>(),
+      el: useRef<HTMLButtonElement>(null),
       handler: content.download,
       icon: DownloadIcon,
       label: `Download ${item.name} logo`,
     }, {
       id: 'copy',
-      el: useRef<HTMLButtonElement>(),
+      el: useRef<HTMLButtonElement>(null),
       handler: content.copy,
       icon: ClipboardIcon,
       label: `Copy ${item.name} logo`,
@@ -84,7 +92,7 @@ export default ({ item }: { item: LogosItem }) => {
         key={action.id}
         ref={action.el}
         type="button"
-        onClick={() => action.handler(action.el)}
+        onClick={() => { action.handler(action.el); }}
       >
         <action.icon
           aria-hidden="true"
@@ -101,7 +109,7 @@ export default ({ item }: { item: LogosItem }) => {
     >
       <div
         className="logos-item__container"
-        dangerouslySetInnerHTML={{ __html: item.content[0] }}
+        dangerouslySetInnerHTML={{ __html: item.content[0] || '' }}
         ref={content.container}
       />
       <div className="logos-item__meta">

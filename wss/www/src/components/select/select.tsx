@@ -10,10 +10,10 @@ export default ({
 }: {
   defaultValue: string;
   legend: string;
-  onChange: (ev: BaseSyntheticEvent) => void;
+  onChange: (val: string) => void;
   options: {
-    id: string;
-    text: string;
+    name: string;
+    val: string;
   }[];
 }): JSX.Element => (
   <fieldset className="select">
@@ -23,14 +23,16 @@ export default ({
     <select
       className="select__select"
       value={defaultValue}
-      onChange={onChange}
+      onChange={(ev: BaseSyntheticEvent) => {
+        onChange(ev.target.value);
+      }}
     >
       {options.map((option) => (
         <option
-          key={option.id}
-          value={option.id}
+          key={option.val}
+          value={option.val}
         >
-          {option.text}
+          {option.name}
         </option>
       ))}
     </select>
