@@ -1,6 +1,6 @@
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import Modal from '@svg24/www/src/components/modal/modal';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import './layout-nav.css';
 
 const GITHUB = 'https://github.com/vanyauhalin/svg24';

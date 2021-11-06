@@ -1,4 +1,3 @@
-import React from 'react';
 import LayoutNav from '../layout-nav/layout-nav';
 import './layout-header.css';
 

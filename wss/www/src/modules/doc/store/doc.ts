@@ -21,7 +21,3 @@ export function initDoc(this: DocumentStore): void {
     },
   });
 }
-
-export default {
-  initDoc,
-};

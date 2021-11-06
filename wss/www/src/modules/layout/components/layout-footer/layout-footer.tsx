@@ -1,4 +1,3 @@
-import React from 'react';
 import './layout-footer.css';
 
 export default (): JSX.Element => (
