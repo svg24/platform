@@ -1,11 +1,11 @@
-import type { DocStore } from '@svg24/www/src/types/doc';
 import { createContext, useContext } from 'react';
 import type { ReactElement } from 'react';
+import type { Store } from '../types/store';
 
-export function init(this: DocStore): void {
+export function initBase<I extends Store<I>>(this: I): void {
   Object.defineProperties(this, {
     _ctx: {
-      value: createContext<DocStore | null>(null),
+      value: createContext<I | null>(null),
       enumerable: true,
     },
     ctx: {
@@ -24,5 +24,5 @@ export function init(this: DocStore): void {
 }
 
 export default {
-  init,
+  initBase,
 };
