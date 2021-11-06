@@ -1,6 +1,6 @@
-import type { DocStore } from '@svg24/www/src/types/doc';
+import type { DocumentStore } from '@svg24/www/src/types/doc';
 
-export function init(this: DocStore): void {
+export function initDoc(this: DocumentStore): void {
   const el = document.documentElement;
 
   Object.assign(this, {
@@ -23,5 +23,5 @@ export function init(this: DocStore): void {
 }
 
 export default {
-  init,
+  initDoc,
 };

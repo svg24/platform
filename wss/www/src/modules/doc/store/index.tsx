@@ -1,10 +1,10 @@
-import type { DocStore as Store } from '@svg24/www/src/types/doc';
+import type { DocumentStore as Store } from '@svg24/www/src/types/doc';
 import { initBase } from '@svg24/www/src/utils/store';
-import doc from './doc';
+import { initDoc } from './doc';
 
-const Inst = function DocStore(this: Store) {
+const Inst = function DocumentStore(this: Store) {
   initBase.call(this);
-  doc.init.call(this);
+  initDoc.call(this);
 } as any as { new (): Store };
 
 export default new Inst();

@@ -1,6 +1,6 @@
 import type { Store } from './store';
 
-export interface DocStore extends Store<DocStore> {
+export interface DocumentStore extends Store<DocumentStore> {
   _el: HTMLElement;
   fix: () => void;
   isFixed: boolean;
