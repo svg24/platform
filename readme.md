@@ -27,7 +27,7 @@ Feel free suggest any logos to add to the collection via [email](mailto:vanyauha
 
 ## Policy
 
-[MIT License](https://github.com/vanyauhalin/svg24/tree/main/LICENSE). All logos on the [svg24.dev](https://svg24.dev) (hence in the [db](https://github.com/vanyauhalin/svg24/tree/db) branch) are the property of their respective owners. If you believe that your copyright has been infringed, please contact me by [email](mailto:vanyauhalin@gmail.com?subject=SVG24%20|%20Copyright%20infringe).
+[MIT License](./LICENSE). All logos on the [svg24.dev](https://svg24.dev) (hence in the [db](https://github.com/vanyauhalin/svg24/tree/db) branch) are the property of their respective owners. If you believe that your copyright has been infringed, please contact me by [email](mailto:vanyauhalin@gmail.com?subject=SVG24%20|%20Copyright%20infringe).
 
 ## References
 
