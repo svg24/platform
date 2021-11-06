@@ -12,7 +12,7 @@ export function initBase<I extends Store<I>>(this: I): void {
       get: () => useContext(this._ctx),
       enumerable: true,
     },
-    provider: {
+    Provider: {
       value: ({ children }: { children: ReactElement }) => (
         <this._ctx.Provider value={this}>
           {children}

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type { ReactElement } from 'react';
-import store from '../store';
+import DocStore from '../store';
 import './doc.css';
 
 export default ({ children }: { children: ReactElement }): JSX.Element => {
@@ -11,8 +11,8 @@ export default ({ children }: { children: ReactElement }): JSX.Element => {
   });
 
   return (
-    <store.provider>
+    <DocStore.Provider>
       {children}
-    </store.provider>
+    </DocStore.Provider>
   );
 };
