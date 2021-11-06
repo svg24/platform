@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import type { ReactElement } from 'react';
+import { UsrStore } from 'src/modules/usr';
 import DocStore from '../store';
 import './doc.css';
 
 export default ({ children }: { children: ReactElement }): JSX.Element => {
   useEffect(() => {
-    // if (DocStore.isTouchDevice) {
-    //   store.touch();
-    // }
+    if (UsrStore.isTouch) DocStore.touch();
   });
 
   return (
