@@ -1,4 +1,7 @@
-# SVG24
+<h1 style="display: flex; align-items: center; justify-content: space-between;">
+  SVG24
+  <img src="wss/www/src/assets/logo.svg" >
+</h1>
 
 **Warning:** at the moment everything described below is under development.
 
