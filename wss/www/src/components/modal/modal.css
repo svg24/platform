@@ -10,7 +10,7 @@
 }
 
 .modal__container {
-  @apply grid w-full gap-6 px-6 py-5 rounded-md bg-gray-50 filter drop-shadow-md;
+  @apply grid w-full gap-6 px-6 py-5 rounded-md bg-gray-50 filter shadow-md;
 
   grid-template-columns: 1fr min-content;
   max-width: 440px;
