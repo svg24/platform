@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.doc {
+  @apply text-gray-900;
+}
+
 .doc_fixed {
   @apply overflow-hidden;
 }

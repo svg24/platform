@@ -78,7 +78,7 @@
 }
 
 .logos-item__actions-item {
-  @apply z-10 px-1 py-1 text-sm text-gray-400 duration-300 bg-gray-200 rounded-md hover:text-black focus:text-black;
+  @apply z-10 px-1 py-1 text-sm text-gray-400 duration-300 bg-gray-200 rounded-md hover:text-gray-900 focus:text-gray-900;
 }
 
 .logos-item__actions-icon {

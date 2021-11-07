@@ -56,5 +56,5 @@
 
 .modal__toggle:hover .modal__icon,
 .modal__toggle:focus .modal__icon {
-  @apply text-black;
+  @apply text-gray-900;
 }

@@ -7,7 +7,7 @@
 }
 
 .select__select {
-  @apply appearance-none text-sm text-gray-500 col-span-full row-span-full rounded-md pl-3 pr-9 py-1 bg-gray-100 duration-300 hover:text-black focus:text-black cursor-pointer;
+  @apply appearance-none text-sm text-gray-500 col-span-full row-span-full rounded-md pl-3 pr-9 py-1 bg-gray-100 duration-300 hover:text-gray-900 focus:text-gray-900 cursor-pointer;
 }
 
 .select__select:hover,
@@ -21,5 +21,5 @@
 
 .select__select:hover + .select__icon,
 .select__select:focus + .select__icon {
-  @apply text-black;
+  @apply text-gray-900;
 }

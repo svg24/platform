@@ -7,7 +7,7 @@
 }
 
 .logos-filter__clear {
-  @apply p-2 ml-auto text-gray-500 duration-300 bg-gray-100 rounded-md hover:text-black focus:text-black;
+  @apply p-2 ml-auto text-gray-500 duration-300 bg-gray-100 rounded-md hover:text-gray-900 focus:text-gray-900;
 }
 
 .logos-filter__clear:hover,

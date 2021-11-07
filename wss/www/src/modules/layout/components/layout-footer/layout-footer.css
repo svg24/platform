@@ -7,5 +7,5 @@
 }
 
 .layout-footer__link {
-  @apply duration-300 hover:text-black;
+  @apply duration-300 hover:text-gray-900;
 }
