@@ -20,9 +20,10 @@ export default (): JSX.Element => {
         return (
           <ol className={`${block} ${mod}`}>
             {ctx.list.items?.map((item) => (
-              <li key={item.slug}>
-                <LogosItem item={item} />
-              </li>
+              <LogosItem
+                item={item}
+                key={item.slug}
+              />
             ))}
           </ol>
         );

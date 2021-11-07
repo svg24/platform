@@ -1,33 +1,31 @@
 .logos-item {
-  @apply relative grid h-full p-3 duration-300 bg-gray-100 rounded-md gap-x-2 gap-y-3;
+  @apply relative flex h-full;
+}
+
+.logos-item_many::before {
+  @apply absolute duration-300 bg-gray-200 rounded-md bottom-2 -top-2 inset-x-2;
+
+  content: '';
+}
+
+.logos-item:hover.logos-item_many::before,
+.logos-item:focus-within.logos-item_many::before {
+  @apply bg-gray-300;
+}
+
+.logos-item__inner {
+  @apply z-10 grid w-full p-3 duration-300 bg-gray-100 rounded-md gap-x-2 gap-y-3;
 
   grid-template: 1fr min-content / min-content 1fr;
 }
 
-.logos-item:hover,
-.logos-item:focus-within {
+.logos-item:hover .logos-item__inner,
+.logos-item:focus-within .logos-item__inner {
   box-shadow: 0 0 0 2px rgba(228, 228, 231, var(--tw-bg-opacity));
 }
 
-.logos-item::before {
-  @apply absolute inset-0 z-20 flex items-center justify-center invisible text-white bg-gray-800 rounded-md opacity-0;
-
-  transition: visibility 0s linear 300ms, opacity 300ms;
-}
-
-.logos-item:not([data-msg])::before {
-  content: '';
-}
-
-.logos-item_complete::before {
-  @apply visible opacity-100;
-
-  content: attr(data-msg);
-  transition: visibility 0s linear 0s, opacity 300ms;
-}
-
 .logos-item__container {
-  @apply flex items-center justify-center row-start-1 row-end-3 p-4 bg-white rounded-md;
+  @apply flex items-center justify-center col-start-1 col-end-2 row-start-1 row-end-3 p-4 bg-white rounded-md;
 }
 
 .logos-output__list_sm .logos-item__container > svg {
@@ -43,7 +41,7 @@
 }
 
 .logos-item__meta {
-  @apply col-start-2 px-1 overflow-hidden;
+  @apply col-start-2 col-end-3 row-start-1 row-end-2 px-1 overflow-hidden;
 }
 
 .logos-item__src {
@@ -58,29 +56,4 @@
 
 .logos-item__category {
   @apply text-sm text-gray-400;
-}
-
-.logos-item__actions-container {
-  @apply flex justify-end col-start-2 gap-3 px-1;
-}
-
-.doc:not(.doc_touch) .logos-item__actions-container {
-  @apply invisible opacity-0;
-
-  transition: visibility 0s linear 300ms, opacity 300ms;
-}
-
-.doc:not(.doc_touch) .logos-item:hover .logos-item__actions-container,
-.doc:not(.doc_touch) .logos-item:focus-within .logos-item__actions-container {
-  @apply visible opacity-100;
-
-  transition: visibility 0s linear 0s, opacity 300ms;
-}
-
-.logos-item__actions-item {
-  @apply z-10 px-1 py-1 text-sm text-gray-400 duration-300 bg-gray-200 rounded-md hover:text-gray-900 focus:text-gray-900;
-}
-
-.logos-item__actions-icon {
-  @apply w-5 h-5;
 }
