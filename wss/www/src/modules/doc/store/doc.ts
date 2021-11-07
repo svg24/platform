@@ -1,4 +1,4 @@
-import type { DocumentStore } from '@svg24/www/src/types/doc';
+import type { DocumentStore } from 'src/types/doc';
 
 export function initDoc(this: DocumentStore): void {
   const el = document.documentElement;

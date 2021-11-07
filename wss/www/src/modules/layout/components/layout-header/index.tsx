@@ -1,6 +1,6 @@
 import Logo from 'src/components/logo';
-import LayoutNav from '../layout-nav/layout-nav';
-import './layout-header.css';
+import LayoutNav from '../layout-nav';
+import './index.css';
 
 export default (): JSX.Element => (
   <header className="layout-header">

@@ -1,4 +1,4 @@
-import './layout-footer.css';
+import './index.css';
 
 export default (): JSX.Element => (
   <footer className="layout-footer">

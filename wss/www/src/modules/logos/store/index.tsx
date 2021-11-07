@@ -1,5 +1,5 @@
 import type { LogosStore as Store } from 'src/types';
-import { initBase } from 'src/utils/store';
+import { initBase } from 'src/utils';
 import {
   FilterPage,
   FilterSearch,

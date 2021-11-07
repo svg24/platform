@@ -3,7 +3,7 @@ import type {
   LogosFilterSelectOptions,
   LogosStore,
 } from 'src/types';
-import { deepAssign } from 'src/utils/obj';
+import { deepObjectAssign } from 'src/utils';
 import { FilterSelect } from './select';
 
 export const FilterSortBy = function (
@@ -11,7 +11,7 @@ export const FilterSortBy = function (
   store: LogosStore,
   opts: LogosFilterSelectOptions,
 ): void {
-  deepAssign(this, new FilterSelect(opts));
+  deepObjectAssign(this, new FilterSelect(opts));
 
   this.onChange = (val) => {
     this.val.cur = val;

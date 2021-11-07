@@ -1,8 +1,8 @@
 import { XIcon } from '@heroicons/react/outline';
-import { DocStore } from '@svg24/www/src/modules/doc';
 import { cloneElement, useEffect, useRef } from 'react';
 import type { ReactElement } from 'react';
-import './modal.css';
+import { DocStore } from 'src/modules/doc';
+import './index.css';
 
 export default ({
   children,

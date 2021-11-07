@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@svg24/www': path.resolve(__dirname),
       src: path.resolve(__dirname, 'src'),
     },
   },

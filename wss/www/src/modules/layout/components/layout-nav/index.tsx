@@ -1,23 +1,23 @@
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import Modal from '@svg24/www/src/components/modal/modal';
 import { useRef, useState } from 'react';
-import './layout-nav.css';
+import Modal from 'src/components/modal';
+import './index.css';
 
 const GITHUB = 'https://github.com/vanyauhalin/svg24';
 
 export default (): JSX.Element => {
   const nav = {
-    el: useRef<HTMLUnknownElement>(),
+    el: useRef<HTMLUnknownElement>(null),
     get isListShowed() {
-      return nav.el.current.classList.contains('layout-nav_show-list');
+      return nav.el.current?.classList.contains('layout-nav_show-list');
     },
     toggleList() {
-      nav.el.current.classList.toggle('layout-nav_show-list');
+      nav.el.current?.classList.toggle('layout-nav_show-list');
     },
   };
 
   const toggle = {
-    el: useRef<HTMLButtonElement>(),
+    el: useRef<HTMLButtonElement>(null),
     _isExpanded: useState(false),
     get isExpanded() {
       return toggle._isExpanded[0];

@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import type { BaseSyntheticEvent } from 'react';
-import './select.css';
+import './index.css';
 
 export default ({
   defaultValue,

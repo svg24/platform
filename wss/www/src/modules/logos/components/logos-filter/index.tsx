@@ -1,7 +1,7 @@
 import { XIcon } from '@heroicons/react/outline';
-import Select from '@svg24/www/src/components/select/select';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
+import Select from 'src/components/select';
 import LogosStore from '../../store';
 import LogosFilterSearch from '../logos-filter-search';
 import './index.css';
