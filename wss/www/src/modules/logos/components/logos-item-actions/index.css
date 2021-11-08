@@ -8,14 +8,12 @@
 
 .doc:not(.doc_touch) .logos-item-actions__container {
   @apply invisible opacity-0;
-
   transition: visibility 0s linear 300ms, opacity 300ms;
 }
 
 .doc:not(.doc_touch) .logos-item:hover .logos-item-actions__container,
 .doc:not(.doc_touch) .logos-item:focus-within .logos-item-actions__container {
   @apply visible opacity-100;
-
   transition: visibility 0s linear 0s, opacity 300ms;
 }
 
@@ -33,13 +31,11 @@
 
 .logos-item-actions__output {
   @apply z-20 flex items-center justify-center invisible col-start-1 col-end-3 row-start-1 row-end-3 -m-3 bg-gray-800 rounded-md opacity-0;
-
   transition: visibility 0s linear 300ms, opacity 300ms;
 }
 
 .logos-item-actions__output_show {
   @apply visible opacity-100;
-
   transition: visibility 0s linear 0s, opacity 300ms;
 }
 

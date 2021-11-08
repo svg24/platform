@@ -1,5 +1,5 @@
 {
-  "extends": ["stylelint-config-recess-order"],
+  "plugins": ["stylelint-order"],
   "rules": {
     "string-no-newline": true,
     "unit-no-unknown": true,
@@ -79,6 +79,10 @@
     "max-empty-lines": 1,
     "no-eol-whitespace": true,
     "no-missing-end-of-source-newline": true,
-    "no-empty-first-line": true
+    "no-empty-first-line": true,
+    "order/order": [
+      "declarations"
+    ],
+    "order/properties-alphabetical-order": true
   }
 }

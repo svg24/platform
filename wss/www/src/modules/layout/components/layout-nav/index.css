@@ -39,13 +39,11 @@
 @media (max-width: 481px) {
   .layout-nav__list {
     @apply absolute invisible p-4 bg-gray-100 rounded-md opacity-0 top-full inset-x-4;
-
     transition: visibility 0s linear 300ms, opacity 300ms;
   }
 
   .layout-nav_show-list .layout-nav__list {
     @apply visible opacity-100;
-
     transition: visibility 0s linear 0s, opacity 300ms;
   }
 }

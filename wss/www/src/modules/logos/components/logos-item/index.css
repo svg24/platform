@@ -4,7 +4,6 @@
 
 .logos-item_many::before {
   @apply absolute duration-300 bg-gray-200 rounded-md bottom-2 -top-2 inset-x-2;
-
   content: '';
 }
 
@@ -15,7 +14,6 @@
 
 .logos-item__inner {
   @apply z-10 grid w-full p-3 duration-300 bg-gray-100 rounded-md gap-x-2 gap-y-3;
-
   grid-template: 1fr min-content / min-content 1fr;
 }
 
@@ -50,7 +48,6 @@
 
 .logos-item__src::before {
   @apply absolute inset-0;
-
   content: '';
 }
 

@@ -1,8 +1,7 @@
 .modal {
   @apply fixed inset-0 z-40 flex items-start justify-center pt-16 pb-20 overflow-x-hidden overflow-y-scroll duration-300 bg-gray-800 bg-opacity-50;
-
-  transition: all 0.3s;
   animation: fade-in 0.3s forwards;
+  transition: all 0.3s;
 }
 
 .modal_reverse {
@@ -11,11 +10,10 @@
 
 .modal__container {
   @apply grid w-full gap-6 px-6 py-5 rounded-md bg-gray-50 filter shadow-md;
-
+  animation: slide-up-in-6 0.3s forwards;
   grid-template-columns: 1fr min-content;
   max-width: 440px;
   transition: all 0.3s;
-  animation: slide-up-in-6 0.3s forwards;
 }
 
 .modal_reverse .modal__container {
