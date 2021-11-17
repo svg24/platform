@@ -60,6 +60,10 @@
   @apply flex items-start mb-4 text-2xl font-bold gap-x-1;
 }
 
+.layout-sidebar__description {
+  @apply sr-only;
+}
+
 .layout-sidebar__src {
   @apply duration-100 text-neutral-400 hover:text-black focus:text-black;
 }

@@ -4,7 +4,7 @@ import type { Store } from 'src/types/store';
 export interface LayoutStore extends Store<LayoutStore> {
   nav: LayoutElementTransitions;
   root: LayoutRoot;
-  sidebar: LayoutElementTransitions;
+  sidebar: LayoutStoreSidebar;
 }
 
 /**
@@ -33,4 +33,16 @@ export type LayoutRoot = {
     hide: () => void;
     show: () => void;
   };
+};
+
+/**
+ * Sidebar
+ */
+
+type LayoutStoreSidebar = {
+  _isVisible: boolean;
+  hide: () => void;
+  initiator: HTMLButtonElement | undefined | null;
+  isVisible: LayoutStoreSidebar['_isVisible'];
+  show: () => void;
 };

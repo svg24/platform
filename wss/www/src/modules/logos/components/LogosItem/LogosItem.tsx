@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { LayoutStore } from '../../../layout';
 import { LogosStore } from '../../store';
 import type { LogosItem as Item } from '../../types';
@@ -18,7 +18,10 @@ export const LogosItem = ({ item }: { item: Item }): JSX.Element => {
   };
 
   const bag = {
+    ref: useRef<HTMLButtonElement>(null),
     toggle() {
+      layoutCtx.sidebar.initiator = bag.ref.current;
+
       logosCtx.bag.add(item);
       layoutCtx.root.sidebar.show();
     },
@@ -33,6 +36,7 @@ export const LogosItem = ({ item }: { item: Item }): JSX.Element => {
       <h3 className="logos-item__heading">
         <button
           className="logos-item__btn"
+          ref={bag.ref}
           type="button"
           onClick={bag.toggle}
         >

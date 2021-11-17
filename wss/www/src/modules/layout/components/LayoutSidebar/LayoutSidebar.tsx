@@ -15,15 +15,23 @@ export const LayoutSidebar = (): JSX.Element => {
     mount() {
       useEffect(() => {
         if (root.ref.current) {
+          root.ref.current.focus();
           root.ref.current.addEventListener('click', root.click);
+          root.ref.current.addEventListener('focusout', root.focusout);
         }
       }, []);
     },
     click(ev: MouseEvent) {
       if (ev.target === root.ref.current) root.close();
     },
+    focusout: (ev: FocusEvent) => {
+      if (!root.ref.current?.contains(ev.relatedTarget as Node)) {
+        root.close();
+      }
+    },
     close() {
       layoutCtx.root.sidebar.hide();
+      layoutCtx.sidebar.initiator?.focus();
     },
   };
 
@@ -52,8 +60,11 @@ export const LayoutSidebar = (): JSX.Element => {
 
   return (
     <div
+      aria-label={`${item.name} details`}
       className="layout-sidebar"
       ref={root.ref}
+      role="dialog"
+      tabIndex={-1}
     >
       <div className="layout-sidebar__inner">
         <div
@@ -61,7 +72,9 @@ export const LayoutSidebar = (): JSX.Element => {
           dangerouslySetInnerHTML={{ __html: item.content[0] || '' }}
         />
         <h1 className="layout-sidebar__heading">
-          {item.name}
+          <span id="layout-sidebar-heading">
+            {item.name}
+          </span>
           <a
             aria-label={`Go to ${item.name} website`}
             className="layout-sidebar__src"
