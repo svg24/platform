@@ -1,16 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Doc from './modules/doc';
-import LayoutRoot from './modules/layout';
-import Logos from './modules/logos';
+import Home from './views/Home';
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Doc>
-      <LayoutRoot>
-        <Logos />
-      </LayoutRoot>
-    </Doc>
+    <Home />
   </React.StrictMode>,
   document.getElementById('root'),
 );

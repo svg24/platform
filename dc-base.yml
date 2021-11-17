@@ -26,7 +26,7 @@ services:
     networks:
       nginx:
     depends_on:
-      - svg24-db
+      - db
     working_dir: /srv/api
     volumes:
       - db-srv:/srv/db
@@ -53,7 +53,7 @@ services:
     container_name: svg24-nginx
     restart: unless-stopped
     ports:
-      - 80:80
+      - '80:80'
     networks:
       nginx:
     depends_on:

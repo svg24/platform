@@ -1,0 +1,29 @@
+@keyframes slide-nav {
+  from {
+    @apply w-0;
+  }
+
+  to {
+    @apply w-40;
+  }
+}
+
+.layout-nav {
+  @apply flex flex-col w-40 gap-y-2.5;
+}
+
+.layout-root_nav-in .layout-nav {
+  animation: slide-nav 0.3s forwards;
+}
+
+.layout-root_nav-out .layout-nav {
+  animation: slide-nav 0.3s forwards reverse;
+}
+
+.layout-nav__label {
+  @apply text-xs font-bold uppercase text-neutral-400;
+}
+
+.layout-nav__item {
+  @apply py-0.5 text-sm;
+}

@@ -1,3 +1,6 @@
-import { FilterSelect } from './select';
+import type { FilterSelectOptions } from './select';
+import { initFilterSelect } from './select';
 
-export const FilterSize = FilterSelect;
+export type FilterSizeOptions = FilterSelectOptions;
+
+export const initFilterSize = initFilterSelect;

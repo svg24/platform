@@ -1,0 +1,59 @@
+.layout-main {
+  @apply grid px-6 overflow-hidden gap-x-6;
+  grid-area: main;
+}
+
+.layout-root_nav-display .layout-main {
+  grid-template-columns: min-content 1fr;
+}
+
+.layout-main__container,
+.layout-main__actions {
+  @apply col-start-1 col-end-2 row-start-1 row-end-2;
+}
+
+.layout-main__container {
+  @apply grid w-full overflow-y-scroll rounded-lg;
+  background-image: url('../../../../assets/images/pattern.svg');
+}
+
+.layout-main__actions {
+  @apply z-20 self-end p-4 justify-self-end;
+}
+
+.layout-root_nav-display .layout-main__container,
+.layout-root_nav-display .layout-main__actions {
+  @apply col-start-2 col-end-3;
+}
+
+.layout-main__container_scroll-up::before,
+.layout-main__container_scroll-down::after,
+.layout-main__content {
+  @apply col-span-full row-span-full;
+}
+
+.layout-main__container_scroll-up::before,
+.layout-main__container_scroll-down::after {
+  @apply z-10 h-6 pointer-events-none opacity-5 from-neutral-400;
+  content: '';
+}
+
+.layout-main__container_scroll-up::before {
+  @apply rounded-t-lg bg-gradient-to-b;
+}
+
+.layout-main__container_scroll-down::after {
+  @apply self-end rounded-b-lg bg-gradient-to-t;
+}
+
+.layout-main__content {
+  @apply px-4 py-4 overflow-scroll;
+}
+
+.layout-main__btn {
+  @apply p-2 duration-300 bg-white border-2 rounded-lg border-neutral-100 hover:border-primary-200;
+}
+
+.layout-main__icon {
+  @apply w-6 h-6 text-neutral-400;
+}

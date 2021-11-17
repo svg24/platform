@@ -1,7 +1,0 @@
-.logos-root {
-  @apply container max-w-screen-xl mx-auto px-4;
-}
-
-.logos-root__heading {
-  @apply mb-4 pt-20 text-5xl font-semibold text-center sm:text-6xl;
-}

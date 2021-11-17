@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 import type { ReactElement } from 'react';
 import type { Store } from '../types/store';
 
-export function initBase<I extends Store<I>>(this: I): void {
+export function initStore<I extends Store<I>>(this: I): void {
   Object.defineProperties(this, {
     _ctx: {
       value: createContext<I | null>(null),
@@ -49,18 +49,15 @@ export const delay = (ms: number): Promise<unknown> => (
   })
 );
 
-export const deepObjectAssign = (target: unknown, ...sources: any[]): any => {
-  sources.forEach((source) => {
-    const props = Object.keys(source).reduce((descriptors, key) => {
-      Object.assign(descriptors, {
-        [key]: Object.getOwnPropertyDescriptor(source, key),
-      });
+export const isInViewport = (element: HTMLDivElement): boolean => {
+  const rect = element.getBoundingClientRect();
 
-      return descriptors;
-    }, {});
-
-    Object.defineProperties(target, props);
-  });
-
-  return target;
+  return (
+    rect.top >= 0
+      && rect.left >= 0
+      && rect.bottom <= document.documentElement.clientHeight
+      && rect.right <= document.documentElement.clientWidth
+      && rect.height !== 0
+      && rect.width !== 0
+  );
 };

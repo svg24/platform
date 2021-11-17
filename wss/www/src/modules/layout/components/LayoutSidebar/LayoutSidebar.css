@@ -1,0 +1,73 @@
+@keyframes fade-sidebar-bg {
+  from {
+    @apply opacity-0;
+  }
+
+  to {
+    @apply opacity-30;
+  }
+}
+
+@keyframes slide-sidebar {
+  from {
+    margin-right: -100%;
+  }
+
+  to {
+    @apply mr-0;
+  }
+}
+
+.layout-sidebar {
+  @apply z-20 grid col-start-1 col-end-2 row-start-1 row-end-4;
+}
+
+.layout-sidebar::before {
+  @apply col-span-full row-span-full bg-neutral-600 opacity-30;
+  content: '';
+}
+
+.layout-root_sidebar-in .layout-sidebar::before {
+  animation: fade-sidebar-bg 0.3s forwards;
+}
+
+.layout-root_sidebar-out .layout-sidebar::before {
+  animation: fade-sidebar-bg 0.3s forwards reverse;
+}
+
+.layout-sidebar__inner {
+  @apply z-10 w-2/5 px-6 py-4 ml-auto overflow-x-hidden bg-white border-l-2 shadow-sm col-span-full row-span-full border-neutral-50;
+}
+
+.layout-root_sidebar-in .layout-sidebar__inner {
+  animation: slide-sidebar 0.3s forwards;
+}
+
+.layout-root_sidebar-out .layout-sidebar__inner {
+  animation: slide-sidebar 0.3s forwards reverse;
+}
+
+.layout-sidebar__container {
+  @apply flex items-center justify-center w-full mb-4 rounded-lg h-52;
+  background-image: url('../../../../assets/images/pattern.svg');
+}
+
+.layout-sidebar__container > svg {
+  @apply w-40 h-40;
+}
+
+.layout-sidebar__heading {
+  @apply mb-4 text-2xl font-bold;
+}
+
+.layout-sidebar__section:not(:last-of-type) {
+  @apply mb-4;
+}
+
+.layout-sidebar__section-heading {
+  @apply text-xs font-bold uppercase text-neutral-400 mb-2;
+}
+
+.layout-sidebar__section-btn {
+  @apply bg-neutral-100 px-2.5 py-0.5 rounded-md;
+}

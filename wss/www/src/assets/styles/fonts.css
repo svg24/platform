@@ -1,0 +1,29 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Chillax';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/Chillax-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Chillax';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/Chillax-Semibold.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Chillax';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Chillax-Bold.woff2') format('woff2');
+}
+
+:root {
+  @apply antialiased text-black;
+  font-family: Chillax;
+  font-weight: 500;
+}

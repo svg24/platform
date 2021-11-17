@@ -1,24 +1,22 @@
-import type { LogosStore as Store } from 'src/types';
-import { initBase } from 'src/utils';
-import {
-  FilterPage,
-  FilterSearch,
-  FilterSize,
-  FilterSortBy,
-  initFilter,
-} from './filter';
+import { initStore } from 'src/utils';
+import type { LogosStore as Store } from '../types';
+import { initBag } from './bag';
+import { initFilter } from './filter';
 import { initList } from './list';
+import { initSentinel } from './sentinel';
 
-const LogosStore = function (this: Store) {
-  initBase.call(this);
-  initList.call(this, this);
+export const LogosStore = new (function (this: Store) {
+  initStore.call(this);
   initFilter.call(this, {
-    page: new FilterPage({
+    initPage: 1,
+    page: {
       id: 'page',
       def: 1,
-    }),
-    search: new FilterSearch(this, { id: 'name' }),
-    size: new FilterSize({
+    },
+    search: {
+      id: 'name',
+    },
+    size: {
       id: 'size',
       name: 'Size',
       def: 'base',
@@ -32,8 +30,8 @@ const LogosStore = function (this: Store) {
         name: 'large',
         val: 'lg',
       }],
-    }),
-    sortBy: new FilterSortBy(this, {
+    },
+    sortBy: {
       id: 'sortBy',
       name: 'Sort by',
       def: 'date',
@@ -44,8 +42,9 @@ const LogosStore = function (this: Store) {
         name: 'name',
         val: 'name',
       }],
-    }),
+    },
   });
-} as any as { new (): Store };
-
-export default new LogosStore();
+  initList.call(this);
+  initSentinel.call(this);
+  initBag.call(this);
+} as any as { new (): Store })();

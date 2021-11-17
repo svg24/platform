@@ -1,0 +1,20 @@
+.layout-footer {
+  @apply flex px-6 py-2;
+  grid-area: footer;
+}
+
+.layout-footer__link {
+  @apply text-sm duration-100 text-neutral-400 hover:text-black;
+}
+
+.layout-footer__link:not(:last-of-type) {
+  @apply mr-2;
+}
+
+.layout-footer__link:last-of-type {
+  @apply mr-auto;
+}
+
+.layout-footer__pr {
+  @apply text-sm text-right text-neutral-400;
+}

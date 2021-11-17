@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
+  <pattern id="doodad" width="16" height="16" viewBox="0 0 40 40" patternUnits="userSpaceOnUse">
+    <rect fill="rgba(82, 82, 91,1)" width="100%" height="100%" />
+    <path fill="rgba(250, 250, 250,1)" d="M 20 20a 1 1 0 0 0 0 2a 1 1 0 0 0 0-2zM-10-10h 60v 60h-60z" />
+  </pattern>
+  <rect fill="url(#doodad)" height="200%" width="200%" />
+</svg>

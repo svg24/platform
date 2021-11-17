@@ -1,0 +1,7 @@
+.layout-root {
+  @apply grid h-screen overflow-hidden;
+  grid-template:
+    'header' min-content
+    'main' 1fr
+    'footer' min-content;
+}

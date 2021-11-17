@@ -1,8 +1,13 @@
-import type { LogosFilterPage, LogosFilterPageOptions } from 'src/types';
+import type { LogosFilterPage } from '../../types';
 
-export const FilterPage = function (
+export type FilterPageOptions = {
+  def: number;
+  id: string;
+};
+
+export const initFilterPage = function (
   this: LogosFilterPage,
-  opts: LogosFilterPageOptions,
+  opts: FilterPageOptions,
 ): void {
   this.id = opts.id;
   this.val = {
@@ -16,6 +21,4 @@ export const FilterPage = function (
   this.reset = () => {
     this.val.cur = this.val._def;
   };
-} as any as {
-  new (opts: LogosFilterPageOptions): LogosFilterPage;
 };

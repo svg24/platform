@@ -1,7 +1,12 @@
-import { computed, makeObservable, observable } from 'mobx';
-import type { LogosListResult, LogosStore } from 'src/types';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+} from 'mobx';
+import type { LogosListResult, LogosStore } from '../types';
 
-export function initList(this: LogosStore, store: LogosStore): void {
+export function initList(this: LogosStore): void {
   this.list = {
     _items: undefined,
 
@@ -27,34 +32,41 @@ export function initList(this: LogosStore, store: LogosStore): void {
       this._isMore = val;
     },
 
-    async upload() {
-      const res = await this.fetch();
-      this.isMore = res.isMore;
-
-      store.filter.params.page.next();
-      this.add(res.data);
+    updateIsMore(val) {
+      this.isMore = val;
     },
 
-    async reset() {
-      store.filter.params.page.reset();
+    upload: async () => {
+      const res = await this.list.fetch();
 
-      const res = await this.fetch();
-      this.isMore = res.isMore;
-
-      store.filter.params.page.next();
-      this.clear();
-      this.add(res.data);
+      this.list.updateIsMore(res.isMore);
+      this.filter.params.page.next();
+      this.list.add(res.data);
     },
 
-    async fetch() {
+    reset: async () => {
+      this.filter.params.page.reset();
+
+      const res = await this.list.fetch(this.filter.params.initPage);
+
+      this.list.updateIsMore(res.isMore);
+      this.filter.params.page.next();
+      this.list.clear();
+      this.list.add(res.data);
+    },
+
+    fetch: async (multiplier) => {
+      const url = [
+        this.filter.params.page,
+        this.filter.params.search,
+        this.filter.params.sortBy,
+      ].reduce((acc, cur) => (
+        cur.val.cur ? `${acc}&${cur.id}=${cur.val.cur}` : acc
+      ), '/api/logos/list?');
       const raw = await fetch(
-        [
-          store.filter.params.page,
-          store.filter.params.search,
-          store.filter.params.sortBy,
-        ].reduce((acc, cur) => (
-          cur.val.cur ? `${acc}&${cur.id}=${cur.val.cur}` : acc
-        ), '/api/logos/list?'),
+        multiplier
+          ? `${url}&multiplier=${multiplier}`
+          : url,
       );
       const res: LogosListResult = await raw.json();
 
@@ -66,12 +78,17 @@ export function initList(this: LogosStore, store: LogosStore): void {
     },
 
     add(data) {
-      this.items = [...this?.items ?? [], ...data];
+      this.items = [...this.items ?? [], ...data];
     },
   };
 
   makeObservable(this.list, {
+    _isMore: observable,
     _items: observable,
+    add: action,
+    clear: action,
+    isMore: computed,
     items: computed,
+    updateIsMore: action,
   });
 }

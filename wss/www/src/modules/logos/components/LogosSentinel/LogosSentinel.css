@@ -1,0 +1,23 @@
+.logos-sentinel {
+  @apply flex items-center justify-center invisible py-12 text-sm text-center text-neutral-400 gap-x-2;
+}
+
+.logos-sentinel_visible {
+  @apply visible;
+}
+
+.logos-sentinel_hidden {
+  @apply hidden;
+}
+
+.logos-sentinel__icon {
+  @apply w-4 h-4 animate-spin;
+}
+
+.logos-sentinel__icon > :first-child {
+  @apply opacity-25;
+}
+
+.logos-sentinel__icon > :last-child {
+  @apply opacity-75;
+}

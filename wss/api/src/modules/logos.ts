@@ -78,6 +78,7 @@ export class Logos {
       category?: string,
       page?: number,
       sortBy?: 'date' | 'name',
+      multiplier?: number,
     }
 
     const DEFAULT_SKIP = 0;
@@ -107,6 +108,9 @@ export class Logos {
               'date',
               'name',
             ],
+          },
+          multiplier: {
+            type: 'number',
           },
         },
         response: {
@@ -153,7 +157,9 @@ export class Logos {
         },
       },
       handler: async (req) => {
-        const limit = DEFAULT_LIMIT;
+        const limit = req.query.multiplier
+          ? DEFAULT_LIMIT * req.query.multiplier
+          : DEFAULT_LIMIT;
         const skip = req.query.page
           ? (req.query.page - 1) * limit
           : DEFAULT_SKIP;

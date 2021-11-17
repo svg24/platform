@@ -1,0 +1,24 @@
+.layout-header {
+  @apply flex justify-between px-6 py-4;
+  grid-area: header;
+}
+
+.layout-header__side:first-of-type {
+  @apply flex gap-x-4;
+}
+
+.layout-header__side:last-of-type {
+  @apply flex gap-x-1;
+}
+
+.layout-header__container {
+  @apply relative;
+}
+
+.layout-header__btn {
+  @apply p-1.5 rounded-lg text-neutral-400 hover:text-black focus:text-black duration-100;
+}
+
+.layout-header__icon {
+  @apply w-5 h-5;
+}

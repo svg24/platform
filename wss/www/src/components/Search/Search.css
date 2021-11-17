@@ -1,0 +1,26 @@
+.search {
+  @apply flex mr-auto duration-100 rounded-lg bg-neutral-50 w-72;
+}
+
+.search:focus-within {
+  @apply w-96;
+}
+
+.search__field {
+  @apply w-full bg-transparent px-3 rounded-lg py-1.5 text-sm placeholder-neutral-400 overflow-ellipsis;
+}
+
+.search__field::-webkit-search-decoration,
+.search__field::-webkit-search-cancel-button,
+.search__field::-webkit-search-results-button,
+.search__field::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+.search__key {
+  @apply px-3 py-1.5 text-sm pointer-events-none text-neutral-400;
+}
+
+.search:focus-within .search__key {
+  @apply hidden;
+}

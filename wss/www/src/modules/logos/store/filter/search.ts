@@ -1,18 +1,22 @@
-import { computed, makeObservable, observable } from 'mobx';
-import type {
-  LogosFilterSearch,
-  LogosFilterSearchOptions,
-  LogosStore,
-} from 'src/types';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+} from 'mobx';
 import { debounce, escapeStr } from 'src/utils';
+import type { LogosStore } from '../../types';
 
-export const FilterSearch = function (
-  this: LogosFilterSearch,
-  store: LogosStore,
-  opts: LogosFilterSearchOptions,
+export type FilterSearchOptions = {
+  id: string;
+};
+
+export const initFilterSearch = function (
+  this: LogosStore,
+  opts: FilterSearchOptions,
 ): void {
-  this.id = opts.id;
-  this.val = {
+  this.filter.params.search.id = opts.id;
+  this.filter.params.search.val = {
     _prev: undefined,
     _field: '',
     cur: undefined,
@@ -24,12 +28,12 @@ export const FilterSearch = function (
     },
   };
 
-  this.process = (val) => {
-    this.val.field = val;
+  this.filter.params.search.process = (val) => {
+    this.filter.params.search.val.field = val;
 
     debounce(() => {
-      const prev = this.val._prev;
-      const { isItems } = store.list;
+      const prev = this.filter.params.search.val._prev;
+      const { isItems } = this.list;
       const trimmed = val.trim();
 
       if (prev === trimmed && val.match(/\s*$/)?.[0]?.length !== 1) return;
@@ -37,36 +41,35 @@ export const FilterSearch = function (
       if (!prev && isItems && !trimmed) return;
 
       if (!trimmed) {
-        this.reset();
+        this.filter.params.search.reset();
       } else {
-        this.val.cur = escapeStr(val);
+        this.filter.params.search.val.cur = escapeStr(val);
       }
 
-      store.list.reset();
+      this.list.reset();
 
-      this.val._prev = trimmed;
-    }, 100)();
+      this.filter.params.search.val._prev = trimmed;
+    }, 300)();
   };
 
   Object.defineProperties(this, {
     isActive: {
-      get: () => !!this.val.field,
+      get: () => !!this.filter.params.search.val.field,
       enumerable: true,
     },
   });
 
-  this.reset = () => {
-    this.val.cur = undefined;
-    this.val.field = '';
+  this.filter.params.search.reset = () => {
+    this.filter.params.search.val.cur = undefined;
+    this.filter.params.search.val.field = '';
   };
 
-  makeObservable(this.val, {
+  makeObservable(this.filter.params.search, {
+    process: action,
+    reset: action,
+  });
+  makeObservable(this.filter.params.search.val, {
     _field: observable,
     field: computed,
   });
-} as any as {
-  new (
-    store: LogosStore,
-    opts: LogosFilterSearchOptions,
-  ): LogosFilterSearch;
 };

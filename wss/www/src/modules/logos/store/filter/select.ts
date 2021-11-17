@@ -1,9 +1,24 @@
-import { computed, makeObservable, observable } from 'mobx';
-import type { LogosFilterSelect, LogosFilterSelectOptions } from 'src/types';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+} from 'mobx';
+import type { LogosFilterSelect } from '../../types';
 
-export const FilterSelect = function (
+export type FilterSelectOptions = {
+  def: string;
+  id: string;
+  name: string;
+  opts: {
+    name: string;
+    val: string;
+  }[];
+};
+
+export const initFilterSelect = function (
   this: LogosFilterSelect,
-  opts: LogosFilterSelectOptions,
+  opts: FilterSelectOptions,
 ): void {
   this.id = opts.id;
   this.name = opts.name;
@@ -33,10 +48,12 @@ export const FilterSelect = function (
     this.val.cur = this.val._def;
   };
 
+  makeObservable(this, {
+    onChange: action,
+    reset: action,
+  });
   makeObservable(this.val, {
     _cur: observable,
     cur: computed,
   });
-} as any as {
-  new (opts: LogosFilterSelectOptions): LogosFilterSelect;
 };

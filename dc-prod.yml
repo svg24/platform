@@ -10,7 +10,7 @@ services:
       - svg24_certbot-etc:/etc/letsencrypt
       - svg24_certbot-lib:/var/lib/letsencrypt
     ports:
-      - 443:443
+      - '443:443'
 
 volumes:
   dhparam:

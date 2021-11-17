@@ -1,26 +1,21 @@
-import type {
-  LogosFilterSelect,
-  LogosFilterSelectOptions,
-  LogosStore,
-} from 'src/types';
-import { deepObjectAssign } from 'src/utils';
-import { FilterSelect } from './select';
+import type { LogosFilterSelect, LogosStore } from '../../types';
+import type { FilterSelectOptions } from './select';
+import { initFilterSelect } from './select';
 
-export const FilterSortBy = function (
-  this: LogosFilterSelect,
-  store: LogosStore,
-  opts: LogosFilterSelectOptions,
+export type FilterSortByOptions = FilterSelectOptions;
+
+export const initFilterSortBy = function (
+  this: LogosStore,
+  opts: FilterSortByOptions,
 ): void {
-  deepObjectAssign(this, new FilterSelect(opts));
+  initFilterSelect.call(this.filter.params.sortBy, opts);
+  Object.defineProperties(this, {
+    onChange: <{ value: LogosFilterSelect['onChange'] }>{
+      value: (val) => {
+        this.filter.params.sortBy.val.cur = val;
 
-  this.onChange = (val) => {
-    this.val.cur = val;
-
-    store.list.reset();
-  };
-} as any as {
-  new (
-    store: LogosStore,
-    opts: LogosFilterSelectOptions,
-  ): LogosFilterSelect;
+        this.list.reset();
+      },
+    },
+  });
 };
