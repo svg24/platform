@@ -57,7 +57,15 @@
 }
 
 .layout-sidebar__heading {
-  @apply mb-4 text-2xl font-bold;
+  @apply flex items-start mb-4 text-2xl font-bold gap-x-1;
+}
+
+.layout-sidebar__src {
+  @apply duration-100 text-neutral-400 hover:text-black focus:text-black;
+}
+
+.layout-sidebar__icon {
+  @apply w-4 h-4;
 }
 
 .layout-sidebar__section:not(:last-of-type) {
@@ -65,7 +73,7 @@
 }
 
 .layout-sidebar__section-heading {
-  @apply text-xs font-bold uppercase text-neutral-400 mb-2;
+  @apply mb-2 text-xs font-bold uppercase text-neutral-400;
 }
 
 .layout-sidebar__section-btn {

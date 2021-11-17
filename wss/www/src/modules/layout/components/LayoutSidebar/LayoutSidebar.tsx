@@ -1,3 +1,4 @@
+import { ExternalLinkIcon } from '@heroicons/react/outline';
 import { useEffect, useRef } from 'react';
 import { LogosStore } from 'src/modules/logos';
 import { LayoutStore } from '../../store';
@@ -61,6 +62,16 @@ export const LayoutSidebar = (): JSX.Element => {
         />
         <h1 className="layout-sidebar__heading">
           {item.name}
+          <a
+            aria-label={`Go to ${item.name} website`}
+            className="layout-sidebar__src"
+            href={item.src}
+          >
+            <ExternalLinkIcon
+              aria-hidden="true"
+              className="layout-sidebar__icon"
+            />
+          </a>
         </h1>
         <section className="layout-sidebar__section">
           <h2 className="layout-sidebar__section-heading">
