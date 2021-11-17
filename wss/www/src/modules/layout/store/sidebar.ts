@@ -13,7 +13,7 @@ export const initSidebar = function (this: LayoutStore): void {
     get isVisible() {
       return this._isVisible;
     },
-    set isVisible(val: boolean) {
+    set isVisible(val) {
       this._isVisible = val;
     },
     show() {
