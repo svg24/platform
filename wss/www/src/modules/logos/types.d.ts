@@ -13,15 +13,11 @@ export interface LogosStore extends Store<LogosStore> {
  * Bag
  */
 
-interface LogosStoreBag {
-  _isOpen: boolean;
+type LogosStoreBag = {
   add: (item: LogosItem) => void;
   clear: () => void;
-  close: () => void;
-  isOpen: LogosStoreBag['_isOpen'];
   items: LogosItem[] | undefined;
-  open: () => void;
-}
+};
 
 /**
  * Filter
