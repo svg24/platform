@@ -2,27 +2,27 @@ import type { RefObject } from 'react';
 import type { Store } from 'src/types/store';
 
 export interface LayoutStore extends Store<LayoutStore> {
-  nav: LayoutElementTransitions;
-  root: LayoutRoot;
+  nav: LayoutStoreNav;
+  root: LayoutStoreRoot;
   sidebar: LayoutStoreSidebar;
 }
 
 /**
- * nav
+ * Nav
  */
 
-export type LayoutElementTransitions = {
+type LayoutStoreNav = {
   _isVisible: boolean;
   hide: () => void;
-  isVisible: LayoutElementTransitions['_isVisible'];
+  isVisible: LayoutStoreNav['_isVisible'];
   show: () => void;
 };
 
 /**
- * root
+ * Root
  */
 
-export type LayoutRoot = {
+type LayoutStoreRoot = {
   nav: {
     hide: () => Promise<void>;
     show: () => void;
