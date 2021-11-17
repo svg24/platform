@@ -1,4 +1,8 @@
+import { observer } from 'mobx-react-lite';
+import { LogosStore } from 'src/modules/logos';
+
 export const LayoutFooter = (): JSX.Element => {
+  const { ctx } = LogosStore;
   const links = [{
     id: 'policy',
     label: 'Policy',
@@ -20,12 +24,28 @@ export const LayoutFooter = (): JSX.Element => {
       {link.label}
     </a>
   ));
+  const info = {
+    showed: observer(() => (
+      <>
+        {ctx.list.items?.length || 0}
+      </>
+    )),
+    total: observer(() => (
+      <>
+        {ctx.info.total}
+      </>
+    )),
+  };
 
   return (
     <footer className="layout-footer">
       {links}
-      <p className="layout-footer__pr">
-        total logos / showed logos
+      <p className="layout-footer__info">
+        <info.showed />
+        {' '}
+        /
+        {' '}
+        <info.total />
       </p>
     </footer>
   );

@@ -2,11 +2,13 @@ import { initStore } from 'src/utils';
 import type { LogosStore as Store } from '../types';
 import { initBag } from './bag';
 import { initFilter } from './filter';
+import { initInfo } from './info';
 import { initList } from './list';
 import { initSentinel } from './sentinel';
 
 export const LogosStore = new (function (this: Store) {
   initStore.call(this);
+  initInfo.call(this);
   initFilter.call(this, {
     initPage: 1,
     page: {

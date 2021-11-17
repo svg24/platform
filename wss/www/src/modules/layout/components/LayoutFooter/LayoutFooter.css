@@ -15,6 +15,6 @@
   @apply mr-auto;
 }
 
-.layout-footer__pr {
+.layout-footer__info {
   @apply text-sm text-right text-neutral-400;
 }

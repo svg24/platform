@@ -14,6 +14,8 @@ export {
 export const Logos = (): JSX.Element => {
   const { ctx } = LogosStore;
 
+  ctx.info.fetch();
+
   const noFound = {
     el: observer(() => (
       ctx.list.isItems || ctx.list.isMore

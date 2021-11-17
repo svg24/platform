@@ -4,6 +4,7 @@ import type { Store } from 'src/types/store';
 export interface LogosStore extends Store<LogosStore> {
   bag: LogosStoreBag;
   filter: LogosStoreFilter;
+  info: LogosStoreInfo;
   list: LogosStoreList;
   sentinel: LogosStoreSentinel;
 }
@@ -78,6 +79,16 @@ export type LogosFilterSelect = {
     _def: string;
     cur: LogosFilterSelect['val']['_cur'];
   };
+};
+
+/**
+ * Info
+ */
+
+type LogosStoreInfo = {
+  _total: number;
+  fetch: () => Promise<void>;
+  total: LogosStoreInfo['_total'];
 };
 
 /**
