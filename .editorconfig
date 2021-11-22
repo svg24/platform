@@ -8,8 +8,8 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[Makefile]
+[nginx/*]
 indent_style = tab
 
-[nginx/*]
+[Makefile]
 indent_style = tab
