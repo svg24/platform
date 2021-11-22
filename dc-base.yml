@@ -7,7 +7,7 @@ services:
       target: db
       args:
         - DB_COLLECTION=logos
-        - DB_TARBALL=https://github.com/vanyauhalin/svg24/tarball/db
+        - DB_TARBALL=https://github.com/svg24/platform/tarball/db
     container_name: svg24-db
     restart: unless-stopped
     networks:
