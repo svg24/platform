@@ -9,13 +9,13 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-lib:/var/lib/letsencrypt
-      - svg24_www-srv:/srv/www
+      - svg24_board-srv:/srv/board
     depends_on:
       - nginx
-    command: certonly --webroot --webroot-path=/srv/www --email vanyauhalin@gmail.com --agree-tos --no-eff-email -d svg24.dev -d www.svg24.dev
+    command: certonly --webroot --webroot-path=/srv/board --email vanyauhalin@gmail.com --agree-tos --no-eff-email -d svg24.dev -d board.svg24.dev
 
 volumes:
   certbot-etc:
   certbot-lib:
-  svg24_www-srv:
+  svg24_board-srv:
     external: true

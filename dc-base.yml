@@ -38,11 +38,11 @@ services:
       - DB_PORT=27017
       - DB_USER=app
 
-  www:
-    container_name: svg24-www
+  board:
+    container_name: svg24-board
     networks:
       nginx:
-    working_dir: /srv/www
+    working_dir: /srv/board
 
   nginx:
     build:
@@ -58,7 +58,7 @@ services:
       nginx:
     depends_on:
       - api
-      - www
+      - board
     command: nginx -g 'daemon off;'
 
 networks:

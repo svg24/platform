@@ -10,13 +10,13 @@ export default defineConfig({
     },
   },
   server: {
-    host: process.env.WWW_HOST,
-    port: parseInt(process.env.WWW_PORT, 10),
+    host: process.env.BOARD_HOST,
+    port: parseInt(process.env.BOARD_PORT, 10),
     hmr: {
-      host: process.env.WWW_HMR_HOST,
-      path: process.env.WWW_HMR_PATH,
-      port: parseInt(process.env.WWW_HMR_PORT, 10),
-      protocol: process.env.WWW_HMR_PROTOCOL,
+      host: process.env.BOARD_HMR_HOST,
+      path: process.env.BOARD_HMR_PATH,
+      port: parseInt(process.env.BOARD_HMR_PORT, 10),
+      protocol: process.env.BOARD_HMR_PROTOCOL,
     },
   },
 });

@@ -92,14 +92,14 @@ RUN \
   && chown -R node:node .
 
 #
-# WWW deps
+# Board deps
 #
 
-FROM node:16-alpine3.14 as www-deps
+FROM node:16-alpine3.14 as board-deps
 ARG NODE_ENV
-WORKDIR /srv/www
+WORKDIR /srv/board
 
-COPY wss/www .
+COPY wss/board .
 RUN \
   if [ "$NODE_ENV" = "production" ]; \
     then \
@@ -112,14 +112,14 @@ RUN \
   && chown -R node:node .
 
 #
-# WWW prod
+# Board prod
 #
 
-FROM base as www-prod
+FROM base as board-prod
 ARG NODE_ENV
-WORKDIR /srv/www
+WORKDIR /srv/board
 
-COPY --from=www-deps /srv/www/dist .
+COPY --from=board-deps /srv/board/dist .
 RUN chown -R $USER_NAME:$USER_NAME .
 
 #

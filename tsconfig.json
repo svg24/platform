@@ -8,6 +8,6 @@
   "references": [{
     "path": "wss/api"
   }, {
-    "path": "wss/www"
+    "path": "wss/board"
   }]
 }

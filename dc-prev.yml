@@ -12,15 +12,15 @@ services:
     environment:
       - NODE_ENV=production
 
-  www:
+  board:
     build:
       context: .
-      target: www-prod
+      target: board-prod
       args:
         - NODE_ENV=production
     user: app
     volumes:
-      - www-srv:/srv/www
+      - board-srv:/srv/board
     environment:
       - NODE_ENV=production
 
@@ -29,7 +29,7 @@ services:
       args:
         - IS_PREV=true
     volumes:
-      - www-srv:/srv/www
+      - board-srv:/srv/board
 
 volumes:
-  www-srv:
+  board-srv:
