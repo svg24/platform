@@ -13,8 +13,7 @@ RUN \
     && curl -LSso db.tar.gz $DB_TARBALL \
     && mkdir db \
     && tar xf db.tar.gz -C db --strip-components 1 \
-    && for cl in $DB_COLLECTION; do \
-      echo $(jq -r '.[]' db/$cl/$cl.json) > db/$cl/$cl.json; done
+    && echo $(jq -r '.[]' db/$DB_COLLECTION) > db/$DB_COLLECTION
 
 #
 # DB
@@ -26,8 +25,6 @@ ARG DB_TARBALL
 WORKDIR /srv/db
 
 COPY --from=db-deps /srv/db .
-COPY ci/db-init.sh init.sh
-RUN chmod +x init.sh
 
 #
 # Base

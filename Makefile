@@ -16,8 +16,11 @@ one-off:
 	docker-compose \
 		-f dc-base.yml -f dc-prev.yml -f dc-prod.yml -f dc-one-off.yml up -d
 
+rs-dev:
+	docker-compose -f dc-base.yml -f dc-prev.yml restart
+
 clear:
-	docker image rm svg24_api svg24_db svg24_nginx svg24_board
+	docker image rm platform_api platform_db platform_nginx platform_board
 
 clear-dev:
 	docker-compose -f dc-base.yml -f dc-dev.yml down

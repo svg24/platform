@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
-import { DB, server, Server } from '../core';
+import {
+  DB,
+  db,
+  server,
+  Server,
+} from '../core';
 
 interface Logo {
   name: string;
@@ -32,13 +37,13 @@ export class Logos {
       required: true,
     },
   }, {
-    collection: 'logos',
+    collection: db.opts.col,
   })
 
   #model = mongoose.model<Logo>('Logo', this.#schema)
 
   opts = {
-    prefix: this.#model.collection.name,
+    prefix: 'logos',
   }
 
   plugin = async (inst: typeof server.inst): Promise<void> => {
@@ -175,8 +180,7 @@ export class Logos {
           },
         });
         const data = await Promise.all(items.map(async (item) => {
-          const { name } = this.#model.collection;
-          const content = await DB.getContent(name, item.slug);
+          const content = await DB.getContent(item.slug);
 
           return Object.assign(item, { content });
         }));
