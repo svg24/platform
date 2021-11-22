@@ -11,8 +11,12 @@
   @apply flex gap-x-1;
 }
 
+.layout-header__logo {
+  @apply w-8 h-8;
+}
+
 .layout-header__container {
-  @apply relative;
+  @apply relative flex;
 }
 
 .layout-header__btn {

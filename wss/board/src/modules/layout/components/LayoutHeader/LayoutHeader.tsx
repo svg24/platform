@@ -65,6 +65,11 @@ export const LayoutHeader = (): JSX.Element => {
   return (
     <header className="layout-header">
       <div className="layout-header__side">
+        <img
+          alt="Logo"
+          className="layout-header__logo"
+          src="https://raw.githubusercontent.com/svg24/.github/main/logo.svg"
+        />
         <LayoutHeaderButton
           icon={nav.icon}
           onClick={nav.onClick}
