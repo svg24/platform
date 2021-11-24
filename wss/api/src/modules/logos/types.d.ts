@@ -1,18 +1,16 @@
 import type { Model, Schema } from 'mongoose';
 import type { server } from '../../core';
 
-export interface List {
-  item: {
-    readonly model: Model<ListItem>;
-    schema: Schema<ListItem>;
-  };
+export interface Logos {
+  model: Model<LogosItem>;
   opts: {
     prefix: string;
   };
   plugin: (inst: typeof server.inst) => Promise<void>;
+  schema: Schema<LogosItem>;
 }
 
-export type ListItem = {
+export type LogosItem = {
   category: string;
   company: string;
   date: string;
@@ -21,7 +19,7 @@ export type ListItem = {
   src: string;
 };
 
-export type ListIndexQuery = {
+export type LogosIndexQuery = {
   category?: string;
   company?: string;
   multiplier?: number;

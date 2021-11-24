@@ -1,3 +1,3 @@
-import { list } from './list';
+import { logos } from './logos';
 
-export { list };
+export { logos };
