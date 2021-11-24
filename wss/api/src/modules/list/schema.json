@@ -1,0 +1,114 @@
+{
+  "method": "GET",
+  "url": "/list",
+  "schema": {
+    "querystring": {
+      "category": {
+        "type": "string"
+      },
+      "company": {
+        "type": "string"
+      },
+      "multiplier": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "page": {
+        "type": "string"
+      },
+      "sortBy": {
+        "type": "string",
+        "enum": [
+          "date",
+          "name"
+        ]
+      }
+    },
+    "response": {
+      "200": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string"
+              },
+              "company": {
+                "type": "string"
+              },
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "packages": {
+                      "type": "object",
+                      "properties": {
+                        "react": {
+                          "type": "string"
+                        },
+                        "vue": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "snippets": {
+                      "type": "object",
+                      "properties": {
+                        "vanilla": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "date": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "src": {
+                "type": "string"
+              }
+            }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "length": {
+                "type": "object",
+                "properties": {
+                  "current": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                }
+              },
+              "page": {
+                "type": "object",
+                "properties": {
+                  "current": {
+                    "type": "number"
+                  },
+                  "isNext": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

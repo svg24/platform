@@ -1,7 +1,3 @@
-import home from './home';
-import logos from './logos';
+import { list } from './list';
 
-export {
-  home,
-  logos,
-};
+export { list };
