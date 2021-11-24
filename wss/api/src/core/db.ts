@@ -1,35 +1,44 @@
 import child from 'child_process';
-import fs from 'fs';
-import mongoose from 'mongoose';
+import { promises as fs } from 'fs';
 import util from 'util';
+import mongoose from 'mongoose';
+import { toCamelCaseFromSvg } from 'src/utils';
 
-export class DB {
-  opts = {
-    uri: `mongodb://db:${process.env.DB_PORT}/?authSource=admin`,
+type DBContent = {
+  packages: {
+    react: string;
+    vue: string;
+  };
+  snippets: {
+    vanilla: string;
+  };
+}[];
+
+interface DB {
+  connect: () => Promise<void>;
+  getContent: (id: string) => Promise<DBContent | []>;
+  init: () => Promise<void>;
+  opts: {
+    col: string;
+    file: string;
+    name: string;
+    pass: string;
+    uri: string;
+    user: string;
+  };
+}
+
+export const db = new (function (this: DB) {
+  this.opts = {
     col: process.env.DB_COLLECTION.replace('.json', ''),
     file: process.env.DB_COLLECTION,
     name: process.env.DB_NAME,
     pass: process.env.DB_PASS,
+    uri: `mongodb://db:${process.env.DB_PORT}/?authSource=admin`,
     user: process.env.DB_USER,
-  }
+  };
 
-  async connect(): Promise<void> {
-    try {
-      await mongoose.connect(this.opts.uri, {
-        dbName: this.opts.name,
-        user: this.opts.user,
-        pass: this.opts.pass,
-      });
-      await this.init();
-    } catch (err) {
-      console.error(err);
-      setTimeout(() => {
-        this.connect();
-      }, 3000);
-    }
-  }
-
-  async init(): Promise<void> {
+  this.init = async () => {
     try {
       await util.promisify(child.exec)(`
         mongoimport \
@@ -46,25 +55,51 @@ export class DB {
       console.error(err);
       process.exit(0);
     }
-  }
+  };
 
-  static async getContent(slug: string): Promise<string[] | void> {
+  this.connect = async () => {
     try {
-      const root = `/srv/db/packages/vanilla/${slug}`;
-      const items = await fs.promises.readdir(root);
-      const content = await Promise.all(items.map(async (item) => {
-        const buf = await fs.promises.readFile(`${root}/${item}`);
+      await mongoose.connect(this.opts.uri, {
+        dbName: this.opts.name,
+        user: this.opts.user,
+        pass: this.opts.pass,
+      });
+      await this.init();
+    } catch (err) {
+      console.error(err);
+      setTimeout(() => {
+        this.connect();
+      }, 3000);
+    }
+  };
 
-        return buf.toString();
+  this.getContent = async (id) => {
+    try {
+      const root = `/srv/db/packages/vanilla/${id}`;
+      const dirents = await fs.readdir(root, { withFileTypes: true });
+      const content: DBContent = [];
+
+      await Promise.all(dirents.map(async (dirent) => {
+        if (dirent.isSymbolicLink()) return;
+
+        const buf = await fs.readFile(`${root}/${dirent.name}`);
+        const name = toCamelCaseFromSvg(dirent.name);
+
+        content.push({
+          packages: {
+            react: `import { ${name} } from '@svg24/react';`,
+            vue: `import { ${name} } from '@svg24/vue';`,
+          },
+          snippets: {
+            vanilla: buf.toString(),
+          },
+        });
       }));
 
       return content;
     } catch (err) {
-      console.log(err);
-
-      return undefined;
+      console.error(err);
+      return [];
     }
-  }
-}
-
-export default new DB();
+  };
+} as any as { new (): DB })();
