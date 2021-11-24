@@ -3,7 +3,6 @@
 #
 
 FROM alpine:3.14 as db-deps
-ARG DB_COLLECTION
 ARG DB_TARBALL
 
 RUN \
@@ -13,14 +12,15 @@ RUN \
     && curl -LSso db.tar.gz $DB_TARBALL \
     && mkdir db \
     && tar xf db.tar.gz -C db --strip-components 1 \
-    && echo $(jq -r '.[]' db/data/$DB_COLLECTION) > db/data/$DB_COLLECTION
+    && cd db/data \
+      && for json in $(find . ! -path .); do \
+        echo $(jq -r '.[]' $json) > $json; done
 
 #
 # DB
 #
 
 FROM mongo:5.0 as db
-ARG DB_COLLECTION
 ARG DB_TARBALL
 WORKDIR /srv/db
 

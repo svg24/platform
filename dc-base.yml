@@ -6,7 +6,6 @@ services:
       context: .
       target: db
       args:
-        - DB_COLLECTION=collection.json
         - DB_TARBALL=https://github.com/svg24/collection/tarball/main
     container_name: svg24-db
     restart: unless-stopped
@@ -33,7 +32,6 @@ services:
     environment:
       - API_HOST=0.0.0.0
       - API_PORT=3000
-      - DB_COLLECTION=collection.json
       - DB_NAME=svg24
       - DB_PASS=app
       - DB_PORT=27017

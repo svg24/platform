@@ -19,8 +19,6 @@ interface DB {
   getContent: (id: string) => Promise<DBContent | []>;
   init: () => Promise<void>;
   opts: {
-    col: string;
-    file: string;
     name: string;
     pass: string;
     uri: string;
@@ -30,8 +28,6 @@ interface DB {
 
 export const db = new (function (this: DB) {
   this.opts = {
-    col: process.env.DB_COLLECTION.replace('.json', ''),
-    file: process.env.DB_COLLECTION,
     name: process.env.DB_NAME,
     pass: process.env.DB_PASS,
     uri: `mongodb://db:${process.env.DB_PORT}/?authSource=admin`,
@@ -40,17 +36,20 @@ export const db = new (function (this: DB) {
 
   this.init = async () => {
     try {
-      await util.promisify(child.exec)(`
-        mongoimport \
-          --host db \
-          --authenticationDatabase admin \
-          --username ${this.opts.user} \
-          --password ${this.opts.pass} \
-          --db ${this.opts.name} \
-          --collection ${this.opts.col} \
-          --file /srv/db/data/${this.opts.file} \
-          --drop;
-      `);
+      await Promise.all(['categories.json, companies.json, logos.json']
+        .map(async (file) => {
+          await util.promisify(child.exec)(`
+            mongoimport \
+              --host db \
+              --authenticationDatabase admin \
+              --username ${this.opts.user} \
+              --password ${this.opts.pass} \
+              --db ${this.opts.name} \
+              --collection ${file.replace('.json', '')} \
+              --file /srv/db/data/${file} \
+              --drop;
+          `);
+        }));
     } catch (err) {
       console.error(err);
       process.exit(0);
