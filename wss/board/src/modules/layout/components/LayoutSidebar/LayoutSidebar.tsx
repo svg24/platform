@@ -44,7 +44,7 @@ export const LayoutSidebar = (): JSX.Element => {
 
       Object.assign(link, {
         href: window.URL.createObjectURL(blob),
-        download: `${item.slug}.svg`,
+        download: `${item.id}.svg`,
       });
 
       link.click();

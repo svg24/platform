@@ -11,7 +11,7 @@ import { initFilterSortBy } from './sort-by';
 export function initFilter(
   this: LogosStore,
   opts: {
-    initPage: LogosFilterParameters['initPage'];
+    multiplier: LogosFilterParameters['multiplier'];
     page: FilterPageOptions;
     search: FilterSearchOptions;
     size: FilterSizeOptions;
@@ -22,7 +22,7 @@ export function initFilter(
     filter: {
       value: {
         params: {
-          initPage: opts.initPage,
+          multiplier: opts.multiplier,
           page: {},
           search: {},
           size: {},

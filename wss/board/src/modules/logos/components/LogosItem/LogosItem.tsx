@@ -1,14 +1,14 @@
 import { useRef, useState } from 'react';
+import type { LogosDataItem } from 'src/plugins/api';
 import { LayoutStore } from '../../../layout';
 import { LogosStore } from '../../store';
-import type { LogosItem as Item } from '../../types';
 
-export const LogosItem = ({ item }: { item: Item }): JSX.Element => {
+export const LogosItem = ({ item }: { item: LogosDataItem }): JSX.Element => {
   const layoutCtx = LayoutStore.ctx;
   const logosCtx = LogosStore.ctx;
 
   const content = {
-    _html: useState<string>(item.content[0] || ''),
+    _html: useState<string>(item.content[0]?.snippets.vanilla || ''),
     get html() {
       return content._html[0];
     },

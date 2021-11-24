@@ -51,7 +51,7 @@ export const Logos = (): JSX.Element => {
 
         list.obs.create().then(() => {
           check().then((res) => {
-            ctx.filter.params.initPage = res;
+            ctx.filter.params.multiplier = res;
           });
         });
       }, []);
@@ -90,7 +90,7 @@ export const Logos = (): JSX.Element => {
             {ctx.list.items.map((item) => (
               <LogosItem
                 item={item}
-                key={item.slug}
+                key={item.id}
               />
             ))}
           </LogosList>

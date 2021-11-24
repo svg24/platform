@@ -10,7 +10,7 @@ export const LogosStore = new (function (this: Store) {
   initStore.call(this);
   initInfo.call(this);
   initFilter.call(this, {
-    initPage: 1,
+    multiplier: 1,
     page: {
       id: 'page',
       def: 1,

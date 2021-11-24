@@ -4,7 +4,8 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import type { LogosListResult, LogosStore } from '../types';
+import { api } from 'src/plugins/api';
+import type { LogosStore } from '../types';
 
 export function initList(this: LogosStore): void {
   this.list = {
@@ -39,7 +40,7 @@ export function initList(this: LogosStore): void {
     upload: async () => {
       const res = await this.list.fetch();
 
-      this.list.updateIsMore(res.isMore);
+      this.list.updateIsMore(res.meta.page.isNext);
       this.filter.params.page.next();
       this.list.add(res.data);
     },
@@ -47,28 +48,24 @@ export function initList(this: LogosStore): void {
     reset: async () => {
       this.filter.params.page.reset();
 
-      const res = await this.list.fetch(this.filter.params.initPage);
+      const res = await this.list.fetch(this.filter.params.multiplier);
 
-      this.list.updateIsMore(res.isMore);
+      this.list.updateIsMore(res.meta.page.isNext);
       this.filter.params.page.next();
       this.list.clear();
       this.list.add(res.data);
     },
 
     fetch: async (multiplier) => {
-      const url = [
-        this.filter.params.page,
-        this.filter.params.search,
-        this.filter.params.sortBy,
-      ].reduce((acc, cur) => (
-        cur.val.cur ? `${acc}&${cur.id}=${cur.val.cur}` : acc
-      ), '/api/logos/list?');
-      const raw = await fetch(
-        multiplier
-          ? `${url}&multiplier=${multiplier}`
-          : url,
-      );
-      const res: LogosListResult = await raw.json();
+      const name = this.filter.params.search.val.cur;
+      const page = this.filter.params.page.val.cur;
+      const sortBy = this.filter.params.sortBy.val.cur;
+      const res = api.list({
+        ...multiplier ? { multiplier } : {},
+        ...name ? { name } : {},
+        ...page ? { page } : {},
+        ...sortBy ? { sortBy } : {},
+      });
 
       return res;
     },
