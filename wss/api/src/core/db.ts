@@ -2,7 +2,7 @@ import child from 'child_process';
 import { promises as fs } from 'fs';
 import util from 'util';
 import mongoose from 'mongoose';
-import { toCamelCaseFromSvg } from 'src/utils';
+import { toCamelCaseFromSvg } from '../utils';
 
 type DBContent = {
   packages: {
@@ -48,7 +48,7 @@ export const db = new (function (this: DB) {
           --password ${this.opts.pass} \
           --db ${this.opts.name} \
           --collection ${this.opts.col} \
-          --file /srv/db/${this.opts.file} \
+          --file /srv/db/data/${this.opts.file} \
           --drop;
       `);
     } catch (err) {

@@ -13,7 +13,7 @@ RUN \
     && curl -LSso db.tar.gz $DB_TARBALL \
     && mkdir db \
     && tar xf db.tar.gz -C db --strip-components 1 \
-    && echo $(jq -r '.[]' db/$DB_COLLECTION) > db/$DB_COLLECTION
+    && echo $(jq -r '.[]' db/data/$DB_COLLECTION) > db/data/$DB_COLLECTION
 
 #
 # DB

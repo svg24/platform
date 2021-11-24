@@ -5,5 +5,5 @@ db.connect();
 server.listen();
 
 Object.values(modules).forEach((module) => {
-  server.inst.register(module.plugin);
+  server.inst.register(module.plugin, module.opts);
 });
