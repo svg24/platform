@@ -33,17 +33,20 @@ export function addIndex(this: Logos, inst: typeof server.inst): void {
         sort: { [sortBy || DEFAULT_SORT_BY]: DEFAULT_SORT_METHOD },
       };
 
-      const current = options.skip + options.limit;
-      const total = await this.model.find(filter).count();
+      const lengthCurrent = options.skip + options.limit;
+      const lengthTotal = await this.model.find(filter).count();
       const length = {
-        total,
-        current: current > total ? total : current,
+        total: lengthTotal,
+        current: lengthCurrent > lengthTotal ? lengthTotal : lengthCurrent,
       };
+      const pageIsNext = length.total - length.current > 0;
       const meta = {
         length,
         page: {
-          current: Math.ceil(length.current / DEFAULT_LIMIT),
-          isNext: length.total - length.current > 0,
+          isNext: pageIsNext,
+          next: pageIsNext
+            ? Math.ceil(length.current / DEFAULT_LIMIT) + 1
+            : null,
         },
       };
 

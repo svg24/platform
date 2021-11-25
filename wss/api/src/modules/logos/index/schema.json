@@ -97,10 +97,10 @@
               "page": {
                 "type": "object",
                 "properties": {
-                  "current": {
-                    "type": "number"
-                  },
                   "isNext": {
+                    "type": "boolean"
+                  },
+                  "next": {
                     "type": "number"
                   }
                 }
