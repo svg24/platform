@@ -9,7 +9,7 @@ export const initFilterSortBy = function (
   opts: FilterSortByOptions,
 ): void {
   initFilterSelect.call(this.filter.params.sortBy, opts);
-  Object.defineProperties(this, {
+  Object.defineProperties(this.filter.params.sortBy, {
     onChange: <{ value: LogosFilterSelect['onChange'] }>{
       value: (val) => {
         this.filter.params.sortBy.val.cur = val;
