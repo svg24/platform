@@ -5,10 +5,13 @@ import { initFilter } from './filter';
 import { initList } from './list';
 import { initMeta } from './meta';
 import { initSentinel } from './sentinel';
+import { initSimple } from './simple';
 
 export const LogosStore = new (function (this: Store) {
   initStore.call(this);
   initMeta.call(this);
+  initSimple.call(this, 'categories');
+  initSimple.call(this, 'companies');
   initFilter.call(this, {
     multiplier: 1,
     size: {

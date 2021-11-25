@@ -1,25 +1,46 @@
-export const LayoutNav = (
-  { companies }: { companies: string[] },
-): JSX.Element => {
-  const nav = {
-    companies: companies.map((item) => (
+import { LogosStore } from 'src/modules/logos';
+
+export const LayoutNav = (): JSX.Element => {
+  const { ctx } = LogosStore;
+
+  const categories = {
+    label: 'Categories',
+    items: ctx.categories.items?.map((item) => (
       <li
         className="layout-nav__item"
-        key={item}
+        key={item.id}
       >
-        {item}
+        {item.name}
+      </li>
+    )),
+  };
+
+  const companies = {
+    label: 'Companies',
+    items: ctx.companies.items?.map((item) => (
+      <li
+        className="layout-nav__item"
+        key={item.id}
+      >
+        {item.name}
       </li>
     )),
   };
 
   return (
     <nav className="layout-nav">
-      <p className="layout-nav__label">
-        Companies
-      </p>
-      <ul className="layout-nav__list">
-        {nav.companies}
-      </ul>
+      {
+        [categories, companies].map((prop) => (
+          <>
+            <p className="layout-nav__label">
+              {prop.label}
+            </p>
+            <ul className="layout-nav__list">
+              {prop.items}
+            </ul>
+          </>
+        ))
+      }
     </nav>
   );
 };

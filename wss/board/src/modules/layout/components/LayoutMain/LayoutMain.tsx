@@ -109,12 +109,7 @@ export const LayoutMain = (
   const { ctx } = LayoutStore;
 
   const nav = {
-    el: observer(() => (
-      ctx.nav.isVisible
-        ? <LayoutNav companies={nav.companies} />
-        : <></>
-    )),
-    companies: ['Adobe', 'Alphabet', 'Github'],
+    el: observer(() => (ctx.nav.isVisible ? <LayoutNav /> : <></>)),
   };
 
   const bag = {

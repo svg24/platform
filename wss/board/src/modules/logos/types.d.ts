@@ -1,14 +1,28 @@
 import type { RefObject } from 'react';
-import type { LogosDataItem, LogosMeta, LogosResult } from 'src/plugins/api';
+import type {
+  LogosDataItem,
+  LogosMeta,
+  LogosResult,
+  SimpleResult,
+} from 'src/plugins/api';
 import type { Store } from 'src/types/store';
 
 export interface LogosStore extends Store<LogosStore> {
   bag: LogosStoreBag;
+  categories: LogosStoreSimpleProperty;
+  companies: LogosStoreSimpleProperty;
   filter: LogosStoreFilter;
   list: LogosStoreList;
   meta: LogosStoreMeta;
   sentinel: LogosStoreSentinel;
 }
+
+type LogosStoreSimpleProperty = {
+  _items: SimpleResult['data'] | undefined;
+  add: (data: SimpleResult['data']) => void;
+  fetch: () => Promise<void>;
+  items: LogosStoreSimpleProperty['_items'];
+};
 
 /**
  * Bag

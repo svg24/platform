@@ -32,12 +32,25 @@ export type LogosMeta = {
   };
 };
 
-type SimpleList = {
-  id: string;
-  name: string;
-}[];
+export type SimpleResult = {
+  data: {
+    id: string;
+    name: string;
+  }[];
+};
+
+const simpleMethod = (name: 'categories' | 'companies') => (
+  async (): Promise<SimpleResult> => {
+    const res = await fetch(`/api/${name}`);
+    const json = await res.json();
+
+    return json;
+  }
+);
 
 export const api = {
+  companies: simpleMethod('companies'),
+  categories: simpleMethod('categories'),
   async list(params: {
     category?: string;
     company?: string;
@@ -53,20 +66,6 @@ export const api = {
     });
 
     const res = await fetch(url);
-    const json = await res.json();
-
-    return json;
-  },
-
-  async companies(): Promise<SimpleList> {
-    const res = await fetch('/api/companies');
-    const json = await res.json();
-
-    return json;
-  },
-
-  async categories(): Promise<SimpleList> {
-    const res = await fetch('/api/categories');
     const json = await res.json();
 
     return json;
