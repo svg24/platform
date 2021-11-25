@@ -1,14 +1,6 @@
-import type { Model, Schema } from 'mongoose';
-import type { server } from '../../core';
+import type { Module } from '../../types/module';
 
-export interface Logos {
-  model: Model<LogosItem>;
-  opts: {
-    prefix: string;
-  };
-  plugin: (inst: typeof server.inst) => Promise<void>;
-  schema: Schema<LogosItem>;
-}
+export interface Logos extends Module<LogosItem> {}
 
 export type LogosItem = {
   category: string;

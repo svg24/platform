@@ -36,20 +36,23 @@ export const db = new (function (this: DB) {
 
   this.init = async () => {
     try {
-      await Promise.all(['categories.json, companies.json, logos.json']
-        .map(async (file) => {
-          await util.promisify(child.exec)(`
-            mongoimport \
-              --host db \
-              --authenticationDatabase admin \
-              --username ${this.opts.user} \
-              --password ${this.opts.pass} \
-              --db ${this.opts.name} \
-              --collection ${file.replace('.json', '')} \
-              --file /srv/db/data/${file} \
-              --drop;
-          `);
-        }));
+      await Promise.all([
+        'categories.json',
+        'companies.json',
+        'logos.json',
+      ].map(async (file) => {
+        await util.promisify(child.exec)(`
+          mongoimport \
+            --host db \
+            --authenticationDatabase admin \
+            --username ${this.opts.user} \
+            --password ${this.opts.pass} \
+            --db ${this.opts.name} \
+            --collection ${file.replace('.json', '')} \
+            --file /srv/db/data/${file} \
+            --drop;
+        `);
+      }));
     } catch (err) {
       console.error(err);
       process.exit(0);
