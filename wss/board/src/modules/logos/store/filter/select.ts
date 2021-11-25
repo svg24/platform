@@ -8,7 +8,6 @@ import type { LogosFilterSelect } from '../../types';
 
 export type FilterSelectOptions = {
   def: string;
-  id: string;
   name: string;
   opts: {
     name: string;
@@ -20,7 +19,6 @@ export const initFilterSelect = function (
   this: LogosFilterSelect,
   opts: FilterSelectOptions,
 ): void {
-  this.id = opts.id;
   this.name = opts.name;
   this.opts = opts.opts;
   this.val = {

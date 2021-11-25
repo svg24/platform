@@ -38,7 +38,6 @@ export type LogosFilterParameters = {
 };
 
 type LogosFilterSearch = {
-  id: string;
   isActive: boolean;
   process: (val: string) => void;
   reset: () => void;
@@ -51,7 +50,6 @@ type LogosFilterSearch = {
 };
 
 export type LogosFilterSelect = {
-  id: string;
   isActive: boolean;
   name: string;
   onChange: (val: string) => void;

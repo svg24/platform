@@ -1,5 +1,4 @@
 import type { LogosFilterParameters, LogosStore } from '../../types';
-import type { FilterSearchOptions } from './search';
 import { initFilterSearch } from './search';
 import type { FilterSizeOptions } from './size';
 import { initFilterSize } from './size';
@@ -10,7 +9,6 @@ export function initFilter(
   this: LogosStore,
   opts: {
     multiplier: LogosFilterParameters['multiplier'];
-    search: FilterSearchOptions;
     size: FilterSizeOptions;
     sortBy: FilterSortByOptions;
   },
@@ -29,7 +27,7 @@ export function initFilter(
     },
   });
 
-  initFilterSearch.call(this, opts.search);
+  initFilterSearch.call(this);
   initFilterSize.call(this.filter.params.size, opts.size);
   initFilterSortBy.call(this, opts.sortBy);
 

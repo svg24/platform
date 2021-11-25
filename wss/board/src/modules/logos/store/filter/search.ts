@@ -7,15 +7,7 @@ import {
 import { debounce, escapeStr } from 'src/utils';
 import type { LogosStore } from '../../types';
 
-export type FilterSearchOptions = {
-  id: string;
-};
-
-export const initFilterSearch = function (
-  this: LogosStore,
-  opts: FilterSearchOptions,
-): void {
-  this.filter.params.search.id = opts.id;
+export const initFilterSearch = function (this: LogosStore): void {
   this.filter.params.search.val = {
     _prev: undefined,
     _field: '',

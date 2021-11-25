@@ -11,11 +11,7 @@ export const LogosStore = new (function (this: Store) {
   initMeta.call(this);
   initFilter.call(this, {
     multiplier: 1,
-    search: {
-      id: 'name',
-    },
     size: {
-      id: 'size',
       name: 'Size',
       def: 'base',
       opts: [{
@@ -30,7 +26,6 @@ export const LogosStore = new (function (this: Store) {
       }],
     },
     sortBy: {
-      id: 'sortBy',
       name: 'Sort by',
       def: 'date',
       opts: [{
