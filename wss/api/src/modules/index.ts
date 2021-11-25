@@ -1,9 +1,13 @@
-import { categories } from './categories';
-import { companies } from './companies';
 import { logos } from './logos';
+import { createSimple } from './simple';
 
-export {
-  categories,
-  companies,
-  logos,
-};
+export { logos };
+
+export const categories = createSimple({
+  collection: 'categories',
+  name: 'CategoriesItem',
+});
+export const companies = createSimple({
+  collection: 'companies',
+  name: 'CompaniesItem',
+});

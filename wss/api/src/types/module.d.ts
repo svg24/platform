@@ -9,8 +9,3 @@ export interface Module<T> {
   plugin: (inst: typeof server.inst) => Promise<void>;
   schema: Schema<T>;
 }
-
-export type ModuleSimpleItem = {
-  id: string;
-  name: string;
-};

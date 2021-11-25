@@ -1,8 +1,8 @@
 import { server } from '../../../core';
-import type { Categories } from '../types';
+import type { SimpleModule } from '../types';
 import schema from './schema.json';
 
-export function addIndex(this: Categories, inst: typeof server.inst): void {
+export function addIndex(this: SimpleModule, inst: typeof server.inst): void {
   inst.route({
     ...JSON.parse(JSON.stringify(schema)),
     handler: async () => {
