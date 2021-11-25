@@ -23,48 +23,31 @@ export function initList(this: LogosStore): void {
       return (this.items?.length ?? 0) > 0;
     },
 
-    _isMore: true,
-
-    get isMore() {
-      return this._isMore;
-    },
-
-    set isMore(val) {
-      this._isMore = val;
-    },
-
-    updateIsMore(val) {
-      this.isMore = val;
-    },
-
     upload: async () => {
       const res = await this.list.fetch();
 
-      this.list.updateIsMore(res.meta.page.isNext);
-      this.filter.params.page.next();
+      this.meta.update(res.meta);
       this.list.add(res.data);
     },
 
     reset: async () => {
-      this.filter.params.page.reset();
+      this.meta.page.reset();
 
       const res = await this.list.fetch(this.filter.params.multiplier);
 
-      this.list.updateIsMore(res.meta.page.isNext);
-      this.filter.params.page.next();
+      this.meta.update(res.meta);
       this.list.clear();
       this.list.add(res.data);
     },
 
     fetch: async (multiplier) => {
       const name = this.filter.params.search.val.cur;
-      const page = this.filter.params.page.val.cur;
       const sortBy = this.filter.params.sortBy.val.cur;
-      const res = api.list({
+      const res = await api.list({
         ...multiplier ? { multiplier } : {},
         ...name ? { name } : {},
-        ...page ? { page } : {},
         ...sortBy ? { sortBy } : {},
+        page: this.meta.page.next,
       });
 
       return res;
@@ -80,12 +63,9 @@ export function initList(this: LogosStore): void {
   };
 
   makeObservable(this.list, {
-    _isMore: observable,
     _items: observable,
     add: action,
     clear: action,
-    isMore: computed,
     items: computed,
-    updateIsMore: action,
   });
 }

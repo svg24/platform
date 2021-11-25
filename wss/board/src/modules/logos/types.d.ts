@@ -1,12 +1,12 @@
 import type { RefObject } from 'react';
-import type { LogosDataItem, LogosResult } from 'src/plugins/api';
+import type { LogosDataItem, LogosMeta, LogosResult } from 'src/plugins/api';
 import type { Store } from 'src/types/store';
 
 export interface LogosStore extends Store<LogosStore> {
   bag: LogosStoreBag;
   filter: LogosStoreFilter;
-  info: LogosStoreInfo;
   list: LogosStoreList;
+  meta: LogosStoreMeta;
   sentinel: LogosStoreSentinel;
 }
 
@@ -32,20 +32,9 @@ type LogosStoreFilter = {
 
 export type LogosFilterParameters = {
   multiplier: number;
-  page: LogosFilterPage;
   search: LogosFilterSearch;
   size: LogosFilterSelect;
   sortBy: LogosFilterSelect;
-};
-
-export type LogosFilterPage = {
-  id: string;
-  next: () => void;
-  reset: () => void;
-  val: {
-    _def: number;
-    cur: number;
-  };
 };
 
 type LogosFilterSearch = {
@@ -79,31 +68,42 @@ export type LogosFilterSelect = {
 };
 
 /**
- * Info
- */
-
-type LogosStoreInfo = {
-  _total: number;
-  fetch: () => Promise<void>;
-  total: LogosStoreInfo['_total'];
-};
-
-/**
  * List
  */
 
 type LogosStoreList = {
-  _isMore: boolean;
   _items: LogosResult['data'] | undefined;
   add: (data: LogosResult['data']) => void;
   clear: () => void;
   fetch: (multiplier?: number) => Promise<LogosResult>;
   isItems: boolean;
-  isMore: LogosStoreList['_isMore'];
   items: LogosStoreList['_items'];
   reset: () => Promise<void>;
-  updateIsMore: (val: LogosStoreList['_isMore']) => void;
   upload: () => Promise<void>;
+};
+
+/**
+ * Meta
+ */
+
+type LogosStoreMeta = {
+  length: {
+    _cur: number;
+    _total: number;
+    cur: LogosStoreMeta['length']['_cur'];
+    setCur: (val: number) => void;
+    setTotal: (val: number) => void;
+    total: LogosStoreMeta['length']['_total'];
+  };
+  page: {
+    _isNext: boolean;
+    isNext: LogosStoreMeta['page']['_isNext'];
+    next: number;
+    reset: () => void;
+    setIsNext: (val: boolean) => void;
+    setNext: (val: number) => void;
+  };
+  update: (val: LogosMeta) => void;
 };
 
 /**

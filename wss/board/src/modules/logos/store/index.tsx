@@ -2,19 +2,15 @@ import { initStore } from 'src/utils';
 import type { LogosStore as Store } from '../types';
 import { initBag } from './bag';
 import { initFilter } from './filter';
-import { initInfo } from './info';
 import { initList } from './list';
+import { initMeta } from './meta';
 import { initSentinel } from './sentinel';
 
 export const LogosStore = new (function (this: Store) {
   initStore.call(this);
-  initInfo.call(this);
+  initMeta.call(this);
   initFilter.call(this, {
     multiplier: 1,
-    page: {
-      id: 'page',
-      def: 1,
-    },
     search: {
       id: 'name',
     },

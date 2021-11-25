@@ -27,12 +27,12 @@ export const LayoutFooter = (): JSX.Element => {
   const info = {
     showed: observer(() => (
       <>
-        {ctx.list.items?.length || 0}
+        {ctx.meta.length.cur}
       </>
     )),
     total: observer(() => (
       <>
-        {ctx.info.total}
+        {ctx.meta.length.total}
       </>
     )),
   };

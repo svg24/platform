@@ -21,14 +21,14 @@ export type LogosDataItem = {
   src: string;
 };
 
-type LogosMeta = {
+export type LogosMeta = {
   length: {
     current: number;
     total: number;
   };
   page: {
-    current: number;
     isNext: boolean;
+    next: number;
   };
 };
 

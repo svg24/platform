@@ -14,11 +14,9 @@ export {
 export const Logos = (): JSX.Element => {
   const { ctx } = LogosStore;
 
-  ctx.info.fetch();
-
   const noFound = {
     el: observer(() => (
-      ctx.list.isItems || ctx.list.isMore
+      ctx.list.isItems || ctx.meta.page.isNext
         ? <></>
         : <LogosNoFound />
     )),
@@ -62,7 +60,7 @@ export const Logos = (): JSX.Element => {
         new Promise((resolve) => {
           if (ctx.sentinel.ref?.current) {
             list.obs.inst = new IntersectionObserver(([entry]) => {
-              if (entry && entry.isIntersecting && ctx.list.isMore) {
+              if (entry && entry.isIntersecting && ctx.meta.page.isNext) {
                 list.upload().then(() => {
                   resolve();
                 });

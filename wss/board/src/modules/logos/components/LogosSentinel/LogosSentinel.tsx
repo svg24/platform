@@ -10,7 +10,7 @@ export const LogosSentinel = (): JSX.Element => {
 
   const root = {
     el: observer(() => {
-      const mod = ctx.list.isMore ? '' : 'logos-sentinel_hidden';
+      const mod = ctx.meta.page.isNext ? '' : 'logos-sentinel_hidden';
 
       return (
         <div
