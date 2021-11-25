@@ -35,7 +35,10 @@ export const Search = ({
   field.mount();
 
   return (
-    <form className="search">
+    <form
+      className="search"
+      id="search"
+    >
       <input
         className="search__field"
         placeholder="Search by name"

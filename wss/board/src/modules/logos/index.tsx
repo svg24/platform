@@ -4,6 +4,7 @@ import { isInViewport } from 'src/utils';
 import { LogosItem } from './components/LogosItem';
 import { LogosList } from './components/LogosList';
 import { LogosNoFound } from './components/LogosNoFound';
+import { LogosOutput } from './components/LogosOutput';
 import { LogosSentinel } from './components/LogosSentinel';
 import { LogosStore } from './store';
 
@@ -103,10 +104,10 @@ export const Logos = (): JSX.Element => {
   list.mount();
 
   return (
-    <>
+    <LogosOutput>
       <list.el />
       <noFound.el />
       <LogosSentinel />
-    </>
+    </LogosOutput>
   );
 };
