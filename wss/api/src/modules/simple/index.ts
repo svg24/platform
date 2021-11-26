@@ -1,6 +1,6 @@
-import { addIndex } from './index/index';
 import { initOpts } from './opts';
 import { initRoot } from './root';
+import { addRoute } from './route';
 import type { SimpleModule } from './types';
 
 export const createSimple = ({
@@ -13,6 +13,6 @@ export const createSimple = ({
   initRoot.call(this, collection, name);
   initOpts.call(this, collection);
   this.plugin = async (inst) => {
-    addIndex.call(this, inst);
+    addRoute.call(this, inst);
   };
 } as any as { new (): SimpleModule })();
