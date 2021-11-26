@@ -44,7 +44,7 @@ export const initFilterSearch = function (this: LogosStore): void {
     }, 300)();
   };
 
-  Object.defineProperties(this, {
+  Object.defineProperties(this.filter.params.search, {
     isActive: {
       get: () => !!this.filter.params.search.val.field,
       enumerable: true,
