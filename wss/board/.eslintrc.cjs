@@ -65,6 +65,13 @@ module.exports = {
       '@typescript-eslint/no-confusing-void-expression': ['error'],
       '@typescript-eslint/no-explicit-any': ['off'],
       'import/no-extraneous-dependencies': 'off',
+      'jsx-a11y/label-has-associated-control': ['error', {
+        labelComponents: [],
+        labelAttributes: [],
+        controlComponents: [],
+        assert: 'nesting',
+        depth: 25,
+      }],
       'react/jsx-filename-extension': [1, {
         extensions: ['tsx'],
       }],
