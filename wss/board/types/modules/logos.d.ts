@@ -114,7 +114,6 @@ type LogosStoreMeta = {
  */
 
 type LogosStoreSearch = {
-  readonly isActive: boolean;
   process: (val: string) => void;
   reset: () => void;
   val: {

@@ -20,9 +20,6 @@ export const initSearch = function (this: LogosStore): void {
         this._field = val;
       },
     },
-    get isActive() {
-      return !!this.val.cur;
-    },
     process: (val) => {
       this.search.val.field = val;
 
