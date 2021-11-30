@@ -31,15 +31,15 @@ type LogosStoreBag = {
  */
 
 type LogosStoreFilter = {
-  categories: LogosFilterSimpleParameter;
-  companies: LogosFilterSimpleParameter;
+  categories: LogosStoreFilterSimpleParameter;
+  companies: LogosStoreFilterSimpleParameter;
   mount: () => Promise<void>;
   multiplier: number | undefined;
   reset: () => void;
-  sortBy: LogosFilterSortBy;
+  sortBy: LogosStoreFilterSortBy;
 };
 
-type LogosFilterSimpleParameter = {
+type LogosStoreFilterSimpleParameter = {
   fetch: () => Promise<void>;
   id: string;
   readonly isActive: boolean;
@@ -49,11 +49,11 @@ type LogosFilterSimpleParameter = {
   set: (id: string) => void;
   val: {
     _cur: string | undefined;
-    cur: LogosFilterSimpleParameter['val']['_cur'];
+    cur: LogosStoreFilterSimpleParameter['val']['_cur'];
   };
 };
 
-type LogosFilterSortBy = {
+type LogosStoreFilterSortBy = {
   id: string;
   readonly isActive: boolean;
   legend: string;
@@ -62,11 +62,11 @@ type LogosFilterSortBy = {
     name: string;
   }[];
   reset: () => void;
-  set: (id: LogosFilterSortBy['val']['cur']) => void;
+  set: (id: LogosStoreFilterSortBy['val']['cur']) => void;
   val: {
-    _cur: LogosFilterSortBy['val']['def'];
-    cur: LogosFilterSortBy['val']['_cur'];
-    def: LogosFilterSortBy['opts'][0]['id'];
+    _cur: LogosStoreFilterSortBy['val']['def'];
+    cur: LogosStoreFilterSortBy['val']['_cur'];
+    def: LogosStoreFilterSortBy['opts'][0]['id'];
   };
 };
 
