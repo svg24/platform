@@ -32,7 +32,7 @@ const LayoutMainFilterParameters = (): JSX.Element => {
             >
               <FilterParameterInput
                 id={par.id}
-                isChecked={opt.id === par.val.def}
+                isChecked={opt.id === par.val.cur}
                 onChange={() => {
                   par.set(opt.id);
                   ctx.list.reset();

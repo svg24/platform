@@ -48,7 +48,8 @@ type LogosStoreFilterSimpleParameter = {
   reset: () => void;
   set: (id: string) => void;
   val: {
-    _cur: string | undefined;
+    _cur: string | LogosStoreFilterSimpleParameter['val']['_def'];
+    _def: undefined;
     cur: LogosStoreFilterSimpleParameter['val']['_cur'];
   };
 };
@@ -64,9 +65,9 @@ type LogosStoreFilterSortBy = {
   reset: () => void;
   set: (id: LogosStoreFilterSortBy['val']['cur']) => void;
   val: {
-    _cur: LogosStoreFilterSortBy['val']['def'];
+    _cur: LogosStoreFilterSortBy['val']['_def'];
+    _def: LogosStoreFilterSortBy['opts'][0]['id'];
     cur: LogosStoreFilterSortBy['val']['_cur'];
-    def: LogosStoreFilterSortBy['opts'][0]['id'];
   };
 };
 

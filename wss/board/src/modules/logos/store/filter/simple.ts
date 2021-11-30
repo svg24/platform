@@ -11,6 +11,8 @@ export function initSimple(
   this: LogosStore,
   id: 'categories' | 'companies',
 ): void {
+  const def = undefined;
+
   this.filter[id] = {
     id,
     legend: `${id[0]?.toUpperCase()}${id.slice(1)}`,
@@ -22,10 +24,11 @@ export function initSimple(
       this.filter[id].val.cur = passedId;
     },
     reset: () => {
-      this.filter[id].val.cur = undefined;
+      this.filter[id].val.cur = this.filter[id].val._def;
     },
     val: {
-      _cur: undefined,
+      _def: def,
+      _cur: def,
       get cur() {
         return this._cur;
       },
@@ -34,7 +37,7 @@ export function initSimple(
       },
     },
     get isActive() {
-      return !!this.val.cur;
+      return this.val.cur !== this.val._def;
     },
   };
 

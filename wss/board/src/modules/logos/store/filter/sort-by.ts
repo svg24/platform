@@ -7,64 +7,39 @@ import {
 import type { LogosStore } from 'types/modules/logos';
 
 export const initSortBy = function (this: LogosStore): void {
-  Object.defineProperties(this.filter, {
-    sortBy: {
-      value: {
-        id: 'sortBy',
-        legend: 'Sort by',
-        opts: [{
-          id: 'date',
-          name: 'Date',
-        }, {
-          id: 'name',
-          name: 'Name',
-        }],
-        val: {},
-      },
-      enumerable: true,
-    },
-  });
-  Object.defineProperties(this.filter.sortBy.val, {
-    def: {
-      value: this.filter.sortBy.opts[0]?.id,
-      enumerable: true,
-    },
-  });
-  Object.defineProperties(this.filter.sortBy.val, {
-    _cur: {
-      value: this.filter.sortBy.val.def,
-      enumerable: true,
-      configurable: true,
-    },
-    cur: {
-      get: () => {
-        const { val } = this.filter.sortBy;
-
-        return val._cur || val.def;
-      },
-      set: (val) => {
-        this.filter.sortBy.val._cur = val;
-      },
-      enumerable: true,
-      configurable: true,
-    },
-  });
-  Object.defineProperties(this.filter.sortBy, {
-    isActive: {
-      get: () => {
-        const { val } = this.filter.sortBy;
-
-        return val._cur !== val.def;
-      },
-      enumerable: true,
-    },
-  });
-
-  this.filter.sortBy.set = (id) => {
-    this.filter.sortBy.val.cur = id;
+  const date = {
+    id: 'date',
+    name: 'Date',
   };
-  this.filter.sortBy.reset = () => {
-    this.filter.sortBy.val.cur = this.filter.sortBy.val.def;
+  const opts = [date, {
+    id: 'name',
+    name: 'Name',
+  }];
+  const def = date.id;
+
+  this.filter.sortBy = {
+    opts,
+    id: 'sortBy',
+    legend: 'Sort by',
+    val: {
+      _def: def,
+      _cur: def,
+      get cur() {
+        return this._cur;
+      },
+      set cur(val) {
+        this._cur = val;
+      },
+    },
+    get isActive() {
+      return this.val._cur !== this.val._def;
+    },
+    set(id) {
+      this.val.cur = id;
+    },
+    reset() {
+      this.val.cur = this.val._def;
+    },
   };
 
   makeObservable(this.filter.sortBy, {
