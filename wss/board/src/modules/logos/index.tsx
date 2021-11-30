@@ -8,15 +8,12 @@ import { LogosOutput } from './components/LogosOutput';
 import { LogosSentinel } from './components/LogosSentinel';
 import { LogosStore } from './store';
 
-export {
-  LogosStore,
-};
+export { LogosStore };
 
 export const Logos = (): JSX.Element => {
   const { ctx } = LogosStore;
 
-  ctx.categories.fetch();
-  ctx.companies.fetch();
+  ctx.filter.mount();
 
   const noFound = {
     el: observer(() => (

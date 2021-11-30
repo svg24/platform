@@ -4,6 +4,7 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
+import { LayoutStore } from 'src/modules/layout';
 import { api } from 'src/plugins/api';
 import type { LogosStore } from '../types';
 
@@ -37,13 +38,18 @@ export function initList(this: LogosStore): void {
 
       this.meta.update(res.meta);
       this.list.clear();
+      LayoutStore.main.content.gotoTop();
       this.list.add(res.data);
     },
 
     fetch: async (multiplier) => {
+      const category = this.filter.params.categories.val.cur;
+      const company = this.filter.params.companies.val.cur;
       const name = this.filter.params.search.val.cur;
       const sortBy = this.filter.params.sortBy.val.cur;
       const res = await api.list({
+        ...category ? { category } : {},
+        ...company ? { company } : {},
         ...multiplier ? { multiplier } : {},
         ...name ? { name } : {},
         ...sortBy ? { sortBy } : {},

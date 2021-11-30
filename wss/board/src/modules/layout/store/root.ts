@@ -16,32 +16,32 @@ export const initRoot = function (this: LayoutStore): void {
 
   this.root = {
     ref: undefined,
-    nav: {
+    filter: {
       show: () => {
-        tmp.ls?.add('layout-root_nav-display');
-        tmp.ls?.add('layout-root_nav-in');
+        tmp.ls?.add('layout-root_filter-display');
+        tmp.ls?.add('layout-root_filter-in');
         setTimeout(() => {
-          tmp.ls?.remove('layout-root_nav-in');
+          tmp.ls?.remove('layout-root_filter-in');
         }, tmp.ms);
       },
       hide: () => (
         new Promise((resolve) => {
-          tmp.ls?.add('layout-root_nav-out');
+          tmp.ls?.add('layout-root_filter-out');
           setTimeout(() => {
-            tmp.ls?.remove('layout-root_nav-out');
-            tmp.ls?.remove('layout-root_nav-display');
+            tmp.ls?.remove('layout-root_filter-out');
+            tmp.ls?.remove('layout-root_filter-display');
             resolve();
           }, tmp.ms);
         })
       ),
       toggle: () => {
-        if (this.nav.isVisible) {
-          this.root.nav.hide().then(() => {
-            this.nav.hide();
+        if (this.main.filter.isVisible) {
+          this.root.filter.hide().then(() => {
+            this.main.filter.hide();
           });
         } else {
-          this.nav.show();
-          this.root.nav.show();
+          this.main.filter.show();
+          this.root.filter.show();
         }
       },
     },

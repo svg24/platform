@@ -1,0 +1,103 @@
+/**
+ * Parameter
+ */
+
+.filter-parameter_as-container {
+  @apply flex flex-wrap gap-x-1;
+}
+
+.filter-parameter__list {
+  @apply grid gap-y-1;
+}
+
+.filter-parameter__item {
+  @apply grid items-start gap-x-1;
+  grid-template-columns: 1.75rem 1fr 1rem;
+}
+
+.filter-parameter__legend {
+  @apply block mb-2 text-xs font-bold uppercase text-neutral-400;
+}
+
+.filter-parameter__letter,
+.filter-parameter__name {
+  @apply px-2 py-1 text-sm duration-100 rounded-lg;
+}
+
+.filter-parameter__letter {
+  @apply text-center;
+}
+
+.filter-parameter__container {
+  @apply flex flex-wrap gap-1 overflow-hidden duration-100;
+  height: calc(1.25rem + 0.5rem);
+}
+
+.filter-parameter__label {
+  @apply grid cursor-pointer;
+}
+
+.filter-parameter__input,
+.filter-parameter__name {
+  @apply col-span-full row-span-full;
+}
+
+.filter-parameter__input {
+  @apply rounded-lg appearance-none;
+}
+
+.filter-parameter__input:checked + .filter-parameter__name {
+  @apply bg-neutral-100;
+}
+
+.filter-parameter__toggle {
+  @apply mt-1 justify-self-end;
+}
+
+.filter-parameter__icon {
+  @apply w-4 h-4;
+}
+
+/**
+ * Applied
+ */
+
+.filter-applied {
+  @apply rounded-lg bg-neutral-50 px-3 py-1.5 flex flex-wrap gap-x-2;
+}
+
+.filter-applied__legend:only-child {
+  @apply text-sm contents text-neutral-400;
+}
+
+.filter-applied__legend:not(:only-child) {
+  @apply sr-only;
+}
+
+.filter-applied__label {
+  @apply grid items-center cursor-pointer text-neutral-400 gap-x-1;
+}
+
+.filter-applied__name,
+.filter-applies__icon {
+  @apply duration-100;
+}
+
+.filter-applied__name {
+  @apply col-span-1 col-end-2 text-sm row-span-full;
+}
+
+.filter-applies__icon {
+  @apply inline-block w-4 h-4 col-start-2 col-end-3 row-span-full;
+}
+
+.filter-applied__label:hover .filter-applied__name,
+.filter-applied__label:focus-within .filter-applied__name,
+.filter-applied__label:hover .filter-applies__icon,
+.filter-applied__label:focus-within .filter-applies__icon {
+  @apply text-black;
+}
+
+.filter-applied__input {
+  @apply col-start-1 col-end-3 appearance-none row-span-full;
+}

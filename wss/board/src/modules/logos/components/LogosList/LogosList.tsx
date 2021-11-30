@@ -8,7 +8,8 @@ export const LogosList = (
    * Мы это уберем.
    * Добавить ref на список и через стор менять класс.
    */
-  const mod = `logos-list_${ctx.filter.params.size.val.cur}`;
+  // const mod = `logos-list_${ctx.filter.params.size.val.cur}`;
+  const mod = `logos-list_base`;
 
   return (
     <ol className={`logos-list ${mod}`}>

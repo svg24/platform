@@ -9,20 +9,11 @@ import type { Store } from 'src/types/store';
 
 export interface LogosStore extends Store<LogosStore> {
   bag: LogosStoreBag;
-  categories: LogosStoreSimpleProperty;
-  companies: LogosStoreSimpleProperty;
   filter: LogosStoreFilter;
   list: LogosStoreList;
   meta: LogosStoreMeta;
   sentinel: LogosStoreSentinel;
 }
-
-type LogosStoreSimpleProperty = {
-  _items: SimpleResult['data'] | undefined;
-  add: (data: SimpleResult['data']) => void;
-  fetch: () => Promise<void>;
-  items: LogosStoreSimpleProperty['_items'];
-};
 
 /**
  * Bag
@@ -39,19 +30,37 @@ type LogosStoreBag = {
  */
 
 type LogosStoreFilter = {
-  isActive: boolean;
+  readonly isActive: boolean;
+  isMounted: boolean;
+  mount: () => Promise<void>;
   params: LogosFilterParameters;
   reset: () => void;
 };
 
-export type LogosFilterParameters = {
-  multiplier: number;
+type LogosFilterParameters = {
+  categories: LogosFilterSimpleParameter;
+  companies: LogosFilterSimpleParameter;
+  multiplier: number | undefined;
   search: LogosFilterSearch;
-  size: LogosFilterSelect;
-  sortBy: LogosFilterSelect;
+  sortBy: LogosFilterSortBy;
+};
+
+type LogosFilterSimpleParameter = {
+  fetch: () => Promise<void>;
+  id: string;
+  readonly isActive: boolean;
+  legend: string;
+  opts: SimpleResult['data'] | undefined;
+  reset: () => void;
+  set: (id: string) => void;
+  val: {
+    _cur: string | undefined;
+    cur: LogosFilterSimpleParameter['val']['_cur'];
+  };
 };
 
 type LogosFilterSearch = {
+  id: string;
   isActive: boolean;
   process: (val: string) => void;
   reset: () => void;
@@ -63,19 +72,20 @@ type LogosFilterSearch = {
   };
 };
 
-export type LogosFilterSelect = {
-  isActive: boolean;
-  name: string;
-  onChange: (val: string) => void;
+type LogosFilterSortBy = {
+  id: string;
+  readonly isActive: boolean;
+  legend: string;
   opts: {
+    id: string;
     name: string;
-    val: string;
   }[];
   reset: () => void;
+  set: (id: LogosFilterSortBy['val']['cur']) => void;
   val: {
-    _cur: string;
-    _def: string;
-    cur: LogosFilterSelect['val']['_cur'];
+    _cur: LogosFilterSortBy['val']['def'];
+    cur: LogosFilterSortBy['val']['_cur'];
+    def: LogosFilterSortBy['opts'][0]['id'];
   };
 };
 

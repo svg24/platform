@@ -1,9 +1,4 @@
-import {
-  AdjustmentsIcon,
-  CogIcon,
-  FolderIcon,
-  FolderOpenIcon,
-} from '@heroicons/react/outline';
+import { AdjustmentsIcon, CogIcon } from '@heroicons/react/outline';
 import { observer } from 'mobx-react-lite';
 import { Search } from 'src/components';
 import { LogosStore } from 'src/modules/logos';
@@ -30,14 +25,10 @@ export const LayoutHeader = (): JSX.Element => {
   const layoutCtx = LayoutStore.ctx;
   const logosCtx = LogosStore.ctx;
 
-  const nav = {
-    icon: observer((props: { className: string }) => {
-      const Icon = layoutCtx.nav.isVisible ? FolderOpenIcon : FolderIcon;
-
-      return <Icon className={props.className} />;
-    }),
+  const filter = {
+    icon: AdjustmentsIcon,
     get onClick() {
-      return layoutCtx.root.nav.toggle;
+      return layoutCtx.root.filter.toggle;
     },
   };
 
@@ -50,11 +41,6 @@ export const LayoutHeader = (): JSX.Element => {
         }}
       />
     )),
-  };
-
-  const adj = {
-    icon: AdjustmentsIcon,
-    onClick: () => {},
   };
 
   const cog = {
@@ -71,18 +57,12 @@ export const LayoutHeader = (): JSX.Element => {
           src="https://raw.githubusercontent.com/svg24/.github/main/logo.svg"
         />
         <LayoutHeaderButton
-          icon={nav.icon}
-          onClick={nav.onClick}
+          icon={filter.icon}
+          onClick={filter.onClick}
         />
         <search.el />
       </div>
       <div className="layout-header__side">
-        <div className="layout-header__container">
-          <LayoutHeaderButton
-            icon={adj.icon}
-            onClick={adj.onClick}
-          />
-        </div>
         <div className="layout-header__container">
           <LayoutHeaderButton
             icon={cog.icon}

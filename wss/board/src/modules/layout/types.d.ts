@@ -2,20 +2,26 @@ import type { RefObject } from 'react';
 import type { Store } from 'src/types/store';
 
 export interface LayoutStore extends Store<LayoutStore> {
-  nav: LayoutStoreNav;
+  main: LayoutStoreMain;
   root: LayoutStoreRoot;
   sidebar: LayoutStoreSidebar;
 }
 
 /**
- * Nav
+ * Main
  */
 
-type LayoutStoreNav = {
-  _isVisible: boolean;
-  hide: () => void;
-  isVisible: LayoutStoreNav['_isVisible'];
-  show: () => void;
+type LayoutStoreMain = {
+  content: {
+    gotoTop: () => void;
+    ref: RefObject<HTMLDivElement> | undefined;
+  };
+  filter: {
+    _isVisible: boolean;
+    hide: () => void;
+    isVisible: LayoutStoreMain['filter']['_isVisible'];
+    show: () => void;
+  };
 };
 
 /**
@@ -23,7 +29,7 @@ type LayoutStoreNav = {
  */
 
 type LayoutStoreRoot = {
-  nav: {
+  filter: {
     hide: () => Promise<void>;
     show: () => void;
     toggle: () => void;
