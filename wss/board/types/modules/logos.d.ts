@@ -12,6 +12,7 @@ export interface LogosStore extends Store<LogosStore> {
   filter: LogosStoreFilter;
   list: LogosStoreList;
   meta: LogosStoreMeta;
+  search: LogosStoreSearch;
   sentinel: LogosStoreSentinel;
 }
 
@@ -35,7 +36,6 @@ type LogosStoreFilter = {
   mount: () => Promise<void>;
   multiplier: number | undefined;
   reset: () => void;
-  search: LogosFilterSearch;
   sortBy: LogosFilterSortBy;
 };
 
@@ -50,18 +50,6 @@ type LogosFilterSimpleParameter = {
   val: {
     _cur: string | undefined;
     cur: LogosFilterSimpleParameter['val']['_cur'];
-  };
-};
-
-type LogosFilterSearch = {
-  readonly isActive: boolean;
-  process: (val: string) => void;
-  reset: () => void;
-  val: {
-    _field: string;
-    _prev: string | undefined;
-    cur: string | undefined;
-    field: LogosFilterSearch['val']['_field'];
   };
 };
 
@@ -119,6 +107,22 @@ type LogosStoreMeta = {
     setNext: (val: number) => void;
   };
   update: (val: LogosMeta) => void;
+};
+
+/**
+ * Search
+ */
+
+type LogosStoreSearch = {
+  readonly isActive: boolean;
+  process: (val: string) => void;
+  reset: () => void;
+  val: {
+    _field: string;
+    _prev: string | undefined;
+    cur: string | undefined;
+    field: LogosStoreSearch['val']['_field'];
+  };
 };
 
 /**

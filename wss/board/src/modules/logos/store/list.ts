@@ -45,7 +45,7 @@ export function initList(this: LogosStore): void {
     fetch: async (multiplier) => {
       const category = this.filter.categories.val.cur;
       const company = this.filter.companies.val.cur;
-      const name = this.filter.search.val.cur;
+      const name = this.search.val.cur;
       const sortBy = this.filter.sortBy.val.cur;
       const res = await api.list({
         ...category ? { category } : {},

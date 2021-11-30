@@ -4,10 +4,12 @@ import { initBag } from './bag';
 import { initFilter } from './filter';
 import { initList } from './list';
 import { initMeta } from './meta';
+import { initSearch } from './search';
 import { initSentinel } from './sentinel';
 
 export const LogosStore = new (function (this: Store) {
   initStore.call(this);
+  initSearch.call(this);
   initMeta.call(this);
   initFilter.call(this);
   initList.call(this);

@@ -8,7 +8,7 @@ import { debounce, escapeStr } from 'src/utils';
 import type { LogosStore } from 'types/modules/logos';
 
 export const initSearch = function (this: LogosStore): void {
-  this.filter.search = {
+  this.search = {
     val: {
       _prev: undefined,
       _field: '',
@@ -24,10 +24,10 @@ export const initSearch = function (this: LogosStore): void {
       return !!this.val.cur;
     },
     process: (val) => {
-      this.filter.search.val.field = val;
+      this.search.val.field = val;
 
       debounce(() => {
-        const prev = this.filter.search.val._prev;
+        const prev = this.search.val._prev;
         const { isItems } = this.list;
         const trimmed = val.trim();
 
@@ -36,14 +36,14 @@ export const initSearch = function (this: LogosStore): void {
         if (!prev && isItems && !trimmed) return;
 
         if (!trimmed) {
-          this.filter.search.reset();
+          this.search.reset();
         } else {
-          this.filter.search.val.cur = escapeStr(val);
+          this.search.val.cur = escapeStr(val);
         }
 
         this.list.reset();
 
-        this.filter.search.val._prev = trimmed;
+        this.search.val._prev = trimmed;
       }, 300)();
     },
     reset() {
@@ -52,11 +52,11 @@ export const initSearch = function (this: LogosStore): void {
     },
   };
 
-  makeObservable(this.filter.search, {
+  makeObservable(this.search, {
     process: action,
     reset: action,
   });
-  makeObservable(this.filter.search.val, {
+  makeObservable(this.search.val, {
     _field: observable,
     field: computed,
   });
