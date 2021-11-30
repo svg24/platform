@@ -5,7 +5,7 @@ import {
   observable,
 } from 'mobx';
 import { debounce, escapeStr } from 'src/utils';
-import type { LogosStore } from 'types/modules/logos';
+import type { LogosStore } from 'types/logos';
 
 export const initSearch = function (this: LogosStore): void {
   this.search = {

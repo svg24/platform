@@ -1,5 +1,5 @@
 import { initStore } from 'src/utils';
-import type { LayoutStore as Store } from 'types/modules/layout';
+import type { LayoutStore as Store } from 'types/layout';
 import { initMain } from './main';
 import { initRoot } from './root';
 import { initSidebar } from './sidebar';

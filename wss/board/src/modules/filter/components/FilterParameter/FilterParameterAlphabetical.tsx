@@ -1,24 +1,53 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
+import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
+import { LogosStore } from 'src/modules/logos';
+import type { FilterStoreParameterAlphabetical } from 'types/filter';
 
-export const FilterParameterAlphabetical = ({
-  children,
-  legend,
+const FilterParameterAlphabeticalLabel = ({
+  opt,
+  pr,
 }: {
-  children: JSX.Element[];
-  legend: string;
-}): JSX.Element => (
-  <fieldset className="filter-parameter">
-    <legend className="filter-parameter__legend">
-      {legend}
-    </legend>
-    <ul className="filter-parameter__list">
-      {children}
-    </ul>
-  </fieldset>
-);
+  opt: Parameters<FilterStoreParameterAlphabetical['set']>[0];
+  pr: FilterStoreParameterAlphabetical;
+}): JSX.Element => {
+  const { ctx } = LogosStore;
 
-export const FilterParameterAlphabeticalItem = ({
+  const input = {
+    el: observer(() => {
+      const isCur = pr.val.checkIsCur(opt.id);
+
+      return (
+        <input
+          className="filter-parameter__input"
+          defaultChecked={isCur}
+          name={pr.id}
+          type="radio"
+          onClick={(el) => {
+            if (isCur && (el.target as HTMLInputElement).checked) {
+              pr.reset();
+            } else {
+              pr.set(opt);
+            }
+
+            ctx.list.reset();
+          }}
+        />
+      );
+    }),
+  };
+
+  return (
+    <label className="filter-parameter__label">
+      <input.el />
+      <span className="filter-parameter__name">
+        {opt.name}
+      </span>
+    </label>
+  );
+};
+
+const FilterParameterAlphabeticalItem = ({
   children,
   letter,
 }: {
@@ -108,17 +137,30 @@ export const FilterParameterAlphabeticalItem = ({
   );
 };
 
-export const FilterParameterAlphabeticalInput = ({
-  id,
-  onClick,
+export const FilterParameterAlphabetical = ({
+  pr,
 }: {
-  id: string;
-  onClick: (el: any) => void;
+  pr: FilterStoreParameterAlphabetical;
 }): JSX.Element => (
-  <input
-    className="filter-parameter__input"
-    name={id}
-    type="radio"
-    onClick={(el) => { onClick(el); }}
-  />
+  <fieldset className="filter-parameter">
+    <legend className="filter-parameter__legend">
+      {pr.legend}
+    </legend>
+    <ul className="filter-parameter__list">
+      {pr.opts && Object.entries(pr.opts).map(([key, val]) => (
+        <FilterParameterAlphabeticalItem
+          key={key}
+          letter={key}
+        >
+          {val.map((opt) => (
+            <FilterParameterAlphabeticalLabel
+              key={opt.id}
+              opt={opt}
+              pr={pr}
+            />
+          ))}
+        </FilterParameterAlphabeticalItem>
+      ))}
+    </ul>
+  </fieldset>
 );

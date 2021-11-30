@@ -4,9 +4,10 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
+import { FilterStore } from 'src/modules/filter';
 import { LayoutStore } from 'src/modules/layout';
 import { api } from 'src/plugins/api';
-import type { LogosStore } from 'types/modules/logos';
+import type { LogosStore } from 'types/logos';
 
 export function initList(this: LogosStore): void {
   this.list = {
@@ -34,7 +35,7 @@ export function initList(this: LogosStore): void {
     reset: async () => {
       this.meta.page.reset();
 
-      const res = await this.list.fetch(this.filter.multiplier);
+      const res = await this.list.fetch(FilterStore.multiplier);
 
       this.meta.update(res.meta);
       this.list.clear();
@@ -43,16 +44,15 @@ export function initList(this: LogosStore): void {
     },
 
     fetch: async (multiplier) => {
-      const category = this.filter.categories.val.cur;
-      const company = this.filter.companies.val.cur;
       const name = this.search.val.cur;
-      const sortBy = this.filter.sortBy.val.cur;
       const res = await api.list({
-        ...category ? { category } : {},
-        ...company ? { company } : {},
+        ...Object.fromEntries([
+          FilterStore.category,
+          FilterStore.company,
+          FilterStore.sortBy,
+        ].map((pr) => (pr.val.cur ? [pr.id, pr.val.cur.id] : []))),
         ...multiplier ? { multiplier } : {},
         ...name ? { name } : {},
-        ...sortBy ? { sortBy } : {},
         page: this.meta.page.next,
       });
 

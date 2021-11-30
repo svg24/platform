@@ -1,4 +1,4 @@
-import type { LogosStore } from 'types/modules/logos';
+import type { LogosStore } from 'types/logos';
 
 export function initBag(this: LogosStore): void {
   this.bag = {

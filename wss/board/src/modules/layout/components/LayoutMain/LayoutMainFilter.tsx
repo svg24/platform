@@ -1,139 +1,41 @@
 import { observer } from 'mobx-react-lite';
 import {
   FilterApplied,
-  FilterAppliedInput,
-  FilterAppliedLabel,
   FilterParameter,
   FilterParameterAlphabetical,
-  FilterParameterAlphabeticalInput,
-  FilterParameterAlphabeticalItem,
-  FilterParameterInput,
-  FilterParameterLabel,
-} from 'src/components/Filter';
-import { LogosStore } from 'src/modules/logos';
-// import { LayoutFilterApplied } from '../LayoutFilterApplied';
+  FilterStore,
+} from 'src/modules/filter';
 
-const LayoutMainFilterParameters = (): JSX.Element => {
-  const { ctx } = LogosStore;
-
-  return (
-    <>
-      {[
-        ctx.filter.sortBy,
-      ].map((par) => (
-        <FilterParameter
-          key={par.id}
-          legend={par.legend}
-        >
-          {par.opts.map((opt) => (
-            <FilterParameterLabel
-              key={opt.id}
-              name={opt.name}
-            >
-              <FilterParameterInput
-                id={par.id}
-                isChecked={opt.id === par.val.cur}
-                onChange={() => {
-                  par.set(opt.id);
-                  ctx.list.reset();
-                }}
-              />
-            </FilterParameterLabel>
-          ))}
-        </FilterParameter>
-      ))}
-    </>
-  );
-};
-
-const LayoutMainFilterParametersAlphabetical = (): JSX.Element => {
-  const { ctx } = LogosStore;
-
-  return (
-    <>
-      {[
-        ctx.filter.categories,
-        ctx.filter.companies,
-      ].map((par) => (par.opts
-        ? (
-          <FilterParameterAlphabetical
-            key={par.id}
-            legend={par.legend}
-          >
-            {Object.entries(par.opts).map(([key, val]) => (
-              <FilterParameterAlphabeticalItem
-                key={key}
-                letter={key}
-              >
-                {val.map((opt) => (
-                  <FilterParameterLabel
-                    key={opt.id}
-                    name={opt.name}
-                  >
-                    <FilterParameterAlphabeticalInput
-                      id={par.id}
-                      onClick={(el) => {
-                        const target = el.target as HTMLInputElement;
-
-                        if (target.checked && opt.id === par.val.cur) {
-                          par.reset();
-
-                          target.checked = false;
-                        } else {
-                          par.set(opt.id);
-                        }
-
-                        ctx.list.reset();
-                      }}
-                    />
-                  </FilterParameterLabel>
-                ))}
-              </FilterParameterAlphabeticalItem>
-            ))}
-          </FilterParameterAlphabetical>
-        )
-        : <></>))}
-    </>
-  );
-};
-
-const LayoutMainFilterApplied = (): JSX.Element => {
-  const { ctx } = LogosStore;
+export const LayoutMainFilter = (): JSX.Element => {
+  const { ctx } = FilterStore;
 
   const applied = {
     el: observer(() => {
-      const active = [
-        ctx.filter.categories,
-        ctx.filter.companies,
-        ctx.filter.sortBy,
-      ].filter((prop) => prop.isActive);
+      const prs = [
+        ctx.category,
+        ctx.company,
+        ctx.sortBy,
+      ].filter((pr) => pr.isActive);
 
-      return active.length
-        ? (
-          <FilterApplied legend="Applied filers">
-            {active.map((prop) => (
-              <FilterAppliedLabel
-                key={prop.id}
-                name={prop.val.cur || ''}
-              >
-                <FilterAppliedInput
-                  onChange={() => {}}
-                />
-              </FilterAppliedLabel>
-            ))}
-          </FilterApplied>
-        )
-        : <FilterApplied legend="No filters applied" />;
+      return <FilterApplied prs={prs} />;
     }),
   };
 
-  return <applied.el />;
+  return (
+    <form className="layout-main__filter">
+      {[ctx.sortBy].map((pr) => (
+        <FilterParameter
+          key={pr.id}
+          pr={pr}
+        />
+      ))}
+      {[ctx.category, ctx.company].map((pr) => (
+        <FilterParameterAlphabetical
+          key={pr.id}
+          pr={pr}
+        />
+      ))}
+      <applied.el />
+    </form>
+  );
 };
-
-export const LayoutMainFilter = (): JSX.Element => (
-  <form className="layout-main__filter">
-    <LayoutMainFilterParameters />
-    <LayoutMainFilterParametersAlphabetical />
-    <LayoutMainFilterApplied />
-  </form>
-);

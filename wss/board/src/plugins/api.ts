@@ -1,48 +1,11 @@
-export type LogosResult = {
-  data: LogosDataItem[];
-  meta: LogosMeta;
-};
-
-export type LogosDataItem = {
-  category: string;
-  company: string;
-  content: {
-    packages: {
-      react: string;
-      vue: string;
-    };
-    snippets: {
-      vanilla: string;
-    };
-  }[];
-  date: string;
-  id: string;
-  name: string;
-  src: string;
-};
-
-export type LogosMeta = {
-  length: {
-    current: number;
-    total: number;
-  };
-  page: {
-    isNext: boolean;
-    next: number;
-  };
-};
-
-export type SimpleResult = {
-  data: {
-    [key: string]: {
-      id: string;
-      name: string;
-    }[];
-  };
-};
+import type {
+  ApiResult,
+  ApiResultAlphabetical,
+  ApiResultLogos,
+} from 'types/api';
 
 const simpleMethod = (name: 'categories' | 'companies') => (
-  async (): Promise<SimpleResult> => {
+  async (): Promise<ApiResultAlphabetical> => {
     const res = await fetch(`/api/${name}`);
     const json = await res.json();
 
@@ -53,6 +16,21 @@ const simpleMethod = (name: 'categories' | 'companies') => (
 export const api = {
   companies: simpleMethod('companies'),
   categories: simpleMethod('categories'),
+  sortBy: async (): Promise<ApiResult> => ({
+    data: [{
+      id: 'date',
+      name: 'Date',
+    }, {
+      id: 'name',
+      name: 'Name',
+    }],
+    meta: {
+      default: {
+        id: 'date',
+        name: 'Date',
+      },
+    },
+  }),
   async list(params: {
     category?: string;
     company?: string;
@@ -60,7 +38,7 @@ export const api = {
     name?: string;
     page?: number;
     sortBy?: string;
-  }): Promise<LogosResult> {
+  }): Promise<ApiResultLogos> {
     let url = '/api/logos?';
 
     Object.entries(params).forEach(([key, val]) => {

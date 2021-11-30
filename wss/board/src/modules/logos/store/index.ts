@@ -1,7 +1,6 @@
 import { initStore } from 'src/utils';
-import type { LogosStore as Store } from 'types/modules/logos';
+import type { LogosStore as Store } from 'types/logos';
 import { initBag } from './bag';
-import { initFilter } from './filter';
 import { initList } from './list';
 import { initMeta } from './meta';
 import { initSearch } from './search';
@@ -11,7 +10,6 @@ export const LogosStore = new (function (this: Store) {
   initStore.call(this);
   initSearch.call(this);
   initMeta.call(this);
-  initFilter.call(this);
   initList.call(this);
   initSentinel.call(this);
   initBag.call(this);

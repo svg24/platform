@@ -1,4 +1,4 @@
-import type { LayoutStore } from 'types/modules/layout';
+import type { LayoutStore } from 'types/layout';
 
 export const initRoot = function (this: LayoutStore): void {
   const tmp: {

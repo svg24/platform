@@ -4,7 +4,7 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import type { LayoutStore } from 'types/modules/layout';
+import type { LayoutStore } from 'types/layout';
 
 export const initSidebar = function (this: LayoutStore): void {
   this.sidebar = {
