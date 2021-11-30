@@ -30,17 +30,11 @@ type LogosStoreBag = {
  */
 
 type LogosStoreFilter = {
-  readonly isActive: boolean;
-  isMounted: boolean;
-  mount: () => Promise<void>;
-  params: LogosFilterParameters;
-  reset: () => void;
-};
-
-type LogosFilterParameters = {
   categories: LogosFilterSimpleParameter;
   companies: LogosFilterSimpleParameter;
+  mount: () => Promise<void>;
   multiplier: number | undefined;
+  reset: () => void;
   search: LogosFilterSearch;
   sortBy: LogosFilterSortBy;
 };

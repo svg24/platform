@@ -7,7 +7,7 @@ import {
 import type { LogosStore } from 'types/modules/logos';
 
 export const initSortBy = function (this: LogosStore): void {
-  Object.defineProperties(this.filter.params, {
+  Object.defineProperties(this.filter, {
     sortBy: {
       value: {
         id: 'sortBy',
@@ -24,35 +24,35 @@ export const initSortBy = function (this: LogosStore): void {
       enumerable: true,
     },
   });
-  Object.defineProperties(this.filter.params.sortBy.val, {
+  Object.defineProperties(this.filter.sortBy.val, {
     def: {
-      value: this.filter.params.sortBy.opts[0]?.id,
+      value: this.filter.sortBy.opts[0]?.id,
       enumerable: true,
     },
   });
-  Object.defineProperties(this.filter.params.sortBy.val, {
+  Object.defineProperties(this.filter.sortBy.val, {
     _cur: {
-      value: this.filter.params.sortBy.val.def,
+      value: this.filter.sortBy.val.def,
       enumerable: true,
       configurable: true,
     },
     cur: {
       get: () => {
-        const { val } = this.filter.params.sortBy;
+        const { val } = this.filter.sortBy;
 
         return val._cur || val.def;
       },
       set: (val) => {
-        this.filter.params.sortBy.val._cur = val;
+        this.filter.sortBy.val._cur = val;
       },
       enumerable: true,
       configurable: true,
     },
   });
-  Object.defineProperties(this.filter.params.sortBy, {
+  Object.defineProperties(this.filter.sortBy, {
     isActive: {
       get: () => {
-        const { val } = this.filter.params.sortBy;
+        const { val } = this.filter.sortBy;
 
         return val._cur !== val.def;
       },
@@ -60,18 +60,18 @@ export const initSortBy = function (this: LogosStore): void {
     },
   });
 
-  this.filter.params.sortBy.set = (id) => {
-    this.filter.params.sortBy.val.cur = id;
+  this.filter.sortBy.set = (id) => {
+    this.filter.sortBy.val.cur = id;
   };
-  this.filter.params.sortBy.reset = () => {
-    this.filter.params.sortBy.val.cur = this.filter.params.sortBy.val.def;
+  this.filter.sortBy.reset = () => {
+    this.filter.sortBy.val.cur = this.filter.sortBy.val.def;
   };
 
-  makeObservable(this.filter.params.sortBy, {
+  makeObservable(this.filter.sortBy, {
     set: action,
     reset: action,
   });
-  makeObservable(this.filter.params.sortBy.val, {
+  makeObservable(this.filter.sortBy.val, {
     _cur: observable,
     cur: computed,
   });

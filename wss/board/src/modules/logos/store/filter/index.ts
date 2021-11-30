@@ -1,9 +1,3 @@
-// import {
-//   action,
-//   computed,
-//   makeObservable,
-//   observable,
-// } from 'mobx';
 import type { LogosStore } from 'types/modules/logos';
 import { initSearch } from './search';
 import { initSimple } from './simple';
@@ -13,11 +7,8 @@ export function initFilter(this: LogosStore): void {
   Object.defineProperties(this, {
     filter: {
       value: {
-        params: {
-          multiplier: undefined,
-          search: {},
-        },
-        isMounted: false,
+        multiplier: undefined,
+        search: {},
       },
       enumerable: true,
     },
@@ -29,28 +20,12 @@ export function initFilter(this: LogosStore): void {
   initSortBy.call(this);
 
   this.filter.mount = async () => {
-    await this.filter.params.categories.fetch();
-    await this.filter.params.companies.fetch();
-
-    this.filter.isMounted = true;
+    await this.filter.categories.fetch();
+    await this.filter.companies.fetch();
   };
 
-  Object.defineProperties(this.filter, {
-    isActive: {
-      get: () => (
-        !![
-          this.filter.params.categories,
-          this.filter.params.companies,
-          this.filter.params.search,
-          this.filter.params.sortBy,
-        ].find((pr) => pr.isActive)
-      ),
-      enumerable: true,
-    },
-  });
-
   this.filter.reset = () => {
-    const { search, sortBy } = this.filter.params;
+    const { search, sortBy } = this.filter;
 
     if (search.isActive || sortBy.isActive) {
       if (search.isActive) search.reset();

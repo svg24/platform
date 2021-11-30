@@ -19,7 +19,7 @@ const LayoutMainFilterParameters = (): JSX.Element => {
   return (
     <>
       {[
-        ctx.filter.params.sortBy,
+        ctx.filter.sortBy,
       ].map((par) => (
         <FilterParameter
           key={par.id}
@@ -52,8 +52,8 @@ const LayoutMainFilterParametersAlphabetical = (): JSX.Element => {
   return (
     <>
       {[
-        ctx.filter.params.categories,
-        ctx.filter.params.companies,
+        ctx.filter.categories,
+        ctx.filter.companies,
       ].map((par) => (par.opts
         ? (
           <FilterParameterAlphabetical
@@ -103,10 +103,9 @@ const LayoutMainFilterApplied = (): JSX.Element => {
   const applied = {
     el: observer(() => {
       const active = [
-        ctx.filter.params.categories,
-        ctx.filter.params.companies,
-        ctx.filter.params.search,
-        ctx.filter.params.sortBy,
+        ctx.filter.categories,
+        ctx.filter.companies,
+        ctx.filter.sortBy,
       ].filter((prop) => prop.isActive);
 
       return active.length

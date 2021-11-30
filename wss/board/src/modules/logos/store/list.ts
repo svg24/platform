@@ -34,7 +34,7 @@ export function initList(this: LogosStore): void {
     reset: async () => {
       this.meta.page.reset();
 
-      const res = await this.list.fetch(this.filter.params.multiplier);
+      const res = await this.list.fetch(this.filter.multiplier);
 
       this.meta.update(res.meta);
       this.list.clear();
@@ -43,10 +43,10 @@ export function initList(this: LogosStore): void {
     },
 
     fetch: async (multiplier) => {
-      const category = this.filter.params.categories.val.cur;
-      const company = this.filter.params.companies.val.cur;
-      const name = this.filter.params.search.val.cur;
-      const sortBy = this.filter.params.sortBy.val.cur;
+      const category = this.filter.categories.val.cur;
+      const company = this.filter.companies.val.cur;
+      const name = this.filter.search.val.cur;
+      const sortBy = this.filter.sortBy.val.cur;
       const res = await api.list({
         ...category ? { category } : {},
         ...company ? { company } : {},

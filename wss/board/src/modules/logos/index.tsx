@@ -50,7 +50,7 @@ export const Logos = (): JSX.Element => {
 
         list.obs.create().then(() => {
           check().then((res) => {
-            ctx.filter.params.multiplier = res;
+            ctx.filter.multiplier = res;
           });
         });
       }, []);

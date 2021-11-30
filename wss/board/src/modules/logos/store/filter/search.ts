@@ -8,8 +8,8 @@ import { debounce, escapeStr } from 'src/utils';
 import type { LogosStore } from 'types/modules/logos';
 
 export const initSearch = function (this: LogosStore): void {
-  this.filter.params.search.id = 'search';
-  this.filter.params.search.val = {
+  this.filter.search.id = 'search';
+  this.filter.search.val = {
     _prev: undefined,
     _field: '',
     cur: undefined,
@@ -21,11 +21,11 @@ export const initSearch = function (this: LogosStore): void {
     },
   };
 
-  this.filter.params.search.process = (val) => {
-    this.filter.params.search.val.field = val;
+  this.filter.search.process = (val) => {
+    this.filter.search.val.field = val;
 
     debounce(() => {
-      const prev = this.filter.params.search.val._prev;
+      const prev = this.filter.search.val._prev;
       const { isItems } = this.list;
       const trimmed = val.trim();
 
@@ -34,34 +34,34 @@ export const initSearch = function (this: LogosStore): void {
       if (!prev && isItems && !trimmed) return;
 
       if (!trimmed) {
-        this.filter.params.search.reset();
+        this.filter.search.reset();
       } else {
-        this.filter.params.search.val.cur = escapeStr(val);
+        this.filter.search.val.cur = escapeStr(val);
       }
 
       this.list.reset();
 
-      this.filter.params.search.val._prev = trimmed;
+      this.filter.search.val._prev = trimmed;
     }, 300)();
   };
 
-  Object.defineProperties(this.filter.params.search, {
+  Object.defineProperties(this.filter.search, {
     isActive: {
-      get: () => !!this.filter.params.search.val.field,
+      get: () => !!this.filter.search.val.field,
       enumerable: true,
     },
   });
 
-  this.filter.params.search.reset = () => {
-    this.filter.params.search.val.cur = undefined;
-    this.filter.params.search.val.field = '';
+  this.filter.search.reset = () => {
+    this.filter.search.val.cur = undefined;
+    this.filter.search.val.field = '';
   };
 
-  makeObservable(this.filter.params.search, {
+  makeObservable(this.filter.search, {
     process: action,
     reset: action,
   });
-  makeObservable(this.filter.params.search.val, {
+  makeObservable(this.filter.search.val, {
     _field: observable,
     field: computed,
   });

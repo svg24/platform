@@ -11,7 +11,7 @@ export function initSimple(
   this: LogosStore,
   id: 'categories' | 'companies',
 ): void {
-  this.filter.params[id] = {
+  this.filter[id] = {
     id,
     legend: `${id[0]?.toUpperCase()}${id.slice(1)}`,
     opts: undefined,
@@ -19,10 +19,10 @@ export function initSimple(
       this.opts = (await api[id]()).data;
     },
     set: (passedId) => {
-      this.filter.params[id].val.cur = passedId;
+      this.filter[id].val.cur = passedId;
     },
     reset: () => {
-      this.filter.params[id].val.cur = undefined;
+      this.filter[id].val.cur = undefined;
     },
     val: {
       _cur: undefined,
@@ -38,11 +38,11 @@ export function initSimple(
     },
   };
 
-  makeObservable(this.filter.params[id], {
+  makeObservable(this.filter[id], {
     set: action,
     reset: action,
   });
-  makeObservable(this.filter.params[id].val, {
+  makeObservable(this.filter[id].val, {
     _cur: observable,
     cur: computed,
   });
