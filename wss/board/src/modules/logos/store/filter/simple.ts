@@ -5,7 +5,7 @@ import {
   observable,
 } from 'mobx';
 import { api } from 'src/plugins/api';
-import type { LogosStore } from '../../types';
+import type { LogosStore } from 'types/modules/logos';
 
 export function initSimple(
   this: LogosStore,

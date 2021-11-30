@@ -1,5 +1,5 @@
 import { initStore } from 'src/utils';
-import type { LogosStore as Store } from '../types';
+import type { LogosStore as Store } from 'types/modules/logos';
 import { initBag } from './bag';
 import { initFilter } from './filter';
 import { initList } from './list';

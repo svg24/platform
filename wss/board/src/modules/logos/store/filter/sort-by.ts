@@ -4,7 +4,7 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import type { LogosStore } from '../../types';
+import type { LogosStore } from 'types/modules/logos';
 
 export const initSortBy = function (this: LogosStore): void {
   Object.defineProperties(this.filter.params, {

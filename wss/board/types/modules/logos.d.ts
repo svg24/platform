@@ -5,7 +5,7 @@ import type {
   LogosResult,
   SimpleResult,
 } from 'src/plugins/api';
-import type { Store } from 'src/types/store';
+import type { Store } from 'types/store';
 
 export interface LogosStore extends Store<LogosStore> {
   bag: LogosStoreBag;

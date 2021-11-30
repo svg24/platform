@@ -6,7 +6,7 @@ import {
 } from 'mobx';
 import { LayoutStore } from 'src/modules/layout';
 import { api } from 'src/plugins/api';
-import type { LogosStore } from '../types';
+import type { LogosStore } from 'types/modules/logos';
 
 export function initList(this: LogosStore): void {
   this.list = {

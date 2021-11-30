@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import type { Store } from 'src/types/store';
+import type { Store } from 'types/store';
 
 export interface LayoutStore extends Store<LayoutStore> {
   main: LayoutStoreMain;

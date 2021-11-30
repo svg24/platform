@@ -4,7 +4,7 @@
 //   makeObservable,
 //   observable,
 // } from 'mobx';
-import type { LogosStore } from '../../types';
+import type { LogosStore } from 'types/modules/logos';
 import { initSearch } from './search';
 import { initSimple } from './simple';
 import { initSortBy } from './sort-by';

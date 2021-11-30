@@ -4,7 +4,7 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import type { LogosStore } from '../types';
+import type { LogosStore } from 'types/modules/logos';
 
 export function initMeta(this: LogosStore): void {
   this.meta = {

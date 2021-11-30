@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import type { ReactElement } from 'react';
-import type { Store } from '../types/store';
+import type { Store } from 'types/store';
 
 export function initStore<I extends Store<I>>(this: I): void {
   Object.defineProperties(this, {
