@@ -8,7 +8,6 @@ export function initFilter(this: LogosStore): void {
     filter: {
       value: {
         multiplier: undefined,
-        search: {},
       },
       enumerable: true,
     },

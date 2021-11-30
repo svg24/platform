@@ -54,12 +54,11 @@ type LogosFilterSimpleParameter = {
 };
 
 type LogosFilterSearch = {
-  id: string;
-  isActive: boolean;
+  readonly isActive: boolean;
   process: (val: string) => void;
   reset: () => void;
   val: {
-    _field: string | undefined;
+    _field: string;
     _prev: string | undefined;
     cur: string | undefined;
     field: LogosFilterSearch['val']['_field'];

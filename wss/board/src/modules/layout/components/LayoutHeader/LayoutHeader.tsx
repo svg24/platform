@@ -35,7 +35,7 @@ export const LayoutHeader = (): JSX.Element => {
   const search = {
     el: observer(() => (
       <Search
-        val={logosCtx.filter.search.val.field || ''}
+        val={logosCtx.filter.search.val.field}
         onInput={(ev) => {
           logosCtx.filter.search.process(ev.target.value);
         }}
