@@ -27,5 +27,7 @@ export const FilterStore = new (function (this: Store) {
 
   this.reset = () => {
     if (this.sortBy.isApplied) this.sortBy.reset();
+    if (this.category.isApplied) this.category.reset();
+    if (this.company.isApplied) this.company.reset();
   };
 } as any as { new (): Store })();

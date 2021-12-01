@@ -1,3 +1,23 @@
+@keyframes slide-container {
+  from {
+    max-width: 2rem;
+  }
+
+  to {
+    max-width: 5rem;
+  }
+}
+
+@keyframes fade {
+  from {
+    @apply opacity-0;
+  }
+
+  to {
+    @apply opacity-100;
+  }
+}
+
 .layout-header {
   @apply flex justify-between px-6 py-4;
   grid-area: header;
@@ -16,13 +36,57 @@
 }
 
 .layout-header__container {
-  @apply relative flex;
+  @apply contents;
+}
+
+.layout-header__container_counter-display {
+  @apply relative flex items-center overflow-hidden;
+}
+
+.layout-header__container_counter-display::before {
+  @apply absolute inset-0 rounded-lg bg-neutral-50;
+  content: '';
+}
+
+.layout-header__container_counter-in {
+  animation: slide-container 300ms forwards;
+}
+
+.layout-header__container_counter-out {
+  animation: slide-container 300ms forwards reverse;
 }
 
 .layout-header__btn {
-  @apply p-1.5 rounded-lg text-neutral-400 hover:text-black focus:text-black duration-100;
+  @apply p-1.5 rounded-lg;
+}
+
+.layout-header__container_counter-display .layout-header__btn,
+.layout-header__counter {
+  @apply z-10;
+}
+
+.layout-header__counter {
+  @apply text-sm text-center text-neutral-400;
+  min-width: 1rem;
+}
+
+.layout-header__container_counter-in::before,
+.layout-header__container_counter-in .layout-header__btn:last-of-type,
+.layout-header__container_counter-in .layout-header__counter {
+  animation: fade 300ms forwards;
+}
+
+.layout-header__container_counter-out::before,
+.layout-header__container_counter-out .layout-header__btn:last-of-type,
+.layout-header__container_counter-out .layout-header__counter {
+  animation: fade 300ms forwards reverse;
 }
 
 .layout-header__icon {
-  @apply w-5 h-5;
+  @apply w-5 h-5 duration-100 text-neutral-400;
+}
+
+.layout-header__btn:hover .layout-header__icon,
+.layout-header__btn:focus .layout-header__icon {
+  @apply text-black;
 }
