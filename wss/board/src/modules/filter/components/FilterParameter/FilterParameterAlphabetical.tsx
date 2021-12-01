@@ -1,51 +1,11 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
-import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
-import { LogosStore } from 'src/modules/logos';
 import type { FilterStoreParameterAlphabetical } from 'types/filter';
-
-const FilterParameterAlphabeticalLabel = ({
-  opt,
-  pr,
-}: {
-  opt: Parameters<FilterStoreParameterAlphabetical['set']>[0];
-  pr: FilterStoreParameterAlphabetical;
-}): JSX.Element => {
-  const { ctx } = LogosStore;
-
-  const input = {
-    el: observer(() => {
-      const isCur = pr.val.checkIsCur(opt.id);
-
-      return (
-        <input
-          className="filter-parameter__input"
-          defaultChecked={isCur}
-          name={pr.id}
-          type="radio"
-          onClick={(el) => {
-            if (isCur && (el.target as HTMLInputElement).checked) {
-              pr.reset();
-            } else {
-              pr.set(opt);
-            }
-
-            ctx.list.reset();
-          }}
-        />
-      );
-    }),
-  };
-
-  return (
-    <label className="filter-parameter__label">
-      <input.el />
-      <span className="filter-parameter__name">
-        {opt.name}
-      </span>
-    </label>
-  );
-};
+import type { FilterParameterBaseLabelOnClick } from './FilterParameterBase';
+import {
+  FilterParameterBase,
+  FilterParameterBaseLabel,
+} from './FilterParameterBase';
 
 const FilterParameterAlphabeticalItem = ({
   children,
@@ -138,14 +98,16 @@ const FilterParameterAlphabeticalItem = ({
 };
 
 export const FilterParameterAlphabetical = ({
+  onClick,
   pr,
 }: {
+  onClick: (
+    opt: Parameters<FilterStoreParameterAlphabetical['set']>[0],
+    checked: Parameters<FilterParameterBaseLabelOnClick>[0],
+  ) => void;
   pr: FilterStoreParameterAlphabetical;
 }): JSX.Element => (
-  <fieldset className="filter-parameter">
-    <legend className="filter-parameter__legend">
-      {pr.legend}
-    </legend>
+  <FilterParameterBase legend={pr.legend}>
     <ul className="filter-parameter__list">
       {pr.opts && Object.entries(pr.opts).map(([key, val]) => (
         <FilterParameterAlphabeticalItem
@@ -153,14 +115,15 @@ export const FilterParameterAlphabetical = ({
           letter={key}
         >
           {val.map((opt) => (
-            <FilterParameterAlphabeticalLabel
+            <FilterParameterBaseLabel
               key={opt.id}
               opt={opt}
               pr={pr}
+              onClick={(checked) => { onClick(opt, checked); }}
             />
           ))}
         </FilterParameterAlphabeticalItem>
       ))}
     </ul>
-  </fieldset>
+  </FilterParameterBase>
 );

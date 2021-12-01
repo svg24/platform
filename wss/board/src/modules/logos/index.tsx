@@ -12,12 +12,12 @@ import { LogosStore } from './store';
 export { LogosStore };
 
 export const Logos = (): JSX.Element => {
-  const { ctx } = LogosStore;
-  const filterCtx = FilterStore;
+  const logosCtx = LogosStore.ctx;
+  const filterCtx = FilterStore.ctx;
 
   const noFound = {
     el: observer(() => (
-      ctx.list.isItems || ctx.meta.page.isNext
+      logosCtx.list.isItems || logosCtx.meta.page.isNext
         ? <></>
         : <LogosNoFound />
     )),
@@ -31,8 +31,8 @@ export const Logos = (): JSX.Element => {
             let i = 1;
 
             const increment = (): void => {
-              if (ctx.sentinel.ref?.current) {
-                if (isInViewport(ctx.sentinel.ref.current)) {
+              if (logosCtx.sentinel.ref?.current) {
+                if (isInViewport(logosCtx.sentinel.ref.current)) {
                   i += 1;
 
                   list.upload().then(() => {
@@ -59,34 +59,34 @@ export const Logos = (): JSX.Element => {
       inst: undefined as IntersectionObserver | undefined,
       create: (): Promise<void> => (
         new Promise((resolve) => {
-          if (ctx.sentinel.ref?.current) {
+          if (logosCtx.sentinel.ref?.current) {
             list.obs.inst = new IntersectionObserver(([entry]) => {
-              if (entry && entry.isIntersecting && ctx.meta.page.isNext) {
+              if (entry && entry.isIntersecting && logosCtx.meta.page.isNext) {
                 list.upload().then(() => {
                   resolve();
                 });
               }
             }, { threshold: 0 });
 
-            list.obs.inst.observe(ctx.sentinel.ref.current);
+            list.obs.inst.observe(logosCtx.sentinel.ref.current);
           }
         })
       ),
     },
     upload: (): Promise<void> => (
       new Promise((resolve) => {
-        ctx.sentinel.show();
-        ctx.list.upload().then(() => {
-          ctx.sentinel.hide();
+        logosCtx.sentinel.show();
+        logosCtx.list.upload().then(() => {
+          logosCtx.sentinel.hide();
           resolve();
         });
       })
     ),
     el: observer(() => (
-      ctx.list.isItems && ctx.list.items
+      logosCtx.list.isItems && logosCtx.list.items
         ? (
           <LogosList>
-            {ctx.list.items.map((item) => (
+            {logosCtx.list.items.map((item) => (
               <LogosItem
                 item={item}
                 key={item.id}

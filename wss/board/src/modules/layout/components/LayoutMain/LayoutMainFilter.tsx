@@ -5,16 +5,18 @@ import {
   FilterParameterAlphabetical,
   FilterStore,
 } from 'src/modules/filter';
+import { LogosStore } from 'src/modules/logos';
 
 export const LayoutMainFilter = (): JSX.Element => {
-  const { ctx } = FilterStore;
+  const logosCtx = LogosStore.ctx;
+  const filterCtx = FilterStore.ctx;
 
   const applied = {
     el: observer(() => {
       const prs = [
-        ctx.category,
-        ctx.company,
-        ctx.sortBy,
+        filterCtx.category,
+        filterCtx.company,
+        filterCtx.sortBy,
       ].filter((pr) => pr.isActive);
 
       return <FilterApplied prs={prs} />;
@@ -23,16 +25,29 @@ export const LayoutMainFilter = (): JSX.Element => {
 
   return (
     <form className="layout-main__filter">
-      {[ctx.sortBy].map((pr) => (
+      {[filterCtx.sortBy].map((pr) => (
         <FilterParameter
           key={pr.id}
           pr={pr}
+          onChange={(opt) => {
+            pr.set(opt);
+            logosCtx.list.reset();
+          }}
         />
       ))}
-      {[ctx.category, ctx.company].map((pr) => (
+      {[filterCtx.category, filterCtx.company].map((pr) => (
         <FilterParameterAlphabetical
           key={pr.id}
           pr={pr}
+          onClick={(opt, checked) => {
+            if (checked) {
+              pr.reset();
+            } else {
+              pr.set(opt);
+            }
+
+            logosCtx.list.reset();
+          }}
         />
       ))}
       <applied.el />

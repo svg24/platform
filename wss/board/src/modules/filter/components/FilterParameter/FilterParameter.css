@@ -1,7 +1,3 @@
-.filter-parameter_as-container {
-  @apply flex flex-wrap gap-x-1;
-}
-
 .filter-parameter__list {
   @apply grid gap-y-1;
 }
@@ -25,7 +21,11 @@
 }
 
 .filter-parameter__container {
-  @apply flex flex-wrap gap-1 overflow-hidden duration-100;
+  @apply flex flex-wrap gap-x-1;
+}
+
+.filter-parameter__letter + .filter-parameter__container {
+  @apply gap-y-1 overflow-hidden duration-100;
   height: calc(1.25rem + 0.5rem);
 }
 
