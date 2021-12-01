@@ -6,6 +6,7 @@ import {
 } from 'mobx';
 import { FilterStore } from 'src/modules/filter';
 import { LayoutStore } from 'src/modules/layout';
+import { UserStore } from 'src/modules/usr';
 import { api } from 'src/plugins/api';
 import type { LogosStore } from 'types/logos';
 
@@ -35,7 +36,7 @@ export function initList(this: LogosStore): void {
     reset: async () => {
       this.meta.page.reset();
 
-      const res = await this.list.fetch(FilterStore.multiplier);
+      const res = await this.list.fetch(UserStore.multiplier);
 
       this.meta.update(res.meta);
       this.list.clear();

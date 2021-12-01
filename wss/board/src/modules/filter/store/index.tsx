@@ -4,9 +4,6 @@ import { initParameter } from './parameter';
 
 export const FilterStore = new (function (this: Store) {
   initStore.call(this);
-
-  this.multiplier = undefined;
-
   initParameter.call(this, 'category');
   initParameter.call(this, 'company');
   initParameter.call(this, 'sortBy');

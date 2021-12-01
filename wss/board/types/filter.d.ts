@@ -9,7 +9,6 @@ export interface FilterStore extends Store<FilterStore> {
   category: FilterStoreParameterAlphabetical;
   company: FilterStoreParameterAlphabetical;
   mount: () => Promise<void>;
-  multiplier: number | undefined;
   reset: () => void;
   sortBy: FilterStoreParameter;
 }

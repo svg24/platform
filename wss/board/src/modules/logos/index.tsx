@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { FilterStore } from 'src/modules/filter';
+import { UserStore } from 'src/modules/usr';
 import { isInViewport } from 'src/utils';
 import { LogosItem } from './components/LogosItem';
 import { LogosList } from './components/LogosList';
@@ -13,7 +13,7 @@ export { LogosStore };
 
 export const Logos = (): JSX.Element => {
   const logosCtx = LogosStore.ctx;
-  const filterCtx = FilterStore.ctx;
+  const usrCtx = UserStore.ctx;
 
   const noFound = {
     el: observer(() => (
@@ -50,7 +50,7 @@ export const Logos = (): JSX.Element => {
 
         list.obs.create().then(() => {
           check().then((res) => {
-            filterCtx.multiplier = res;
+            usrCtx.multiplier = res;
           });
         });
       }, []);
