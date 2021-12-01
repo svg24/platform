@@ -6,21 +6,21 @@ import type {
 } from 'types/filter';
 
 export const FilterApplied = ({
-  prs,
+  applied,
 }: {
-  prs: (FilterStoreParameter | FilterStoreParameterAlphabetical)[] | [];
+  applied: (FilterStoreParameter | FilterStoreParameterAlphabetical)[] | [];
 }): JSX.Element => {
   const { ctx } = LogosStore;
 
   return (
     <fieldset className="filter-applied">
-      {prs.length
+      {applied.length
         ? (
           <>
             <legend className="filter-applied__legend">
               Applied filters
             </legend>
-            {prs.map((pr) => (
+            {applied.map((pr) => (
               <label
                 className="filter-applied__label"
                 key={pr.id}

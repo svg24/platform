@@ -8,6 +8,7 @@ import type { Store } from 'types/store';
 export interface FilterStore extends Store<FilterStore> {
   category: FilterStoreParameterAlphabetical;
   company: FilterStoreParameterAlphabetical;
+  readonly getApplied: (FilterStoreParameter | FilterStoreParameterAlphabetical)[];
   mount: () => Promise<void>;
   reset: () => void;
   sortBy: FilterStoreParameter;
@@ -22,7 +23,7 @@ export type FilterStoreParameterAlphabetical
 export type FilterStoreParameterBase<T> = {
   fetch: () => Promise<void>;
   id: string;
-  readonly isActive: boolean;
+  readonly isApplied: boolean;
   legend: string;
   opts: T | undefined;
   reset: () => void;

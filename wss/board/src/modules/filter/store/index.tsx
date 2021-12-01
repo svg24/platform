@@ -8,6 +8,17 @@ export const FilterStore = new (function (this: Store) {
   initParameter.call(this, 'company');
   initParameter.call(this, 'sortBy');
 
+  Object.defineProperties(this, {
+    getApplied: {
+      get: () => [
+        this.category,
+        this.company,
+        this.sortBy,
+      ].filter((pr) => pr.isApplied),
+      enumerable: true,
+    },
+  });
+
   this.mount = async () => {
     await this.sortBy.fetch();
     await this.category.fetch();
@@ -15,6 +26,6 @@ export const FilterStore = new (function (this: Store) {
   };
 
   this.reset = () => {
-    if (this.sortBy.isActive) this.sortBy.reset();
+    if (this.sortBy.isApplied) this.sortBy.reset();
   };
 } as any as { new (): Store })();

@@ -43,7 +43,7 @@ export function initParameter(
         return passedId === this.cur?.id;
       },
     },
-    get isActive() {
+    get isApplied() {
       return this.val._def
         ? this.val.cur?.id !== this.val._def.id
         : !!this.val.cur;

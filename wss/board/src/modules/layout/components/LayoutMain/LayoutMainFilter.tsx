@@ -12,15 +12,7 @@ export const LayoutMainFilter = (): JSX.Element => {
   const filterCtx = FilterStore.ctx;
 
   const applied = {
-    el: observer(() => {
-      const prs = [
-        filterCtx.category,
-        filterCtx.company,
-        filterCtx.sortBy,
-      ].filter((pr) => pr.isActive);
-
-      return <FilterApplied prs={prs} />;
-    }),
+    el: observer(() => <FilterApplied applied={filterCtx.getApplied || []} />),
   };
 
   return (
