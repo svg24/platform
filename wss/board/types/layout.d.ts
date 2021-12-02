@@ -21,6 +21,7 @@ type LayoutStoreMain = {
     hide: () => void;
     isVisible: LayoutStoreMain['filter']['_isVisible'];
     show: () => void;
+    toggle: () => void;
   };
 };
 
@@ -29,11 +30,6 @@ type LayoutStoreMain = {
  */
 
 type LayoutStoreRoot = {
-  filter: {
-    hide: () => Promise<void>;
-    show: () => void;
-    toggle: () => void;
-  };
   ref: RefObject<HTMLDivElement> | undefined;
   sidebar: {
     hide: () => void;

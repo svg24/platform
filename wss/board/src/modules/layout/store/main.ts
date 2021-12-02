@@ -28,6 +28,13 @@ export const initMain = function (this: LayoutStore): void {
       hide() {
         this.isVisible = false;
       },
+      toggle: () => {
+        if (this.main.filter.isVisible) {
+          this.main.filter.hide();
+        } else {
+          this.main.filter.show();
+        }
+      },
     },
   };
 

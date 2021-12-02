@@ -16,35 +16,6 @@ export const initRoot = function (this: LayoutStore): void {
 
   this.root = {
     ref: undefined,
-    filter: {
-      show: () => {
-        tmp.ls?.add('layout-root_filter-display');
-        tmp.ls?.add('layout-root_filter-in');
-        setTimeout(() => {
-          tmp.ls?.remove('layout-root_filter-in');
-        }, tmp.ms);
-      },
-      hide: () => (
-        new Promise((resolve) => {
-          tmp.ls?.add('layout-root_filter-out');
-          setTimeout(() => {
-            tmp.ls?.remove('layout-root_filter-out');
-            tmp.ls?.remove('layout-root_filter-display');
-            resolve();
-          }, tmp.ms);
-        })
-      ),
-      toggle: () => {
-        if (this.main.filter.isVisible) {
-          this.root.filter.hide().then(() => {
-            this.main.filter.hide();
-          });
-        } else {
-          this.main.filter.show();
-          this.root.filter.show();
-        }
-      },
-    },
     sidebar: {
       show: () => {
         this.sidebar.show();

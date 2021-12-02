@@ -13,7 +13,7 @@
   grid-area: main;
 }
 
-.layout-root_filter-display .layout-main {
+.layout-main_filter-display {
   grid-template-columns: min-content 1fr;
 }
 
@@ -21,11 +21,11 @@
   @apply w-60 flex flex-col gap-y-4;
 }
 
-.layout-root_filter-in .layout-main__filter {
+.layout-main_filter-in .layout-main__filter {
   animation: slide-filter 0.3s forwards;
 }
 
-.layout-root_filter-out .layout-main__filter {
+.layout-main_filter-out .layout-main__filter {
   animation: slide-filter 0.3s forwards reverse;
 }
 
@@ -47,8 +47,8 @@
   @apply z-20 self-end p-4 justify-self-end;
 }
 
-.layout-root_filter-display .layout-main__container,
-.layout-root_filter-display .layout-main__actions {
+.layout-main_filter-display .layout-main__container,
+.layout-main_filter-display .layout-main__actions {
   @apply col-start-2 col-end-3;
 }
 
