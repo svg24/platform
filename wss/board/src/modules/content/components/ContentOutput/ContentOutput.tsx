@@ -1,10 +1,10 @@
-export const LogosOutput = ({
+export const ContentOutput = ({
   children,
 }: {
   children: JSX.Element[];
 }): JSX.Element => (
   <output
-    className="logos-output"
+    className="content-output"
     form="search"
   >
     {children}

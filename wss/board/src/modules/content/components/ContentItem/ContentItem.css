@@ -1,29 +1,29 @@
-.logos-item {
+.content-item {
   @apply relative duration-100 bg-white border-2 rounded-lg shadow-sm border-neutral-50;
 }
 
-.logos-item:hover,
-.logos-item:focus-within {
+.content-item:hover,
+.content-item:focus-within {
   @apply shadow-md border-neutral-100;
 }
 
-.logos-item__container {
+.content-item__container {
   @apply px-3 py-2 border-b border-neutral-100;
 }
 
-.logos-item__heading {
+.content-item__heading {
   @apply px-3 py-2;
 }
 
-.logos-list_base .logos-item__container > svg {
+.content-list_base .content-item__container > svg {
   @apply w-16 h-16;
 }
 
-.logos-item__btn {
+.content-item__btn {
   @apply w-full text-sm text-left truncate;
 }
 
-.logos-item__btn::before {
+.content-item__btn::before {
   @apply absolute inset-0;
   content: '';
 }

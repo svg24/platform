@@ -1,11 +1,11 @@
 import { CogIcon } from '@heroicons/react/outline';
 import { observer } from 'mobx-react-lite';
 import { Search } from 'src/components';
-import { LogosStore } from 'src/modules/logos';
+import { ContentStore } from 'src/modules/content';
 import { LayoutHeaderFilter } from './LayoutHeaderFilter';
 
 export const LayoutHeader = (): JSX.Element => {
-  const { ctx } = LogosStore;
+  const { ctx } = ContentStore;
 
   const search = {
     el: observer(() => (

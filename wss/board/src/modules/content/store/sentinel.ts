@@ -4,9 +4,9 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import type { LogosStore } from 'types/logos';
+import type { ContentStore } from 'types/content';
 
-export function initSentinel(this: LogosStore): void {
+export function initSentinel(this: ContentStore): void {
   this.sentinel = {
     _isVisible: false,
     get isVisible() {

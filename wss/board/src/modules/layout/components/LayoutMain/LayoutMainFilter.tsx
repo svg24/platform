@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite';
+import { ContentStore } from 'src/modules/content';
 import {
   FilterApplied,
   FilterParameter,
   FilterParameterAlphabetical,
   FilterStore,
 } from 'src/modules/filter';
-import { LogosStore } from 'src/modules/logos';
 
 export const LayoutMainFilter = (): JSX.Element => {
-  const logosCtx = LogosStore.ctx;
+  const contentCtx = ContentStore.ctx;
   const filterCtx = FilterStore.ctx;
 
   const applied = {
@@ -23,7 +23,7 @@ export const LayoutMainFilter = (): JSX.Element => {
           pr={pr}
           onChange={(opt) => {
             pr.set(opt);
-            logosCtx.list.reset();
+            contentCtx.list.reset();
           }}
         />
       ))}
@@ -38,7 +38,7 @@ export const LayoutMainFilter = (): JSX.Element => {
               pr.set(opt);
             }
 
-            logosCtx.list.reset();
+            contentCtx.list.reset();
           }}
         />
       ))}

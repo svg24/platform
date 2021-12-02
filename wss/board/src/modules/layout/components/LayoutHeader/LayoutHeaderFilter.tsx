@@ -2,14 +2,14 @@ import { AdjustmentsIcon, XIcon } from '@heroicons/react/outline';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
+import { ContentStore } from 'src/modules/content';
 import { FilterStore } from 'src/modules/filter';
-import { LogosStore } from 'src/modules/logos';
 import { LayoutStore } from '../../store';
 
 export const LayoutHeaderFilter = (): JSX.Element => {
   const layoutCtx = LayoutStore.ctx;
   const filterCtx = FilterStore.ctx;
-  const logosCtx = LogosStore.ctx;
+  const contentCtx = ContentStore.ctx;
 
   const root = {
     ref: useRef<HTMLDivElement>(null),
@@ -96,7 +96,7 @@ export const LayoutHeaderFilter = (): JSX.Element => {
               type="button"
               onClick={() => {
                 filterCtx.reset();
-                logosCtx.list.reset();
+                contentCtx.list.reset();
               }}
             >
               <XIcon className="layout-header__icon" />

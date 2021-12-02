@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
-import { LogosStore } from 'src/modules/logos';
+import { ContentStore } from 'src/modules/content';
 
 export const LayoutFooter = (): JSX.Element => {
-  const { ctx } = LogosStore;
+  const { ctx } = ContentStore;
   const links = [{
     id: 'policy',
     label: 'Policy',

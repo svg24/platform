@@ -4,9 +4,9 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import type { LogosStore } from 'types/logos';
+import type { ContentStore } from 'types/content';
 
-export function initMeta(this: LogosStore): void {
+export function initMeta(this: ContentStore): void {
   this.meta = {
     length: {
       _cur: 0,

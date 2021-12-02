@@ -2,10 +2,10 @@ import { reaction } from 'mobx';
 import type { MutableRefObject } from 'react';
 import { forwardRef, useEffect } from 'react';
 import { Spin } from 'src/components';
-import { LogosStore } from '../../store';
+import { ContentStore } from '../../store';
 
-export const LogosSentinel = forwardRef<HTMLDivElement>((_, ref) => {
-  const { ctx } = LogosStore;
+export const ContentSentinel = forwardRef<HTMLDivElement>((_, ref) => {
+  const { ctx } = ContentStore;
 
   const root = {
     get ls() {
@@ -21,16 +21,16 @@ export const LogosSentinel = forwardRef<HTMLDivElement>((_, ref) => {
     },
     toggleHidden() {
       if (ctx.meta.page.isNext) {
-        root.ls?.remove('logos-sentinel_hidden');
+        root.ls?.remove('content-sentinel_hidden');
       } else {
-        root.ls?.add('logos-sentinel_hidden');
+        root.ls?.add('content-sentinel_hidden');
       }
     },
     toggleVisible() {
       if (ctx.sentinel.isVisible) {
-        root.ls?.add('logos-sentinel_visible');
+        root.ls?.add('content-sentinel_visible');
       } else {
-        root.ls?.remove('logos-sentinel_visible');
+        root.ls?.remove('content-sentinel_visible');
       }
     },
   };
@@ -39,10 +39,10 @@ export const LogosSentinel = forwardRef<HTMLDivElement>((_, ref) => {
 
   return (
     <div
-      className="logos-sentinel"
+      className="content-sentinel"
       ref={ref}
     >
-      <Spin className="logos-sentinel__icon" />
+      <Spin className="content-sentinel__icon" />
       <span>
         Loading more...
       </span>

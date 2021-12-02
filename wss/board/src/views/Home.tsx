@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Content, ContentStore } from '../modules/content';
 import { FilterStore } from '../modules/filter';
 import { Layout, LayoutStore } from '../modules/layout';
-import { Logos, LogosStore } from '../modules/logos';
 import { UserStore } from '../modules/usr';
 
 export default (): JSX.Element => {
@@ -18,11 +18,11 @@ export default (): JSX.Element => {
       <UserStore.Provider>
         <LayoutStore.Provider>
           <FilterStore.Provider>
-            <LogosStore.Provider>
+            <ContentStore.Provider>
               <Layout>
-                <Logos />
+                <Content />
               </Layout>
-            </LogosStore.Provider>
+            </ContentStore.Provider>
           </FilterStore.Provider>
         </LayoutStore.Provider>
       </UserStore.Provider>

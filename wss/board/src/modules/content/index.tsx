@@ -2,24 +2,24 @@ import { observer } from 'mobx-react-lite';
 import { createRef, useEffect } from 'react';
 import { UserStore } from 'src/modules/usr';
 import { isInViewport } from 'src/utils';
-import { LogosItem } from './components/LogosItem';
-import { LogosList } from './components/LogosList';
-import { LogosNoFound } from './components/LogosNoFound';
-import { LogosOutput } from './components/LogosOutput';
-import { LogosSentinel } from './components/LogosSentinel';
-import { LogosStore } from './store';
+import { ContentItem } from './components/ContentItem';
+import { ContentList } from './components/ContentList';
+import { ContentNoFound } from './components/ContentNoFound';
+import { ContentOutput } from './components/ContentOutput';
+import { ContentSentinel } from './components/ContentSentinel';
+import { ContentStore } from './store';
 
-export { LogosStore };
+export { ContentStore };
 
-export const Logos = (): JSX.Element => {
-  const logosCtx = LogosStore.ctx;
+export const Content = (): JSX.Element => {
+  const contentCtx = ContentStore.ctx;
   const usrCtx = UserStore.ctx;
 
   const noFound = {
     el: observer(() => (
-      logosCtx.list.isItems || logosCtx.meta.page.isNext
+      contentCtx.list.isItems || contentCtx.meta.page.isNext
         ? <></>
-        : <LogosNoFound />
+        : <ContentNoFound />
     )),
   };
 
@@ -65,7 +65,7 @@ export const Logos = (): JSX.Element => {
         new Promise((resolve) => {
           if (sentinel.ref?.current) {
             list.obs.inst = new IntersectionObserver(([entry]) => {
-              if (entry && entry.isIntersecting && logosCtx.meta.page.isNext) {
+              if (entry && entry.isIntersecting && contentCtx.meta.page.isNext) {
                 list.upload().then(() => {
                   resolve();
                 });
@@ -79,24 +79,24 @@ export const Logos = (): JSX.Element => {
     },
     upload: (): Promise<void> => (
       new Promise((resolve) => {
-        logosCtx.sentinel.show();
-        logosCtx.list.upload().then(() => {
-          logosCtx.sentinel.hide();
+        contentCtx.sentinel.show();
+        contentCtx.list.upload().then(() => {
+          contentCtx.sentinel.hide();
           resolve();
         });
       })
     ),
     el: observer(() => (
-      logosCtx.list.isItems && logosCtx.list.items
+      contentCtx.list.isItems && contentCtx.list.items
         ? (
-          <LogosList>
-            {logosCtx.list.items.map((item) => (
-              <LogosItem
+          <ContentList>
+            {contentCtx.list.items.map((item) => (
+              <ContentItem
                 item={item}
                 key={item.id}
               />
             ))}
-          </LogosList>
+          </ContentList>
         )
         : <></>
     )),
@@ -105,10 +105,10 @@ export const Logos = (): JSX.Element => {
   list.mount();
 
   return (
-    <LogosOutput>
+    <ContentOutput>
       <list.el />
       <noFound.el />
-      <LogosSentinel ref={sentinel.ref} />
-    </LogosOutput>
+      <ContentSentinel ref={sentinel.ref} />
+    </ContentOutput>
   );
 };

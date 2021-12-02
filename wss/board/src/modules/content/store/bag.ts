@@ -1,6 +1,6 @@
-import type { LogosStore } from 'types/logos';
+import type { ContentStore } from 'types/content';
 
-export function initBag(this: LogosStore): void {
+export function initBag(this: ContentStore): void {
   this.bag = {
     items: undefined,
 

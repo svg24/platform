@@ -1,12 +1,12 @@
 import { ExternalLinkIcon } from '@heroicons/react/outline';
 import { useEffect, useRef } from 'react';
-import { LogosStore } from 'src/modules/logos';
+import { ContentStore } from 'src/modules/content';
 import { LayoutStore } from '../../store';
 
 export const LayoutSidebar = (): JSX.Element => {
   const layoutCtx = LayoutStore.ctx;
-  const logosCtx = LogosStore.ctx;
-  const item = logosCtx.bag.items?.[0];
+  const contentCtx = ContentStore.ctx;
+  const item = contentCtx.bag.items?.[0];
 
   if (!item) return <></>;
 

@@ -1,11 +1,15 @@
 import { useRef, useState } from 'react';
 import { LayoutStore } from 'src/modules/layout';
 import type { ApiLogosDataItem } from 'types/api';
-import { LogosStore } from '../../store';
+import { ContentStore } from '../../store';
 
-export const LogosItem = ({ item }: { item: ApiLogosDataItem }): JSX.Element => {
+export const ContentItem = ({
+  item,
+}: {
+  item: ApiLogosDataItem;
+}): JSX.Element => {
   const layoutCtx = LayoutStore.ctx;
-  const logosCtx = LogosStore.ctx;
+  const contentCtx = ContentStore.ctx;
 
   const content = {
     _html: useState<string>(item.content[0]?.snippets.vanilla || ''),
@@ -22,20 +26,20 @@ export const LogosItem = ({ item }: { item: ApiLogosDataItem }): JSX.Element => 
     toggle() {
       layoutCtx.sidebar.initiator = btn.ref.current;
 
-      logosCtx.bag.add(item);
+      contentCtx.bag.add(item);
       layoutCtx.sidebar.show();
     },
   };
 
   return (
-    <li className="logos-item">
+    <li className="content-item">
       <div
-        className="logos-item__container"
+        className="content-item__container"
         dangerouslySetInnerHTML={{ __html: content.html }}
       />
-      <h3 className="logos-item__heading">
+      <h3 className="content-item__heading">
         <button
-          className="logos-item__btn"
+          className="content-item__btn"
           ref={btn.ref}
           type="button"
           onClick={btn.toggle}

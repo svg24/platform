@@ -8,9 +8,9 @@ import { FilterStore } from 'src/modules/filter';
 import { LayoutStore } from 'src/modules/layout';
 import { UserStore } from 'src/modules/usr';
 import { api } from 'src/plugins/api';
-import type { LogosStore } from 'types/logos';
+import type { ContentStore } from 'types/content';
 
-export function initList(this: LogosStore): void {
+export function initList(this: ContentStore): void {
   this.list = {
     _items: undefined,
 

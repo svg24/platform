@@ -5,9 +5,9 @@ import {
   observable,
 } from 'mobx';
 import { debounce, escapeStr } from 'src/utils';
-import type { LogosStore } from 'types/logos';
+import type { ContentStore } from 'types/content';
 
-export const initSearch = function (this: LogosStore): void {
+export const initSearch = function (this: ContentStore): void {
   this.search = {
     val: {
       _prev: undefined,

@@ -1,5 +1,5 @@
 import { XIcon } from '@heroicons/react/outline';
-import { LogosStore } from 'src/modules/logos';
+import { ContentStore } from 'src/modules/content';
 import type {
   FilterStoreParameter,
   FilterStoreParameterAlphabetical,
@@ -10,7 +10,7 @@ export const FilterApplied = ({
 }: {
   applied: (FilterStoreParameter | FilterStoreParameterAlphabetical)[] | [];
 }): JSX.Element => {
-  const { ctx } = LogosStore;
+  const { ctx } = ContentStore;
 
   return (
     <fieldset className="filter-applied">

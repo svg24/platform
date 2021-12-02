@@ -1,9 +1,9 @@
-export const LogosList = ({
+export const ContentList = ({
   children,
 }: {
   children: JSX.Element[];
 }): JSX.Element => (
-  <ol className="logos-list logos-list_base">
+  <ol className="content-list content-list_base">
     {children}
   </ol>
 );
