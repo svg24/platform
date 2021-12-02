@@ -19,7 +19,7 @@
 }
 
 .layout-sidebar {
-  @apply z-20 grid col-start-1 col-end-2 row-start-1 row-end-4;
+  @apply z-10 grid col-start-1 col-end-2 row-start-1 row-end-4;
 }
 
 .layout-sidebar::before {
@@ -28,11 +28,11 @@
 }
 
 .layout-root_sidebar-in .layout-sidebar::before {
-  animation: fade-sidebar-bg 0.3s forwards;
+  animation: fade-sidebar-bg 300ms forwards;
 }
 
 .layout-root_sidebar-out .layout-sidebar::before {
-  animation: fade-sidebar-bg 0.3s forwards reverse;
+  animation: fade-sidebar-bg 300ms forwards reverse;
 }
 
 .layout-sidebar__inner {
@@ -40,16 +40,16 @@
 }
 
 .layout-root_sidebar-in .layout-sidebar__inner {
-  animation: slide-sidebar 0.3s forwards;
+  animation: slide-sidebar 300ms forwards;
 }
 
 .layout-root_sidebar-out .layout-sidebar__inner {
-  animation: slide-sidebar 0.3s forwards reverse;
+  animation: slide-sidebar 300ms forwards reverse;
 }
 
 .layout-sidebar__container {
   @apply flex items-center justify-center w-full mb-4 rounded-lg h-52;
-  background-image: url('../../../../assets/images/pattern.svg');
+  background-image: url('src/assets/images/pattern.svg');
 }
 
 .layout-sidebar__container > svg {

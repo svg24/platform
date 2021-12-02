@@ -1,40 +1,34 @@
 import { useEffect, useRef } from 'react';
 import { LayoutStore } from '../../store';
 
-export const LayoutMainContainer = (
-  { children }: { children: JSX.Element },
-): JSX.Element => {
+export const LayoutMainContainer = ({
+  children,
+}: {
+  children: JSX.Element;
+}): JSX.Element => {
   const { ctx } = LayoutStore;
 
-  const container = {
+  const root = {
     ref: useRef<HTMLDivElement>(null),
-    get classList() {
-      return container.ref.current?.classList;
+    get ls() {
+      return root.ref.current?.classList;
     },
-    scrollDown: {
-      add() {
-        container.classList?.add('layout-main__container_scroll-down');
-      },
-      remove() {
-        container.classList?.remove('layout-main__container_scroll-down');
-      },
+    addScrollDown() {
+      root.ls?.add('layout-main__container_scroll-down');
     },
-    scrollUp: {
-      add() {
-        container.classList?.add('layout-main__container_scroll-up');
-      },
-      remove() {
-        container.classList?.remove('layout-main__container_scroll-up');
-      },
+    rmScrollDown() {
+      root.ls?.remove('layout-main__container_scroll-down');
+    },
+    addScrollUp() {
+      root.ls?.add('layout-main__container_scroll-up');
+    },
+    rmScrollUp() {
+      root.ls?.remove('layout-main__container_scroll-up');
     },
   };
 
-  ctx.main.content.ref = useRef<HTMLDivElement>(null);
-
   const content = {
-    get cur() {
-      return ctx.main.content.ref?.current;
-    },
+    ref: useRef<HTMLDivElement>(null),
     mount() {
       useEffect(() => {
         content.scroll.add();
@@ -43,41 +37,42 @@ export const LayoutMainContainer = (
     },
     scroll: {
       add() {
-        content.cur?.addEventListener('scroll', content.scroll.listener);
+        content.ref.current
+          ?.addEventListener('scroll', content.scroll.listener);
       },
       listener() {
-        if (content.cur) {
+        if (content.ref.current) {
           const {
             clientHeight,
             offsetHeight,
             scrollHeight,
             scrollTop,
-          } = content.cur;
+          } = content.ref.current;
 
           if (clientHeight === scrollHeight) {
-            container.scrollDown.remove();
-            container.scrollUp.remove();
+            root.rmScrollDown();
+            root.rmScrollUp();
             return;
           }
 
           if (scrollTop + offsetHeight === scrollHeight) {
-            container.scrollDown.remove();
+            root.rmScrollDown();
           } else {
-            container.scrollDown.add();
+            root.addScrollDown();
           }
 
           if (scrollTop > 0) {
-            container.scrollUp.add();
+            root.addScrollUp();
           } else {
-            container.scrollUp.remove();
+            root.rmScrollUp();
           }
         }
       },
     },
     mutation: {
       observe() {
-        if (content.cur) {
-          content.mutation.obs.observe(content.cur, {
+        if (content.ref.current) {
+          content.mutation.obs.observe(content.ref.current, {
             childList: true,
           });
         }
@@ -88,16 +83,22 @@ export const LayoutMainContainer = (
     },
   };
 
+  ctx.main.content = {
+    gotoTop() {
+      if (content.ref.current) content.ref.current.scrollTop = 0;
+    },
+  };
+
   content.mount();
 
   return (
     <div
       className="layout-main__container"
-      ref={container.ref}
+      ref={root.ref}
     >
       <div
         className="layout-main__content"
-        ref={ctx.main.content.ref}
+        ref={content.ref}
       >
         {children}
       </div>

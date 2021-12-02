@@ -24,28 +24,20 @@ export const LayoutFooter = (): JSX.Element => {
       {link.label}
     </a>
   ));
-  const info = {
-    showed: observer(() => (
-      <>
-        {ctx.meta.length.cur}
-      </>
-    )),
-    total: observer(() => (
-      <>
-        {ctx.meta.length.total}
-      </>
-    )),
+  const meta = {
+    showed: observer(() => <>{ctx.meta.length.cur}</>),
+    total: observer(() => <>{ctx.meta.length.total}</>),
   };
 
   return (
     <footer className="layout-footer">
       {links}
-      <p className="layout-footer__info">
-        <info.showed />
+      <p className="layout-footer__meta">
+        <meta.showed />
         {' '}
         /
         {' '}
-        <info.total />
+        <meta.total />
       </p>
     </footer>
   );

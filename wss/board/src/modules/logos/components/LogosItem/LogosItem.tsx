@@ -23,7 +23,7 @@ export const LogosItem = ({ item }: { item: LogosDataItem }): JSX.Element => {
       layoutCtx.sidebar.initiator = bag.ref.current;
 
       logosCtx.bag.add(item);
-      layoutCtx.root.sidebar.show();
+      layoutCtx.sidebar.show();
     },
   };
 

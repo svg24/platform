@@ -1,13 +1,32 @@
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+} from 'mobx';
 import type { LogosStore } from 'types/logos';
 
 export function initSentinel(this: LogosStore): void {
   this.sentinel = {
-    ref: undefined,
+    _isVisible: false,
+    get isVisible() {
+      return this._isVisible;
+    },
+    set isVisible(val) {
+      this._isVisible = val;
+    },
     show() {
-      this.ref?.current?.classList.add('logos-sentinel_visible');
+      this.isVisible = true;
     },
     hide() {
-      this.ref?.current?.classList.remove('logos-sentinel_visible');
+      this.isVisible = false;
     },
   };
+
+  makeObservable(this.sentinel, {
+    _isVisible: observable,
+    isVisible: computed,
+    show: action,
+    hide: action,
+  });
 }

@@ -119,7 +119,9 @@ export const FilterParameterAlphabetical = ({
               key={opt.id}
               opt={opt}
               pr={pr}
-              onClick={(checked) => { onClick(opt, checked); }}
+              onClick={(checked) => {
+                onClick(opt, checked);
+              }}
             />
           ))}
         </FilterParameterAlphabeticalItem>

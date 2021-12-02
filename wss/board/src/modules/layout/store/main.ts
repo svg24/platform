@@ -8,12 +8,6 @@ import type { LayoutStore } from 'types/layout';
 
 export const initMain = function (this: LayoutStore): void {
   this.main = {
-    content: {
-      ref: undefined,
-      gotoTop() {
-        if (this.ref?.current) this.ref.current.scrollTop = 0;
-      },
-    },
     filter: {
       _isVisible: false,
       get isVisible() {

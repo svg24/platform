@@ -30,7 +30,7 @@ export const LayoutSidebar = (): JSX.Element => {
       }
     },
     close() {
-      layoutCtx.root.sidebar.hide();
+      layoutCtx.sidebar.hide();
       layoutCtx.sidebar.initiator?.focus();
     },
   };

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
+import { createRef, useEffect } from 'react';
 import { UserStore } from 'src/modules/usr';
 import { isInViewport } from 'src/utils';
 import { LogosItem } from './components/LogosItem';
@@ -23,6 +23,10 @@ export const Logos = (): JSX.Element => {
     )),
   };
 
+  const sentinel = {
+    ref: createRef<HTMLDivElement>(),
+  };
+
   const list = {
     mount() {
       useEffect(() => {
@@ -31,8 +35,8 @@ export const Logos = (): JSX.Element => {
             let i = 1;
 
             const increment = (): void => {
-              if (logosCtx.sentinel.ref?.current) {
-                if (isInViewport(logosCtx.sentinel.ref.current)) {
+              if (sentinel.ref?.current) {
+                if (isInViewport(sentinel.ref.current)) {
                   i += 1;
 
                   list.upload().then(() => {
@@ -59,7 +63,7 @@ export const Logos = (): JSX.Element => {
       inst: undefined as IntersectionObserver | undefined,
       create: (): Promise<void> => (
         new Promise((resolve) => {
-          if (logosCtx.sentinel.ref?.current) {
+          if (sentinel.ref?.current) {
             list.obs.inst = new IntersectionObserver(([entry]) => {
               if (entry && entry.isIntersecting && logosCtx.meta.page.isNext) {
                 list.upload().then(() => {
@@ -68,7 +72,7 @@ export const Logos = (): JSX.Element => {
               }
             }, { threshold: 0 });
 
-            list.obs.inst.observe(logosCtx.sentinel.ref.current);
+            list.obs.inst.observe(sentinel.ref.current);
           }
         })
       ),
@@ -104,7 +108,7 @@ export const Logos = (): JSX.Element => {
     <LogosOutput>
       <list.el />
       <noFound.el />
-      <LogosSentinel />
+      <LogosSentinel ref={sentinel.ref} />
     </LogosOutput>
   );
 };

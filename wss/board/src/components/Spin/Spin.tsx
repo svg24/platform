@@ -1,4 +1,8 @@
-export const Spin = ({ className }: { className: string }): JSX.Element => (
+export const Spin = ({
+  className,
+}: {
+  className: string;
+}): JSX.Element => (
   <svg
     className={className}
     fill="none"

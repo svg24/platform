@@ -1,17 +1,16 @@
-import type { RefObject } from 'react';
 import type {
   ApiLogosDataItem,
   ApiLogosMeta,
   ApiResultLogos,
 } from 'types/api';
-import type { Store } from 'types/store';
+import type { Store, StoreVisible } from 'types/store';
 
 export interface LogosStore extends Store<LogosStore> {
   bag: LogosStoreBag;
   list: LogosStoreList;
   meta: LogosStoreMeta;
   search: LogosStoreSearch;
-  sentinel: LogosStoreSentinel;
+  sentinel: StoreVisible;
 }
 
 /**
@@ -76,14 +75,4 @@ type LogosStoreSearch = {
     cur: string | undefined;
     field: LogosStoreSearch['val']['_field'];
   };
-};
-
-/**
- * Sentinel
- */
-
-type LogosStoreSentinel = {
-  hide: () => void;
-  ref: RefObject<HTMLDivElement> | undefined;
-  show: () => void;
 };

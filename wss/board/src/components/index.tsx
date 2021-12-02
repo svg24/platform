@@ -1,5 +1,4 @@
 import { Search } from './Search';
+import { Spin } from './Spin';
 
-export {
-  Search,
-};
+export { Search, Spin };

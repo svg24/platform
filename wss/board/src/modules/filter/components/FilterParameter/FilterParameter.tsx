@@ -18,7 +18,9 @@ export const FilterParameter = ({
           key={opt.id}
           opt={opt}
           pr={pr}
-          onChange={() => { onChange(opt); }}
+          onChange={() => {
+            onChange(opt);
+          }}
         />
       ))}
     </div>

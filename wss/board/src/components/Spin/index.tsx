@@ -1,5 +1,3 @@
 import { Spin } from './Spin';
 
-export {
-  Spin,
-};
+export { Spin };

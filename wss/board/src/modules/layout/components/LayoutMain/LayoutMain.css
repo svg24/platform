@@ -18,37 +18,27 @@
 }
 
 .layout-main__filter {
-  @apply w-60 flex flex-col gap-y-4 overflow-x-hidden;
+  @apply flex flex-col overflow-x-hidden w-60 gap-y-4;
 }
 
 .layout-main_filter-in .layout-main__filter {
-  animation: slide-filter 0.3s forwards;
+  animation: slide-filter 300ms forwards;
 }
 
 .layout-main_filter-out .layout-main__filter {
-  animation: slide-filter 0.3s forwards reverse;
+  animation: slide-filter 300ms forwards reverse;
 }
 
 .layout-main__filter .filter-parameter:nth-last-child(2) {
   @apply mb-auto;
 }
 
-.layout-main__container,
-.layout-main__actions {
-  @apply col-start-1 col-end-2 row-start-1 row-end-2;
-}
-
 .layout-main__container {
-  @apply grid w-full overflow-y-scroll rounded-lg;
-  background-image: url('../../../../assets/images/pattern.svg');
+  @apply grid w-full col-start-1 col-end-2 row-start-1 row-end-2 overflow-y-scroll rounded-lg;
+  background-image: url('src/assets/images/pattern.svg');
 }
 
-.layout-main__actions {
-  @apply z-20 self-end p-4 justify-self-end;
-}
-
-.layout-main_filter-display .layout-main__container,
-.layout-main_filter-display .layout-main__actions {
+.layout-main_filter-display .layout-main__container {
   @apply col-start-2 col-end-3;
 }
 
@@ -74,12 +64,4 @@
 
 .layout-main__content {
   @apply px-4 py-4 overflow-scroll;
-}
-
-.layout-main__btn {
-  @apply p-2 duration-300 bg-white border-2 rounded-lg border-neutral-100 hover:border-primary-200;
-}
-
-.layout-main__icon {
-  @apply w-6 h-6 text-neutral-400;
 }

@@ -40,7 +40,7 @@ export function initList(this: LogosStore): void {
 
       this.meta.update(res.meta);
       this.list.clear();
-      LayoutStore.main.content.gotoTop();
+      if (LayoutStore.main.content) LayoutStore.main.content.gotoTop();
       this.list.add(res.data);
     },
 
