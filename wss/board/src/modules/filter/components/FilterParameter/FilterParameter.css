@@ -1,3 +1,8 @@
+.filter-parameter {
+  @apply overflow-scroll;
+  min-height: 3.25rem;
+}
+
 .filter-parameter__list {
   @apply grid gap-y-1;
 }
@@ -25,8 +30,7 @@
 }
 
 .filter-parameter__letter + .filter-parameter__container {
-  @apply gap-y-1 overflow-hidden duration-100;
-  height: calc(1.25rem + 0.5rem);
+  @apply overflow-hidden duration-100 gap-y-1 h-7;
 }
 
 .filter-parameter__label {
