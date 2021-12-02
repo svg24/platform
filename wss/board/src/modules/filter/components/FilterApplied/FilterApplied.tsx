@@ -35,6 +35,9 @@ export const FilterApplied = ({
                   }}
                 />
                 <span className="filter-applied__name">
+                  {pr.legend}
+                  :
+                  {' '}
                   {pr.val.cur?.name}
                 </span>
                 <XIcon className="filter-applies__icon" />

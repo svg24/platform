@@ -11,9 +11,9 @@ export const FilterStore = new (function (this: Store) {
   Object.defineProperties(this, {
     getApplied: {
       get: () => [
+        this.sortBy,
         this.category,
         this.company,
-        this.sortBy,
       ].filter((pr) => pr.isApplied),
       enumerable: true,
     },
