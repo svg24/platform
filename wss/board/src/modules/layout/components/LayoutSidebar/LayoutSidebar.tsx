@@ -39,7 +39,7 @@ export const LayoutSidebar = (): JSX.Element => {
 
   const download = {
     onClick: () => {
-      const blob = new Blob([item.content[0] || '']);
+      const blob = new Blob([item.content[0]?.snippets.vanilla || '']);
       const link = document.createElement('a');
 
       Object.assign(link, {
@@ -54,7 +54,7 @@ export const LayoutSidebar = (): JSX.Element => {
 
   const copy = {
     onClick: async () => {
-      await navigator.clipboard.writeText(item.content[0] || '');
+      await navigator.clipboard.writeText(item.content[0]?.snippets.vanilla || '');
     },
   };
 
@@ -69,7 +69,7 @@ export const LayoutSidebar = (): JSX.Element => {
       <div className="layout-sidebar__inner">
         <div
           className="layout-sidebar__container"
-          dangerouslySetInnerHTML={{ __html: item.content[0] || '' }}
+          dangerouslySetInnerHTML={{ __html: item.content[0]?.snippets.vanilla || '' }}
         />
         <h1 className="layout-sidebar__heading">
           <span id="layout-sidebar-heading">
