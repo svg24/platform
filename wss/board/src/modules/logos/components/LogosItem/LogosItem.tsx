@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
-import type { LogosDataItem } from 'src/plugins/api';
-import { LayoutStore } from '../../../layout';
+import { LayoutStore } from 'src/modules/layout';
+import type { ApiLogosDataItem } from 'types/api';
 import { LogosStore } from '../../store';
 
-export const LogosItem = ({ item }: { item: LogosDataItem }): JSX.Element => {
+export const LogosItem = ({ item }: { item: ApiLogosDataItem }): JSX.Element => {
   const layoutCtx = LayoutStore.ctx;
   const logosCtx = LogosStore.ctx;
 
@@ -17,10 +17,10 @@ export const LogosItem = ({ item }: { item: LogosDataItem }): JSX.Element => {
     },
   };
 
-  const bag = {
+  const btn = {
     ref: useRef<HTMLButtonElement>(null),
     toggle() {
-      layoutCtx.sidebar.initiator = bag.ref.current;
+      layoutCtx.sidebar.initiator = btn.ref.current;
 
       logosCtx.bag.add(item);
       layoutCtx.sidebar.show();
@@ -36,9 +36,9 @@ export const LogosItem = ({ item }: { item: LogosDataItem }): JSX.Element => {
       <h3 className="logos-item__heading">
         <button
           className="logos-item__btn"
-          ref={bag.ref}
+          ref={btn.ref}
           type="button"
-          onClick={bag.toggle}
+          onClick={btn.toggle}
         >
           {item.name}
         </button>
