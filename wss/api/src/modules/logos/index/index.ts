@@ -1,5 +1,5 @@
-import { db, server } from '../../../core';
-import type { Logos, LogosIndexQuery } from '../types';
+import { db, server } from 'src/core';
+import type { Logos, LogosIndexQuery } from 'types/logos';
 import schema from './schema.json';
 
 const DEFAULT_LIMIT = 20;

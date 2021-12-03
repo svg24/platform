@@ -1,16 +1,5 @@
-import type http from 'http';
-import type { FastifyInstance } from 'fastify';
 import fastify from 'fastify';
-
-interface Server {
-  beatify: (val: any) => string;
-  inst: FastifyInstance<http.Server, http.IncomingMessage, http.ServerResponse>;
-  listen: () => Promise<void>;
-  opts: {
-    host: string;
-    port: string;
-  };
-}
+import type { Server } from 'types/server';
 
 export const server = new (function (this: Server) {
   this.opts = {

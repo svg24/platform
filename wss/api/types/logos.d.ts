@@ -1,4 +1,4 @@
-import type { Module } from '../../../types/module';
+import type { Module } from 'types/module';
 
 export interface Logos extends Module<LogosItem> {}
 

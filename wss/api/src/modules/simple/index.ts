@@ -1,7 +1,7 @@
+import type { SimpleModule } from 'types/simple';
 import { initOpts } from './opts';
 import { initRoot } from './root';
 import { addRoute } from './route';
-import type { SimpleModule } from './types';
 
 export const createSimple = ({
   collection,

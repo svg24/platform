@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import type { Logos } from './types';
+import type { Logos } from 'types/logos';
 
 export function initRoot(this: Logos): void {
   this.schema = new mongoose.Schema({

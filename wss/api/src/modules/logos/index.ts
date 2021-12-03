@@ -1,7 +1,7 @@
+import type { Logos } from 'types/logos';
 import { addIndex } from './index/index';
 import { initOpts } from './opts';
 import { initRoot } from './root';
-import type { Logos } from './types';
 
 export const logos = new (function (this: Logos) {
   initRoot.call(this);

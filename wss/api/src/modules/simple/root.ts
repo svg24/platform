@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import type { SimpleModule } from './types';
+import type { SimpleModule } from 'types/simple';
 
 export function initRoot(
   this: SimpleModule,

@@ -2,29 +2,8 @@ import child from 'child_process';
 import { promises as fs } from 'fs';
 import util from 'util';
 import mongoose from 'mongoose';
-import { toCamelCaseFromSvg } from '../utils';
-
-type DBContent = {
-  packages: {
-    react: string;
-    vue: string;
-  };
-  snippets: {
-    vanilla: string;
-  };
-}[];
-
-interface DB {
-  connect: () => Promise<void>;
-  getContent: (id: string) => Promise<DBContent | []>;
-  init: () => Promise<void>;
-  opts: {
-    name: string;
-    pass: string;
-    uri: string;
-    user: string;
-  };
-}
+import { toCamelCaseFromSvg } from 'src/utils';
+import type { DB, DBContent } from 'types/db';
 
 export const db = new (function (this: DB) {
   this.opts = {
