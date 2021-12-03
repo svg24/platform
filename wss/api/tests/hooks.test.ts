@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { db, node } from '../core';
+import { db, node } from '../src/core';
 
 export const mochaHooks: Mocha.RootHookObject = {
   beforeAll(done) {

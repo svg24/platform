@@ -24,9 +24,9 @@
     "module": "es6",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "typeRoots": [
-      "src/types"
+      "types"
     ],
     "types": [
       "mocha",
@@ -69,7 +69,8 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "tests/*/*.test.ts",
-    "src/**/*.json"
+    "src/**/*.json",
+    "tests/*.test.ts",
+    "types/*.d.ts"
   ]
 }
