@@ -20,7 +20,7 @@ export function addRoute(this: Item, inst: typeof server.inst): void {
           meta: {
             category: item.category,
             company: item.company,
-            date: item.date,
+            date: (new Date(item.date)).getTime(),
             id: item.id,
             name: item.name,
             src: {
