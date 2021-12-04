@@ -1,21 +1,25 @@
-### get https://github.com/svg24/collection/blob/main/data/categories.json
+### get categories alphabetically
 GET https://api.svg24.dev/v1/categories
 
 {
-  "data": [{
-    "id": "",
-    "name": ""
-  }]
+  "data": {
+    "A": {
+      "id": "",
+      "name": ""
+    }
+  }
 }
 
-### get https://github.com/svg24/collection/blob/main/data/companies.json
+### get companies alphabetically
 GET https://api.svg24.dev/v1/companies
 
 {
-  "data": [{
-    "id": "",
-    "name": ""
-  }]
+  "data": {
+    "A": {
+      "id": "",
+      "name": ""
+    }
+  }
 }
 
 ### find logos by filter
