@@ -1,13 +1,8 @@
-import { logos } from './logos';
+import { item } from './item';
+import { list } from './list';
 import { createSimple } from './simple';
 
-export { logos };
+export { item, list };
 
-export const categories = createSimple({
-  collection: 'categories',
-  name: 'CategoriesItem',
-});
-export const companies = createSimple({
-  collection: 'companies',
-  name: 'CompaniesItem',
-});
+export const categories = createSimple('categories');
+export const companies = createSimple('companies');

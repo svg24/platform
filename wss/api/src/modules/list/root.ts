@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import type { Logos } from 'types/logos';
+import type { List } from 'types/list';
 
-export function initRoot(this: Logos): void {
+export function initRoot(this: List): void {
   this.schema = new mongoose.Schema({
     id: { type: String, required: true },
     name: { type: String, required: true },
@@ -12,5 +12,8 @@ export function initRoot(this: Logos): void {
   }, {
     collection: 'logos',
   });
-  this.model = mongoose.model('LogosItem', this.schema);
+  this.model = mongoose.model('List', this.schema);
+  this.opts = {
+    prefix: 'list',
+  };
 }

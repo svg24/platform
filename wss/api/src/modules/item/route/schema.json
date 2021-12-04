@@ -1,0 +1,130 @@
+{
+  "method": "GET",
+  "url": "/",
+  "schema": {
+    "querystring": {
+      "id": {
+        "type": "string"
+      }
+    },
+    "response": {
+      "200": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "object",
+                  "properties": {
+                    "components": {
+                      "type": "object",
+                      "properties": {
+                        "js": {
+                          "type": "object",
+                          "properties": {
+                            "react": {
+                              "type": "string"
+                            },
+                            "vue": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "ts": {
+                          "type": "object",
+                          "properties": {
+                            "react": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "packages": {
+                      "type": "object",
+                      "properties": {
+                        "react": {
+                          "type": "string"
+                        },
+                        "vue": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "snippets": {
+                      "type": "object",
+                      "properties": {
+                        "css": {
+                          "type": "string"
+                        },
+                        "jsx": {
+                          "type": "string"
+                        },
+                        "svg": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "version": {
+                  "type": "object",
+                  "properties": {
+                    "date": {
+                      "type": "number"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string"
+              },
+              "company": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "src": {
+                "type": "object",
+                "properties": {
+                  "product": {
+                    "type": "string"
+                  },
+                  "usage": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

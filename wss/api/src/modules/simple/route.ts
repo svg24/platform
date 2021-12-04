@@ -1,5 +1,5 @@
-import { server } from 'src/core';
 import type { SimpleModule } from 'types/simple';
+import { server } from '../../core';
 
 const DEFAULT_SORT_BY = 'name';
 const DEFAULT_SORT_METHOD = 'asc';

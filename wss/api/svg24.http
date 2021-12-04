@@ -1,3 +1,94 @@
-###
+### get https://github.com/svg24/collection/blob/main/data/categories.json
+GET https://api.svg24.dev/v1/categories
 
-GET http://api.github.com/users/vanyauhalin
+{
+  "data": [{
+    "id": "",
+    "name": ""
+  }]
+}
+
+### get https://github.com/svg24/collection/blob/main/data/companies.json
+GET https://api.svg24.dev/v1/companies
+
+{
+  "data": [{
+    "id": "",
+    "name": ""
+  }]
+}
+
+### find logos by filter
+GET https://api.svg24.dev/v1/list
+  ?category
+  &company
+  &multiplier
+  &name
+  &page
+  &sortBy
+
+{
+  "data": [{
+    "id": "",
+    "isMore": "",
+    "name": "",
+    "latest": "",
+  }],
+  "meta": {
+    "length": {
+      "current": "",
+      "total": "",
+    },
+    "page": {
+      "isNext": "",
+      "next": "",
+    }
+  }
+}
+
+### find logo by id
+GET https://api.svg24.dev/v1/item
+  ?id
+
+{
+  "data": [{
+    "content": {
+      "components": {
+        "js": {
+          "react": "",
+          "vue": ""
+        },
+        "ts": {
+          "react": ""
+        }
+      },
+      "links": {
+        "url": ""
+      },
+      "packages": {
+        "react": "",
+        "vue": ""
+      },
+      "snippets": {
+        "css": "",
+        "jsx": "",
+        "svg": ""
+      },
+    },
+    "version": {
+      "date": "",
+      "type": ""
+    }
+  }],
+  "meta": {
+    "category": "",
+    "company": "",
+    "date": "",
+    "id": "",
+    "name": "",
+    "src": {
+      "product": "",
+      "usage": ""
+    }
+  }
+}

@@ -31,52 +31,22 @@
         "type": "object",
         "properties": {
           "data": {
-            "type": "object",
-            "properties": {
-              "category": {
-                "type": "string"
-              },
-              "company": {
-                "type": "string"
-              },
-              "content": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "packages": {
-                      "type": "object",
-                      "properties": {
-                        "react": {
-                          "type": "string"
-                        },
-                        "vue": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "snippets": {
-                      "type": "object",
-                      "properties": {
-                        "vanilla": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "isMore": {
+                  "type": "boolean"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "latest": {
+                  "type": "string"
                 }
-              },
-              "date": {
-                "type": "string"
-              },
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "src": {
-                "type": "string"
               }
             }
           },
