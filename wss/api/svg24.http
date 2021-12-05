@@ -34,7 +34,7 @@ GET https://api.svg24.dev/v1/list
 {
   "data": [{
     "id": "",
-    "isMore": "",
+    "isMany": "",
     "name": "",
     "latest": "",
   }],

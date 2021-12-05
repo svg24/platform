@@ -59,11 +59,11 @@ export const db = new (function (this: DB) {
   this.list = {
     async getDataItem(id) {
       return {
-        isMore: await this.getDataItemIsMore(id),
+        isMany: await this.getDataItemIsMany(id),
         latest: await this.getDataItemLatest(id),
       };
     },
-    getDataItemIsMore: async (id) => {
+    getDataItemIsMany: async (id) => {
       const dirents = await fs.readdir(`${this.opts.src}${id}`, {
         withFileTypes: true,
       });

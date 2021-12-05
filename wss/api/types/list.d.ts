@@ -22,10 +22,10 @@ export type ListRouteQuery = {
 };
 
 export type ListDataItem = {
-  isMore: ListDataItemIsMore;
+  isMany: ListDataItemIsMany;
   latest: ListDataItemLatest;
 };
 
-export type ListDataItemIsMore = boolean;
+export type ListDataItemIsMany = boolean;
 
 export type ListDataItemLatest = ItemDataItemContent['snippets']['svg'];

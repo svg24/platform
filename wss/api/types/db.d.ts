@@ -8,7 +8,7 @@ import type {
 } from 'types/item';
 import type {
   ListDataItem,
-  ListDataItemIsMore,
+  ListDataItemIsMany,
   ListDataItemLatest,
   ListSchema,
 } from 'types/list';
@@ -42,7 +42,7 @@ type DBItemParameterName = Dirent['name'];
 
 type DBList = {
   getDataItem: (id: DBListParameterId) => Promise<ListDataItem>;
-  getDataItemIsMore: (id: DBListParameterId) => Promise<ListDataItemIsMore>;
+  getDataItemIsMany: (id: DBListParameterId) => Promise<ListDataItemIsMany>;
   getDataItemLatest: (id: DBListParameterId) => Promise<ListDataItemLatest>;
 };
 type DBListParameterId = ListSchema['id'];
