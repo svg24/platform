@@ -30,6 +30,9 @@ export function addRoute(this: SimpleModule, inst: typeof server.inst): void {
                 }]))),
               },
             },
+            meta: {
+              type: 'object',
+            },
           },
         },
       },
@@ -46,7 +49,10 @@ export function addRoute(this: SimpleModule, inst: typeof server.inst): void {
         return acc;
       }, {} as { [key: string]: typeof raw[0][] });
 
-      return server.beatify({ data });
+      return server.beatify({
+        data,
+        meta: {},
+      });
     },
   });
 }
