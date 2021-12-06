@@ -116,7 +116,7 @@ export const db = new (function (this: DB) {
           },
         },
         links: {
-          url: `https://api.svg24.dev/item?id=${id}`,
+          url: utils.toURL(id),
         },
         packages: {
           react: utils.toReactPackage(name),

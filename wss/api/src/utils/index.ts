@@ -15,17 +15,21 @@ export function toComponentName(name: string): string {
 export function toJSReact(name: string, jsx: string): string {
   return `export const ${name} = (props) => (\n${
     jsx.replace(/<svg (.*?)>/, '<svg $1 {...props}>')
-  }\n)`;
+  }\n);`;
 }
 
 export function toJSVue(name: string, html: string): string {
-  return `<template>\n${html}\n</template>\n\nexport default {\n  name:${name}\n}`;
+  return `<template>\n${html}\n</template>\n\nexport default {\n  name:${name}\n};`;
 }
 
 export function toTSReact(name: string, jsx: string): string {
   return `export const ${name} = (props: React.ComponentProps<'svg'>): JSX.Element => (\n${
     jsx.replace(/<svg (.*?)>/, '<svg $1 {...props}>')
-  }\n)`;
+  }\n);`;
+}
+
+export function toURL(id: string): string {
+  return `https://api.svg24.dev/content?id=${id}`;
 }
 
 export function toReactPackage(name: string): string {
