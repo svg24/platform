@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { createRef, useEffect } from 'react';
-import { UserStore } from 'src/modules/usr';
+import { UserStore } from 'src/modules/user';
 import { isInViewport } from 'src/utils';
 import { ContentItem } from './components/ContentItem';
 import { ContentList } from './components/ContentList';
@@ -13,7 +13,7 @@ export { ContentStore };
 
 export const Content = (): JSX.Element => {
   const contentCtx = ContentStore.ctx;
-  const usrCtx = UserStore.ctx;
+  const userCtx = UserStore.ctx;
 
   const noFound = {
     el: observer(() => (
@@ -54,7 +54,7 @@ export const Content = (): JSX.Element => {
 
         list.obs.create().then(() => {
           check().then((res) => {
-            usrCtx.multiplier = res;
+            userCtx.multiplier = res;
           });
         });
       }, []);

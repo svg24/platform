@@ -1,7 +1,7 @@
 import { FilterStore } from 'src/modules/filter';
 import { LayoutStore } from 'src/modules/layout';
 import { SearchStore } from 'src/modules/search';
-import { UserStore } from 'src/modules/usr';
+import { UserStore } from 'src/modules/user';
 import { api } from 'src/plugins/api';
 import type { ContentStore } from 'types/content';
 
