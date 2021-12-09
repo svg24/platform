@@ -12,7 +12,7 @@ export const FilterParameter = ({
   pr: FilterStoreParameter;
 }): JSX.Element => (
   <FilterParameterBase legend={pr.legend}>
-    <div className="filter-parameter__container">
+    <>
       {pr.opts?.map((opt) => (
         <FilterParameterBaseLabel
           key={opt.id}
@@ -23,6 +23,6 @@ export const FilterParameter = ({
           }}
         />
       ))}
-    </div>
+    </>
   </FilterParameterBase>
 );
