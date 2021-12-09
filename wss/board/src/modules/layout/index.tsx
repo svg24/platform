@@ -1,6 +1,7 @@
 import { reaction } from 'mobx';
-import { createRef, useEffect, useState } from 'react';
+import { createRef, useEffect } from 'react';
 import { Bag } from 'src/modules/bag';
+import { deepAssign, getStateAnimation } from 'src/utils';
 import { LayoutFooter } from './components/LayoutFooter';
 import { LayoutHeader } from './components/LayoutHeader';
 import { LayoutMain } from './components/LayoutMain';
@@ -11,19 +12,12 @@ export { LayoutStore };
 
 const root = {
   ref: createRef<HTMLDivElement>(),
-  get ls() {
-    return root.ref?.current?.classList;
-  },
 };
 
-export function Layout({
-  children,
-}: {
-  children: JSX.Element;
-}): JSX.Element {
+export function Layout({ children }: { children: JSX.Element }): JSX.Element {
   const { ctx } = LayoutStore;
 
-  const bag = {
+  const bag = deepAssign({
     mount() {
       useEffect(() => {
         reaction(() => ctx.bag.isVisible, bag.toggle);
@@ -39,32 +33,7 @@ export function Layout({
         });
       }
     },
-    _ms: 300,
-    _isShowed: useState(false),
-    get isShowed() {
-      return bag._isShowed[0];
-    },
-    set isShowed(val) {
-      bag._isShowed[1](val);
-    },
-    show() {
-      root.ls?.add('layout-root_bag-display');
-      root.ls?.add('layout-root_bag-in');
-      setTimeout(() => {
-        root.ls?.remove('layout-root_bag-in');
-      }, bag._ms);
-    },
-    hide(): Promise<void> {
-      return new Promise((resolve) => {
-        root.ls?.add('layout-root_bag-out');
-        setTimeout(() => {
-          root.ls?.remove('layout-root_bag-out');
-          root.ls?.remove('layout-root_bag-display');
-          resolve();
-        }, bag._ms);
-      });
-    },
-  };
+  }, getStateAnimation(root.ref, 'layout-root_bag'));
 
   bag.mount();
 

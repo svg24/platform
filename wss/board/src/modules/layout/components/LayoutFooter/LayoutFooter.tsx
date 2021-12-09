@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { ContentStore } from 'src/modules/content';
 
-export const LayoutFooter = (): JSX.Element => {
+export function LayoutFooter(): JSX.Element {
   const { ctx } = ContentStore;
 
   const links = [{
@@ -41,4 +41,4 @@ export const LayoutFooter = (): JSX.Element => {
       </p>
     </footer>
   );
-};
+}

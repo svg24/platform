@@ -1,24 +1,22 @@
 import { AdjustmentsIcon, XIcon } from '@heroicons/react/outline';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { ContentStore } from 'src/modules/content';
 import { FilterStore } from 'src/modules/filter';
+import { deepAssign, getStateAnimation } from 'src/utils';
 import { LayoutStore } from '../../store';
 
-export const LayoutHeaderFilter = (): JSX.Element => {
+export function LayoutHeaderFilter(): JSX.Element {
   const layoutCtx = LayoutStore.ctx;
   const filterCtx = FilterStore.ctx;
   const contentCtx = ContentStore.ctx;
 
   const root = {
     ref: useRef<HTMLDivElement>(null),
-    get ls() {
-      return root.ref.current?.classList;
-    },
   };
 
-  const counter = {
+  const counter = deepAssign({
     el: observer(() => (
       <span className="layout-header__counter">
         {filterCtx.getApplied.length}
@@ -43,35 +41,7 @@ export const LayoutHeaderFilter = (): JSX.Element => {
         counter.show();
       }
     },
-    _ms: 300,
-    _isShowed: useState(false),
-    get isShowed() {
-      return counter._isShowed[0];
-    },
-    set isShowed(val) {
-      counter._isShowed[1](val);
-    },
-    get isDisplay() {
-      return root.ls?.contains('layout-header__container_counter-display');
-    },
-    hide(): Promise<void> {
-      return new Promise((resolve) => {
-        root.ls?.add('layout-header__container_counter-out');
-        setTimeout(() => {
-          root.ls?.remove('layout-header__container_counter-display');
-          root.ls?.remove('layout-header__container_counter-out');
-          resolve();
-        }, counter._ms);
-      });
-    },
-    show() {
-      root.ls?.add('layout-header__container_counter-display');
-      root.ls?.add('layout-header__container_counter-in');
-      setTimeout(() => {
-        root.ls?.remove('layout-header__container_counter-in');
-      }, counter._ms);
-    },
-  };
+  }, getStateAnimation(root.ref, 'layout-header__container_counter'));
 
   counter.mount();
 
@@ -106,4 +76,4 @@ export const LayoutHeaderFilter = (): JSX.Element => {
         : <></>}
     </div>
   );
-};
+}

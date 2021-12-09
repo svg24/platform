@@ -1,6 +1,10 @@
+import { getStateAnimation } from './state';
 import { initStore } from './store';
 
-export { initStore };
+export {
+  getStateAnimation,
+  initStore,
+};
 
 export const debounce = (
   <F extends (...args: any[]) => any>(fn: F, ms: number): any => {
@@ -34,3 +38,19 @@ export const isInViewport = (element: HTMLDivElement): boolean => {
       && rect.width !== 0
   );
 };
+
+export function deepAssign<Target, Source>(
+  target: Target,
+  source: Source,
+): Target & Source {
+  const properties = Object.keys(source).reduce((descriptors, key) => {
+    Object.assign(descriptors, {
+      [key]: Object.getOwnPropertyDescriptor(source, key),
+    });
+    return descriptors;
+  }, {});
+
+  Object.defineProperties(target, properties);
+
+  return target as Target & Source;
+}

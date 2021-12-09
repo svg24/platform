@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { LayoutStore } from '../../store';
 
-export const LayoutMainContainer = ({
+export function LayoutMainContainer({
   children,
 }: {
   children: JSX.Element;
-}): JSX.Element => {
+}): JSX.Element {
   const { ctx } = LayoutStore;
 
   const root = {
@@ -30,6 +30,10 @@ export const LayoutMainContainer = ({
   const content = {
     ref: useRef<HTMLDivElement>(null),
     mount() {
+      ctx.main.content.toTop = () => {
+        if (content.ref.current) content.ref.current.scrollTop = 0;
+      };
+
       useEffect(() => {
         content.scroll.add();
         content.mutation.observe();
@@ -83,10 +87,6 @@ export const LayoutMainContainer = ({
     },
   };
 
-  ctx.main.content.toTop = () => {
-    if (content.ref.current) content.ref.current.scrollTop = 0;
-  };
-
   content.mount();
 
   return (
@@ -102,4 +102,4 @@ export const LayoutMainContainer = ({
       </div>
     </div>
   );
-};
+}

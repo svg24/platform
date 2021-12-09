@@ -7,7 +7,7 @@ import {
   FilterStore,
 } from 'src/modules/filter';
 
-export const LayoutMainFilter = (): JSX.Element => {
+export function LayoutMainFilter(): JSX.Element {
   const contentCtx = ContentStore.ctx;
   const filterCtx = FilterStore.ctx;
 
@@ -45,4 +45,4 @@ export const LayoutMainFilter = (): JSX.Element => {
       <applied.el />
     </form>
   );
-};
+}

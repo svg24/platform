@@ -1,28 +1,26 @@
 import { reaction } from 'mobx';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Filter } from 'src/modules/filter';
+import { deepAssign, getStateAnimation } from 'src/utils';
 import { LayoutStore } from '../../store';
 import { LayoutMainContainer } from './LayoutMainContainer';
 
-export const LayoutMain = ({
+export function LayoutMain({
   children,
 }: {
   children: JSX.Element;
-}): JSX.Element => {
+}): JSX.Element {
   const { ctx } = LayoutStore;
 
   const root = {
     ref: useRef<HTMLDivElement>(null),
-    get ls() {
-      return root.ref.current?.classList;
-    },
   };
 
-  const filter = {
+  const filter = deepAssign({
     mount() {
       useEffect(() => {
         reaction(() => ctx.main.filter.isVisible, filter.toggle);
-      });
+      }, []);
     },
     toggle() {
       if (ctx.main.filter.isVisible) {
@@ -34,32 +32,7 @@ export const LayoutMain = ({
         });
       }
     },
-    _ms: 300,
-    _isShowed: useState(false),
-    get isShowed() {
-      return filter._isShowed[0];
-    },
-    set isShowed(val) {
-      filter._isShowed[1](val);
-    },
-    show() {
-      root.ls?.add('layout-main_filter-display');
-      root.ls?.add('layout-main_filter-in');
-      setTimeout(() => {
-        root.ls?.remove('layout-main_filter-in');
-      }, filter._ms);
-    },
-    hide(): Promise<void> {
-      return new Promise((resolve) => {
-        root.ls?.add('layout-main_filter-out');
-        setTimeout(() => {
-          root.ls?.remove('layout-main_filter-out');
-          root.ls?.remove('layout-main_filter-display');
-          resolve();
-        }, filter._ms);
-      });
-    },
-  };
+  }, getStateAnimation(root.ref, 'layout-main_filter'));
 
   filter.mount();
 
@@ -74,4 +47,4 @@ export const LayoutMain = ({
       </LayoutMainContainer>
     </main>
   );
-};
+}
