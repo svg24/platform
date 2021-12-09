@@ -26,37 +26,37 @@ export function initParameter(this: FilterStore, id: ApiSimplMethods): void {
   this[id] = {
     id,
     legend: legends[id],
-    opts: undefined,
-    val: {
-      _def: undefined,
-      _cur: undefined,
-      get cur() {
-        return this._cur;
+    options: null,
+    value: {
+      _default: null,
+      _current: null,
+      get current() {
+        return this._current;
       },
-      set cur(val) {
-        this._cur = val;
+      set current(value) {
+        this._current = value;
       },
-      checkIsCur(passedId) {
-        return passedId === this.cur?.id;
+      checkCurrent(passedId) {
+        return passedId === this.current?.id;
       },
     },
     get isApplied() {
-      return this.val._def
-        ? this.val.cur?.id !== this.val._def.id
-        : !!this.val.cur;
+      return this.value._default
+        ? this.value.current?.id !== this.value._default.id
+        : !!this.value.current;
     },
     fetch: async () => {
       const res = await api[methods[id]]();
 
-      this[id].opts = res.data;
-      this[id].val._def = res.meta.default;
-      this[id].val.cur = res.meta.default;
+      this[id].options = res.data;
+      this[id].value._default = res.meta.default;
+      this[id].value.current = res.meta.default;
     },
     set: (item) => {
-      this[id].val.cur = item;
+      this[id].value.current = item;
     },
     reset: () => {
-      this[id].val.cur = this[id].val._def;
+      this[id].value.current = this[id].value._default;
     },
   };
 
@@ -64,8 +64,8 @@ export function initParameter(this: FilterStore, id: ApiSimplMethods): void {
     set: action,
     reset: action,
   });
-  makeObservable(this[id].val, {
-    _cur: observable,
-    cur: computed,
+  makeObservable(this[id].value, {
+    _current: observable,
+    current: computed,
   });
 }

@@ -6,20 +6,20 @@ import {
 
 export const FilterParameter = ({
   onChange,
-  pr,
+  parameter,
 }: {
-  onChange: (opt: Parameters<FilterStoreParameter['set']>[0]) => void;
-  pr: FilterStoreParameter;
+  onChange: (option: Parameters<FilterStoreParameter['set']>[0]) => void;
+  parameter: FilterStoreParameter;
 }): JSX.Element => (
-  <FilterParameterBase legend={pr.legend}>
+  <FilterParameterBase legend={parameter.legend}>
     <>
-      {pr.opts?.map((opt) => (
+      {parameter.options?.map((option) => (
         <FilterParameterBaseLabel
-          key={opt.id}
-          opt={opt}
-          pr={pr}
+          key={option.id}
+          option={option}
+          parameter={parameter}
           onChange={() => {
-            onChange(opt);
+            onChange(option);
           }}
         />
       ))}

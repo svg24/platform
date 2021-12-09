@@ -38,7 +38,7 @@ export function initListRoot(this: ContentStore): void {
         FilterStore.category,
         FilterStore.company,
         FilterStore.sortBy,
-      ].map((pr) => (pr.val.cur ? [pr.id, pr.val.cur.id] : []))),
+      ].map((pr) => (pr.value.current ? [pr.id, pr.value.current.id] : []))),
       ...multiplier ? { multiplier } : {},
       ...name ? { name } : {},
       page: this.result.meta.page.next,

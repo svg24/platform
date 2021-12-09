@@ -29,18 +29,18 @@ export type FilterParameterBaseLabelOnClick = (checked: boolean) => void;
 export const FilterParameterBaseLabel = ({
   onChange,
   onClick,
-  opt,
-  pr,
+  option,
+  parameter,
 }: {
   onChange?: () => void;
   onClick?: FilterParameterBaseLabelOnClick;
-  opt: Parameters<Parameter['set']>[0];
-  pr: Parameter;
+  option: Parameters<Parameter['set']>[0];
+  parameter: Parameter;
 }): JSX.Element => {
   const input = {
     ref: useRef<HTMLInputElement>(null),
     el: observer(() => {
-      const isCur = pr.val.checkIsCur(opt.id);
+      const isCur = parameter.value.checkCurrent(option.id);
 
       if (input.ref.current) {
         input.ref.current.checked = isCur;
@@ -50,7 +50,7 @@ export const FilterParameterBaseLabel = ({
         <input
           className="filter-parameter__input"
           defaultChecked={isCur}
-          name={pr.id}
+          name={parameter.id}
           ref={input.ref}
           type="radio"
           onChange={onChange || undefined}
@@ -68,7 +68,7 @@ export const FilterParameterBaseLabel = ({
     <label className="filter-parameter__label">
       <input.el />
       <span className="filter-parameter__name">
-        {opt.name}
+        {option.name}
       </span>
     </label>
   );

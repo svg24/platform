@@ -51,11 +51,7 @@ export const api = {
 
     return json;
   },
-  async item({
-    id,
-  }: {
-    id: string;
-  }): Promise<ApiItem> {
+  async item({ id }: { id: string }): Promise<ApiItem> {
     const res = await fetch(`/api/v1/item?id=${id}`);
     const json = await res.json();
 

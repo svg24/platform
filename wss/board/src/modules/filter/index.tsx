@@ -29,9 +29,9 @@ export function Filter(): JSX.Element {
         {[filterCtx.sortBy].map((pr) => (
           <FilterParameter
             key={pr.id}
-            pr={pr}
-            onChange={(opt) => {
-              pr.set(opt);
+            parameter={pr}
+            onChange={(option) => {
+              pr.set(option);
               contentCtx.list.reset();
             }}
           />
@@ -39,12 +39,12 @@ export function Filter(): JSX.Element {
         {[filterCtx.category, filterCtx.company].map((pr) => (
           <FilterParameterAlphabetical
             key={pr.id}
-            pr={pr}
-            onClick={(opt, checked) => {
+            parameter={pr}
+            onClick={(option, checked) => {
               if (checked) {
                 pr.reset();
               } else {
-                pr.set(opt);
+                pr.set(option);
               }
 
               contentCtx.list.reset();

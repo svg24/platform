@@ -99,33 +99,34 @@ const FilterParameterAlphabeticalItem = ({
 
 export const FilterParameterAlphabetical = ({
   onClick,
-  pr,
+  parameter,
 }: {
   onClick: (
-    opt: Parameters<FilterStoreParameterAlphabetical['set']>[0],
+    option: Parameters<FilterStoreParameterAlphabetical['set']>[0],
     checked: Parameters<FilterParameterBaseLabelOnClick>[0],
   ) => void;
-  pr: FilterStoreParameterAlphabetical;
+  parameter: FilterStoreParameterAlphabetical;
 }): JSX.Element => (
-  <FilterParameterBase legend={pr.legend}>
+  <FilterParameterBase legend={parameter.legend}>
     <ul className="filter-parameter__list">
-      {pr.opts && Object.entries(pr.opts).map(([key, val]) => (
-        <FilterParameterAlphabeticalItem
-          key={key}
-          letter={key}
-        >
-          {val.map((opt) => (
-            <FilterParameterBaseLabel
-              key={opt.id}
-              opt={opt}
-              pr={pr}
-              onClick={(checked) => {
-                onClick(opt, checked);
-              }}
-            />
-          ))}
-        </FilterParameterAlphabeticalItem>
-      ))}
+      {parameter.options && Object.entries(parameter.options)
+        .map(([key, value]) => (
+          <FilterParameterAlphabeticalItem
+            key={key}
+            letter={key}
+          >
+            {value.map((option) => (
+              <FilterParameterBaseLabel
+                key={option.id}
+                option={option}
+                parameter={parameter}
+                onClick={(checked) => {
+                  onClick(option, checked);
+                }}
+              />
+            ))}
+          </FilterParameterAlphabeticalItem>
+        ))}
     </ul>
   </FilterParameterBase>
 );

@@ -35,10 +35,7 @@ export const FilterApplied = ({
                   }}
                 />
                 <span className="filter-applied__name">
-                  {pr.legend}
-                  :
-                  {' '}
-                  {pr.val.cur?.name}
+                  {`${pr.legend}: ${pr.value.current?.name}`}
                 </span>
                 <XIcon className="filter-applies__icon" />
               </label>

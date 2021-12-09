@@ -20,18 +20,19 @@ export type FilterStoreParameter
 export type FilterStoreParameterAlphabetical
   = FilterStoreParameterBase<ApiSimpleAlphabeticalData>;
 
+type FilterStoreParameterBaseValueDefault = ApiSimpleDataItem | null;
 type FilterStoreParameterBase<T> = {
   fetch: () => Promise<void>;
   id: string;
   readonly isApplied: boolean;
   legend: string;
-  opts: T | undefined;
+  options: T | null;
   reset: () => void;
   set: (item: ApiSimpleDataItem) => void;
-  val: {
-    _cur: FilterStoreParameterBase<T>['val']['_def'];
-    _def: ApiSimpleDataItem | undefined;
-    checkIsCur: (id: ApiSimpleDataItem['id']) => boolean;
-    cur: FilterStoreParameterBase<T>['val']['_cur'];
+  value: {
+    _current: FilterStoreParameterBaseValueDefault;
+    _default: FilterStoreParameterBaseValueDefault;
+    checkCurrent: (id: ApiSimpleDataItem['id']) => boolean;
+    current: FilterStoreParameterBaseValueDefault;
   };
 };
