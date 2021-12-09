@@ -6,12 +6,12 @@ export interface LayoutStore extends Store<LayoutStore> {
 }
 
 interface LayoutStoreBag extends StoreVisible {
-  back: () => void;
+  goBack: (() => void) | null;
 }
 
 type LayoutStoreMain = {
   content: {
-    toTop: () => void;
+    goTop: (() => void) | null;
   };
   filter: LayoutStoreMainFilter;
 };

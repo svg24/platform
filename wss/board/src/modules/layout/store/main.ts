@@ -1,44 +1,24 @@
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-} from 'mobx';
+import { initStoreVisible } from 'src/utils';
 import type { LayoutStore } from 'types/layout';
 
-export const initMain = function (this: LayoutStore): void {
-  this.main = {
-    content: {
-      toTop: () => {},
-    },
-    filter: {
-      _isVisible: false,
-      get isVisible() {
-        return this._isVisible;
+export function initMain(this: LayoutStore): void {
+  Object.defineProperty(this, 'main', {
+    value: {
+      content: {
+        goTop: null,
       },
-      set isVisible(val) {
-        this._isVisible = val;
-      },
-      show() {
-        this.isVisible = true;
-      },
-      hide() {
-        this.isVisible = false;
-      },
-      toggle: () => {
-        if (this.main.filter.isVisible) {
-          this.main.filter.hide();
-        } else {
-          this.main.filter.show();
-        }
+      filter: {
+        toggle: () => {
+          if (this.main.filter.isVisible) {
+            this.main.filter.hide();
+          } else {
+            this.main.filter.show();
+          }
+        },
       },
     },
-  };
-
-  makeObservable(this.main.filter, {
-    _isVisible: observable,
-    isVisible: computed,
-    show: action,
-    hide: action,
+    enumerable: true,
   });
-};
+
+  initStoreVisible.call(this.main.filter);
+}

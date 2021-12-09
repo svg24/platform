@@ -27,7 +27,7 @@ export function initListRoot(this: ContentStore): void {
 
     this.result.meta.set(res.meta);
     this.result.data.clear();
-    LayoutStore.main.content.toTop();
+    if (LayoutStore.main.content.goTop) LayoutStore.main.content.goTop();
     this.result.data.add(res.data);
   };
 

@@ -30,7 +30,7 @@ export function BagRoot({
     },
     close() {
       layoutCtx.bag.hide();
-      layoutCtx.bag.back();
+      if (layoutCtx.bag.goBack) layoutCtx.bag.goBack();
     },
   };
 

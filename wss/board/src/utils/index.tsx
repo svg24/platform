@@ -1,9 +1,10 @@
 import { getStateAnimation } from './state';
-import { initStore } from './store';
+import { initStore, initStoreVisible } from './store';
 
 export {
   getStateAnimation,
   initStore,
+  initStoreVisible,
 };
 
 export const debounce = (

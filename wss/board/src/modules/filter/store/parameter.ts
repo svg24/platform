@@ -22,10 +22,7 @@ const legends = {
   sortBy: 'Sort by',
 };
 
-export function initParameter(
-  this: FilterStore,
-  id: ApiSimplMethods,
-): void {
+export function initParameter(this: FilterStore, id: ApiSimplMethods): void {
   this[id] = {
     id,
     legend: legends[id],

@@ -8,15 +8,13 @@ export const FilterStore = new (function (this: Store) {
   initParameter.call(this, 'company');
   initParameter.call(this, 'sortBy');
 
-  Object.defineProperties(this, {
-    getApplied: {
-      get: () => [
-        this.sortBy,
-        this.category,
-        this.company,
-      ].filter((pr) => pr.isApplied),
-      enumerable: true,
-    },
+  Object.defineProperty(this, 'getApplied', {
+    get: () => [
+      this.sortBy,
+      this.category,
+      this.company,
+    ].filter((pr) => pr.isApplied),
+    enumerable: true,
   });
 
   this.mount = async () => {

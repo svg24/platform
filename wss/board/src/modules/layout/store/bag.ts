@@ -1,33 +1,12 @@
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-} from 'mobx';
+import { initStoreVisible } from 'src/utils';
 import type { LayoutStore } from 'types/layout';
 
-export const initBag = function (this: LayoutStore): void {
-  this.bag = {
-    _isVisible: false,
-    get isVisible() {
-      return this._isVisible;
+export function initBag(this: LayoutStore): void {
+  Object.defineProperty(this, 'bag', {
+    value: {
+      goBack: null,
     },
-    set isVisible(val) {
-      this._isVisible = val;
-    },
-    show() {
-      this.isVisible = true;
-    },
-    hide() {
-      this.isVisible = false;
-    },
-    back: () => {},
-  };
-
-  makeObservable(this.bag, {
-    _isVisible: observable,
-    isVisible: computed,
-    show: action,
-    hide: action,
+    enumerable: true,
   });
-};
+  initStoreVisible.call(this.bag);
+}

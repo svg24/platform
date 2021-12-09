@@ -6,7 +6,7 @@ export interface Store<T> extends Object {
   readonly ctx: T;
 }
 
-type StoreVisible = {
+export type StoreVisible = {
   _isVisible: boolean;
   hide: () => void;
   isVisible: StoreVisible['_isVisible'];

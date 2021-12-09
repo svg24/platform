@@ -30,7 +30,7 @@ export function LayoutMainContainer({
   const content = {
     ref: useRef<HTMLDivElement>(null),
     mount() {
-      ctx.main.content.toTop = () => {
+      ctx.main.content.goTop = () => {
         if (content.ref.current) content.ref.current.scrollTop = 0;
       };
 
