@@ -22,12 +22,6 @@ export const escapeStr = (str: string): string => (
   JSON.stringify(str).slice(1, -1).replace(/\s+/g, ' ')
 );
 
-export const delay = (ms: number): Promise<unknown> => (
-  new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  })
-);
-
 export const isInViewport = (element: HTMLDivElement): boolean => {
   const rect = element.getBoundingClientRect();
 
