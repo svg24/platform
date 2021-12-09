@@ -32,7 +32,7 @@ export function toReactTS(name: string, jsx: string): string {
 }
 
 export function toURL(path: string): string {
-  return `https://api.svg24.dev/content/${path}`;
+  return `https://api.svg24.dev/v1/content/${path}`;
 }
 
 export function toReactPackage(name: string): string {

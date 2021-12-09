@@ -118,7 +118,7 @@ export const db = new (function (this: DB) {
             },
           },
           links: {
-            url: utils.toURL(path),
+            url: utils.toURL(utils.removeExtension(path)),
           },
           packages: {
             react: utils.toReactPackage(componentName),
