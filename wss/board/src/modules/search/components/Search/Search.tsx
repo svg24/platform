@@ -1,13 +1,10 @@
 import type { BaseSyntheticEvent } from 'react';
 import { useEffect, useRef } from 'react';
+import { SearchStore } from 'src/modules/search';
 
-export const Search = ({
-  onInput,
-  val,
-}: {
-  onInput: (ev: BaseSyntheticEvent) => void;
-  val: string;
-}): JSX.Element => {
+export function Search(): JSX.Element {
+  const { ctx } = SearchStore;
+
   const field = {
     ref: useRef<HTMLInputElement>(null),
     checkActive(code: string) {
@@ -44,12 +41,13 @@ export const Search = ({
         placeholder="Search by name"
         ref={field.ref}
         type="search"
-        value={val}
-        onInput={onInput}
+        onInput={(ev: BaseSyntheticEvent) => {
+          ctx.process(ev.target.value);
+        }}
       />
       <kbd className="search__key">
         /
       </kbd>
     </form>
   );
-};
+}

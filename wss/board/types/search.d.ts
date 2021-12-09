@@ -1,12 +1,11 @@
 import type { Store } from 'types/store';
 
 export interface SearchStore extends Store<SearchStore> {
-  process: (val: string) => void;
+  process: (value: string) => void;
   reset: () => void;
-  val: {
-    _field: string;
-    _prev: string | undefined;
-    cur: string | undefined;
-    field: SearchStore['val']['_field'];
+  value: {
+    _default: null;
+    _previous: SearchStore['value']['current'];
+    current: string | SearchStore['value']['_default'];
   };
 }

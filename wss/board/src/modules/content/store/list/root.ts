@@ -32,7 +32,7 @@ export function initListRoot(this: ContentStore): void {
   };
 
   this.list.fetch = async function (multiplier) {
-    const name = SearchStore.val.cur;
+    const name = SearchStore.value.current;
     const res = await api.list({
       ...Object.fromEntries([
         FilterStore.category,

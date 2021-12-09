@@ -1,61 +1,43 @@
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-} from 'mobx';
+import { action, makeObservable } from 'mobx';
 import { ContentStore } from 'src/modules/content';
-import { debounce, escapeStr } from 'src/utils';
+import { debounce, escapeString } from 'src/utils';
 import type { SearchStore } from 'types/search';
 
-export const initRoot = function (this: SearchStore): void {
-  this.val = {
-    _prev: undefined,
-    _field: '',
-    cur: undefined,
-    get field() {
-      return this._field;
-    },
-    set field(val) {
-      this._field = val;
-    },
+export function initRoot(this: SearchStore): void {
+  this.value = {
+    _default: null,
+    _previous: null,
+    current: null,
   };
 
-  this.process = (val) => {
-    this.val.field = val;
-
+  this.process = (value) => {
     debounce(() => {
-      const prev = this.val._prev;
+      const prev = this.value._previous;
       const { isItems } = ContentStore.list.data;
-      const trimmed = val.trim();
+      const trimmed = value.trim();
 
-      if (prev === trimmed && val.match(/\s*$/)?.[0]?.length !== 1) return;
+      if (prev === trimmed && value.match(/\s*$/)?.[0]?.length !== 1) return;
       if (prev && !isItems && trimmed.length > prev.length) return;
       if (!prev && isItems && !trimmed) return;
 
       if (!trimmed) {
         this.reset();
       } else {
-        this.val.cur = escapeStr(val);
+        this.value.current = escapeString(value);
       }
 
       ContentStore.list.reset();
 
-      this.val._prev = trimmed;
+      this.value._previous = trimmed;
     }, 300)();
   };
 
   this.reset = () => {
-    this.val.cur = undefined;
-    this.val.field = '';
+    this.value.current = this.value._default;
   };
 
   makeObservable(this as object, {
     process: action,
     reset: action,
   });
-  makeObservable(this.val, {
-    _field: observable,
-    field: computed,
-  });
-};
+}

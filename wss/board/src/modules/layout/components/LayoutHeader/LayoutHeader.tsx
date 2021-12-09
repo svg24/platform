@@ -1,22 +1,9 @@
 import { CogIcon } from '@heroicons/react/outline';
-import { observer } from 'mobx-react-lite';
-import { Search, SearchStore } from 'src/modules/search';
+import { Search } from 'src/modules/search';
+import { Settings } from 'src/modules/settings';
 import { LayoutHeaderFilter } from './LayoutHeaderFilter';
 
-export const LayoutHeader = (): JSX.Element => {
-  const { ctx } = SearchStore;
-
-  const search = {
-    el: observer(() => (
-      <Search
-        val={ctx.val.field}
-        onInput={(ev) => {
-          ctx.process(ev.target.value);
-        }}
-      />
-    )),
-  };
-
+export function LayoutHeader(): JSX.Element {
   return (
     <header className="layout-header">
       <div className="layout-header__side">
@@ -26,7 +13,7 @@ export const LayoutHeader = (): JSX.Element => {
           src="https://raw.githubusercontent.com/svg24/.github/main/logo.svg"
         />
         <LayoutHeaderFilter />
-        <search.el />
+        <Search />
       </div>
       <div className="layout-header__side">
         <button
@@ -35,7 +22,8 @@ export const LayoutHeader = (): JSX.Element => {
         >
           <CogIcon className="layout-header__icon" />
         </button>
+        <Settings />
       </div>
     </header>
   );
-};
+}

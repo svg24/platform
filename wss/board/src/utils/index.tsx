@@ -18,8 +18,8 @@ export const debounce = (
   }
 );
 
-export const escapeStr = (str: string): string => (
-  JSON.stringify(str).slice(1, -1).replace(/\s+/g, ' ')
+export const escapeString = (string: string): string => (
+  JSON.stringify(string).slice(1, -1).replace(/\s+/g, ' ')
 );
 
 export const isInViewport = (element: HTMLDivElement): boolean => {
