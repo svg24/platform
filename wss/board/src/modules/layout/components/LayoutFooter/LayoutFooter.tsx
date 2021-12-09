@@ -3,6 +3,7 @@ import { ContentStore } from 'src/modules/content';
 
 export const LayoutFooter = (): JSX.Element => {
   const { ctx } = ContentStore;
+
   const links = [{
     id: 'policy',
     label: 'Policy',
@@ -24,9 +25,10 @@ export const LayoutFooter = (): JSX.Element => {
       {link.label}
     </a>
   ));
+
   const meta = {
-    showed: observer(() => <>{ctx.list.meta.length.cur}</>),
-    total: observer(() => <>{ctx.list.meta.length.total}</>),
+    showed: observer(() => <>{ctx.list.result.meta.length.current}</>),
+    total: observer(() => <>{ctx.list.result.meta.length.total}</>),
   };
 
   return (
@@ -34,9 +36,7 @@ export const LayoutFooter = (): JSX.Element => {
       {links}
       <p className="layout-footer__meta">
         <meta.showed />
-        {' '}
-        /
-        {' '}
+        {'\n/\n'}
         <meta.total />
       </p>
     </footer>

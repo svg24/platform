@@ -5,11 +5,7 @@ import { LayoutStore } from 'src/modules/layout';
 import type { ApiListDataItem } from 'types/api';
 import { ContentStore } from '../../store';
 
-export const ContentItem = ({
-  item,
-}: {
-  item: ApiListDataItem;
-}): JSX.Element => {
+export function ContentItem({ item }: { item: ApiListDataItem }): JSX.Element {
   const layoutCtx = LayoutStore.ctx;
   const contentCtx = ContentStore.ctx;
   const bagCtx = BagStore.ctx;
@@ -35,7 +31,7 @@ export const ContentItem = ({
       bagCtx.list.add(item.id);
       await contentCtx.item.fetch();
 
-      if (contentCtx.item.result) {
+      if (contentCtx.item.result && contentCtx.item.result.data[0]) {
         bagCtx.item.setData(contentCtx.item.result.data[0]);
         bagCtx.item.setMeta(contentCtx.item.result.meta);
         layoutCtx.bag.show();
@@ -66,4 +62,4 @@ export const ContentItem = ({
       </h3>
     </li>
   );
-};
+}

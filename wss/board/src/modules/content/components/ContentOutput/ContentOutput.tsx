@@ -1,12 +1,14 @@
-export const ContentOutput = ({
+export function ContentOutput({
   children,
 }: {
   children: JSX.Element[];
-}): JSX.Element => (
-  <output
-    className="content-output"
-    form="search"
-  >
-    {children}
-  </output>
-);
+}): JSX.Element {
+  return (
+    <output
+      className="content-output"
+      form="search"
+    >
+      {children}
+    </output>
+  );
+}

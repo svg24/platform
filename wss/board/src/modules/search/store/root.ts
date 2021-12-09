@@ -13,7 +13,7 @@ export function initRoot(this: SearchStore): void {
   this.process = (value) => {
     debounce(() => {
       const prev = this.value._previous;
-      const { isItems } = ContentStore.list.data;
+      const { isItems } = ContentStore.list.result.data;
       const trimmed = value.trim();
 
       if (prev === trimmed && value.match(/\s*$/)?.[0]?.length !== 1) return;

@@ -16,19 +16,19 @@ export function initListRoot(this: ContentStore): void {
   this.list.upload = async function () {
     const res = await this.fetch();
 
-    this.meta.set(res.meta);
-    this.data.add(res.data);
+    this.result.meta.set(res.meta);
+    this.result.data.add(res.data);
   };
 
   this.list.reset = async function () {
-    this.meta.page.reset();
+    this.result.meta.page.reset();
 
     const res = await this.fetch(UserStore.multiplier);
 
-    this.meta.set(res.meta);
-    this.data.clear();
+    this.result.meta.set(res.meta);
+    this.result.data.clear();
     LayoutStore.main.content.toTop();
-    this.data.add(res.data);
+    this.result.data.add(res.data);
   };
 
   this.list.fetch = async function (multiplier) {
@@ -41,7 +41,7 @@ export function initListRoot(this: ContentStore): void {
       ].map((pr) => (pr.val.cur ? [pr.id, pr.val.cur.id] : []))),
       ...multiplier ? { multiplier } : {},
       ...name ? { name } : {},
-      page: this.meta.page.next,
+      page: this.result.meta.page.next,
     });
 
     return res;

@@ -17,7 +17,8 @@ export const Content = (): JSX.Element => {
 
   const noFound = {
     el: observer(() => (
-      contentCtx.list.data.isItems || contentCtx.list.meta.page.isNext
+      contentCtx.list.result.data.isItems
+      || contentCtx.list.result.meta.page.isNext
         ? <></>
         : <ContentNoFound />
     )),
@@ -68,7 +69,7 @@ export const Content = (): JSX.Element => {
               if (
                 entry
                 && entry.isIntersecting
-                && contentCtx.list.meta.page.isNext
+                && contentCtx.list.result.meta.page.isNext
               ) {
                 list.upload().then(() => {
                   resolve();
@@ -91,10 +92,10 @@ export const Content = (): JSX.Element => {
       })
     ),
     el: observer(() => (
-      contentCtx.list.data.isItems
+      contentCtx.list.result.data.isItems
         ? (
           <ContentList>
-            {contentCtx.list.data.items.map((item) => (
+            {contentCtx.list.result.data.items.map((item) => (
               <ContentItem
                 item={item}
                 key={item.id}

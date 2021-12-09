@@ -19,33 +19,42 @@ type ContentStoreItem = {
 };
 
 type ContentStoreList = {
+  fetch: (multiplier?: number) => Promise<ApiList>;
+  reset: () => Promise<void>;
+  result: ContentStoreListResult;
+  upload: () => Promise<void>;
+};
+
+type ContentStoreListResultDataItems = ApiListData | [];
+type ContentStoreListResultMetaLengthCurrent = ApiListMeta['length']['current'];
+type ContentStoreListResultMetaLengthTotal = ApiListMeta['length']['total'];
+type ContentStoreListResultMetaPageIsNext = ApiListMeta['page']['isNext'];
+type ContentStoreListResultMetaPageNext = ApiListMeta['page']['next'];
+type ContentStoreListResult = {
   data: {
-    _items: ApiListData | [];
+    _items: ContentStoreListResultDataItems;
     add: (data: ApiListData) => void;
     clear: () => void;
     isItems: boolean;
-    items: ContentStoreList['data']['_items'];
+    items: ContentStoreListResultDataItems;
   };
-  fetch: (multiplier?: number) => Promise<ApiList>;
   meta: {
     length: {
-      _cur: ApiListMeta['length']['current'];
-      _total: ApiListMeta['length']['total'];
-      cur: ContentStoreList['meta']['length']['_cur'];
-      setCur: (val: ContentStoreList['meta']['length']['_cur']) => void;
-      setTotal: (val: ContentStoreList['meta']['length']['_total']) => void;
-      total: ContentStoreList['meta']['length']['_total'];
+      _current: ContentStoreListResultMetaLengthCurrent;
+      _total: ContentStoreListResultMetaLengthTotal;
+      current: ContentStoreListResultMetaLengthCurrent;
+      setCurrent: (value: ContentStoreListResultMetaLengthCurrent) => void;
+      setTotal: (value: ContentStoreListResultMetaLengthTotal) => void;
+      total: ContentStoreListResultMetaLengthTotal;
     };
     page: {
-      _isNext: ApiListMeta['page']['isNext'];
-      isNext: ContentStoreList['meta']['page']['_isNext'];
-      next: ApiListMeta['page']['next'];
+      _isNext: ContentStoreListResultMetaPageIsNext;
+      isNext: ContentStoreListResultMetaPageIsNext;
+      next: ContentStoreListResultMetaPageNext;
       reset: () => void;
-      setIsNext: (val: ContentStoreList['meta']['page']['_isNext']) => void;
-      setNext: (val: ContentStoreList['meta']['page']['next']) => void;
+      setIsNext: (value: ContentStoreListResultMetaPageIsNext) => void;
+      setNext: (value: ContentStoreListResultMetaPageNext) => void;
     };
-    set: (val: ApiListMeta) => void;
+    set: (value: ApiListMeta) => void;
   };
-  reset: () => Promise<void>;
-  upload: () => Promise<void>;
 };
