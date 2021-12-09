@@ -1,0 +1,15 @@
+.filter-root {
+  @apply flex flex-col overflow-x-hidden w-60 gap-y-4;
+}
+
+.layout-main_filter-in .filter-root {
+  animation: slide-filter 300ms forwards;
+}
+
+.layout-main_filter-out .filter-root {
+  animation: slide-filter 300ms forwards reverse;
+}
+
+.filter-root .filter-parameter:nth-last-child(2) {
+  @apply mb-auto;
+}

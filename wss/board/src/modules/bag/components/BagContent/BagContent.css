@@ -1,0 +1,11 @@
+.bag-content {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.bag-content__btn {
+  @apply px-2 py-1 text-sm rounded-lg bg-neutral-100;
+}
+
+.bag-content__btn:not(:last-child) {
+  @apply mr-2;
+}

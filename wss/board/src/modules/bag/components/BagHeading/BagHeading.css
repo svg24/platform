@@ -1,0 +1,16 @@
+.bag-heading {
+  @apply flex items-start mb-4 text-2xl font-bold gap-x-1;
+}
+
+.bag-heading__link {
+  @apply duration-100 text-neutral-400;
+}
+
+.bag-heading__link:hover,
+.bag-heading__link:focus {
+  @apply text-black;
+}
+
+.bag-heading__icon {
+  @apply w-4 h-4;
+}

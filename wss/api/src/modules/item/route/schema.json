@@ -19,10 +19,42 @@
                 "content": {
                   "type": "object",
                   "properties": {
-                    "components": {
+                    "original": {
                       "type": "object",
                       "properties": {
-                        "js": {
+                        "components": {
+                          "type": "object",
+                          "properties": {
+                            "react": {
+                              "type": "object",
+                              "properties": {
+                                "js": {
+                                  "type": "string"
+                                },
+                                "ts": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "vue": {
+                              "type": "object",
+                              "properties": {
+                                "js": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "links": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "packages": {
                           "type": "object",
                           "properties": {
                             "react": {
@@ -33,61 +65,99 @@
                             }
                           }
                         },
-                        "ts": {
+                        "snippets": {
                           "type": "object",
                           "properties": {
-                            "react": {
+                            "css": {
+                              "type": "string"
+                            },
+                            "jsx": {
+                              "type": "string"
+                            },
+                            "svg": {
                               "type": "string"
                             }
                           }
                         }
                       }
                     },
-                    "links": {
+                    "square": {
                       "type": "object",
                       "properties": {
-                        "url": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "packages": {
-                      "type": "object",
-                      "properties": {
-                        "react": {
-                          "type": "string"
+                        "components": {
+                          "type": "object",
+                          "properties": {
+                            "react": {
+                              "type": "object",
+                              "properties": {
+                                "js": {
+                                  "type": "string"
+                                },
+                                "ts": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "vue": {
+                              "type": "object",
+                              "properties": {
+                                "js": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
                         },
-                        "vue": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "snippets": {
-                      "type": "object",
-                      "properties": {
-                        "css": {
-                          "type": "string"
+                        "links": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string"
+                            }
+                          }
                         },
-                        "jsx": {
-                          "type": "string"
+                        "packages": {
+                          "type": "object",
+                          "properties": {
+                            "react": {
+                              "type": "string"
+                            },
+                            "vue": {
+                              "type": "string"
+                            }
+                          }
                         },
-                        "svg": {
-                          "type": "string"
+                        "snippets": {
+                          "type": "object",
+                          "properties": {
+                            "css": {
+                              "type": "string"
+                            },
+                            "jsx": {
+                              "type": "string"
+                            },
+                            "svg": {
+                              "type": "string"
+                            }
+                          }
                         }
                       }
                     }
                   }
                 },
-                "version": {
+                "file": {
                   "type": "object",
                   "properties": {
-                    "date": {
-                      "type": "number"
+                    "camel": {
+                      "type": "string"
                     },
-                    "type": {
+                    "snake": {
                       "type": "string"
                     }
                   }
+                },
+                "version": {
+                  "type": "number"
                 }
               }
             }
@@ -96,13 +166,26 @@
             "type": "object",
             "properties": {
               "category": {
-                "type": "string"
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
               },
               "company": {
-                "type": "string"
-              },
-              "date": {
-                "type": "number"
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
               },
               "id": {
                 "type": "string"

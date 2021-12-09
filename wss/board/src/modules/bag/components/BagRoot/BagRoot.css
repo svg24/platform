@@ -1,0 +1,53 @@
+@keyframes fade-bag-bg {
+  from {
+    @apply opacity-0;
+  }
+
+  to {
+    @apply opacity-30;
+  }
+}
+
+@keyframes slide-bag {
+  from {
+    margin-right: -100%;
+  }
+
+  to {
+    @apply mr-0;
+  }
+}
+
+.bag-root {
+  @apply z-10 grid col-start-1 col-end-2 row-start-1 row-end-4;
+}
+
+.bag-root::before {
+  @apply col-span-full row-span-full bg-neutral-600 opacity-30;
+  content: '';
+}
+
+.layout-root_bag-in .bag-root::before {
+  animation: fade-bag-bg 300ms forwards;
+}
+
+.layout-root_bag-out .bag-root::before {
+  animation: fade-bag-bg 300ms forwards reverse;
+}
+
+.bag-root__inner {
+  @apply z-10 flex flex-col px-6 py-4 ml-auto overflow-x-hidden bg-white border-l-2 shadow-sm col-span-full row-span-full border-neutral-50;
+  width: 36rem;
+}
+
+.layout-root_bag-in .bag-root__inner {
+  animation: slide-bag 300ms forwards;
+}
+
+.layout-root_bag-out .bag-root__inner {
+  animation: slide-bag 300ms forwards reverse;
+}
+
+.bag-root__heading {
+  @apply mb-2 text-xs font-bold uppercase text-neutral-400;
+}

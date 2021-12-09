@@ -2,14 +2,12 @@ import type { ContentStore } from 'types/content';
 
 export function initBag(this: ContentStore): void {
   this.bag = {
-    items: undefined,
-
-    add(item) {
-      this.items = [item];
+    ids: [],
+    add(id) {
+      this.ids = [id];
     },
-
     clear() {
-      this.items = undefined;
+      this.ids = [];
     },
   };
 }

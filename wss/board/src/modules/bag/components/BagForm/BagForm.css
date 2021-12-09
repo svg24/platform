@@ -1,0 +1,32 @@
+.bag-form {
+  @apply grid grid-cols-2 gap-4 mb-4;
+}
+
+.bag-form__container {
+  @apply flex gap-x-1;
+}
+
+.bag-form__label {
+  @apply inline-grid cursor-pointer;
+}
+
+.bag-form__label:only-child {
+  @apply pointer-events-none;
+}
+
+.bag-form__input,
+.bag-form__name {
+  @apply col-span-full row-span-full;
+}
+
+.bag-form__input {
+  @apply rounded-lg appearance-none;
+}
+
+.bag-form__name {
+  @apply px-2 py-1 text-sm duration-100 rounded-lg;
+}
+
+.bag-form__input:checked + .bag-form__name {
+  @apply bg-neutral-100;
+}

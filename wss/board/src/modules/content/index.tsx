@@ -17,7 +17,7 @@ export const Content = (): JSX.Element => {
 
   const noFound = {
     el: observer(() => (
-      contentCtx.list.isItems || contentCtx.meta.page.isNext
+      contentCtx.list.data.isItems || contentCtx.list.meta.page.isNext
         ? <></>
         : <ContentNoFound />
     )),
@@ -65,7 +65,11 @@ export const Content = (): JSX.Element => {
         new Promise((resolve) => {
           if (sentinel.ref?.current) {
             list.obs.inst = new IntersectionObserver(([entry]) => {
-              if (entry && entry.isIntersecting && contentCtx.meta.page.isNext) {
+              if (
+                entry
+                && entry.isIntersecting
+                && contentCtx.list.meta.page.isNext
+              ) {
                 list.upload().then(() => {
                   resolve();
                 });
@@ -87,10 +91,10 @@ export const Content = (): JSX.Element => {
       })
     ),
     el: observer(() => (
-      contentCtx.list.isItems && contentCtx.list.items
+      contentCtx.list.data.isItems
         ? (
           <ContentList>
-            {contentCtx.list.items.map((item) => (
+            {contentCtx.list.data.items.map((item) => (
               <ContentItem
                 item={item}
                 key={item.id}

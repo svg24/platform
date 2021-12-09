@@ -1,3 +1,7 @@
+export function removeExtension(file: string): string {
+  return file.replace('.svg', '');
+}
+
 export function toBad(error: unknown): { docs: string; error: unknown } {
   return {
     error,
@@ -6,30 +10,29 @@ export function toBad(error: unknown): { docs: string; error: unknown } {
 }
 
 export function toComponentName(name: string): string {
-  return name[0]?.toUpperCase() + name
+  return name[0]?.toUpperCase() + removeExtension(name
     .slice(1)
-    .replace(/-(\w)/g, (_, char) => (char.toUpperCase()))
-    .replace('.svg', '');
+    .replace(/-(\w)/g, (_, char) => (char.toUpperCase())));
 }
 
-export function toJSReact(name: string, jsx: string): string {
+export function toReactJS(name: string, jsx: string): string {
   return `export const ${name} = (props) => (\n${
     jsx.replace(/<svg (.*?)>/, '<svg $1 {...props}>')
   }\n);`;
 }
 
-export function toJSVue(name: string, html: string): string {
+export function toVueJS(name: string, html: string): string {
   return `<template>\n${html}\n</template>\n\nexport default {\n  name:${name}\n};`;
 }
 
-export function toTSReact(name: string, jsx: string): string {
+export function toReactTS(name: string, jsx: string): string {
   return `export const ${name} = (props: React.ComponentProps<'svg'>): JSX.Element => (\n${
     jsx.replace(/<svg (.*?)>/, '<svg $1 {...props}>')
   }\n);`;
 }
 
-export function toURL(id: string): string {
-  return `https://api.svg24.dev/content?id=${id}`;
+export function toURL(path: string): string {
+  return `https://api.svg24.dev/content/${path}`;
 }
 
 export function toReactPackage(name: string): string {

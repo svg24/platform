@@ -1,4 +1,4 @@
-@keyframes fade-sidebar-bg {
+/* @keyframes fade-sidebar-bg {
   from {
     @apply opacity-0;
   }
@@ -36,7 +36,7 @@
 }
 
 .layout-sidebar__inner {
-  @apply z-10 px-6 py-4 ml-auto overflow-x-hidden bg-white border-l-2 shadow-sm col-span-full row-span-full border-neutral-50;
+  @apply z-10 flex flex-col px-6 py-4 ml-auto overflow-x-hidden bg-white border-l-2 shadow-sm col-span-full row-span-full border-neutral-50;
   width: 36rem;
 }
 
@@ -46,41 +46,96 @@
 
 .layout-root_sidebar-out .layout-sidebar__inner {
   animation: slide-sidebar 300ms forwards reverse;
-}
+} */
 
-.layout-sidebar__container {
+/* .layout-sidebar__container {
   @apply flex items-center justify-center w-full mb-4 rounded-lg h-52;
   background-image: url('src/assets/images/pattern.svg');
 }
 
 .layout-sidebar__container > svg {
   @apply w-40 h-40;
-}
+} */
 
-.layout-sidebar__heading {
+/* .layout-sidebar__heading {
   @apply flex items-start mb-4 text-2xl font-bold gap-x-1;
-}
+} */
 
 .layout-sidebar__description {
   @apply sr-only;
 }
 
-.layout-sidebar__src {
+/* .layout-sidebar__src {
   @apply duration-100 text-neutral-400 hover:text-black focus:text-black;
-}
+} */
 
-.layout-sidebar__icon {
+/* .layout-sidebar__icon {
   @apply w-4 h-4;
+} */
+
+/* .layout-sidebar__section:first-of-type {
+  order: -1;
 }
 
 .layout-sidebar__section:not(:last-of-type) {
   @apply mb-4;
 }
 
-.layout-sidebar__section-heading {
-  @apply mb-2 text-xs font-bold uppercase text-neutral-400;
+.layout-sidebar__section:last-of-type {
+  @apply grid grid-cols-2 gap-4;
+} */
+
+/* .layout-sidebar__link {
+  @apply underline;
 }
 
-.layout-sidebar__section-btn {
-  @apply bg-neutral-100 px-2.5 py-0.5 rounded-md;
+.layout-sidebar__link:hover,
+.layout-sidebar__link:focus {
+  text-decoration: none;
+} */
+
+/* .layout-sidebar__sub-heading {
+  @apply mb-2 text-xs font-bold uppercase text-neutral-400;
+} */
+
+/* .layout-sidebar__item::before {
+  @apply inline mr-2;
+  content: '•';
+} */
+
+/* .layout-sidebar__btn {
+  @apply px-2 py-1 text-sm rounded-lg bg-neutral-100;
 }
+
+.layout-sidebar__btn:not(:last-child) {
+  @apply mr-2;
+} */
+
+/* .layout-sidebar__actions {
+  @apply mb-4;
+}
+
+.layout-sidebar__label {
+  @apply inline-grid cursor-pointer row-span-full;
+}
+
+.layout-sidebar__label:not(:last-of-type) {
+  @apply mr-1;
+}
+
+.layout-sidebar__input,
+.layout-sidebar__name {
+  @apply col-span-full row-span-full;
+}
+
+.layout-sidebar__input {
+  @apply rounded-lg appearance-none;
+}
+
+.layout-sidebar__name {
+  @apply px-2 py-1 text-sm duration-100 rounded-lg;
+}
+
+.layout-sidebar__input:checked + .layout-sidebar__name {
+  @apply bg-neutral-100;
+} */

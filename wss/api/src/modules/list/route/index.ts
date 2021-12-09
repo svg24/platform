@@ -62,9 +62,9 @@ export function addRoute(this: List, inst: typeof server.inst): void {
 
         const items = await this.model.find(filter, ['id', 'name'], options);
         const data = await Promise.all(items.map(async (item) => ({
+          ...await db.modules.list.getDataItem(item.id),
           id: item.id,
           name: item.name,
-          ...await db.list.getDataItem(item.id),
         })));
 
         return server.beatify({ data, meta });

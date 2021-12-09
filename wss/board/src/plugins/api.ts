@@ -1,12 +1,13 @@
 import type {
-  ApiResult,
-  ApiResultAlphabetical,
-  ApiResultLogos,
+  ApiItem,
+  ApiList,
+  ApiSimple,
+  ApiSimpleAlphabetical,
 } from 'types/api';
 
 const simpleMethod = (name: 'categories' | 'companies') => (
-  async (): Promise<ApiResultAlphabetical> => {
-    const res = await fetch(`/api/${name}`);
+  async (): Promise<ApiSimpleAlphabetical> => {
+    const res = await fetch(`/api/v1/${name}`);
     const json = await res.json();
 
     return json;
@@ -14,9 +15,7 @@ const simpleMethod = (name: 'categories' | 'companies') => (
 );
 
 export const api = {
-  companies: simpleMethod('companies'),
-  categories: simpleMethod('categories'),
-  sortBy: async (): Promise<ApiResult> => ({
+  sortBy: async (): Promise<ApiSimple> => ({
     data: [{
       id: 'date',
       name: 'Date',
@@ -31,6 +30,8 @@ export const api = {
       },
     },
   }),
+  categories: simpleMethod('categories'),
+  companies: simpleMethod('companies'),
   async list(params: {
     category?: string;
     company?: string;
@@ -38,14 +39,24 @@ export const api = {
     name?: string;
     page?: number;
     sortBy?: string;
-  }): Promise<ApiResultLogos> {
-    let url = '/api/logos?';
+  }): Promise<ApiList> {
+    let url = '/api/v1/list?';
 
     Object.entries(params).forEach(([key, val]) => {
       if (val) url += `&${key}=${val}`;
     });
 
     const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  },
+  async item({
+    id,
+  }: {
+    id: string;
+  }): Promise<ApiItem> {
+    const res = await fetch(`/api/v1/item?id=${id}`);
     const json = await res.json();
 
     return json;

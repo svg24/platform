@@ -2,7 +2,7 @@ import type { Module } from 'types/module';
 
 export interface Logos extends Module<LogosItem> {}
 
-export type LogosItem = {
+type LogosItem = {
   category: string;
   company: string;
   date: string;

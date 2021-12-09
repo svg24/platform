@@ -12,19 +12,26 @@ export type ItemRouteQuery = {
 
 export type ItemData = ItemDataItem[];
 
-export type ItemDataItem = {
+type ItemDataItem = {
   content: ItemDataItemContent;
+  file: ItemDataItemFile;
   version: ItemDataItemVersion;
 };
 
-export type ItemDataItemContent = {
+type ItemDataItemContentTypes = 'square' | 'original';
+
+type ItemDataItemContent = {
+  [key in ItemDataItemContentTypes]?: ItemDataItemContentType;
+};
+
+type ItemDataItemContentType = {
   components: {
-    js: {
-      react: string;
-      vue: string;
+    react: {
+      js: string;
+      ts: string;
     };
-    ts: {
-      react: string;
+    vue: {
+      js: string;
     };
   };
   links: {
@@ -41,7 +48,9 @@ export type ItemDataItemContent = {
   };
 };
 
-export type ItemDataItemVersion = {
-  date: number;
-  type: 'squared';
+type ItemDataItemFile = {
+  camel: string;
+  snake: string;
 };
+
+type ItemDataItemVersion = number;

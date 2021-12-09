@@ -1,0 +1,16 @@
+{
+  "method": "GET",
+  "url": "/:id/:name",
+  "schema": {
+    "querystring": {
+      "id": {
+        "type": "string"
+      }
+    },
+    "response": {
+      "200": {
+        "type": "string"
+      }
+    }
+  }
+}

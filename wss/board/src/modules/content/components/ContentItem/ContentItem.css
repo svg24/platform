@@ -8,15 +8,20 @@
 }
 
 .content-item__container {
-  @apply px-3 py-2 border-b border-neutral-100;
+  @apply grid items-center px-3 py-2 border-b border-neutral-100 gap-x-2 justify-items-end;
+  grid-template-columns: min-content 1fr;
 }
 
 .content-item__heading {
   @apply px-3 py-2;
 }
 
-.content-list_base .content-item__container > svg {
+.content-list_base .content-item__vanilla > svg {
   @apply w-16 h-16;
+}
+
+.content-item__icon {
+  @apply w-5 h-5 text-neutral-400;
 }
 
 .content-item__btn {

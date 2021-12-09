@@ -5,11 +5,11 @@ import {
   observable,
 } from 'mobx';
 import { api } from 'src/plugins/api';
+import type { ApiSimplMethods } from 'types/api';
 import type { FilterStore } from 'types/filter';
 
 const methods: {
-  [key in 'category' | 'company' | 'sortBy']:
-  'categories' | 'companies' | 'sortBy'
+  [key in ApiSimplMethods]: 'categories' | 'companies' | 'sortBy'
 } = {
   category: 'categories',
   company: 'companies',
@@ -24,7 +24,7 @@ const legends = {
 
 export function initParameter(
   this: FilterStore,
-  id: keyof typeof methods,
+  id: ApiSimplMethods,
 ): void {
   this[id] = {
     id,
@@ -52,11 +52,8 @@ export function initParameter(
       const res = await api[methods[id]]();
 
       this[id].opts = res.data;
-
-      if (res.meta) {
-        this[id].val._def = res.meta.default;
-        this[id].val.cur = res.meta.default;
-      }
+      this[id].val._def = res.meta.default;
+      this[id].val.cur = res.meta.default;
     },
     set: (item) => {
       this[id].val.cur = item;

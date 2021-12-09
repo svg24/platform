@@ -25,8 +25,8 @@ export const LayoutFooter = (): JSX.Element => {
     </a>
   ));
   const meta = {
-    showed: observer(() => <>{ctx.meta.length.cur}</>),
-    total: observer(() => <>{ctx.meta.length.total}</>),
+    showed: observer(() => <>{ctx.list.meta.length.cur}</>),
+    total: observer(() => <>{ctx.list.meta.length.total}</>),
   };
 
   return (

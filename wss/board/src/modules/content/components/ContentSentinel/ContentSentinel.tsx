@@ -15,12 +15,12 @@ export const ContentSentinel = forwardRef<HTMLDivElement>((_, ref) => {
     mount() {
       useEffect(() => {
         root.toggleHidden();
-        reaction(() => ctx.meta.page.isNext, root.toggleHidden);
+        reaction(() => ctx.list.meta.page.isNext, root.toggleHidden);
         reaction(() => ctx.sentinel.isVisible, root.toggleVisible);
       }, []);
     },
     toggleHidden() {
-      if (ctx.meta.page.isNext) {
+      if (ctx.list.meta.page.isNext) {
         root.ls?.remove('content-sentinel_hidden');
       } else {
         root.ls?.add('content-sentinel_hidden');

@@ -1,8 +1,8 @@
 import { reaction } from 'mobx';
 import { useEffect, useRef, useState } from 'react';
+import { Filter } from 'src/modules/filter';
 import { LayoutStore } from '../../store';
 import { LayoutMainContainer } from './LayoutMainContainer';
-import { LayoutMainFilter } from './LayoutMainFilter';
 
 export const LayoutMain = ({
   children,
@@ -68,7 +68,7 @@ export const LayoutMain = ({
       className="layout-main"
       ref={root.ref}
     >
-      {filter.isShowed ? <LayoutMainFilter /> : <></>}
+      {filter.isShowed ? <Filter /> : <></>}
       <LayoutMainContainer>
         {children}
       </LayoutMainContainer>

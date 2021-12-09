@@ -1,0 +1,60 @@
+.bag-view {
+  @apply mb-4;
+  order: -1;
+}
+
+.bag-view__main {
+  @apply mb-2 rounded-lg h-52;
+  background-image: url('src/assets/images/pattern.svg');
+}
+
+.bag-view__btn {
+  @apply absolute z-10 duration-100 transform -translate-y-1/2 top-1/2;
+}
+
+.bag-view__btn:first-of-type {
+  @apply left-4;
+}
+
+.bag-view__btn:last-of-type {
+  @apply right-4;
+}
+
+.bag-view__btn_disabled {
+  @apply pointer-events-none text-neutral-400;
+}
+
+.bag-view__icon {
+  @apply w-5 h-5;
+}
+
+.bag-view__slide {
+  @apply flex items-center justify-center;
+}
+
+.bag-view > .bag-view__slide {
+  @apply rounded-lg h-52;
+  background-image: url('src/assets/images/pattern.svg');
+}
+
+.bag-view__main .bag-view__slide {
+  @apply w-full;
+}
+
+.bag-view__thumbs .bag-view__slide {
+  @apply border-2 h-20 rounded-lg duration-100 border-transparent cursor-pointer;
+  background-image: url('src/assets/images/pattern.svg');
+}
+
+.bag-view > .bag-view__slide > svg,
+.bag-view__main .bag-view__slide > svg {
+  @apply w-40 h-40;
+}
+
+.bag-view__thumbs .bag-view__slide > svg {
+  @apply w-12 h-12;
+}
+
+.bag-view__thumbs .bag-view__slide_active {
+  @apply border-neutral-100;
+}

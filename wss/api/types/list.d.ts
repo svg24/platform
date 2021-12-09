@@ -1,4 +1,4 @@
-import type { ItemDataItemContent } from 'types/item';
+import type { ItemDataItemContentType } from 'types/item';
 import type { Module } from 'types/module';
 
 export interface List extends Module<ListSchema> {}
@@ -21,11 +21,11 @@ export type ListRouteQuery = {
   sortBy?: 'date' | 'name';
 };
 
-export type ListDataItem = {
+type ListDataItem = {
   isMany: ListDataItemIsMany;
   latest: ListDataItemLatest;
 };
 
-export type ListDataItemIsMany = boolean;
+type ListDataItemIsMany = boolean;
 
-export type ListDataItemLatest = ItemDataItemContent['snippets']['svg'];
+type ListDataItemLatest = ItemDataItemContentType['snippets']['svg'];

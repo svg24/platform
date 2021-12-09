@@ -1,21 +1,21 @@
 import type { Store, StoreVisible } from 'types/store';
 
 export interface LayoutStore extends Store<LayoutStore> {
+  bag: LayoutStoreBag;
   main: LayoutStoreMain;
-  sidebar: LayoutStoreSidebar;
+}
+
+interface LayoutStoreBag extends StoreVisible {
+  back: () => void;
 }
 
 type LayoutStoreMain = {
-  content?: {
-    gotoTop: (() => void);
+  content: {
+    toTop: () => void;
   };
   filter: LayoutStoreMainFilter;
 };
 
 interface LayoutStoreMainFilter extends StoreVisible {
   toggle: () => void;
-}
-
-interface LayoutStoreSidebar extends StoreVisible {
-  initiator: HTMLButtonElement | undefined | null;
 }

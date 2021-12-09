@@ -17,22 +17,6 @@
   grid-template-columns: min-content 1fr;
 }
 
-.layout-main__filter {
-  @apply flex flex-col overflow-x-hidden w-60 gap-y-4;
-}
-
-.layout-main_filter-in .layout-main__filter {
-  animation: slide-filter 300ms forwards;
-}
-
-.layout-main_filter-out .layout-main__filter {
-  animation: slide-filter 300ms forwards reverse;
-}
-
-.layout-main__filter .filter-parameter:nth-last-child(2) {
-  @apply mb-auto;
-}
-
 .layout-main__container {
   @apply grid w-full col-start-1 col-end-2 row-start-1 row-end-2 overflow-y-scroll rounded-lg;
   background-image: url('src/assets/images/pattern.svg');

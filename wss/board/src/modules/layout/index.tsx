@@ -1,10 +1,10 @@
 import { reaction } from 'mobx';
 import { createRef, useEffect, useState } from 'react';
+import { Bag } from 'src/modules/bag';
 import { LayoutFooter } from './components/LayoutFooter';
 import { LayoutHeader } from './components/LayoutHeader';
 import { LayoutMain } from './components/LayoutMain';
 import { LayoutRoot } from './components/LayoutRoot';
-import { LayoutSidebar } from './components/LayoutSidebar';
 import { LayoutStore } from './store';
 
 export { LayoutStore };
@@ -16,57 +16,57 @@ const root = {
   },
 };
 
-export const Layout = ({
+export function Layout({
   children,
 }: {
   children: JSX.Element;
-}): JSX.Element => {
+}): JSX.Element {
   const { ctx } = LayoutStore;
 
-  const sidebar = {
+  const bag = {
     mount() {
       useEffect(() => {
-        reaction(() => ctx.sidebar.isVisible, sidebar.toggle);
+        reaction(() => ctx.bag.isVisible, bag.toggle);
       }, []);
     },
     toggle() {
-      if (ctx.sidebar.isVisible) {
-        sidebar.isShowed = true;
-        sidebar.show();
+      if (ctx.bag.isVisible) {
+        bag.isShowed = true;
+        bag.show();
       } else {
-        sidebar.hide().then(() => {
-          sidebar.isShowed = false;
+        bag.hide().then(() => {
+          bag.isShowed = false;
         });
       }
     },
     _ms: 300,
     _isShowed: useState(false),
     get isShowed() {
-      return sidebar._isShowed[0];
+      return bag._isShowed[0];
     },
     set isShowed(val) {
-      sidebar._isShowed[1](val);
+      bag._isShowed[1](val);
     },
     show() {
-      root.ls?.add('layout-root_sidebar-display');
-      root.ls?.add('layout-root_sidebar-in');
+      root.ls?.add('layout-root_bag-display');
+      root.ls?.add('layout-root_bag-in');
       setTimeout(() => {
-        root.ls?.remove('layout-root_sidebar-in');
-      }, sidebar._ms);
+        root.ls?.remove('layout-root_bag-in');
+      }, bag._ms);
     },
     hide(): Promise<void> {
       return new Promise((resolve) => {
-        root.ls?.add('layout-root_sidebar-out');
+        root.ls?.add('layout-root_bag-out');
         setTimeout(() => {
-          root.ls?.remove('layout-root_sidebar-out');
-          root.ls?.remove('layout-root_sidebar-display');
+          root.ls?.remove('layout-root_bag-out');
+          root.ls?.remove('layout-root_bag-display');
           resolve();
-        }, sidebar._ms);
+        }, bag._ms);
       });
     },
   };
 
-  sidebar.mount();
+  bag.mount();
 
   return (
     <LayoutRoot ref={root.ref}>
@@ -74,8 +74,8 @@ export const Layout = ({
       <LayoutMain>
         {children}
       </LayoutMain>
-      {sidebar.isShowed ? <LayoutSidebar /> : <></>}
+      {bag.isShowed ? <Bag /> : <></>}
       <LayoutFooter />
     </LayoutRoot>
   );
-};
+}

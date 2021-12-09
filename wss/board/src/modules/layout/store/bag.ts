@@ -6,9 +6,8 @@ import {
 } from 'mobx';
 import type { LayoutStore } from 'types/layout';
 
-export const initSidebar = function (this: LayoutStore): void {
-  this.sidebar = {
-    initiator: undefined,
+export const initBag = function (this: LayoutStore): void {
+  this.bag = {
     _isVisible: false,
     get isVisible() {
       return this._isVisible;
@@ -22,9 +21,10 @@ export const initSidebar = function (this: LayoutStore): void {
     hide() {
       this.isVisible = false;
     },
+    back: () => {},
   };
 
-  makeObservable(this.sidebar, {
+  makeObservable(this.bag, {
     _isVisible: observable,
     isVisible: computed,
     show: action,

@@ -1,78 +1,51 @@
 import type {
-  ApiLogosDataItem,
-  ApiLogosMeta,
-  ApiResultLogos,
+  ApiItem,
+  ApiList,
+  ApiListData,
+  ApiListMeta,
 } from 'types/api';
 import type { Store, StoreVisible } from 'types/store';
 
 export interface ContentStore extends Store<ContentStore> {
-  bag: ContentStoreBag;
+  item: ContentStoreItem;
   list: ContentStoreList;
-  meta: ContentStoreMeta;
-  search: ContentStoreSearch;
   sentinel: StoreVisible;
 }
 
-/**
- * Bag
- */
-
-type ContentStoreBag = {
-  add: (item: ApiLogosDataItem) => void;
+type ContentStoreItem = {
   clear: () => void;
-  items: ApiResultLogos['data'] | undefined;
+  fetch: () => Promise<void>;
+  result: ApiItem | null;
 };
-
-/**
- * List
- */
 
 type ContentStoreList = {
-  _items: ApiResultLogos['data'] | undefined;
-  add: (data: ApiResultLogos['data']) => void;
-  clear: () => void;
-  fetch: (multiplier?: number) => Promise<ApiResultLogos>;
-  isItems: boolean;
-  items: ContentStoreList['_items'];
+  data: {
+    _items: ApiListData | [];
+    add: (data: ApiListData) => void;
+    clear: () => void;
+    isItems: boolean;
+    items: ContentStoreList['data']['_items'];
+  };
+  fetch: (multiplier?: number) => Promise<ApiList>;
+  meta: {
+    length: {
+      _cur: ApiListMeta['length']['current'];
+      _total: ApiListMeta['length']['total'];
+      cur: ContentStoreList['meta']['length']['_cur'];
+      setCur: (val: ContentStoreList['meta']['length']['_cur']) => void;
+      setTotal: (val: ContentStoreList['meta']['length']['_total']) => void;
+      total: ContentStoreList['meta']['length']['_total'];
+    };
+    page: {
+      _isNext: ApiListMeta['page']['isNext'];
+      isNext: ContentStoreList['meta']['page']['_isNext'];
+      next: ApiListMeta['page']['next'];
+      reset: () => void;
+      setIsNext: (val: ContentStoreList['meta']['page']['_isNext']) => void;
+      setNext: (val: ContentStoreList['meta']['page']['next']) => void;
+    };
+    set: (val: ApiListMeta) => void;
+  };
   reset: () => Promise<void>;
   upload: () => Promise<void>;
-};
-
-/**
- * Meta
- */
-
-type ContentStoreMeta = {
-  length: {
-    _cur: number;
-    _total: number;
-    cur: ContentStoreMeta['length']['_cur'];
-    setCur: (val: number) => void;
-    setTotal: (val: number) => void;
-    total: ContentStoreMeta['length']['_total'];
-  };
-  page: {
-    _isNext: boolean;
-    isNext: ContentStoreMeta['page']['_isNext'];
-    next: number;
-    reset: () => void;
-    setIsNext: (val: boolean) => void;
-    setNext: (val: number) => void;
-  };
-  update: (val: ApiLogosMeta) => void;
-};
-
-/**
- * Search
- */
-
-type ContentStoreSearch = {
-  process: (val: string) => void;
-  reset: () => void;
-  val: {
-    _field: string;
-    _prev: string | undefined;
-    cur: string | undefined;
-    field: ContentStoreSearch['val']['_field'];
-  };
 };

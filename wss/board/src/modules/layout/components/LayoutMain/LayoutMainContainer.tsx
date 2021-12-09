@@ -83,10 +83,8 @@ export const LayoutMainContainer = ({
     },
   };
 
-  ctx.main.content = {
-    gotoTop() {
-      if (content.ref.current) content.ref.current.scrollTop = 0;
-    },
+  ctx.main.content.toTop = () => {
+    if (content.ref.current) content.ref.current.scrollTop = 0;
   };
 
   content.mount();

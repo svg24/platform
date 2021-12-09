@@ -1,8 +1,12 @@
+import { content } from './content';
 import { item } from './item';
 import { list } from './list';
-import { createSimple } from './simple';
+import { categories, companies } from './simple';
 
-export { item, list };
-
-export const categories = createSimple('categories');
-export const companies = createSimple('companies');
+export {
+  content,
+  categories,
+  companies,
+  item,
+  list,
+};

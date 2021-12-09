@@ -1,5 +1,6 @@
 import type { SimpleModule } from 'types/simple';
 import { server } from '../../core';
+import { toBad } from '../../utils';
 
 const DEFAULT_SORT_BY = 'name';
 const DEFAULT_SORT_METHOD = 'asc';
@@ -38,21 +39,25 @@ export function addRoute(this: SimpleModule, inst: typeof server.inst): void {
       },
     },
     handler: async () => {
-      const raw = await this.model.find({}, null, {
-        sort: { [DEFAULT_SORT_BY]: DEFAULT_SORT_METHOD },
-      });
-      const data = raw.reduce((acc, cur) => {
-        const first = cur.name[0]?.toUpperCase();
+      try {
+        const raw = await this.model.find({}, ['id', 'name'], {
+          sort: { [DEFAULT_SORT_BY]: DEFAULT_SORT_METHOD },
+        });
+        const data = raw.reduce((acc, cur) => {
+          const first = cur.name[0]?.toUpperCase();
 
-        if (first) acc[first] = [...acc[first] || [], cur];
+          if (first) acc[first] = [...acc[first] || [], cur];
 
-        return acc;
-      }, {} as { [key: string]: typeof raw[0][] });
+          return acc;
+        }, {} as { [key: string]: typeof raw[0][] });
 
-      return server.beatify({
-        data,
-        meta: {},
-      });
+        return server.beatify({
+          data,
+          meta: {},
+        });
+      } catch (error) {
+        return server.beatify(toBad(error));
+      }
     },
   });
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './views/Home';
+import 'swiper/css';
 import './index.css';
 
 ReactDOM.render(

@@ -6,8 +6,8 @@ import {
 } from 'mobx';
 import type { ContentStore } from 'types/content';
 
-export function initMeta(this: ContentStore): void {
-  this.meta = {
+export function initListMeta(this: ContentStore): void {
+  this.list.meta = {
     length: {
       _cur: 0,
       get cur() {
@@ -49,7 +49,7 @@ export function initMeta(this: ContentStore): void {
         this.isNext = val;
       },
     },
-    update(meta) {
+    set(meta) {
       this.length.setCur(meta.length.current);
       this.length.setTotal(meta.length.total);
       this.page.setIsNext(meta.page.isNext);
@@ -57,7 +57,7 @@ export function initMeta(this: ContentStore): void {
     },
   };
 
-  makeObservable(this.meta.length, {
+  makeObservable(this.list.meta.length, {
     _cur: observable,
     _total: observable,
     cur: computed,
@@ -65,7 +65,7 @@ export function initMeta(this: ContentStore): void {
     setTotal: action,
     total: computed,
   });
-  makeObservable(this.meta.page, {
+  makeObservable(this.list.meta.page, {
     _isNext: observable,
     isNext: computed,
     setIsNext: action,

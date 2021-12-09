@@ -2,13 +2,14 @@ import { ExternalLinkIcon } from '@heroicons/react/outline';
 import { useEffect, useRef } from 'react';
 import { ContentStore } from 'src/modules/content';
 import { LayoutStore } from '../../store';
+import { LayoutSidebarActions } from './LayoutSidebarActions';
+import { LayoutSidebarContent } from './LayoutSidebarContent';
+import { LayoutSidebarMeta } from './LayoutSidebarMeta';
+import { LayoutSidebarView } from './LayoutSidebarView';
 
 export const LayoutSidebar = (): JSX.Element => {
   const layoutCtx = LayoutStore.ctx;
   const contentCtx = ContentStore.ctx;
-  const item = contentCtx.bag.items?.[0];
-
-  if (!item) return <></>;
 
   const root = {
     ref: useRef<HTMLDivElement>(null),
@@ -25,92 +26,48 @@ export const LayoutSidebar = (): JSX.Element => {
       if (ev.target === root.ref.current) root.close();
     },
     focusout: (ev: FocusEvent) => {
-      if (!root.ref.current?.contains(ev.relatedTarget as Node)) {
-        root.close();
-      }
+      if (!ev.relatedTarget) return;
+      if (!root.ref.current?.contains(ev.relatedTarget as Node)) root.close();
     },
     close() {
       layoutCtx.sidebar.hide();
-      layoutCtx.sidebar.initiator?.focus();
+      layoutCtx.sidebar.back();
     },
   };
 
   root.mount();
 
-  const download = {
-    onClick: () => {
-      const blob = new Blob([item.content[0]?.snippets.vanilla || '']);
-      const link = document.createElement('a');
-
-      Object.assign(link, {
-        href: window.URL.createObjectURL(blob),
-        download: `${item.id}.svg`,
-      });
-
-      link.click();
-      link.remove();
-    },
-  };
-
-  const copy = {
-    onClick: async () => {
-      await navigator.clipboard.writeText(item.content[0]?.snippets.vanilla || '');
-    },
-  };
-
-  return (
-    <div
-      aria-label={`${item.name} details`}
-      className="layout-sidebar"
-      ref={root.ref}
-      role="dialog"
-      tabIndex={-1}
-    >
-      <div className="layout-sidebar__inner">
-        <div
-          className="layout-sidebar__container"
-          dangerouslySetInnerHTML={{ __html: item.content[0]?.snippets.vanilla || '' }}
-        />
-        <h1 className="layout-sidebar__heading">
-          <span id="layout-sidebar-heading">
-            {item.name}
-          </span>
-          <a
-            aria-label={`Go to ${item.name} website`}
-            className="layout-sidebar__src"
-            href={item.src}
-          >
-            <ExternalLinkIcon
-              aria-hidden="true"
-              className="layout-sidebar__icon"
-            />
-          </a>
-        </h1>
-        <section className="layout-sidebar__section">
-          <h2 className="layout-sidebar__section-heading">
-            Download
-          </h2>
-          <button
-            className="layout-sidebar__section-btn"
-            type="button"
-            onClick={download.onClick}
-          >
-            .svg
-          </button>
-        </section>
-        <section className="layout-sidebar__section">
-          <h2 className="layout-sidebar__section-heading">
-            Copy
-          </h2>
-          <button
-            className="layout-sidebar__section-btn"
-            type="button"
-            onClick={copy.onClick}
-          >
-            html
-          </button>
-        </section>
+  return contentCtx.item.data && contentCtx.item.meta
+    ? (
+      <div
+        aria-label={`${contentCtx.item.meta?.name} details`}
+        className="layout-sidebar"
+        ref={root.ref}
+        role="dialog"
+        tabIndex={-1}
+      >
+        <div className="layout-sidebar__inner">
+          <h1 className="layout-sidebar__heading">
+            <span id="layout-sidebar-heading">
+              {contentCtx.item.meta?.name}
+            </span>
+            <a
+              aria-label={`Go to ${contentCtx.item.meta?.name} website`}
+              className="layout-sidebar__src"
+              href={contentCtx.item.meta?.src.product}
+            >
+              <ExternalLinkIcon
+                aria-hidden="true"
+                className="layout-sidebar__icon"
+              />
+            </a>
+          </h1>
+          <LayoutSidebarView />
+          <LayoutSidebarMeta />
+          <LayoutSidebarActions />
+          <LayoutSidebarContent />
+        </div>
       </div>
-    </div>
-  );
+    )
+    : <></>;
 };

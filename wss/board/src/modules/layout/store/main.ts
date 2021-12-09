@@ -8,6 +8,9 @@ import type { LayoutStore } from 'types/layout';
 
 export const initMain = function (this: LayoutStore): void {
   this.main = {
+    content: {
+      toTop: () => {},
+    },
     filter: {
       _isVisible: false,
       get isVisible() {

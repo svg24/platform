@@ -8,9 +8,9 @@ import * as utils from '../utils';
 
 export const db = new (function (this: DB) {
   this.opts = {
+    local: '/srv/db/packages/vanilla/',
     name: process.env.DB_NAME,
     pass: process.env.DB_PASS,
-    src: '/srv/db/packages/vanilla/',
     uri: `mongodb://db:${process.env.DB_PORT}/?authSource=admin`,
     user: process.env.DB_USER,
   };
@@ -56,88 +56,101 @@ export const db = new (function (this: DB) {
     }
   };
 
-  this.list = {
-    async getDataItem(id) {
-      return {
-        isMany: await this.getDataItemIsMany(id),
-        latest: await this.getDataItemLatest(id),
-      };
+  this.modules = {
+    list: {
+      async getDataItem(id) {
+        return {
+          isMany: await this.getDataItemIsMany(id),
+          latest: await this.getDataItemLatest(id),
+        };
+      },
+      getDataItemIsMany: async (id) => {
+        const dirents = await fs.readdir(`${this.opts.local}${id}`, {
+          withFileTypes: true,
+        });
+        return dirents.filter((dirent) => !dirent.isSymbolicLink()).length > 1;
+      },
+      getDataItemLatest: async (id) => {
+        const buf = await fs.readFile(`${this.opts.local}${id}/${id}.svg`);
+        return buf.toString();
+      },
     },
-    getDataItemIsMany: async (id) => {
-      const dirents = await fs.readdir(`${this.opts.src}${id}`, {
-        withFileTypes: true,
-      });
-      return dirents.filter((dirent) => !dirent.isSymbolicLink()).length > 1;
-    },
-    getDataItemLatest: async (id) => {
-      const buf = await fs.readFile(`${this.opts.src}${id}/${id}.svg`);
-      return buf.toString();
-    },
-  };
+    item: {
+      getData: async (id) => {
+        const root = `${this.opts.local}${id}`;
+        const dirents = await fs.readdir(root, { withFileTypes: true });
+        const data = [] as ItemData;
 
-  this.item = {
-    getData: async (id) => {
-      const root = `${this.opts.src}${id}`;
-      const dirents = await fs.readdir(root, { withFileTypes: true });
-      const data = [] as ItemData;
+        await Promise.all(dirents.map(async (dirent) => {
+          if (!dirent.isSymbolicLink()) {
+            data.push(await this.modules.item.getDataItem(id, dirent.name));
+          }
+        }));
 
-      await Promise.all(dirents.map(async (dirent) => {
-        if (!dirent.isSymbolicLink()) {
-          data.push(await this.item.getDataItem(id, dirent.name));
-        }
-      }));
+        return data;
+      },
+      async getDataItem(id, direntName) {
+        const componentName = utils.toComponentName(direntName);
 
-      return data;
-    },
-    async getDataItem(id, name) {
-      return {
-        content: await this.getDataItemContent(id, name),
-        version: await this.getDataItemVersion(id),
-      };
-    },
-    getDataItemContent: async (id, direntName) => {
-      const buf = await fs.readFile(`${this.opts.src}${id}/${direntName}`);
-      const name = utils.toComponentName(direntName);
+        return {
+          content: await this.getDataItemContent(`${id}/${direntName}`, componentName),
+          file: this.getDataItemFile(direntName, componentName),
+          version: await this.getDataItemVersion(direntName),
+        };
+      },
+      getDataItemContent: async (path, componentName) => {
+        const buf = await fs.readFile(`${this.opts.local}${path}`);
 
-      const content = {
-        components: {
-          js: {
-            get react() {
-              return utils.toJSReact(name, content.snippets.jsx);
+        const original = {
+          components: {
+            react: {
+              get js() {
+                return utils.toReactJS(componentName, original.snippets.jsx);
+              },
+              get ts() {
+                return utils.toReactTS(componentName, original.snippets.jsx);
+              },
             },
-            get vue() {
-              return utils.toJSVue(name, content.snippets.svg);
+            vue: {
+              get js() {
+                return utils.toVueJS(componentName, original.snippets.svg);
+              },
             },
           },
-          ts: {
-            get react() {
-              return utils.toTSReact(name, content.snippets.jsx);
+          links: {
+            url: utils.toURL(path),
+          },
+          packages: {
+            react: utils.toReactPackage(componentName),
+            vue: utils.toVuePackage(componentName),
+          },
+          snippets: {
+            css: utils.toCSS(buf.toString('base64')),
+            get jsx() {
+              return utils.toJSX(original.snippets.svg);
             },
+            svg: buf.toString(),
           },
-        },
-        links: {
-          url: utils.toURL(id),
-        },
-        packages: {
-          react: utils.toReactPackage(name),
-          vue: utils.toVuePackage(name),
-        },
-        snippets: {
-          css: utils.toCSS(buf.toString('base64')),
-          get jsx() {
-            return utils.toJSX(content.snippets.svg);
-          },
-          svg: buf.toString(),
-        },
-      };
+        };
 
-      return content;
+        return { original };
+      },
+      getDataItemFile(direntName, componentName) {
+        return {
+          camel: componentName,
+          snake: utils.removeExtension(direntName),
+        };
+      },
+      async getDataItemVersion(direntName) {
+        const match = direntName.match(/.+-v(.*).svg/);
+        return match && match[1] ? (new Date(match[1])).getTime() : 0;
+      },
     },
-    async getDataItemVersion(id) {
-      const match = id.match(/.+-v(.*).svg/);
-      const date = match && match[1] ? (new Date(match[1])).getTime() : 0;
-
-      return { date, type: 'squared' };
+    content: {
+      get: async (id, name) => {
+        const buf = await fs.readFile(`${this.opts.local}/${id}/${name}.svg`);
+        return buf.toString();
+      },
     },
   };
 } as any as { new (): DB })();
