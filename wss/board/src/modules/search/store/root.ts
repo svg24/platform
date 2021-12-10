@@ -1,4 +1,3 @@
-import { action, makeObservable } from 'mobx';
 import { ContentStore } from 'src/modules/content';
 import { debounce, escapeString } from 'src/utils';
 import type { SearchStore } from 'types/search';
@@ -35,9 +34,4 @@ export function initRoot(this: SearchStore): void {
   this.reset = () => {
     this.value.current = this.value._default;
   };
-
-  makeObservable(this as object, {
-    process: action,
-    reset: action,
-  });
 }
