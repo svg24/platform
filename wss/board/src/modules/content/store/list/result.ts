@@ -6,7 +6,7 @@ import {
 } from 'mobx';
 import type { ContentStore } from 'types/content';
 
-export function initResult(this: ContentStore): void {
+export function initListResult(this: ContentStore): void {
   this.list.result = {
     data: {
       _items: [],

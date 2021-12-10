@@ -7,6 +7,6 @@ import { initSentinel } from './sentinel';
 export const ContentStore = new (function (this: Store) {
   initStore.call(this);
   initList.call(this);
-  initSentinel.call(this);
   initItem.call(this);
+  initSentinel.call(this);
 } as any as { new (): Store })();
