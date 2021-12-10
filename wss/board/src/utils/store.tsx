@@ -37,14 +37,12 @@ export function initStore<I extends Store<I>>(this: I): void {
 export function initStoreVisible<I extends StoreVisible>(this: I): void {
   this._isVisible = false;
 
-  Object.defineProperties(this, {
-    isVisible: {
-      get: () => this._isVisible,
-      set(value) {
-        this._isVisible = value;
-      },
-      enumerable: true,
-      configurable: true,
+  Object.defineProperty(this, 'isVisible', {
+    enumerable: true,
+    configurable: true,
+    get: () => this._isVisible,
+    set(value) {
+      this._isVisible = value;
     },
   });
 

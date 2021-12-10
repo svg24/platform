@@ -6,11 +6,9 @@ import { api } from 'src/plugins/api';
 import type { ContentStore } from 'types/content';
 
 export function initListRoot(this: ContentStore): void {
-  Object.defineProperties(this, {
-    list: {
-      value: {},
-      enumerable: true,
-    },
+  Object.defineProperty(this, 'list', {
+    enumerable: true,
+    value: {},
   });
 
   this.list.upload = async function () {

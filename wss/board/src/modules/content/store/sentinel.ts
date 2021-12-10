@@ -3,8 +3,8 @@ import type { ContentStore } from 'types/content';
 
 export function initSentinel(this: ContentStore): void {
   Object.defineProperty(this, 'sentinel', {
-    value: {},
     enumerable: true,
+    value: {},
   });
   initStoreVisible.call(this.sentinel);
 }

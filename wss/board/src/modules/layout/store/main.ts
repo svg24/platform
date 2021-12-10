@@ -3,6 +3,7 @@ import type { LayoutStore } from 'types/layout';
 
 export function initMain(this: LayoutStore): void {
   Object.defineProperty(this, 'main', {
+    enumerable: true,
     value: {
       content: {
         goTop: null,
@@ -17,7 +18,6 @@ export function initMain(this: LayoutStore): void {
         },
       },
     },
-    enumerable: true,
   });
 
   initStoreVisible.call(this.main.filter);

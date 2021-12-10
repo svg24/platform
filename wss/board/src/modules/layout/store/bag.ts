@@ -3,10 +3,10 @@ import type { LayoutStore } from 'types/layout';
 
 export function initBag(this: LayoutStore): void {
   Object.defineProperty(this, 'bag', {
+    enumerable: true,
     value: {
       goBack: null,
     },
-    enumerable: true,
   });
   initStoreVisible.call(this.bag);
 }

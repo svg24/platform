@@ -9,12 +9,12 @@ export const FilterStore = new (function (this: Store) {
   initParameter.call(this, 'sortBy');
 
   Object.defineProperty(this, 'getApplied', {
+    enumerable: true,
     get: () => [
       this.sortBy,
       this.category,
       this.company,
     ].filter((pr) => pr.isApplied),
-    enumerable: true,
   });
 
   this.mount = async () => {
