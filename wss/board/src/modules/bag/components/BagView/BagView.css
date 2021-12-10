@@ -1,5 +1,4 @@
 .bag-view {
-  @apply mb-4;
   order: -1;
 }
 
@@ -42,7 +41,7 @@
 }
 
 .bag-view__thumbs .bag-view__slide {
-  @apply border-2 h-20 rounded-lg duration-100 border-transparent cursor-pointer;
+  @apply h-20 duration-100 border-2 border-transparent rounded-lg cursor-pointer;
   background-image: url('src/assets/images/pattern.svg');
 }
 

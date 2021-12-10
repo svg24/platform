@@ -41,7 +41,7 @@ export function BagMeta(): JSX.Element {
   };
 
   return (
-    <section className="bag-meta">
+    <section>
       {bagCtx.item.meta?.src.usage
         ? (
           <p>

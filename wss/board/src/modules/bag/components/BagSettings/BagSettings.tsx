@@ -8,7 +8,7 @@ import {
 import type { BagStoreItemAction, BagStoreItemType } from 'types/bag';
 import { BagStore } from '../../store';
 
-export function BagForm(): JSX.Element {
+export function BagSettings(): JSX.Element {
   const { ctx } = BagStore;
 
   const actions = {
@@ -105,30 +105,32 @@ export function BagForm(): JSX.Element {
   types.mount();
 
   return (
-    <Form className={`${Form({}).props.className} bag-form`}>
-      {[actions, types].map((pr) => (
-        <FormParameterBase
-          key={pr.id}
-          legend={pr.legend}
-        >
-          <>
-            {Object.entries(pr.list).map(([key, value]) => (
-              <FormLabelBase
-                key={key}
-                name={value.name}
-              >
-                <FormInput
-                  defaultChecked={value.checked}
-                  name={pr.id}
-                  onChange={() => {
-                    pr.onChange(value);
-                  }}
-                />
-              </FormLabelBase>
-            ))}
-          </>
-        </FormParameterBase>
-      ))}
-    </Form>
+    <section className="bag-settings">
+      <Form>
+        {[actions, types].map((pr) => (
+          <FormParameterBase
+            key={pr.id}
+            legend={pr.legend}
+          >
+            <>
+              {Object.entries(pr.list).map(([key, value]) => (
+                <FormLabelBase
+                  key={key}
+                  name={value.name}
+                >
+                  <FormInput
+                    defaultChecked={value.checked}
+                    name={pr.id}
+                    onChange={() => {
+                      pr.onChange(value);
+                    }}
+                  />
+                </FormLabelBase>
+              ))}
+            </>
+          </FormParameterBase>
+        ))}
+      </Form>
+    </section>
   );
 }

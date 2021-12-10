@@ -1,5 +1,5 @@
 .bag-heading {
-  @apply flex items-start mb-4 text-2xl font-bold gap-x-1;
+  @apply flex items-start text-2xl font-bold gap-x-1;
 }
 
 .bag-heading__link {

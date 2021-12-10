@@ -36,7 +36,7 @@
 }
 
 .bag-root__inner {
-  @apply z-10 flex flex-col px-6 py-4 ml-auto overflow-x-hidden bg-white border-l-2 shadow-sm col-span-full row-span-full border-neutral-50;
+  @apply z-10 flex flex-col px-6 py-4 ml-auto overflow-x-hidden bg-white border-l-2 shadow-sm col-span-full row-span-full border-neutral-50 gap-y-4;
   width: 36rem;
 }
 
