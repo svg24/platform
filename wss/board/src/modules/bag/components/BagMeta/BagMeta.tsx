@@ -4,28 +4,41 @@ import {
   ListItem,
   PseudoLink,
 } from 'src/components';
+import { ContentStore } from 'src/modules/content';
+import { FilterStore } from 'src/modules/filter';
 import { LayoutStore } from 'src/modules/layout';
+import type { ApiSimpleDataItem } from 'types/api';
+import type { FilterStoreParameterAlphabeticalProperties } from 'types/filter';
 import { BagStore } from '../../store';
 
 export function BagMeta(): JSX.Element {
   const layoutCtx = LayoutStore.ctx;
+  const filterCtx = FilterStore.ctx;
+  const contentCtx = ContentStore.ctx;
   const bagCtx = BagStore.ctx;
 
   const general = {
-    list: bagCtx.item.meta
-      ? [{
-        id: 'category',
-        label: 'Category',
-        meta: bagCtx.item.meta.category,
-      }, {
-        id: 'company',
-        label: 'Company',
-        meta: bagCtx.item.meta.company,
-      }]
-      : [],
-    onClick: (id: string) => {
+    list: [{
+      id: 'category',
+      label: 'Category',
+      meta: bagCtx.item.meta?.category,
+    }, {
+      id: 'company',
+      label: 'Company',
+      meta: bagCtx.item.meta?.company,
+    }],
+    onClick: (item) => {
+      filterCtx[item.id].set(item.meta);
+      contentCtx.list.reset();
       layoutCtx.bag.hide();
     },
+  } as {
+    list: {
+      id: FilterStoreParameterAlphabeticalProperties;
+      label: string;
+      meta: ApiSimpleDataItem;
+    }[];
+    onClick: (item: typeof general.list[0]) => void;
   };
 
   const individual = {
@@ -55,25 +68,25 @@ export function BagMeta(): JSX.Element {
         : <></>}
       <List>
         {general.list.length
-          ? general.list.map((item) => (
-            <ListItem key={item.id}>
+          ? general.list.map((prop) => (
+            <ListItem key={prop.id}>
               <span>
-                {`${item.label}: `}
+                {`${prop.label}: `}
               </span>
               <PseudoLink
                 onClick={() => {
-                  general.onClick(item.id);
+                  general.onClick(prop);
                 }}
               >
-                {item.meta?.name}
+                {prop.meta?.name}
               </PseudoLink>
             </ListItem>
           ))
           : {}}
         {individual.list.length
-          ? individual.list.map((item) => (
-            <ListItem key={item.id}>
-              {`${item.label}: ${item.meta}`}
+          ? individual.list.map((prop) => (
+            <ListItem key={prop.id}>
+              {`${prop.label}: ${prop.meta}`}
             </ListItem>
           ))
           : {}}

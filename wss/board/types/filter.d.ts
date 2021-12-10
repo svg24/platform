@@ -14,6 +14,8 @@ export interface FilterStore extends Store<FilterStore> {
   sortBy: FilterStoreParameter;
 }
 
+export type FilterStoreParameterAlphabeticalProperties = 'category' | 'company';
+
 export type FilterStoreParameter
   = FilterStoreParameterBase<ApiSimpleData>;
 

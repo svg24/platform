@@ -103,14 +103,8 @@ type ApiItemDataItem = {
 };
 
 type ApiItemMeta = {
-  category: {
-    id: string;
-    name: string;
-  };
-  company: {
-    id: string;
-    name: string;
-  };
+  category: ApiSimpleDataItem;
+  company: ApiSimpleDataItem;
   id: string;
   name: string;
   src: {
