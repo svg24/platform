@@ -1,13 +1,3 @@
-@keyframes fade-bag-bg {
-  from {
-    @apply opacity-0;
-  }
-
-  to {
-    @apply opacity-30;
-  }
-}
-
 @keyframes slide-bag {
   from {
     margin-right: -100%;
@@ -28,11 +18,11 @@
 }
 
 .layout-root_bag-in .bag-root::before {
-  animation: fade-bag-bg 300ms forwards;
+  animation: fade-0-30 var(--state-animation-ms) forwards;
 }
 
 .layout-root_bag-out .bag-root::before {
-  animation: fade-bag-bg 300ms forwards reverse;
+  animation: fade-0-30 var(--state-animation-ms) forwards reverse;
 }
 
 .bag-root__inner {
@@ -41,9 +31,9 @@
 }
 
 .layout-root_bag-in .bag-root__inner {
-  animation: slide-bag 300ms forwards;
+  animation: slide-bag var(--state-animation-ms) forwards;
 }
 
 .layout-root_bag-out .bag-root__inner {
-  animation: slide-bag 300ms forwards reverse;
+  animation: slide-bag var(--state-animation-ms) forwards reverse;
 }

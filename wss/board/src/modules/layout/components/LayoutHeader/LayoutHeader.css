@@ -8,16 +8,6 @@
   }
 }
 
-@keyframes fade {
-  from {
-    @apply opacity-0;
-  }
-
-  to {
-    @apply opacity-100;
-  }
-}
-
 .layout-header {
   @apply flex justify-between px-6 py-4;
   grid-area: header;
@@ -49,11 +39,11 @@
 }
 
 .layout-header__container_counter-in {
-  animation: slide-container 300ms forwards;
+  animation: slide-container var(--state-animation-ms) forwards;
 }
 
 .layout-header__container_counter-out {
-  animation: slide-container 300ms forwards reverse;
+  animation: slide-container var(--state-animation-ms) forwards reverse;
 }
 
 .layout-header__btn {
@@ -73,13 +63,13 @@
 .layout-header__container_counter-in::before,
 .layout-header__container_counter-in .layout-header__btn:last-of-type,
 .layout-header__container_counter-in .layout-header__counter {
-  animation: fade 300ms forwards;
+  animation: fade-0-100 var(--state-animation-ms) forwards;
 }
 
 .layout-header__container_counter-out::before,
 .layout-header__container_counter-out .layout-header__btn:last-of-type,
 .layout-header__container_counter-out .layout-header__counter {
-  animation: fade 300ms forwards reverse;
+  animation: fade-0-100 var(--state-animation-ms) forwards reverse;
 }
 
 .layout-header__icon {

@@ -3,11 +3,11 @@
 }
 
 .layout-main_filter-in .filter-root {
-  animation: slide-filter 300ms forwards;
+  animation: slide-filter var(--state-animation-ms) forwards;
 }
 
 .layout-main_filter-out .filter-root {
-  animation: slide-filter 300ms forwards reverse;
+  animation: slide-filter var(--state-animation-ms) forwards reverse;
 }
 
 .filter-root .filter-parameter:nth-last-child(2) {
