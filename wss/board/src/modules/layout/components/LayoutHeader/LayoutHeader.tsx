@@ -1,4 +1,4 @@
-import { CogIcon } from '@heroicons/react/outline';
+import { Logo } from 'src/components';
 import { Search } from 'src/modules/search';
 import { Settings } from 'src/modules/settings';
 import { LayoutHeaderFilter } from './LayoutHeaderFilter';
@@ -7,11 +7,7 @@ export function LayoutHeader(): JSX.Element {
   return (
     <header className="layout-header">
       <div className="layout-header__side">
-        <img
-          alt="Logo"
-          className="layout-header__logo"
-          src="https://raw.githubusercontent.com/svg24/.github/main/logo.svg"
-        />
+        <Logo className="layout-header__logo" />
         <LayoutHeaderFilter />
         <Search />
       </div>
