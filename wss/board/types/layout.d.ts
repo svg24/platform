@@ -10,12 +10,12 @@ interface LayoutStoreBag extends StoreVisible {
 }
 
 type LayoutStoreMain = {
-  content: {
-    goTop: (() => void) | null;
-  };
+  content: LayoutStoreMainContent;
   filter: LayoutStoreMainFilter;
 };
-
+type LayoutStoreMainContent = {
+  goTop: (() => void) | null;
+};
 interface LayoutStoreMainFilter extends StoreVisible {
   toggle: () => void;
 }

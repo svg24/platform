@@ -1,50 +1,37 @@
-/**
- * Simple
- */
-
 export type ApiSimplMethods = 'category' | 'company' | 'sortBy';
 
 export type ApiSimple = {
   data: ApiSimpleData;
-  meta: {
-    default: ApiSimpleDataItem;
-  };
+  meta: ApiSimpleMeta;
 };
-
 type ApiSimpleData = ApiSimpleDataItem[];
-
 type ApiSimpleDataItem = {
   id: string;
   name: string;
+};
+type ApiSimpleMeta = {
+  default: ApiSimpleDataItem;
 };
 
 export type ApiSimpleAlphabetical = {
   data: ApiSimpleAlphabeticalData;
   meta: any;
 };
-
 type ApiSimpleAlphabeticalData = {
   [key: string]: ApiSimpleData;
 };
-
-/**
- * List
- */
 
 export type ApiList = {
   data: ApiListData;
   meta: ApiListMeta;
 };
-
 export type ApiListData = ApiListDataItem[];
-
 export type ApiListDataItem = {
   id: string;
   isMany: boolean;
   latest: string;
   name: string;
 };
-
 type ApiListMeta = {
   length: {
     current: number;
@@ -56,19 +43,11 @@ type ApiListMeta = {
   };
 };
 
-/**
- * Item
- */
-
 export type ApiItem = {
   data: ApiItemData;
   meta: ApiItemMeta;
 };
-
 type ApiItemData = ApiItemDataItem[];
-
-type ApiItemDataItemTypes = 'square' | 'original';
-
 type ApiItemDataItem = {
   content: {
     [key in ApiItemDataItemTypes]?: {
@@ -101,7 +80,7 @@ type ApiItemDataItem = {
   };
   version: number;
 };
-
+type ApiItemDataItemTypes = 'square' | 'original';
 type ApiItemMeta = {
   category: ApiSimpleDataItem;
   company: ApiSimpleDataItem;
