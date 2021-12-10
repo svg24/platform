@@ -6,6 +6,8 @@ import { ContentStore } from 'src/modules/content';
 import { FilterStore } from 'src/modules/filter';
 import { deepAssign, getStateAnimation } from 'src/utils';
 import { LayoutStore } from '../../store';
+import { LayoutHeaderButton } from './LayoutHeaderButton';
+import { LayoutHeaderIcon } from './LayoutHeaderIcon';
 
 export function LayoutHeaderFilter(): JSX.Element {
   const layoutCtx = LayoutStore.ctx;
@@ -41,36 +43,29 @@ export function LayoutHeaderFilter(): JSX.Element {
         counter.show();
       }
     },
-  }, getStateAnimation(root.ref, 'layout-header__container_counter'));
+    reset() {
+      filterCtx.reset();
+      contentCtx.list.reset();
+    },
+  }, getStateAnimation(root.ref, 'layout-header__filter_counter'));
 
   counter.mount();
 
   return (
     <div
-      className="layout-header__container"
+      className="layout-header__filter"
       ref={root.ref}
     >
-      <button
-        className="layout-header__btn"
-        type="button"
-        onClick={layoutCtx.main.filter.toggle}
-      >
-        <AdjustmentsIcon className="layout-header__icon" />
-      </button>
+      <LayoutHeaderButton onClick={layoutCtx.main.filter.toggle}>
+        <LayoutHeaderIcon icon={AdjustmentsIcon} />
+      </LayoutHeaderButton>
       {counter.isDisplay
         ? (
           <>
             <counter.el />
-            <button
-              className="layout-header__btn"
-              type="button"
-              onClick={() => {
-                filterCtx.reset();
-                contentCtx.list.reset();
-              }}
-            >
-              <XIcon className="layout-header__icon" />
-            </button>
+            <LayoutHeaderButton onClick={counter.reset}>
+              <LayoutHeaderIcon icon={XIcon} />
+            </LayoutHeaderButton>
           </>
         )
         : <></>}

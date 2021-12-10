@@ -25,32 +25,32 @@
   @apply w-8 h-8;
 }
 
-.layout-header__container {
+.layout-header__filter {
   @apply contents;
 }
 
-.layout-header__container_counter-display {
+.layout-header__filter_counter-display {
   @apply relative flex items-center overflow-hidden;
 }
 
-.layout-header__container_counter-display::before {
+.layout-header__filter_counter-display::before {
   @apply absolute inset-0 rounded-lg bg-neutral-50;
   content: '';
 }
 
-.layout-header__container_counter-in {
+.layout-header__filter_counter-in {
   animation: slide-container var(--state-animation-ms) forwards;
 }
 
-.layout-header__container_counter-out {
+.layout-header__filter_counter-out {
   animation: slide-container var(--state-animation-ms) forwards reverse;
 }
 
-.layout-header__btn {
+.layout-header__button {
   @apply p-1.5 rounded-lg;
 }
 
-.layout-header__container_counter-display .layout-header__btn,
+.layout-header__filter_counter-display .layout-header__button,
 .layout-header__counter {
   @apply z-10;
 }
@@ -60,15 +60,15 @@
   min-width: 1rem;
 }
 
-.layout-header__container_counter-in::before,
-.layout-header__container_counter-in .layout-header__btn:last-of-type,
-.layout-header__container_counter-in .layout-header__counter {
+.layout-header__filter_counter-in::before,
+.layout-header__filter_counter-in .layout-header__button:last-of-type,
+.layout-header__filter_counter-in .layout-header__counter {
   animation: fade-0-100 var(--state-animation-ms) forwards;
 }
 
-.layout-header__container_counter-out::before,
-.layout-header__container_counter-out .layout-header__btn:last-of-type,
-.layout-header__container_counter-out .layout-header__counter {
+.layout-header__filter_counter-out::before,
+.layout-header__filter_counter-out .layout-header__button:last-of-type,
+.layout-header__filter_counter-out .layout-header__counter {
   animation: fade-0-100 var(--state-animation-ms) forwards reverse;
 }
 
@@ -76,7 +76,11 @@
   @apply w-5 h-5 duration-100 text-neutral-400;
 }
 
-.layout-header__btn:hover .layout-header__icon,
-.layout-header__btn:focus .layout-header__icon {
+.layout-header__button:hover .layout-header__icon,
+.layout-header__button:focus .layout-header__icon {
   @apply text-black;
+}
+
+.layout-header__container {
+  @apply relative flex;
 }
