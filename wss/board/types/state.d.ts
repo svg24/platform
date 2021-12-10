@@ -5,7 +5,7 @@ export type StateAnimation = {
   _ms: number;
   hide: () => Promise<void>;
   isDisplay: boolean;
-  isShowed: StateAnimationIsShowed;
+  isShowed: StateAnimationIsShowed[0];
   show: () => void;
 };
 
