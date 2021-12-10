@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import {
   Form,
   FormInput,
-  FormLabelBase,
-  FormParameterBase,
+  FormLabel,
+  FormParameter,
 } from 'src/components';
 import type { BagStoreItemAction, BagStoreItemType } from 'types/bag';
 import { BagStore } from '../../store';
@@ -16,13 +16,13 @@ export function BagSettings(): JSX.Element {
     legend: 'Actions',
     mount() {
       useEffect(() => {
-        ctx.item.setAction(actions.list.copy.handler);
+        ctx.item.setAction(actions.options.copy.handler);
       }, []);
     },
-    onChange: (item) => {
+    set: (item) => {
       ctx.item.setAction(item.handler);
     },
-    list: {
+    options: {
       copy: {
         name: 'Copy',
         checked: true,
@@ -49,15 +49,15 @@ export function BagSettings(): JSX.Element {
   } as {
     id: string;
     legend: string;
-    list: {
+    mount: () => void;
+    options: {
       [key in 'copy' | 'download']: {
         checked?: boolean;
         handler: BagStoreItemAction;
         name: string;
       };
     };
-    mount: () => void;
-    onChange: (item: typeof actions.list.copy) => void;
+    set: (item: typeof actions.options.copy) => void;
   };
 
   actions.mount();
@@ -67,13 +67,13 @@ export function BagSettings(): JSX.Element {
     legend: 'Types',
     mount() {
       useEffect(() => {
-        ctx.item.setType(types.list.original.id);
+        ctx.item.setType(types.options.original.id);
       }, []);
     },
-    onChange: (item) => {
+    set: (item) => {
       ctx.item.setType(item.id);
     },
-    list: {
+    options: {
       original: {
         id: 'original',
         name: 'Original',
@@ -91,15 +91,15 @@ export function BagSettings(): JSX.Element {
   } as {
     id: string;
     legend: string;
-    list: {
+    mount: () => void;
+    options: {
       [key in BagStoreItemType]: {
         checked?: boolean;
         id: BagStoreItemType;
         name: string;
       };
     };
-    mount: () => void;
-    onChange: (item: typeof types.list.original) => void;
+    set: (item: typeof types.options.original) => void;
   };
 
   types.mount();
@@ -108,27 +108,25 @@ export function BagSettings(): JSX.Element {
     <section className="bag-settings">
       <Form>
         {[actions, types].map((pr) => (
-          <FormParameterBase
+          <FormParameter
             key={pr.id}
             legend={pr.legend}
           >
-            <>
-              {Object.entries(pr.list).map(([key, value]) => (
-                <FormLabelBase
-                  key={key}
-                  name={value.name}
-                >
-                  <FormInput
-                    defaultChecked={value.checked}
-                    name={pr.id}
-                    onChange={() => {
-                      pr.onChange(value);
-                    }}
-                  />
-                </FormLabelBase>
-              ))}
-            </>
-          </FormParameterBase>
+            {Object.entries(pr.options).map(([key, value]) => (
+              <FormLabel
+                key={key}
+                name={value.name}
+              >
+                <FormInput
+                  defaultChecked={value.checked}
+                  name={pr.id}
+                  onChange={() => {
+                    pr.set(value);
+                  }}
+                />
+              </FormLabel>
+            ))}
+          </FormParameter>
         ))}
       </Form>
     </section>

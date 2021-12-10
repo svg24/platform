@@ -1,9 +1,10 @@
 import { getStateAnimation } from './state';
-import { initStore, initStoreVisible } from './store';
+import { initStore, initStoreFormParameter, initStoreVisible } from './store';
 
 export {
   getStateAnimation,
   initStore,
+  initStoreFormParameter,
   initStoreVisible,
 };
 

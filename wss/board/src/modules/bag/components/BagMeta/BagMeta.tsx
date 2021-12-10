@@ -8,7 +8,7 @@ import { ContentStore } from 'src/modules/content';
 import { FilterStore } from 'src/modules/filter';
 import { LayoutStore } from 'src/modules/layout';
 import type { ApiSimpleDataItem } from 'types/api';
-import type { FilterStoreParameterAlphabeticalProperties } from 'types/filter';
+import type { FilterStoreParameterAlphabeticalIds } from 'types/filter';
 import { BagStore } from '../../store';
 
 export function BagMeta(): JSX.Element {
@@ -34,7 +34,7 @@ export function BagMeta(): JSX.Element {
     },
   } as {
     list: {
-      id: FilterStoreParameterAlphabeticalProperties;
+      id: FilterStoreParameterAlphabeticalIds;
       label: string;
       meta: ApiSimpleDataItem;
     }[];

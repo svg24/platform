@@ -1,22 +1,31 @@
+import { observer } from 'mobx-react-lite';
 import type { ComponentProps } from 'react';
-import { createElement, forwardRef } from 'react';
+import { createElement, createRef, forwardRef } from 'react';
+import type {
+  StoreFormParameter,
+  StoreFormParameterOptionsItem,
+} from 'types/store';
 
-export function FormParameter(
-  props: ComponentProps<'fieldset'>,
-): JSX.Element {
-  return createElement('fieldset', {
-    className: 'form__parameter',
+export function Form(props: ComponentProps<'form'>): JSX.Element {
+  return createElement('form', {
+    className: 'form',
     ...props,
   });
 }
 
-export function FormLegend(
-  props: ComponentProps<'legend'>,
-): JSX.Element {
-  return createElement('legend', {
-    className: 'form__legend',
+export function FormParameter(props: {
+  legend: string;
+} & ComponentProps<'fieldset'>): JSX.Element {
+  const { children, className, legend } = props;
+
+  return createElement('fieldset', {
     ...props,
-  });
+    className: `form__parameter ${className || ''}`,
+  }, createElement('legend', {
+    className: 'form__legend',
+  }, legend), createElement('div', {
+    className: 'form__container',
+  }, children));
 }
 
 export const FormContainer = (
@@ -29,54 +38,17 @@ export const FormContainer = (
   ))
 );
 
-export function FormParameterBase({
-  children,
-  legend,
-}: {
-  children: JSX.Element;
-  legend: string;
-}): JSX.Element {
-  return (
-    <FormParameter>
-      <FormLegend>
-        {legend}
-      </FormLegend>
-      <FormContainer>
-        {children}
-      </FormContainer>
-    </FormParameter>
-  );
-}
+export function FormLabel(props: {
+  name: string;
+} & ComponentProps<'label'>): JSX.Element {
+  const { children, name } = props;
 
-function FormLabel(props: ComponentProps<'label'>): JSX.Element {
   return createElement('label', {
     className: 'form__label',
     ...props,
-  });
-}
-
-function FormName(props: ComponentProps<'span'>): JSX.Element {
-  return createElement('span', {
+  }, children, createElement('span', {
     className: 'form__name',
-    ...props,
-  });
-}
-
-export function FormLabelBase({
-  children,
-  name,
-}: {
-  children: JSX.Element;
-  name: string;
-}): JSX.Element {
-  return (
-    <FormLabel>
-      {children}
-      <FormName>
-        {name}
-      </FormName>
-    </FormLabel>
-  );
+  }, name));
 }
 
 export const FormInput = (
@@ -90,9 +62,50 @@ export const FormInput = (
   ))
 );
 
-export function Form(props: ComponentProps<'form'>): JSX.Element {
-  return createElement('form', {
-    className: 'form',
-    ...props,
-  });
+export function FormLabelComplete({
+  onChange,
+  onClick,
+  option,
+  parameter,
+}: {
+  onChange?: () => void;
+  onClick?: (isChecked: boolean) => void;
+  option: StoreFormParameterOptionsItem;
+  parameter: StoreFormParameter<any, StoreFormParameterOptionsItem>;
+}): JSX.Element {
+  const input = {
+    ref: createRef<HTMLInputElement>(),
+    isCurrent: false,
+    el: observer(() => {
+      input.isCurrent = parameter.value.checkIsCurrent(option.id);
+
+      if (input.ref.current) input.ref.current.checked = input.isCurrent;
+
+      return (
+        <FormInput
+          defaultChecked={input.isCurrent}
+          name={parameter.id}
+          ref={input.ref}
+          onChange={onChange || undefined}
+          onClick={onClick
+            ? (el) => {
+              onClick(input.isCurrent
+                && (el.target as HTMLInputElement).checked);
+            }
+            : undefined}
+        />
+      );
+    }),
+  };
+
+  return (
+    <FormLabel name={option.name}>
+      <input.el />
+    </FormLabel>
+  );
 }
+
+FormLabelComplete.defaultProps = {
+  onChange: undefined,
+  onClick: undefined,
+};

@@ -1,12 +1,11 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
 import { useEffect, useRef, useState } from 'react';
-import { FormContainer } from 'src/components';
-import type { FilterStoreParameterAlphabetical } from 'types/filter';
-import type { FilterParameterBaseLabelOnClick } from './FilterParameterBase';
 import {
-  FilterParameterBase,
-  FilterParameterBaseLabel,
-} from './FilterParameterBase';
+  FormContainer,
+  FormLabelComplete,
+  FormParameter,
+} from 'src/components';
+import type { FilterStoreParameterAlphabetical } from 'types/filter';
 
 const FilterParameterAlphabeticalItem = ({
   children,
@@ -101,11 +100,16 @@ export const FilterParameterAlphabetical = ({
 }: {
   onClick: (
     option: Parameters<FilterStoreParameterAlphabetical['set']>[0],
-    checked: Parameters<FilterParameterBaseLabelOnClick>[0],
+    checked: boolean,
   ) => void;
-  parameter: FilterStoreParameterAlphabetical;
+  parameter: {
+    legend: string;
+  } & FilterStoreParameterAlphabetical;
 }): JSX.Element => (
-  <FilterParameterBase legend={parameter.legend}>
+  <FormParameter
+    className="filter-parameter"
+    legend={parameter.legend}
+  >
     <ul className="filter-parameter__list">
       {parameter.options && Object.entries(parameter.options)
         .map(([key, value]) => (
@@ -114,7 +118,7 @@ export const FilterParameterAlphabetical = ({
             letter={key}
           >
             {value.map((option) => (
-              <FilterParameterBaseLabel
+              <FormLabelComplete
                 key={option.id}
                 option={option}
                 parameter={parameter}
@@ -126,5 +130,5 @@ export const FilterParameterAlphabetical = ({
           </FilterParameterAlphabeticalItem>
         ))}
     </ul>
-  </FilterParameterBase>
+  </FormParameter>
 );

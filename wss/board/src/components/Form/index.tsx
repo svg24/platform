@@ -2,10 +2,9 @@ import {
   Form,
   FormContainer,
   FormInput,
-  FormLabelBase,
-  FormLegend,
+  FormLabel,
+  FormLabelComplete,
   FormParameter,
-  FormParameterBase,
 } from './Form';
 import './Form.css';
 
@@ -13,8 +12,7 @@ export {
   Form,
   FormContainer,
   FormInput,
-  FormLabelBase,
-  FormLegend,
+  FormLabel,
+  FormLabelComplete,
   FormParameter,
-  FormParameterBase,
 };

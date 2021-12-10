@@ -3,10 +3,9 @@ import {
   Form,
   FormContainer,
   FormInput,
-  FormLabelBase,
-  FormLegend,
+  FormLabel,
+  FormLabelComplete,
   FormParameter,
-  FormParameterBase,
 } from './Form';
 import { HeadingLevel3 } from './Heading';
 import { Link } from './Link';
@@ -20,10 +19,9 @@ export {
   Form,
   FormContainer,
   FormInput,
-  FormLabelBase,
-  FormLegend,
+  FormLabel,
+  FormLabelComplete,
   FormParameter,
-  FormParameterBase,
   HeadingLevel3,
   Link,
   List,

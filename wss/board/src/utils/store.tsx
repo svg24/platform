@@ -6,7 +6,12 @@ import {
 } from 'mobx';
 import { createContext, useContext } from 'react';
 import type { ReactElement } from 'react';
-import type { Store, StoreVisible } from 'types/store';
+import type {
+  Store,
+  StoreFormParameter,
+  StoreFormParameterOptionsItem,
+  StoreVisible,
+} from 'types/store';
 
 export function initStore<I extends Store<I>>(this: I): void {
   Object.defineProperties(this, {
@@ -55,5 +60,39 @@ export function initStoreVisible<I extends StoreVisible>(this: I): void {
     isVisible: computed,
     show: action,
     hide: action,
+  });
+}
+
+export function initStoreFormParameter<
+  I extends StoreFormParameter<any, StoreFormParameterOptionsItem>>(
+  this: I,
+): void {
+  Object.defineProperty(this.value, 'current', {
+    configurable: true,
+    enumerable: true,
+    get: () => this.value._current,
+    set: (value: typeof this.value._current) => {
+      this.value._current = value;
+    },
+  });
+
+  this.value.checkIsCurrent = function (id) {
+    return this.current?.id === id;
+  };
+
+  this.set = function (option) {
+    this.value.current = option;
+  };
+  this.reset = function () {
+    this.value.current = this.value._default;
+  };
+
+  makeObservable(this, {
+    set: action,
+    reset: action,
+  });
+  makeObservable(this.value, {
+    _current: observable,
+    current: computed,
   });
 }

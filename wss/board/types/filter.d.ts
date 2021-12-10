@@ -3,7 +3,11 @@ import type {
   ApiSimpleData,
   ApiSimpleDataItem,
 } from 'types/api';
-import type { Store } from 'types/store';
+import type {
+  Store,
+  StoreFormParameter,
+  StoreFormParameterOptionsItem,
+} from 'types/store';
 
 export interface FilterStore extends Store<FilterStore> {
   category: FilterStoreParameterAlphabetical;
@@ -17,29 +21,23 @@ export interface FilterStore extends Store<FilterStore> {
   sortBy: FilterStoreParameter;
 }
 
+export type FilterStoreParameters
+  = FilterStoreParameterAlphabetical | FilterStoreParameter;
+export type FilterStoreParametersIds
+  = FilterStoreParameterAlphabeticalIds | FilterStoreParameterId;
+
+export type FilterStoreParameterAlphabeticalIds = 'category' | 'company';
 export type FilterStoreParameterAlphabetical
-  = FilterStoreParameterBase<ApiSimpleAlphabeticalData>;
-export type FilterStoreParameterAlphabeticalProperties = 'category' | 'company';
+  = FilterStoreParameterBase<ApiSimpleAlphabeticalData, ApiSimpleDataItem>;
 
-export type FilterStoreParameter = FilterStoreParameterBase<ApiSimpleData>;
+type FilterStoreParameterId = 'sortBy';
+export type FilterStoreParameter
+  = FilterStoreParameterBase<ApiSimpleData, ApiSimpleDataItem>;
 
-type FilterStoreParameterBase<T> = {
+interface FilterStoreParameterBase<
+  Options,
+  Option extends StoreFormParameterOptionsItem>
+  extends StoreFormParameter<Options, Option> {
   fetch: () => Promise<void>;
-  id: string;
   readonly isApplied: boolean;
-  legend: string;
-  options: T | null;
-  reset: () => void;
-  set: (item: ApiSimpleDataItem) => void;
-  value: FilterStoreParameterBaseValue;
-};
-type FilterStoreParameterBaseValue = {
-  _current: FilterStoreParameterBaseValueCurrent;
-  _default: FilterStoreParameterBaseValueDefault;
-  checkCurrent: (id: FilterStoreParameterBaseValueArgumentId) => boolean;
-  current: FilterStoreParameterBaseValueCurrent;
-};
-type FilterStoreParameterBaseValueCurrent
-  = FilterStoreParameterBaseValueDefault;
-type FilterStoreParameterBaseValueDefault = ApiSimpleDataItem | null;
-type FilterStoreParameterBaseValueArgumentId = ApiSimpleDataItem['id'];
+}

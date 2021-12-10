@@ -1,4 +1,4 @@
-export type ApiSimplMethods = 'category' | 'company' | 'sortBy';
+export type ApiSimpleIds = 'categories' | 'companies' | 'sortBy';
 
 export type ApiSimple = {
   data: ApiSimpleData;

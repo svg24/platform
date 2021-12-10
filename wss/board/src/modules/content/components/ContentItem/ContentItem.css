@@ -16,8 +16,16 @@
   @apply px-3 py-2;
 }
 
-.content-list_base .content-item__vanilla > svg {
+.content-list_small .content-item__vanilla > svg {
+  @apply w-12 h-12;
+}
+
+.content-list_normal .content-item__vanilla > svg {
   @apply w-16 h-16;
+}
+
+.content-list_big .content-item__vanilla > svg {
+  @apply w-20 h-20;
 }
 
 .content-item__icon {

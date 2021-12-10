@@ -1,20 +1,20 @@
-import type { FilterStoreParameter } from 'types/filter';
-import {
-  FilterParameterBase,
-  FilterParameterBaseLabel,
-} from './FilterParameterBase';
+import { FormLabelComplete, FormParameter } from 'src/components';
+import type { FormPropertyOnChange, FormPropertyParameter } from 'types/form';
 
-export const FilterParameter = ({
+export function FilterParameter({
   onChange,
   parameter,
 }: {
-  onChange: (option: Parameters<FilterStoreParameter['set']>[0]) => void;
-  parameter: FilterStoreParameter;
-}): JSX.Element => (
-  <FilterParameterBase legend={parameter.legend}>
-    <>
+  onChange: FormPropertyOnChange;
+  parameter: FormPropertyParameter;
+}): JSX.Element {
+  return (
+    <FormParameter
+      className="filter-parameter"
+      legend={parameter.legend}
+    >
       {parameter.options?.map((option) => (
-        <FilterParameterBaseLabel
+        <FormLabelComplete
           key={option.id}
           option={option}
           parameter={parameter}
@@ -23,6 +23,6 @@ export const FilterParameter = ({
           }}
         />
       ))}
-    </>
-  </FilterParameterBase>
-);
+    </FormParameter>
+  );
+}

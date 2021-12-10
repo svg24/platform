@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { ContentStore } from 'src/modules/content';
+import { deepAssign } from 'src/utils';
 import { FilterApplied } from './components/FilterApplied';
 import {
   FilterParameter,
@@ -19,6 +20,14 @@ export function Filter(): JSX.Element {
   const contentCtx = ContentStore.ctx;
   const filterCtx = FilterStore.ctx;
 
+  const parameters = [
+    deepAssign(filterCtx.sortBy, { legend: 'Sort by' }),
+  ];
+  const parametersAlphabetical = [
+    deepAssign(filterCtx.category, { legend: 'Category' }),
+    deepAssign(filterCtx.company, { legend: 'Company' }),
+  ];
+
   const applied = {
     el: observer(() => <FilterApplied applied={filterCtx.getApplied} />),
   };
@@ -26,7 +35,7 @@ export function Filter(): JSX.Element {
   return (
     <FilterRoot>
       <>
-        {[filterCtx.sortBy].map((pr) => (
+        {parameters.map((pr) => (
           <FilterParameter
             key={pr.id}
             parameter={pr}
@@ -36,7 +45,7 @@ export function Filter(): JSX.Element {
             }}
           />
         ))}
-        {[filterCtx.category, filterCtx.company].map((pr) => (
+        {parametersAlphabetical.map((pr) => (
           <FilterParameterAlphabetical
             key={pr.id}
             parameter={pr}
