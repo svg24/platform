@@ -5,7 +5,10 @@ import {
   FormLabel,
   FormParameter,
 } from 'src/components';
-import type { BagStoreItemAction, BagStoreItemType } from 'types/bag';
+import type {
+  BagStoreItemSettingsAction,
+  BagStoreItemSettingsType,
+} from 'types/bag';
 import { BagStore } from '../../store';
 
 export function BagSettings(): JSX.Element {
@@ -16,11 +19,11 @@ export function BagSettings(): JSX.Element {
     legend: 'Actions',
     mount() {
       useEffect(() => {
-        ctx.item.setAction(actions.options.copy.handler);
+        ctx.item.settings.setAction(actions.options.copy.handler);
       }, []);
     },
     set: (item) => {
-      ctx.item.setAction(item.handler);
+      ctx.item.settings.setAction(item.handler);
     },
     options: {
       copy: {
@@ -53,7 +56,7 @@ export function BagSettings(): JSX.Element {
     options: {
       [key in 'copy' | 'download']: {
         checked?: boolean;
-        handler: BagStoreItemAction;
+        handler: BagStoreItemSettingsAction;
         name: string;
       };
     };
@@ -67,11 +70,11 @@ export function BagSettings(): JSX.Element {
     legend: 'Types',
     mount() {
       useEffect(() => {
-        ctx.item.setType(types.options.original.id);
+        ctx.item.settings.setType(types.options.original.id);
       }, []);
     },
     set: (item) => {
-      ctx.item.setType(item.id);
+      ctx.item.settings.setType(item.id);
     },
     options: {
       original: {
@@ -93,9 +96,9 @@ export function BagSettings(): JSX.Element {
     legend: string;
     mount: () => void;
     options: {
-      [key in BagStoreItemType]: {
+      [key in BagStoreItemSettingsType]: {
         checked?: boolean;
-        id: BagStoreItemType;
+        id: BagStoreItemSettingsType;
         name: string;
       };
     };

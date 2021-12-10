@@ -13,21 +13,24 @@ export interface BagStore extends Store<BagStore> {
 
 type BagStoreItem = {
   _data: BagStoreItemData;
-  action: BagStoreItemAction | null;
   data: BagStoreItemData;
   meta: ApiItemMeta | null;
-  setAction: (action: BagStoreItemAction) => void;
   setData: (data: ApiItemDataItem) => void;
   setMeta: (meta: ApiItemMeta) => void;
-  setType: (type: BagStoreItemType) => void;
-  type: BagStoreItemType | null;
+  settings: BagStoreItemSettings;
 };
 type BagStoreItemData = ApiItemDataItem | null;
-export type BagStoreItemAction = (args: {
+type BagStoreItemSettings = {
+  action: BagStoreItemSettingsAction | null;
+  setAction: (action: BagStoreItemSettingsAction) => void;
+  setType: (type: BagStoreItemSettingsType) => void;
+  type: BagStoreItemSettingsType | null;
+};
+export type BagStoreItemSettingsAction = (args: {
   content: string;
   file: string;
 }) => Promise<void>;
-export type BagStoreItemType = ApiItemDataItemTypes;
+export type BagStoreItemSettingsType = ApiItemDataItemTypes;
 
 type BagStoreList = {
   add: (id: BagStoreListIdsItem) => void;

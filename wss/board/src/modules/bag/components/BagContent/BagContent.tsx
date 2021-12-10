@@ -113,11 +113,11 @@ export function BagContent(): JSX.Element {
             <Button
               key={item.id}
               onClick={() => {
-                if (ctx.item.action && ctx.item.type) {
-                  const content = item.content[ctx.item.type];
+                if (ctx.item.settings.action && ctx.item.settings.type) {
+                  const content = item.content[ctx.item.settings.type];
 
                   if (content) {
-                    ctx.item.action({
+                    ctx.item.settings.action({
                       content,
                       file: item.file,
                     });

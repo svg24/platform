@@ -22,13 +22,15 @@ export function initRoot(this: BagStore): void {
     setMeta(val) {
       this.meta = val;
     },
-    action: null,
-    setAction(fn) {
-      this.action = fn;
-    },
-    type: null,
-    setType(type) {
-      this.type = type;
+    settings: {
+      action: null,
+      setAction(fn) {
+        this.action = fn;
+      },
+      type: null,
+      setType(type) {
+        this.type = type;
+      },
     },
   };
 
