@@ -1,3 +1,4 @@
+import { Button, HeadingLevel3 } from 'src/components';
 import { BagStore } from '../../store';
 
 export function BagContent(): JSX.Element {
@@ -105,14 +106,12 @@ export function BagContent(): JSX.Element {
     <section className="bag-content">
       {sections.map((sec) => (
         <div key={sec.id}>
-          <h3 className="bag-root__heading">
+          <HeadingLevel3>
             {sec.heading}
-          </h3>
+          </HeadingLevel3>
           {sec.items.map((item) => (
-            <button
-              className="bag-content__btn"
+            <Button
               key={item.id}
-              type="button"
               onClick={() => {
                 if (ctx.item.action && ctx.item.type) {
                   const content = item.content[ctx.item.type];
@@ -127,7 +126,7 @@ export function BagContent(): JSX.Element {
               }}
             >
               {item.label}
-            </button>
+            </Button>
           ))}
         </div>
       ))}

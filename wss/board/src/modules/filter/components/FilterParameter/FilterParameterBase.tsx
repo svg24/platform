@@ -1,5 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
+import {
+  FormContainer,
+  FormInput,
+  FormLabelBase,
+  FormLegend,
+  FormParameter,
+} from 'src/components';
 import type {
   FilterStoreParameter,
   FilterStoreParameterAlphabetical,
@@ -7,22 +14,26 @@ import type {
 
 type Parameter = FilterStoreParameter | FilterStoreParameterAlphabetical;
 
-export const FilterParameterBase = ({
+export function FilterParameterBase({
   children,
   legend,
 }: {
   children: JSX.Element;
   legend: Parameter['legend'];
-}): JSX.Element => (
-  <fieldset className="filter-parameter">
-    <legend className="filter-parameter__legend">
-      {legend}
-    </legend>
-    <div className="filter-parameter__container">
-      {children}
-    </div>
-  </fieldset>
-);
+}): JSX.Element {
+  const { className } = FormParameter({}).props;
+
+  return (
+    <FormParameter className={`${className} filter-parameter`}>
+      <FormLegend>
+        {legend}
+      </FormLegend>
+      <FormContainer>
+        {children}
+      </FormContainer>
+    </FormParameter>
+  );
+}
 
 export type FilterParameterBaseLabelOnClick = (checked: boolean) => void;
 
@@ -47,12 +58,10 @@ export const FilterParameterBaseLabel = ({
       }
 
       return (
-        <input
-          className="filter-parameter__input"
+        <FormInput
           defaultChecked={isCur}
           name={parameter.id}
           ref={input.ref}
-          type="radio"
           onChange={onChange || undefined}
           onClick={onClick
             ? (el) => {
@@ -65,12 +74,9 @@ export const FilterParameterBaseLabel = ({
   };
 
   return (
-    <label className="filter-parameter__label">
+    <FormLabelBase name={option.name}>
       <input.el />
-      <span className="filter-parameter__name">
-        {option.name}
-      </span>
-    </label>
+    </FormLabelBase>
   );
 };
 

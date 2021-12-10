@@ -1,0 +1,7 @@
+.heading {
+  @apply font-bold;
+}
+
+.heading_l3 {
+  @apply mb-2 text-xs uppercase text-neutral-400;
+}

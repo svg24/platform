@@ -1,3 +1,9 @@
+import {
+  Link,
+  List,
+  ListItem,
+  PseudoLink,
+} from 'src/components';
 import { LayoutStore } from 'src/modules/layout';
 import { BagStore } from '../../store';
 
@@ -40,49 +46,38 @@ export function BagMeta(): JSX.Element {
         ? (
           <p>
             {'Before use, it is recommended to read the '}
-            <a
-              className="bag-meta__link"
-              href={bagCtx.item.meta.src.usage}
-            >
+            <Link href={bagCtx.item.meta.src.usage}>
               usage guide
-            </a>
+            </Link>
             .
           </p>
         )
         : <></>}
-      <ul>
+      <List>
         {general.list.length
           ? general.list.map((item) => (
-            <li
-              className="bag-meta__item"
-              key={item.id}
-            >
+            <ListItem key={item.id}>
               <span>
                 {`${item.label}: `}
               </span>
-              <button
-                className="bag-meta__btn"
-                type="button"
+              <PseudoLink
                 onClick={() => {
                   general.onClick(item.id);
                 }}
               >
                 {item.meta?.name}
-              </button>
-            </li>
+              </PseudoLink>
+            </ListItem>
           ))
           : {}}
         {individual.list.length
           ? individual.list.map((item) => (
-            <li
-              className="bag-meta__item"
-              key={item.id}
-            >
+            <ListItem key={item.id}>
               {`${item.label}: ${item.meta}`}
-            </li>
+            </ListItem>
           ))
           : {}}
-      </ul>
+      </List>
     </section>
   );
 }

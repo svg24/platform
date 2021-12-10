@@ -1,4 +1,10 @@
 import { useEffect } from 'react';
+import {
+  Form,
+  FormInput,
+  FormLabelBase,
+  FormParameterBase,
+} from 'src/components';
 import type { BagStoreItemAction, BagStoreItemType } from 'types/bag';
 import { BagStore } from '../../store';
 
@@ -7,7 +13,7 @@ export function BagForm(): JSX.Element {
 
   const actions = {
     id: 'actions',
-    heading: 'Actions',
+    legend: 'Actions',
     mount() {
       useEffect(() => {
         ctx.item.setAction(actions.list.copy.handler);
@@ -41,8 +47,8 @@ export function BagForm(): JSX.Element {
       },
     },
   } as {
-    heading: string;
     id: string;
+    legend: string;
     list: {
       [key in 'copy' | 'download']: {
         checked?: boolean;
@@ -58,7 +64,7 @@ export function BagForm(): JSX.Element {
 
   const types = {
     id: 'types',
-    heading: 'Types',
+    legend: 'Types',
     mount() {
       useEffect(() => {
         ctx.item.setType(types.list.original.id);
@@ -83,8 +89,8 @@ export function BagForm(): JSX.Element {
         : {},
     },
   } as {
-    heading: string;
     id: string;
+    legend: string;
     list: {
       [key in BagStoreItemType]: {
         checked?: boolean;
@@ -99,35 +105,30 @@ export function BagForm(): JSX.Element {
   types.mount();
 
   return (
-    <form className="bag-form">
-      {[actions, types].map((obj) => (
-        <fieldset key={obj.id}>
-          <h2 className="bag-root__heading">
-            {obj.heading}
-          </h2>
-          <div className="bag-form__container">
-            {Object.entries(obj.list).map(([key, val]) => (
-              <label
-                className="bag-form__label"
+    <Form className={`${Form({}).props.className} bag-form`}>
+      {[actions, types].map((pr) => (
+        <FormParameterBase
+          key={pr.id}
+          legend={pr.legend}
+        >
+          <>
+            {Object.entries(pr.list).map(([key, value]) => (
+              <FormLabelBase
                 key={key}
+                name={value.name}
               >
-                <input
-                  className="bag-form__input"
-                  defaultChecked={val.checked}
-                  name={obj.id}
-                  type="radio"
+                <FormInput
+                  defaultChecked={value.checked}
+                  name={pr.id}
                   onChange={() => {
-                    obj.onChange(val);
+                    pr.onChange(value);
                   }}
                 />
-                <span className="bag-form__name">
-                  {val.name}
-                </span>
-              </label>
+              </FormLabelBase>
             ))}
-          </div>
-        </fieldset>
+          </>
+        </FormParameterBase>
       ))}
-    </form>
+    </Form>
   );
 }

@@ -1,0 +1,8 @@
+.pseudo-link {
+  @apply underline;
+}
+
+.pseudo-link:hover,
+.pseudo-link:focus {
+  text-decoration: none;
+}

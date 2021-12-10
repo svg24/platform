@@ -12,42 +12,12 @@
   grid-template-columns: 1.75rem 1fr 1rem;
 }
 
-.filter-parameter__legend {
-  @apply block mb-2 text-xs font-bold uppercase text-neutral-400;
-}
-
-.filter-parameter__letter,
-.filter-parameter__name {
-  @apply px-2 py-1 text-sm duration-100 rounded-lg;
-}
-
 .filter-parameter__letter {
-  @apply text-center;
+  @apply px-2 py-1 text-sm text-center duration-100 rounded-lg;
 }
 
-.filter-parameter__container {
-  @apply flex flex-wrap gap-x-1;
-}
-
-.filter-parameter__letter + .filter-parameter__container {
+.filter-parameter__letter + .form__container {
   @apply overflow-hidden duration-100 gap-y-1 h-7;
-}
-
-.filter-parameter__label {
-  @apply grid cursor-pointer;
-}
-
-.filter-parameter__input,
-.filter-parameter__name {
-  @apply col-span-full row-span-full;
-}
-
-.filter-parameter__input {
-  @apply rounded-lg appearance-none;
-}
-
-.filter-parameter__input:checked + .filter-parameter__name {
-  @apply bg-neutral-100;
 }
 
 .filter-parameter__toggle {

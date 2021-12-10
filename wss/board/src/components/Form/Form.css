@@ -1,0 +1,28 @@
+.form__legend {
+  @apply mb-2 text-xs font-bold uppercase text-neutral-400;
+}
+
+.form__container {
+  @apply flex flex-wrap gap-x-1;
+}
+
+.form__label {
+  @apply grid cursor-pointer;
+}
+
+.form__input,
+.form__name {
+  @apply col-span-full row-span-full;
+}
+
+.form__input {
+  @apply rounded-lg appearance-none;
+}
+
+.form__name {
+  @apply px-2 py-1 text-sm duration-100 rounded-lg;
+}
+
+.form__input:checked + .form__name {
+  @apply bg-neutral-100;
+}

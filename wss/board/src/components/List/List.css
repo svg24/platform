@@ -1,0 +1,4 @@
+.list__item::before {
+  @apply inline mr-2;
+  content: '•';
+}

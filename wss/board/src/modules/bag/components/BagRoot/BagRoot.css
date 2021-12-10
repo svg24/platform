@@ -47,7 +47,3 @@
 .layout-root_bag-out .bag-root__inner {
   animation: slide-bag 300ms forwards reverse;
 }
-
-.bag-root__heading {
-  @apply mb-2 text-xs font-bold uppercase text-neutral-400;
-}

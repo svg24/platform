@@ -1,11 +1,13 @@
+import { Form } from 'src/components';
+
 export function FilterRoot({
   children,
 }: {
   children: JSX.Element;
 }): JSX.Element {
   return (
-    <form className="filter-root">
+    <Form className={`${Form({}).props.className} filter-root`}>
       {children}
-    </form>
+    </Form>
   );
 }

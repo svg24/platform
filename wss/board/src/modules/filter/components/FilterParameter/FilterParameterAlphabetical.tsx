@@ -1,5 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
 import { useEffect, useRef, useState } from 'react';
+import { FormContainer } from 'src/components';
 import type { FilterStoreParameterAlphabetical } from 'types/filter';
 import type { FilterParameterBaseLabelOnClick } from './FilterParameterBase';
 import {
@@ -74,12 +75,9 @@ const FilterParameterAlphabeticalItem = ({
       <span className="filter-parameter__letter">
         {letter}
       </span>
-      <div
-        className="filter-parameter__container"
-        ref={container.ref}
-      >
+      <FormContainer ref={container.ref}>
         {children}
-      </div>
+      </FormContainer>
       {btn.isVisible
         ? (
           <button
@@ -87,9 +85,9 @@ const FilterParameterAlphabeticalItem = ({
             type="button"
             onClick={btn.onClick}
           >
-            {container.isCollapsed
-              ? <ChevronDownIcon className="filter-parameter__icon" />
-              : <ChevronUpIcon className="filter-parameter__icon" />}
+            {(container.isCollapsed
+              ? ChevronDownIcon
+              : ChevronUpIcon)({ className: 'filter-parameter__icon' })}
           </button>
         )
         : <></>}
