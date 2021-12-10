@@ -1,4 +1,4 @@
-import type { SimpleModule } from 'types/simple';
+import type { SimpleModule, SimpleModuleItem } from 'types/simple';
 import { server } from '../../core';
 import { toBad } from '../../utils';
 
@@ -46,10 +46,15 @@ export function addRoute(this: SimpleModule, inst: typeof server.inst): void {
         const data = raw.reduce((acc, cur) => {
           const first = cur.name[0]?.toUpperCase();
 
-          if (first) acc[first] = [...acc[first] || [], cur];
+          if (first) {
+            acc[first] = [...acc[first] || [], {
+              id: cur.id,
+              name: cur.name,
+            }];
+          }
 
           return acc;
-        }, {} as { [key: string]: typeof raw[0][] });
+        }, {} as { [key: string]: SimpleModuleItem[] });
 
         return server.beatify({
           data,
