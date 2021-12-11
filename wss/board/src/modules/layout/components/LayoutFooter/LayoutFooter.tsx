@@ -5,6 +5,10 @@ export function LayoutFooter(): JSX.Element {
   const { ctx } = ContentStore;
 
   const links = [{
+    id: 'github',
+    label: 'GitHub',
+    url: 'https://github.com/svg24',
+  }, {
     id: 'policy',
     label: 'Policy',
     url: '/',
