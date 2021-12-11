@@ -5,7 +5,10 @@ import {
   FormLabelComplete,
   FormParameter,
 } from 'src/components';
-import type { FilterStoreParameterAlphabetical } from 'types/filter';
+import type {
+  FilterParameterAlphabeticalOnClick,
+  FilterParameterAlphabeticalParameter,
+} from 'types/filter';
 
 const FilterParameterAlphabeticalItem = ({
   children,
@@ -98,13 +101,8 @@ export const FilterParameterAlphabetical = ({
   onClick,
   parameter,
 }: {
-  onClick: (
-    option: Parameters<FilterStoreParameterAlphabetical['set']>[0],
-    checked: boolean,
-  ) => void;
-  parameter: {
-    legend: string;
-  } & FilterStoreParameterAlphabetical;
+  onClick: FilterParameterAlphabeticalOnClick;
+  parameter: FilterParameterAlphabeticalParameter;
 }): JSX.Element => (
   <FormParameter
     className="filter-parameter"
@@ -122,8 +120,8 @@ export const FilterParameterAlphabetical = ({
                 key={option.id}
                 option={option}
                 parameter={parameter}
-                onClick={(checked) => {
-                  onClick(option, checked);
+                onClick={(isChecked) => {
+                  onClick(option, isChecked);
                 }}
               />
             ))}

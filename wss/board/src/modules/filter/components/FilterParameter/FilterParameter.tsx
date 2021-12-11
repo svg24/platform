@@ -1,12 +1,15 @@
 import { FormLabelComplete, FormParameter } from 'src/components';
-import type { FormPropertyOnChange, FormPropertyParameter } from 'types/form';
+import type {
+  FilterParameterOnChange,
+  FilterParameterParameter,
+} from 'types/filter';
 
 export function FilterParameter({
   onChange,
   parameter,
 }: {
-  onChange: FormPropertyOnChange;
-  parameter: FormPropertyParameter;
+  onChange: FilterParameterOnChange;
+  parameter: FilterParameterParameter;
 }): JSX.Element {
   return (
     <FormParameter

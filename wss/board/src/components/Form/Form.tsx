@@ -2,9 +2,11 @@ import { observer } from 'mobx-react-lite';
 import type { ComponentProps } from 'react';
 import { createElement, createRef, forwardRef } from 'react';
 import type {
-  StoreFormParameter,
-  StoreFormParameterOptionsItem,
-} from 'types/store';
+  FormLabelCompleteOnClick,
+  FormLabelCompleteOption,
+  FormLabelCompleteParameter,
+  FormParameterAdditionalProperties,
+} from 'types/form';
 
 export function Form(props: ComponentProps<'form'>): JSX.Element {
   return createElement('form', {
@@ -13,9 +15,9 @@ export function Form(props: ComponentProps<'form'>): JSX.Element {
   });
 }
 
-export function FormParameter(props: {
-  legend: string;
-} & ComponentProps<'fieldset'>): JSX.Element {
+export function FormParameter(
+  props: FormParameterAdditionalProperties & ComponentProps<'fieldset'>,
+): JSX.Element {
   const { children, className, legend } = props;
 
   return createElement('fieldset', {
@@ -69,9 +71,9 @@ export function FormLabelComplete({
   parameter,
 }: {
   onChange?: () => void;
-  onClick?: (isChecked: boolean) => void;
-  option: StoreFormParameterOptionsItem;
-  parameter: StoreFormParameter<any, StoreFormParameterOptionsItem>;
+  onClick?: FormLabelCompleteOnClick;
+  option: FormLabelCompleteOption;
+  parameter: FormLabelCompleteParameter;
 }): JSX.Element {
   const input = {
     ref: createRef<HTMLInputElement>(),
