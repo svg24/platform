@@ -21,7 +21,6 @@ export function FormParameter(
   const { children, className, legend } = props;
 
   return createElement('fieldset', {
-    ...props,
     className: `form__parameter ${className || ''}`,
   }, createElement('legend', {
     className: 'form__legend',
@@ -40,14 +39,15 @@ export const FormContainer = (
   ))
 );
 
-export function FormLabel(props: {
+export function FormLabel({
+  children,
+  name,
+}: {
+  children: ComponentProps<'label'>['children'];
   name: string;
-} & ComponentProps<'label'>): JSX.Element {
-  const { children, name } = props;
-
+}): JSX.Element {
   return createElement('label', {
     className: 'form__label',
-    ...props,
   }, children, createElement('span', {
     className: 'form__name',
   }, name));
