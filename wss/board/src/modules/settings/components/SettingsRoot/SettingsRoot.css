@@ -1,8 +1,3 @@
-.settings-root {
-  @apply absolute z-20 px-3 py-2 bg-white border-2 rounded-lg shadow-md border-neutral-50 right-2;
-  top: calc(100% + 0.5rem);
-}
-
-.settings-root .form__container {
+.modal .form__container {
   @apply w-max;
 }

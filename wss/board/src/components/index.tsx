@@ -11,6 +11,7 @@ import { HeadingLevel3 } from './Heading';
 import { Link } from './Link';
 import { List, ListItem } from './List';
 import { Logo } from './Logo';
+import { Modal } from './Modal';
 import { PseudoLink } from './PseudoLink';
 import { Spin } from './Spin';
 
@@ -27,6 +28,7 @@ export {
   List,
   ListItem,
   Logo,
+  Modal,
   PseudoLink,
   Spin,
 };
