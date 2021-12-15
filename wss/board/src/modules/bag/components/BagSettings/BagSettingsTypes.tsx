@@ -2,23 +2,23 @@ import { useEffect } from 'react';
 import { FormInput, FormLabel, FormParameter } from 'src/components';
 import { useStore } from 'src/store';
 import type {
-  BagSettingsParameterTypes,
-  BagSettingsParameterTypesOptionsItem,
+  SettingsParameterTypes,
+  SettingsParameterTypesOptionsItem,
 } from 'types/bag';
 
 export function BagSettingsTypes(): JSX.Element {
   const { bag } = useStore();
 
-  const original: BagSettingsParameterTypesOptionsItem = {
+  const original: SettingsParameterTypesOptionsItem = {
     id: 'original',
     name: 'Original',
     checked: true,
   };
-  const square: BagSettingsParameterTypesOptionsItem = {
+  const square: SettingsParameterTypesOptionsItem = {
     id: 'square',
     name: 'Square',
   };
-  const parameter: BagSettingsParameterTypes = {
+  const parameter: SettingsParameterTypes = {
     id: 'types',
     legend: 'Types',
     options: [

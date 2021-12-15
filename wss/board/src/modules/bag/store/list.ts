@@ -1,16 +1,5 @@
-import type { BagStore } from 'types/bag';
+import type { Store } from 'types/bag';
 
-export function initList(this: BagStore): void {
-  this.list = {
-    ids: new Set(),
-    add(id) {
-      this.ids.add(id);
-    },
-    delete(id) {
-      this.ids.delete(id);
-    },
-    clear() {
-      this.ids.clear();
-    },
-  };
+export function initList(this: Store): void {
+  this.list = new Set();
 }

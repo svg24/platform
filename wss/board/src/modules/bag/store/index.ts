@@ -1,4 +1,4 @@
-import type { BagStore as Store } from 'types/bag';
+import type { Store } from 'types/bag';
 import { initItem } from './item';
 import { initList } from './list';
 

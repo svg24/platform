@@ -4,9 +4,9 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import type { BagStore } from 'types/bag';
+import type { Store } from 'types/bag';
 
-export function initItem(this: BagStore): void {
+export function initItem(this: Store): void {
   this.item = {
     _data: null,
     get data() {

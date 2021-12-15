@@ -1,4 +1,4 @@
-import type { BagStore } from './bag';
+import type { Store as BagStore } from './bag';
 import type { ContentStore } from './content';
 import type { FilterStore } from './filter';
 import type { LayoutStore } from './layout';

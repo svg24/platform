@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import { FormInput, FormLabel, FormParameter } from 'src/components';
 import { useStore } from 'src/store';
 import type {
-  BagSettingsParameterActions,
-  BagSettingsParameterActionsOptionsItem,
+  SettingsParameterActions,
+  SettingsParameterActionsOptionsItem,
 } from 'types/bag';
 
 export function BagSettingsActions(): JSX.Element {
   const { bag } = useStore();
 
-  const copy: BagSettingsParameterActionsOptionsItem = {
+  const copy: SettingsParameterActionsOptionsItem = {
     id: 'copy',
     name: 'Copy',
     checked: true,
@@ -17,7 +17,7 @@ export function BagSettingsActions(): JSX.Element {
       await navigator.clipboard.writeText(content);
     },
   };
-  const download: BagSettingsParameterActionsOptionsItem = {
+  const download: SettingsParameterActionsOptionsItem = {
     id: 'download',
     name: 'Download',
     async handler({ content, file }) {
@@ -34,7 +34,7 @@ export function BagSettingsActions(): JSX.Element {
     },
   };
 
-  const parameter: BagSettingsParameterActions = {
+  const parameter: SettingsParameterActions = {
     id: 'actions',
     legend: 'Actions',
     options: [copy, download],

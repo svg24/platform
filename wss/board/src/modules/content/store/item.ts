@@ -7,7 +7,7 @@ export function initItem(this: ContentStore): void {
     result: null,
     async fetch() {
       this.result = await api.item({
-        id: Store.bag.list.ids.values().next().value,
+        id: Store.bag.list.values().next().value,
       });
     },
     clear() {
