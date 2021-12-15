@@ -1,6 +1,6 @@
 import type {
   ApiItemDataItem,
-  ApiItemDataItemTypes,
+  ApiItemDataItemContentTypes,
   ApiItemMeta,
   ApiListDataItem,
 } from 'types/api';
@@ -29,7 +29,7 @@ type BagStoreItemSettingsAction = (args: {
   content: string;
   file: string;
 }) => Promise<void>;
-type BagStoreItemSettingsTypes = ApiItemDataItemTypes;
+type BagStoreItemSettingsTypes = ApiItemDataItemContentTypes;
 
 type BagStoreList = {
   add: (id: BagStoreListIdsItem) => void;
