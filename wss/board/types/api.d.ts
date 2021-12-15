@@ -49,36 +49,38 @@ export type ApiItem = {
 };
 type ApiItemData = ApiItemDataItem[];
 type ApiItemDataItem = {
-  content: {
-    [key in ApiItemDataItemTypes]?: {
-      components: {
-        react: {
-          js: string;
-          ts: string;
-        };
-        vue: {
-          js: string;
-        };
+  content: ApiItemDataItemContent;
+  file: ApiItemDataItemFile;
+  version: number;
+};
+type ApiItemDataItemContent = {
+  [key in ApiItemDataItemTypes]?: {
+    components: {
+      react: {
+        js: string;
+        ts: string;
       };
-      links: {
-        url: string;
-      };
-      packages: {
-        react: string;
-        vue: string;
-      };
-      snippets: {
-        css: string;
-        jsx: string;
-        svg: string;
+      vue: {
+        js: string;
       };
     };
+    links: {
+      url: string;
+    };
+    packages: {
+      react: string;
+      vue: string;
+    };
+    snippets: {
+      css: string;
+      jsx: string;
+      svg: string;
+    };
   };
-  file: {
-    camel: string;
-    snake: string;
-  };
-  version: number;
+};
+type ApiItemDataItemFile = {
+  camel: string;
+  snake: string;
 };
 type ApiItemDataItemTypes = 'square' | 'original';
 type ApiItemMeta = {

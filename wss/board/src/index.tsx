@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { Store, StoreProvider } from './store';
-import Home from './views/Home';
+import { Home } from './views/Home';
 import 'swiper/css';
 import './index.css';
 

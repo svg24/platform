@@ -8,7 +8,7 @@ import { SettingsStore } from 'src/modules/settings';
 import { UserStore } from 'src/modules/user';
 import type { Store as IStore } from 'types/store';
 
-export const Store = {
+const Store = {
   bag: BagStore,
   content: ContentStore,
   filter: FilterStore,
@@ -17,12 +17,16 @@ export const Store = {
   settings: SettingsStore,
   user: UserStore,
 };
-
 const storeContext = createContext(Store);
+const StoreProvider = storeContext.Provider;
 
-export const StoreProvider = storeContext.Provider;
-
-export function useStore(): IStore {
+function useStore(): IStore {
   const context = useContext(storeContext);
   return context;
 }
+
+export {
+  Store,
+  StoreProvider,
+  useStore,
+};

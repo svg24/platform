@@ -3,7 +3,7 @@ import { Content } from 'src/modules/content';
 import { FilterStore } from 'src/modules/filter';
 import { Layout } from 'src/modules/layout';
 
-export default (): JSX.Element => {
+export function Home(): JSX.Element {
   const isMounted = useState(false);
 
   useEffect(() => {
@@ -19,4 +19,4 @@ export default (): JSX.Element => {
       </Layout>
     )
     : <></>;
-};
+}

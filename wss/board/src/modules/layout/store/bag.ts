@@ -8,5 +8,6 @@ export function initBag(this: LayoutStore): void {
       goBack: null,
     },
   });
+
   initStoreVisible.call(this.bag);
 }

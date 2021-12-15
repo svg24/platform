@@ -6,5 +6,6 @@ export function initSentinel(this: ContentStore): void {
     enumerable: true,
     value: {},
   });
+
   initStoreVisible.call(this.sentinel);
 }
