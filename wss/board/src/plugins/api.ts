@@ -1,12 +1,13 @@
 import type {
-  ApiItem,
-  ApiList,
-  ApiSimple,
-  ApiSimpleAlphabetical,
+  Categories,
+  Companies,
+  Item,
+  List,
+  Simple,
 } from 'types/api';
 
-const simpleMethod = (name: 'categories' | 'companies') => (
-  async (): Promise<ApiSimpleAlphabetical> => {
+const simpleMethod = <T>(name: 'categories' | 'companies') => (
+  async (): Promise<T> => {
     const res = await fetch(`/api/v1/${name}`);
     const json = await res.json();
 
@@ -15,7 +16,7 @@ const simpleMethod = (name: 'categories' | 'companies') => (
 );
 
 export const api = {
-  sortBy: async (): Promise<ApiSimple> => ({
+  sortBy: async (): Promise<Simple> => ({
     data: [{
       id: 'date',
       name: 'Date',
@@ -30,8 +31,8 @@ export const api = {
       },
     },
   }),
-  categories: simpleMethod('categories'),
-  companies: simpleMethod('companies'),
+  categories: simpleMethod<Categories>('categories'),
+  companies: simpleMethod<Companies>('companies'),
   async list(params: {
     category?: string;
     company?: string;
@@ -39,7 +40,7 @@ export const api = {
     name?: string;
     page?: number;
     sortBy?: string;
-  }): Promise<ApiList> {
+  }): Promise<List> {
     let url = '/api/v1/list?';
 
     Object.entries(params).forEach(([key, val]) => {
@@ -51,7 +52,7 @@ export const api = {
 
     return json;
   },
-  async item({ id }: { id: string }): Promise<ApiItem> {
+  async item({ id }: { id: string }): Promise<Item> {
     const res = await fetch(`/api/v1/item?id=${id}`);
     const json = await res.json();
 

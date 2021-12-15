@@ -1,8 +1,8 @@
 import type {
-  ApiItemDataItem,
-  ApiItemDataItemContentTypes,
-  ApiItemMeta,
-  ApiListDataItem,
+  ItemDataItem,
+  ItemDataItemContentTypes,
+  ItemMeta,
+  ListDataItemId,
 } from 'types/api';
 
 export interface BagStore {
@@ -13,12 +13,12 @@ export interface BagStore {
 type BagStoreItem = {
   _data: BagStoreItemData;
   data: BagStoreItemData;
-  meta: ApiItemMeta | null;
-  setData: (data: ApiItemDataItem) => void;
-  setMeta: (meta: ApiItemMeta) => void;
+  meta: ItemMeta | null;
+  setData: (data: ItemDataItem) => void;
+  setMeta: (meta: ItemMeta) => void;
   settings: BagStoreItemSettings;
 };
-type BagStoreItemData = ApiItemDataItem | null;
+type BagStoreItemData = ItemDataItem | null;
 type BagStoreItemSettings = {
   action: BagStoreItemSettingsAction | null;
   setAction: (action: BagStoreItemSettingsAction) => void;
@@ -29,7 +29,7 @@ type BagStoreItemSettingsAction = (args: {
   content: string;
   file: string;
 }) => Promise<void>;
-type BagStoreItemSettingsTypes = ApiItemDataItemContentTypes;
+type BagStoreItemSettingsTypes = ItemDataItemContentTypes;
 
 type BagStoreList = {
   add: (id: BagStoreListIdsItem) => void;
@@ -37,7 +37,7 @@ type BagStoreList = {
   delete: (id: BagStoreListIdsItem) => void;
   ids: Set<BagStoreListIdsItem | null>;
 };
-type BagStoreListIdsItem = ApiListDataItem['id'];
+type BagStoreListIdsItem = ListDataItemId;
 
 export type BagSettingsParameters
   = BagSettingsParameterTypes | BagSettingsParameterActions;

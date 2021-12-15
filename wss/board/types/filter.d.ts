@@ -1,7 +1,7 @@
 import type {
-  ApiSimpleAlphabeticalData,
-  ApiSimpleData,
-  ApiSimpleDataItem,
+  SimpleAlphabeticalData,
+  SimpleData,
+  SimpleDataItem,
 } from 'types/api';
 import type {
   FormLabelCompleteOnClick,
@@ -31,11 +31,11 @@ export type FilterStoreParametersIds
 
 export type FilterStoreParameterAlphabeticalIds = 'category' | 'company';
 export type FilterStoreParameterAlphabetical
-  = FilterStoreParameterBase<ApiSimpleAlphabeticalData, ApiSimpleDataItem>;
+  = FilterStoreParameterBase<SimpleAlphabeticalData, SimpleDataItem>;
 
 type FilterStoreParameterId = 'sortBy';
 export type FilterStoreParameter
-  = FilterStoreParameterBase<ApiSimpleData, ApiSimpleDataItem>;
+  = FilterStoreParameterBase<SimpleData, SimpleDataItem>;
 
 interface FilterStoreParameterBase<
   Options,

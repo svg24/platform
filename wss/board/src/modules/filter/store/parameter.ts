@@ -1,9 +1,9 @@
 import { api } from 'src/plugins/api';
 import { initStoreFormParameter } from 'src/utils';
-import type { ApiSimpleIds } from 'types/api';
+import type { SimpleIds } from 'types/api';
 import type { FilterStore, FilterStoreParametersIds } from 'types/filter';
 
-const methods: { [key in FilterStoreParametersIds]: ApiSimpleIds } = {
+const methods: { [key in FilterStoreParametersIds]: SimpleIds } = {
   category: 'categories',
   company: 'companies',
   sortBy: 'sortBy',

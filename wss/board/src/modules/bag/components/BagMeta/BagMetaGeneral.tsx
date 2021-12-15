@@ -1,12 +1,12 @@
 import { ListItem, PseudoLink } from 'src/components';
 import { useStore } from 'src/store';
-import type { ApiSimpleDataItem } from 'types/api';
+import type { SimpleDataItem } from 'types/api';
 import type { FilterStoreParameterAlphabeticalIds } from 'types/filter';
 
 type BagMetaGeneralItem = {
   id: FilterStoreParameterAlphabeticalIds;
   label: string;
-  meta?: ApiSimpleDataItem | undefined;
+  meta?: SimpleDataItem | undefined;
 };
 
 export function BagMetaGeneral(): JSX.Element {

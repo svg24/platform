@@ -1,8 +1,12 @@
 import type {
-  ApiItem,
-  ApiList,
-  ApiListData,
-  ApiListMeta,
+  Item,
+  List,
+  ListData,
+  ListMeta,
+  ListMetaLengthCurrent,
+  ListMetaLengthTotal,
+  ListMetaPageIsNext,
+  ListMetaPageNext,
 } from 'types/api';
 import type { StoreVisible } from 'types/store';
 
@@ -15,11 +19,11 @@ export interface ContentStore {
 type ContentStoreItem = {
   clear: () => void;
   fetch: () => Promise<void>;
-  result: ApiItem | null;
+  result: Item | null;
 };
 
 type ContentStoreList = {
-  fetch: (multiplier?: number) => Promise<ApiList>;
+  fetch: (multiplier?: number) => Promise<List>;
   reset: () => Promise<void>;
   result: ContentStoreListResult;
   upload: () => Promise<void>;
@@ -30,16 +34,16 @@ type ContentStoreListResult = {
 };
 type ContentStoreListResultData = {
   _items: ContentStoreListResultDataItems;
-  add: (data: ApiListData) => void;
+  add: (data: ListData) => void;
   clear: () => void;
   isItems: boolean;
   items: ContentStoreListResultDataItems;
 };
-type ContentStoreListResultDataItems = ApiListData | [];
+type ContentStoreListResultDataItems = ListData | [];
 type ContentStoreListResultMeta = {
   length: ContentStoreListResultMetaLength;
   page: ContentStoreListResultMetaPage;
-  set: (value: ApiListMeta) => void;
+  set: (value: ListMeta) => void;
 };
 type ContentStoreListResultMetaLength = {
   _current: ContentStoreListResultMetaLengthCurrent;
@@ -49,8 +53,8 @@ type ContentStoreListResultMetaLength = {
   setTotal: (value: ContentStoreListResultMetaLengthTotal) => void;
   total: ContentStoreListResultMetaLengthTotal;
 };
-type ContentStoreListResultMetaLengthCurrent = ApiListMeta['length']['current'];
-type ContentStoreListResultMetaLengthTotal = ApiListMeta['length']['total'];
+type ContentStoreListResultMetaLengthCurrent = ListMetaLengthCurrent;
+type ContentStoreListResultMetaLengthTotal = ListMetaLengthTotal;
 type ContentStoreListResultMetaPage = {
   _isNext: ContentStoreListResultMetaPageIsNext;
   isNext: ContentStoreListResultMetaPageIsNext;
@@ -59,5 +63,5 @@ type ContentStoreListResultMetaPage = {
   setIsNext: (value: ContentStoreListResultMetaPageIsNext) => void;
   setNext: (value: ContentStoreListResultMetaPageNext) => void;
 };
-type ContentStoreListResultMetaPageIsNext = ApiListMeta['page']['isNext'];
-type ContentStoreListResultMetaPageNext = ApiListMeta['page']['next'];
+type ContentStoreListResultMetaPageIsNext = ListMetaPageIsNext;
+type ContentStoreListResultMetaPageNext = ListMetaPageNext;
