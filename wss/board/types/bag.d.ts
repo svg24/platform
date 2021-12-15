@@ -9,10 +9,10 @@ declare namespace Bag {
   /**
    * `bag`
    */
-  interface Store {
+  type Store = {
     item: StoreItem;
     list: StoreList;
-  }
+  };
   /**
    * `bag.item`
    */
@@ -59,17 +59,17 @@ declare namespace Bag {
     extends SettingsParameterOptionsItem {
     id: StoreItemSettingsTypes;
   }
-
-  interface SettingsParameter<Item extends SettingsParameterOptionsItem> {
-    id: string;
-    legend: string;
-    onChange: (item: Item) => void;
-    options: Item[];
-  }
-  type SettingsParameterOptionsItem = {
-    checked?: boolean;
-    name: string;
-  };
 }
+
+interface SettingsParameter<Item extends SettingsParameterOptionsItem> {
+  id: string;
+  legend: string;
+  onChange: (item: Item) => void;
+  options: Item[];
+}
+type SettingsParameterOptionsItem = {
+  checked?: boolean;
+  name: string;
+};
 
 export = Bag;
