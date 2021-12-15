@@ -4,9 +4,9 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import type { ContentStore } from 'types/content';
+import type { Store } from 'types/content';
 
-export function initListResult(this: ContentStore): void {
+export function initListResult(this: Store): void {
   this.list.result = {
     data: {
       _items: [],

@@ -9,59 +9,71 @@ import type {
   ListMetaPageNext,
 } from 'types/api';
 import type { StoreVisible } from 'types/store';
+import type { UserStoreContent } from 'types/user';
 
-export interface ContentStore {
-  item: ContentStoreItem;
-  list: ContentStoreList;
-  sentinel: StoreVisible;
+declare namespace Content {
+  /**
+   * `content`
+   */
+  interface Store {
+    item: StoreItem;
+    list: StoreList;
+    sentinel: StoreVisible;
+  }
+  /**
+   * `content.item`
+   */
+  type StoreItem = {
+    clear: () => void;
+    fetch: () => Promise<void>;
+    result: Item | null;
+  };
+  /**
+   * `content.list`
+   */
+  type StoreList = {
+    fetch: (multiplier?: UserStoreContent['list']['multiplier']['value']['current']) => Promise<List>;
+    reset: () => Promise<void>;
+    result: StoreListResult;
+    upload: () => Promise<void>;
+  };
+  type StoreListResult = {
+    data: StoreListResultData;
+    meta: StoreListResultMeta;
+  };
+  type StoreListResultData = {
+    _items: StoreListResultDataItems;
+    add: (data: ListData) => void;
+    clear: () => void;
+    isItems: boolean;
+    items: StoreListResultDataItems;
+  };
+  type StoreListResultDataItems = ListData | [];
+  type StoreListResultMeta = {
+    length: StoreListResultMetaLength;
+    page: StoreListResultMetaPage;
+    set: (meta: ListMeta) => void;
+  };
+  type StoreListResultMetaLength = {
+    _current: StoreListResultMetaLengthCurrent;
+    _total: StoreListResultMetaLengthTotal;
+    current: StoreListResultMetaLengthCurrent;
+    setCurrent: (current: StoreListResultMetaLengthCurrent) => void;
+    setTotal: (total: StoreListResultMetaLengthTotal) => void;
+    total: StoreListResultMetaLengthTotal;
+  };
+  type StoreListResultMetaLengthCurrent = ListMetaLengthCurrent;
+  type StoreListResultMetaLengthTotal = ListMetaLengthTotal;
+  type StoreListResultMetaPage = {
+    _isNext: StoreListResultMetaPageIsNext;
+    isNext: StoreListResultMetaPageIsNext;
+    next: StoreListResultMetaPageNext;
+    reset: () => void;
+    setIsNext: (isNext: StoreListResultMetaPageIsNext) => void;
+    setNext: (next: StoreListResultMetaPageNext) => void;
+  };
+  type StoreListResultMetaPageIsNext = ListMetaPageIsNext;
+  type StoreListResultMetaPageNext = ListMetaPageNext;
 }
 
-type ContentStoreItem = {
-  clear: () => void;
-  fetch: () => Promise<void>;
-  result: Item | null;
-};
-
-type ContentStoreList = {
-  fetch: (multiplier?: number) => Promise<List>;
-  reset: () => Promise<void>;
-  result: ContentStoreListResult;
-  upload: () => Promise<void>;
-};
-type ContentStoreListResult = {
-  data: ContentStoreListResultData;
-  meta: ContentStoreListResultMeta;
-};
-type ContentStoreListResultData = {
-  _items: ContentStoreListResultDataItems;
-  add: (data: ListData) => void;
-  clear: () => void;
-  isItems: boolean;
-  items: ContentStoreListResultDataItems;
-};
-type ContentStoreListResultDataItems = ListData | [];
-type ContentStoreListResultMeta = {
-  length: ContentStoreListResultMetaLength;
-  page: ContentStoreListResultMetaPage;
-  set: (value: ListMeta) => void;
-};
-type ContentStoreListResultMetaLength = {
-  _current: ContentStoreListResultMetaLengthCurrent;
-  _total: ContentStoreListResultMetaLengthTotal;
-  current: ContentStoreListResultMetaLengthCurrent;
-  setCurrent: (value: ContentStoreListResultMetaLengthCurrent) => void;
-  setTotal: (value: ContentStoreListResultMetaLengthTotal) => void;
-  total: ContentStoreListResultMetaLengthTotal;
-};
-type ContentStoreListResultMetaLengthCurrent = ListMetaLengthCurrent;
-type ContentStoreListResultMetaLengthTotal = ListMetaLengthTotal;
-type ContentStoreListResultMetaPage = {
-  _isNext: ContentStoreListResultMetaPageIsNext;
-  isNext: ContentStoreListResultMetaPageIsNext;
-  next: ContentStoreListResultMetaPageNext;
-  reset: () => void;
-  setIsNext: (value: ContentStoreListResultMetaPageIsNext) => void;
-  setNext: (value: ContentStoreListResultMetaPageNext) => void;
-};
-type ContentStoreListResultMetaPageIsNext = ListMetaPageIsNext;
-type ContentStoreListResultMetaPageNext = ListMetaPageNext;
+export = Content;

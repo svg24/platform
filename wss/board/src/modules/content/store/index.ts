@@ -1,4 +1,4 @@
-import type { ContentStore as Store } from 'types/content';
+import type { Store } from 'types/content';
 import { initItem } from './item';
 import { initList } from './list';
 import { initSentinel } from './sentinel';
