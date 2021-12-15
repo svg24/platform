@@ -1,11 +1,10 @@
 import type {
-  Store,
   StoreFormParameter,
   StoreFormParameterOptions,
   StoreFormParameterOptionsItem,
 } from 'types/store';
 
-export interface SettingsStore extends Store<SettingsStore> {
+export interface SettingsStore {
   size: SettingsStoreSize;
 }
 

@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
-import { ContentStore } from 'src/modules/content';
+import { useStore } from 'src/store';
 
 export function LayoutFooter(): JSX.Element {
-  const { ctx } = ContentStore;
+  const { content } = useStore();
 
   const links = [{
     id: 'github',
@@ -31,8 +31,8 @@ export function LayoutFooter(): JSX.Element {
   ));
 
   const meta = {
-    showed: observer(() => <>{ctx.list.result.meta.length.current}</>),
-    total: observer(() => <>{ctx.list.result.meta.length.total}</>),
+    showed: observer(() => <>{content.list.result.meta.length.current}</>),
+    total: observer(() => <>{content.list.result.meta.length.total}</>),
   };
 
   return (

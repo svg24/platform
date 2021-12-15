@@ -1,14 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { LayoutStore } from 'src/modules/layout';
-import { BagStore } from '../../store';
+import { useStore } from 'src/store';
 
 export function BagRoot({
   children,
 }: {
   children: JSX.Element[];
 }): JSX.Element {
-  const layoutCtx = LayoutStore.ctx;
-  const bagCtx = BagStore.ctx;
+  const { bag, layout } = useStore();
 
   const root = {
     ref: useRef<HTMLDivElement>(null),
@@ -29,8 +27,8 @@ export function BagRoot({
       if (!root.ref.current?.contains(ev.relatedTarget as Node)) root.close();
     },
     close() {
-      layoutCtx.bag.hide();
-      if (layoutCtx.bag.goBack) layoutCtx.bag.goBack();
+      layout.bag.hide();
+      if (layout.bag.goBack) layout.bag.goBack();
     },
   };
 
@@ -38,7 +36,7 @@ export function BagRoot({
 
   return (
     <div
-      aria-label={`${bagCtx.item.meta?.name} details`}
+      aria-label={`${bag.item.meta?.name} details`}
       className="bag-root"
       ref={root.ref}
       role="dialog"

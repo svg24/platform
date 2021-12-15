@@ -1,9 +1,19 @@
-import type { Context, ReactElement } from 'react';
+import type { BagStore } from './bag';
+import type { ContentStore } from './content';
+import type { FilterStore } from './filter';
+import type { LayoutStore } from './layout';
+import type { SearchStore } from './search';
+import type { SettingsStore } from './settings';
+import type { UserStore } from './user';
 
-export interface Store<T> extends Object {
-  readonly Provider: (args: { children: ReactElement }) => JSX.Element;
-  readonly _ctx: Context<T>;
-  readonly ctx: T;
+export interface Store {
+  bag: BagStore;
+  content: ContentStore;
+  filter: FilterStore;
+  layout: LayoutStore;
+  search: SearchStore;
+  settings: SettingsStore;
+  user: UserStore;
 }
 
 export type StoreVisible = {

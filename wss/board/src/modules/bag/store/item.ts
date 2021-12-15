@@ -6,7 +6,7 @@ import {
 } from 'mobx';
 import type { BagStore } from 'types/bag';
 
-export function initRoot(this: BagStore): void {
+export function initItem(this: BagStore): void {
   this.item = {
     _data: null,
     get data() {
@@ -31,19 +31,6 @@ export function initRoot(this: BagStore): void {
       setType(type) {
         this.type = type;
       },
-    },
-  };
-
-  this.list = {
-    ids: new Set(),
-    add(id) {
-      this.ids.add(id);
-    },
-    delete(id) {
-      this.ids.delete(id);
-    },
-    clear() {
-      this.ids.clear();
     },
   };
 

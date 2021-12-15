@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import { SettingsStore } from 'src/modules/settings';
+import { useStore } from 'src/store';
 
 export function ContentList({
   children,
 }: {
   children: JSX.Element[];
 }): JSX.Element {
-  const { ctx } = SettingsStore;
+  const { settings } = useStore();
 
   const root = {
     el: observer(() => (
@@ -15,8 +15,8 @@ export function ContentList({
       </ol>
     )),
     get mod() {
-      return ctx.size.value.current
-        ? `content-list_${ctx.size.value.current.id}`
+      return settings.size.value.current
+        ? `content-list_${settings.size.value.current.id}`
         : '';
     },
   };

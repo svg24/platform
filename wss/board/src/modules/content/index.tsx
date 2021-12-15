@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { createRef, useEffect } from 'react';
-import { UserStore } from 'src/modules/user';
+import { useStore } from 'src/store';
 import { isInViewport } from 'src/utils';
 import { ContentItem } from './components/ContentItem';
 import { ContentList } from './components/ContentList';
@@ -12,13 +12,11 @@ import { ContentStore } from './store';
 export { ContentStore };
 
 export const Content = (): JSX.Element => {
-  const contentCtx = ContentStore.ctx;
-  const userCtx = UserStore.ctx;
+  const { content, user } = useStore();
 
   const noFound = {
     el: observer(() => (
-      contentCtx.list.result.data.isItems
-      || contentCtx.list.result.meta.page.isNext
+      content.list.result.data.isItems || content.list.result.meta.page.isNext
         ? <></>
         : <ContentNoFound />
     )),
@@ -55,7 +53,7 @@ export const Content = (): JSX.Element => {
 
         list.obs.create().then(() => {
           check().then((res) => {
-            userCtx.multiplier = res;
+            user.content.list.multiplier.value.current = res;
           });
         });
       }, []);
@@ -69,7 +67,7 @@ export const Content = (): JSX.Element => {
               if (
                 entry
                 && entry.isIntersecting
-                && contentCtx.list.result.meta.page.isNext
+                && content.list.result.meta.page.isNext
               ) {
                 list.upload().then(() => {
                   resolve();
@@ -84,18 +82,18 @@ export const Content = (): JSX.Element => {
     },
     upload: (): Promise<void> => (
       new Promise((resolve) => {
-        contentCtx.sentinel.show();
-        contentCtx.list.upload().then(() => {
-          contentCtx.sentinel.hide();
+        content.sentinel.show();
+        content.list.upload().then(() => {
+          content.sentinel.hide();
           resolve();
         });
       })
     ),
     el: observer(() => (
-      contentCtx.list.result.data.isItems
+      content.list.result.data.isItems
         ? (
           <ContentList>
-            {contentCtx.list.result.data.items.map((item) => (
+            {content.list.result.data.items.map((item) => (
               <ContentItem
                 item={item}
                 key={item.id}

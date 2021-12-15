@@ -1,10 +1,9 @@
-import { initStore } from 'src/utils';
 import type { UserStore as Store } from 'types/user';
+import { initContent } from './content';
 
 export const UserStore = new (function (this: Store) {
-  initStore.call(this);
+  initContent.call(this);
 
-  this.multiplier = undefined;
   this.document = {
     _fontSize: parseInt(
       window.getComputedStyle(document.documentElement).fontSize,

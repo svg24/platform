@@ -1,10 +1,8 @@
 import type { BaseSyntheticEvent } from 'react';
 import { useEffect, useRef } from 'react';
-import { SearchStore } from 'src/modules/search';
+import { Store } from 'src/store';
 
 export function Search(): JSX.Element {
-  const { ctx } = SearchStore;
-
   const field = {
     ref: useRef<HTMLInputElement>(null),
     checkActive(code: string) {
@@ -42,7 +40,7 @@ export function Search(): JSX.Element {
         ref={field.ref}
         type="search"
         onInput={(ev: BaseSyntheticEvent) => {
-          ctx.process(ev.target.value);
+          Store.search.process(ev.target.value);
         }}
       />
       <kbd className="search__key">

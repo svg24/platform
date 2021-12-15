@@ -1,6 +1,7 @@
 import { reaction } from 'mobx';
 import { createRef, useEffect } from 'react';
 import { Bag } from 'src/modules/bag';
+import { useStore } from 'src/store';
 import { deepAssign, getStateAnimation } from 'src/utils';
 import { LayoutFooter } from './components/LayoutFooter';
 import { LayoutHeader } from './components/LayoutHeader';
@@ -15,16 +16,16 @@ const root = {
 };
 
 export function Layout({ children }: { children: JSX.Element }): JSX.Element {
-  const { ctx } = LayoutStore;
+  const { layout } = useStore();
 
   const bag = deepAssign({
     mount() {
       useEffect(() => {
-        reaction(() => ctx.bag.isVisible, bag.toggle);
+        reaction(() => layout.bag.isVisible, bag.toggle);
       }, []);
     },
     toggle() {
-      if (ctx.bag.isVisible) {
+      if (layout.bag.isVisible) {
         bag.isShowed = true;
         bag.show();
       } else {

@@ -1,17 +1,15 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { useEffect, useRef, useState } from 'react';
-import { ContentStore } from 'src/modules/content';
+import { useStore } from 'src/store';
 import SwiperCore, { Navigation, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { ApiItem } from 'types/api';
-import { BagStore } from '../../store';
 
 SwiperCore.use([Navigation, Thumbs]);
 
 function BagViewWithThumbs(): JSX.Element {
-  const contentCtx = ContentStore.ctx;
-  const bagCtx = BagStore.ctx;
-  const { data } = contentCtx.item.result as ApiItem;
+  const { bag, content } = useStore();
+  const { data } = content.item.result as ApiItem;
   const slides = [] as JSX.Element[];
 
   data.forEach((item) => {
@@ -89,7 +87,7 @@ function BagViewWithThumbs(): JSX.Element {
           const item = data[swiper.realIndex];
 
           if (item) {
-            bagCtx.item.setData(item);
+            bag.item.setData(item);
           }
         }}
       >
@@ -111,8 +109,8 @@ function BagViewWithThumbs(): JSX.Element {
 }
 
 function BagViewWithoutThumbs(): JSX.Element {
-  const bagCtx = BagStore.ctx;
-  const svg = bagCtx.item.data?.content.original?.snippets.svg;
+  const { bag } = useStore();
+  const svg = bag.item.data?.content.original?.snippets.svg;
 
   return (svg
     ? (
@@ -126,17 +124,16 @@ function BagViewWithoutThumbs(): JSX.Element {
 }
 
 export function BagView(): JSX.Element {
-  const contentCtx = ContentStore.ctx;
-  const bagCtx = BagStore.ctx;
+  const { bag, content } = useStore();
 
   const root = {
     view: <></>,
     mount() {
-      if (contentCtx.item.result) {
-        const { data } = contentCtx.item.result;
+      if (content.item.result) {
+        const { data } = content.item.result;
 
         useEffect(() => {
-          if (data[0]) bagCtx.item.setData(data[0]);
+          if (data[0]) bag.item.setData(data[0]);
         }, []);
 
         if (data.length > 1) {

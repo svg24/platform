@@ -1,8 +1,5 @@
-import { FilterStore } from 'src/modules/filter';
-import { LayoutStore } from 'src/modules/layout';
-import { SearchStore } from 'src/modules/search';
-import { UserStore } from 'src/modules/user';
 import { api } from 'src/plugins/api';
+import { Store } from 'src/store';
 import type { ContentStore } from 'types/content';
 
 export function initListRoot(this: ContentStore): void {
@@ -21,21 +18,23 @@ export function initListRoot(this: ContentStore): void {
   this.list.reset = async function () {
     this.result.meta.page.reset();
 
-    const res = await this.fetch(UserStore.multiplier);
+    const res = await this.fetch(
+      Store.user.content.list.multiplier.value.current,
+    );
 
     this.result.meta.set(res.meta);
     this.result.data.clear();
-    if (LayoutStore.main.content.goTop) LayoutStore.main.content.goTop();
+    if (Store.layout.main.content.goTop) Store.layout.main.content.goTop();
     this.result.data.add(res.data);
   };
 
   this.list.fetch = async function (multiplier) {
-    const name = SearchStore.value.current;
+    const name = Store.search.value.current;
     const res = await api.list({
       ...Object.fromEntries([
-        FilterStore.category,
-        FilterStore.company,
-        FilterStore.sortBy,
+        Store.filter.category,
+        Store.filter.company,
+        Store.filter.sortBy,
       ].map((pr) => (pr.value.current ? [pr.id, pr.value.current.id] : []))),
       ...multiplier ? { multiplier } : {},
       ...name ? { name } : {},

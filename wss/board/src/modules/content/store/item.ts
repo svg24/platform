@@ -1,5 +1,5 @@
-import { BagStore } from 'src/modules/bag';
 import { api } from 'src/plugins/api';
+import { Store } from 'src/store';
 import type { ContentStore } from 'types/content';
 
 export function initItem(this: ContentStore): void {
@@ -7,7 +7,7 @@ export function initItem(this: ContentStore): void {
     result: null,
     async fetch() {
       this.result = await api.item({
-        id: BagStore.list.ids.values().next().value,
+        id: Store.bag.list.ids.values().next().value,
       });
     },
     clear() {

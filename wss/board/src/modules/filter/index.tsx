@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { ContentStore } from 'src/modules/content';
+import { useStore } from 'src/store';
 import { deepAssign } from 'src/utils';
 import { FilterApplied } from './components/FilterApplied';
 import {
@@ -17,19 +17,18 @@ export {
 };
 
 export function Filter(): JSX.Element {
-  const contentCtx = ContentStore.ctx;
-  const filterCtx = FilterStore.ctx;
+  const { content, filter } = useStore();
 
   const parameters = [
-    deepAssign(filterCtx.sortBy, { legend: 'Sort by' }),
+    deepAssign(filter.sortBy, { legend: 'Sort by' }),
   ];
   const parametersAlphabetical = [
-    deepAssign(filterCtx.category, { legend: 'Category' }),
-    deepAssign(filterCtx.company, { legend: 'Company' }),
+    deepAssign(filter.category, { legend: 'Category' }),
+    deepAssign(filter.company, { legend: 'Company' }),
   ];
 
   const applied = {
-    el: observer(() => <FilterApplied applied={filterCtx.getApplied} />),
+    el: observer(() => <FilterApplied applied={filter.getApplied} />),
   };
 
   return (
@@ -41,7 +40,7 @@ export function Filter(): JSX.Element {
             parameter={pr}
             onChange={(option) => {
               pr.set(option);
-              contentCtx.list.reset();
+              content.list.reset();
             }}
           />
         ))}
@@ -56,7 +55,7 @@ export function Filter(): JSX.Element {
                 pr.set(option);
               }
 
-              contentCtx.list.reset();
+              content.list.reset();
             }}
           />
         ))}

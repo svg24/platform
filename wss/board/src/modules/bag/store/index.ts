@@ -1,8 +1,8 @@
-import { initStore } from 'src/utils';
 import type { BagStore as Store } from 'types/bag';
-import { initRoot } from './root';
+import { initItem } from './item';
+import { initList } from './list';
 
 export const BagStore = new (function (this: Store) {
-  initStore.call(this);
-  initRoot.call(this);
+  initItem.call(this);
+  initList.call(this);
 } as any as { new (): Store })();

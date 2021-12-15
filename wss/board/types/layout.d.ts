@@ -1,6 +1,6 @@
-import type { Store, StoreVisible } from 'types/store';
+import type { StoreVisible } from 'types/store';
 
-export interface LayoutStore extends Store<LayoutStore> {
+export interface LayoutStore {
   bag: LayoutStoreBag;
   main: LayoutStoreMain;
 }

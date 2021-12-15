@@ -8,12 +8,11 @@ import type {
   FormParameterAdditionalProperties,
 } from 'types/form';
 import type {
-  Store,
   StoreFormParameter,
   StoreFormParameterOptionsItem,
 } from 'types/store';
 
-export interface FilterStore extends Store<FilterStore> {
+export interface FilterStore {
   category: FilterStoreParameterAlphabetical;
   company: FilterStoreParameterAlphabetical;
   readonly getApplied: (

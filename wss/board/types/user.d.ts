@@ -1,9 +1,19 @@
-import type { Store } from 'types/store';
-
-export interface UserStore extends Store<UserStore> {
+export interface UserStore {
+  content: UserStoreContent;
   document: UserStoreDocument;
-  multiplier: number | undefined;
 }
+
+type UserStoreContent = {
+  list: {
+    multiplier: {
+      isApplied: boolean;
+      value: {
+        _default: number;
+        current: number;
+      };
+    };
+  };
+};
 
 type UserStoreDocument = {
   _fontSize: number;

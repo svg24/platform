@@ -4,9 +4,9 @@ import type {
   ApiListData,
   ApiListMeta,
 } from 'types/api';
-import type { Store, StoreVisible } from 'types/store';
+import type { StoreVisible } from 'types/store';
 
-export interface ContentStore extends Store<ContentStore> {
+export interface ContentStore {
   item: ContentStoreItem;
   list: ContentStoreList;
   sentinel: StoreVisible;

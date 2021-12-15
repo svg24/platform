@@ -3,17 +3,15 @@ import {
   FormLabelComplete,
   FormParameter,
 } from 'src/components';
+import { useStore } from 'src/store';
 import { deepAssign } from 'src/utils';
-import { SettingsStore } from '../../store';
 
 export function SettingsRoot(): JSX.Element {
-  const { ctx } = SettingsStore;
-
-  const parameters = [deepAssign(ctx.size, { legend: 'Size' })];
+  const { settings } = useStore();
 
   return (
     <Form>
-      {parameters.map((pr) => (
+      {[deepAssign(settings.size, { legend: 'Size' })].map((pr) => (
         <FormParameter
           key={pr.id}
           legend={pr.legend}

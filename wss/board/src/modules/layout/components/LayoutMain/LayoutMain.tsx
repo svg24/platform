@@ -1,8 +1,8 @@
 import { reaction } from 'mobx';
 import { useEffect, useRef } from 'react';
 import { Filter } from 'src/modules/filter';
+import { useStore } from 'src/store';
 import { deepAssign, getStateAnimation } from 'src/utils';
-import { LayoutStore } from '../../store';
 import { LayoutMainContainer } from './LayoutMainContainer';
 
 export function LayoutMain({
@@ -10,7 +10,7 @@ export function LayoutMain({
 }: {
   children: JSX.Element;
 }): JSX.Element {
-  const { ctx } = LayoutStore;
+  const { layout } = useStore();
 
   const root = {
     ref: useRef<HTMLDivElement>(null),
@@ -19,11 +19,11 @@ export function LayoutMain({
   const filter = deepAssign({
     mount() {
       useEffect(() => {
-        reaction(() => ctx.main.filter.isVisible, filter.toggle);
+        reaction(() => layout.main.filter.isVisible, filter.toggle);
       }, []);
     },
     toggle() {
-      if (ctx.main.filter.isVisible) {
+      if (layout.main.filter.isVisible) {
         filter.isShowed = true;
         filter.show();
       } else {

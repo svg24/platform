@@ -4,9 +4,8 @@ import type {
   ApiItemMeta,
   ApiListDataItem,
 } from 'types/api';
-import type { Store } from 'types/store';
 
-export interface BagStore extends Store<BagStore> {
+export interface BagStore {
   item: BagStoreItem;
   list: BagStoreList;
 }

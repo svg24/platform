@@ -1,5 +1,5 @@
 import { XIcon } from '@heroicons/react/outline';
-import { ContentStore } from 'src/modules/content';
+import { useStore } from 'src/store';
 import type {
   FilterStoreParameter,
   FilterStoreParameterAlphabetical,
@@ -10,7 +10,7 @@ export const FilterApplied = ({
 }: {
   applied: (FilterStoreParameter | FilterStoreParameterAlphabetical)[] | [];
 }): JSX.Element => {
-  const { ctx } = ContentStore;
+  const { content } = useStore();
 
   return (
     <fieldset className="filter-applied">
@@ -31,7 +31,7 @@ export const FilterApplied = ({
                   checked
                   onChange={() => {
                     pr.reset();
-                    ctx.list.reset();
+                    content.list.reset();
                   }}
                 />
                 <span className="filter-applied__name">

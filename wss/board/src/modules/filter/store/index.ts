@@ -1,31 +1,10 @@
-import { initStore } from 'src/utils';
 import type { FilterStore as Store } from 'types/filter';
 import { initParameter } from './parameter';
+import { initRoot } from './root';
 
 export const FilterStore = new (function (this: Store) {
-  initStore.call(this);
+  initRoot.call(this);
   initParameter.call(this, 'category');
   initParameter.call(this, 'company');
   initParameter.call(this, 'sortBy');
-
-  Object.defineProperty(this, 'getApplied', {
-    enumerable: true,
-    get: () => [
-      this.sortBy,
-      this.category,
-      this.company,
-    ].filter((pr) => pr.isApplied),
-  });
-
-  this.mount = async () => {
-    await this.sortBy.fetch();
-    await this.category.fetch();
-    await this.company.fetch();
-  };
-
-  this.reset = () => {
-    if (this.sortBy.isApplied) this.sortBy.reset();
-    if (this.category.isApplied) this.category.reset();
-    if (this.company.isApplied) this.company.reset();
-  };
 } as any as { new (): Store })();

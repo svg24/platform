@@ -1,4 +1,4 @@
-import { ContentStore } from 'src/modules/content';
+import { Store } from 'src/store';
 import { debounce, escapeString } from 'src/utils';
 import type { SearchStore } from 'types/search';
 
@@ -12,7 +12,7 @@ export function initRoot(this: SearchStore): void {
   this.process = (value) => {
     debounce(() => {
       const prev = this.value._previous;
-      const { isItems } = ContentStore.list.result.data;
+      const { isItems } = Store.content.list.result.data;
       const trimmed = value.trim();
 
       if (prev === trimmed && value.match(/\s*$/)?.[0]?.length !== 1) return;
@@ -25,7 +25,7 @@ export function initRoot(this: SearchStore): void {
         this.value.current = escapeString(value);
       }
 
-      ContentStore.list.reset();
+      Store.content.list.reset();
 
       this.value._previous = trimmed;
     }, 300)();

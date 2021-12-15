@@ -4,33 +4,32 @@ import {
   ListItem,
   PseudoLink,
 } from 'src/components';
-import { ContentStore } from 'src/modules/content';
-import { FilterStore } from 'src/modules/filter';
-import { LayoutStore } from 'src/modules/layout';
+import { useStore } from 'src/store';
 import type { ApiSimpleDataItem } from 'types/api';
 import type { FilterStoreParameterAlphabeticalIds } from 'types/filter';
-import { BagStore } from '../../store';
 
 export function BagMeta(): JSX.Element {
-  const layoutCtx = LayoutStore.ctx;
-  const filterCtx = FilterStore.ctx;
-  const contentCtx = ContentStore.ctx;
-  const bagCtx = BagStore.ctx;
+  const {
+    bag,
+    content,
+    filter,
+    layout,
+  } = useStore();
 
   const general = {
     list: [{
       id: 'category',
       label: 'Category',
-      meta: bagCtx.item.meta?.category,
+      meta: bag.item.meta?.category,
     }, {
       id: 'company',
       label: 'Company',
-      meta: bagCtx.item.meta?.company,
+      meta: bag.item.meta?.company,
     }],
     onClick: (item) => {
-      filterCtx[item.id].set(item.meta);
-      contentCtx.list.reset();
-      layoutCtx.bag.hide();
+      filter[item.id].set(item.meta);
+      content.list.reset();
+      layout.bag.hide();
     },
   } as {
     list: {
@@ -42,11 +41,11 @@ export function BagMeta(): JSX.Element {
   };
 
   const individual = {
-    list: bagCtx.item.data
+    list: bag.item.data
       ? [{
         id: 'version',
         label: 'Version',
-        meta: new Date(bagCtx.item.data?.version).toLocaleString('en', {
+        meta: new Date(bag.item.data?.version).toLocaleString('en', {
           year: 'numeric',
         }),
       }]
@@ -55,11 +54,11 @@ export function BagMeta(): JSX.Element {
 
   return (
     <section>
-      {bagCtx.item.meta?.src.usage
+      {bag.item.meta?.src.usage
         ? (
           <p>
             {'Before use, it is recommended to read the '}
-            <Link href={bagCtx.item.meta.src.usage}>
+            <Link href={bag.item.meta.src.usage}>
               usage guide
             </Link>
             .

@@ -5,25 +5,25 @@ import {
   FormLabel,
   FormParameter,
 } from 'src/components';
+import { useStore } from 'src/store';
 import type {
   BagStoreItemSettingsAction,
   BagStoreItemSettingsType,
 } from 'types/bag';
-import { BagStore } from '../../store';
 
 export function BagSettings(): JSX.Element {
-  const { ctx } = BagStore;
+  const { bag } = useStore();
 
   const actions = {
     id: 'actions',
     legend: 'Actions',
     mount() {
       useEffect(() => {
-        ctx.item.settings.setAction(actions.options.copy.handler);
+        bag.item.settings.setAction(actions.options.copy.handler);
       }, []);
     },
     set: (item) => {
-      ctx.item.settings.setAction(item.handler);
+      bag.item.settings.setAction(item.handler);
     },
     options: {
       copy: {
@@ -70,11 +70,11 @@ export function BagSettings(): JSX.Element {
     legend: 'Types',
     mount() {
       useEffect(() => {
-        ctx.item.settings.setType(types.options.original.id);
+        bag.item.settings.setType(types.options.original.id);
       }, []);
     },
     set: (item) => {
-      ctx.item.settings.setType(item.id);
+      bag.item.settings.setType(item.id);
     },
     options: {
       original: {
@@ -82,7 +82,7 @@ export function BagSettings(): JSX.Element {
         name: 'Original',
         checked: true,
       },
-      ...ctx.item.data?.content.square
+      ...bag.item.data?.content.square
         ? {
           square: {
             id: 'square',

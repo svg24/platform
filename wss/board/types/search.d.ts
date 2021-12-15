@@ -1,6 +1,4 @@
-import type { Store } from 'types/store';
-
-export interface SearchStore extends Store<SearchStore> {
+export interface SearchStore {
   process: (value: string) => void;
   reset: () => void;
   value: SearchStoreValue;

@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { LayoutStore } from '../../store';
+import { useStore } from 'src/store';
 
 export function LayoutMainContainer({
   children,
 }: {
   children: JSX.Element;
 }): JSX.Element {
-  const { ctx } = LayoutStore;
+  const { layout } = useStore();
 
   const root = {
     ref: useRef<HTMLDivElement>(null),
@@ -30,7 +30,7 @@ export function LayoutMainContainer({
   const content = {
     ref: useRef<HTMLDivElement>(null),
     mount() {
-      ctx.main.content.goTop = () => {
+      layout.main.content.goTop = () => {
         if (content.ref.current) content.ref.current.scrollTop = 0;
       };
 

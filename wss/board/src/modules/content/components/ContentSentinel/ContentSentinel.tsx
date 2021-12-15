@@ -2,10 +2,10 @@ import { reaction } from 'mobx';
 import type { MutableRefObject } from 'react';
 import { forwardRef, useEffect } from 'react';
 import { Spin } from 'src/components';
-import { ContentStore } from '../../store';
+import { useStore } from 'src/store';
 
 export const ContentSentinel = forwardRef<HTMLDivElement>((_, ref) => {
-  const { ctx } = ContentStore;
+  const { content } = useStore();
 
   const root = {
     get ls() {
@@ -15,19 +15,19 @@ export const ContentSentinel = forwardRef<HTMLDivElement>((_, ref) => {
     mount() {
       useEffect(() => {
         root.toggleHidden();
-        reaction(() => ctx.list.result.meta.page.isNext, root.toggleHidden);
-        reaction(() => ctx.sentinel.isVisible, root.toggleVisible);
+        reaction(() => content.list.result.meta.page.isNext, root.toggleHidden);
+        reaction(() => content.sentinel.isVisible, root.toggleVisible);
       }, []);
     },
     toggleHidden() {
-      if (ctx.list.result.meta.page.isNext) {
+      if (content.list.result.meta.page.isNext) {
         root.ls?.remove('content-sentinel_hidden');
       } else {
         root.ls?.add('content-sentinel_hidden');
       }
     },
     toggleVisible() {
-      if (ctx.sentinel.isVisible) {
+      if (content.sentinel.isVisible) {
         root.ls?.add('content-sentinel_visible');
       } else {
         root.ls?.remove('content-sentinel_visible');
