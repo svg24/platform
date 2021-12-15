@@ -1,26 +1,23 @@
 import { XIcon } from '@heroicons/react/outline';
 import { useStore } from 'src/store';
-import type {
-  FilterStoreParameter,
-  FilterStoreParameterAlphabetical,
-} from 'types/filter';
+import type { AppliedParameters } from 'types/filter';
 
 export const FilterApplied = ({
-  applied,
+  parameters,
 }: {
-  applied: (FilterStoreParameter | FilterStoreParameterAlphabetical)[] | [];
+  parameters: AppliedParameters;
 }): JSX.Element => {
   const { content } = useStore();
 
   return (
     <fieldset className="filter-applied">
-      {applied.length
+      {parameters.length
         ? (
           <>
             <legend className="filter-applied__legend">
               Applied filters
             </legend>
-            {applied.map((pr) => (
+            {parameters.map((pr) => (
               <label
                 className="filter-applied__label"
                 key={pr.id}

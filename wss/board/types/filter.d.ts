@@ -12,32 +12,69 @@ import type {
   StoreFormParameterOptionsItem,
 } from 'types/store';
 
-export interface FilterStore {
-  category: FilterStoreParameterAlphabetical;
-  company: FilterStoreParameterAlphabetical;
-  readonly getApplied: (
-    FilterStoreParameter
-    | FilterStoreParameterAlphabetical
-  )[];
-  mount: () => Promise<void>;
-  reset: () => void;
-  sortBy: FilterStoreParameter;
+declare namespace Filter {
+  /**
+   * `filter`
+   */
+  type Store = {
+    readonly applied: StoreApplied;
+    category: StoreCategory;
+    company: StoreCompany;
+    mount: () => Promise<void>;
+    reset: () => void;
+    sortBy: StoreSortBy;
+  };
+  type StoreKeysParameters
+    = StoreKeyParameterCategory
+    | StoreKeyParameterCompany | StoreKeyParameterSortBy;
+  type StoreKeysParametersAlphabetical
+    = StoreKeyParameterCategory | StoreKeyParameterCompany;
+  type StoreKeyParameterCategory = 'category';
+  type StoreKeyParameterCompany = 'company';
+  type StoreKeyParameterSortBy = 'sortBy';
+  /**
+   * `filter.applied`
+   */
+  type StoreApplied = (StoreCategory | StoreCompany | StoreSortBy)[] | [];
+  /**
+   * `filter.category`
+   */
+  type StoreCategory = StoreParameterAlphabetical;
+  /**
+   * `filter.company`
+   */
+  type StoreCompany = StoreParameterAlphabetical;
+  /**
+   * `filter.sortBy`
+   */
+  type StoreSortBy = StoreParameter;
+  /**
+   * `FilterApplied()`
+   */
+  type AppliedParameters
+    = (ParameterParameter | ParameterAlphabeticalParameter)[] | [];
+  /**
+   * `FilterParameter()`
+   */
+  type ParameterOnChange = (item: StoreFormParameterOptionsItem) => void;
+  type ParameterParameter = FormParameterAdditionalProperties & StoreParameter;
+  /**
+   * `FilterParameterAlphabetical()`
+   */
+  type ParameterAlphabeticalOnClick = (
+    option: Parameters<StoreParameterAlphabetical['set']>[0],
+    isChecked: Parameters<FormLabelCompleteOnClick>[0],
+  ) => void;
+  type ParameterAlphabeticalParameter
+    = FormParameterAdditionalProperties & StoreParameterAlphabetical;
 }
 
-export type FilterStoreParameters
-  = FilterStoreParameterAlphabetical | FilterStoreParameter;
-export type FilterStoreParametersIds
-  = FilterStoreParameterAlphabeticalIds | FilterStoreParameterId;
+type StoreParameterAlphabetical
+  = StoreParameterBase<SimpleAlphabeticalData, SimpleDataItem>;
 
-export type FilterStoreParameterAlphabeticalIds = 'category' | 'company';
-export type FilterStoreParameterAlphabetical
-  = FilterStoreParameterBase<SimpleAlphabeticalData, SimpleDataItem>;
+type StoreParameter = StoreParameterBase<SimpleData, SimpleDataItem>;
 
-type FilterStoreParameterId = 'sortBy';
-export type FilterStoreParameter
-  = FilterStoreParameterBase<SimpleData, SimpleDataItem>;
-
-interface FilterStoreParameterBase<
+interface StoreParameterBase<
   Options,
   Option extends StoreFormParameterOptionsItem>
   extends StoreFormParameter<Options, Option> {
@@ -45,14 +82,4 @@ interface FilterStoreParameterBase<
   readonly isApplied: boolean;
 }
 
-export type FilterParameterOnChange
-  = (option: StoreFormParameterOptionsItem) => void;
-export type FilterParameterParameter
-  = FormParameterAdditionalProperties & FilterStoreParameter;
-
-export type FilterParameterAlphabeticalOnClick = (
-  option: Parameters<FilterStoreParameterAlphabetical['set']>[0],
-  isChecked: Parameters<FormLabelCompleteOnClick>[0],
-) => void;
-export type FilterParameterAlphabeticalParameter
-  = FormParameterAdditionalProperties & FilterStoreParameterAlphabetical;
+export = Filter;

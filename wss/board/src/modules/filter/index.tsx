@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from 'src/store';
 import { deepAssign } from 'src/utils';
+import type { AppliedParameters } from 'types/filter';
 import { FilterApplied } from './components/FilterApplied';
 import {
   FilterParameter,
@@ -28,7 +29,9 @@ export function Filter(): JSX.Element {
   ];
 
   const applied = {
-    el: observer(() => <FilterApplied applied={filter.getApplied} />),
+    el: observer(() => (
+      <FilterApplied parameters={filter.applied as AppliedParameters} />
+    )),
   };
 
   return (

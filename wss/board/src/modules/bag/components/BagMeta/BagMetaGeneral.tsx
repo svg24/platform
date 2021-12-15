@@ -1,10 +1,10 @@
 import { ListItem, PseudoLink } from 'src/components';
 import { useStore } from 'src/store';
 import type { SimpleDataItem } from 'types/api';
-import type { FilterStoreParameterAlphabeticalIds } from 'types/filter';
+import type { StoreKeysParametersAlphabetical } from 'types/filter';
 
 type BagMetaGeneralItem = {
-  id: FilterStoreParameterAlphabeticalIds;
+  id: StoreKeysParametersAlphabetical;
   label: string;
   meta?: SimpleDataItem | undefined;
 };

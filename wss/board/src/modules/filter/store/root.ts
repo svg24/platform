@@ -1,7 +1,7 @@
-import type { FilterStore } from 'types/filter';
+import type { Store } from 'types/filter';
 
-export function initRoot(this: FilterStore): void {
-  Object.defineProperty(this, 'getApplied', {
+export function initRoot(this: Store): void {
+  Object.defineProperty(this, 'applied', {
     enumerable: true,
     get: () => [
       this.sortBy,

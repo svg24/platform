@@ -1,6 +1,6 @@
 import type { Store as BagStore } from './bag';
 import type { Store as ContentStore } from './content';
-import type { FilterStore } from './filter';
+import type { Store as FilterStore } from './filter';
 import type { LayoutStore } from './layout';
 import type { SearchStore } from './search';
 import type { SettingsStore } from './settings';

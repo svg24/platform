@@ -1,4 +1,4 @@
-import type { FilterStore as Store } from 'types/filter';
+import type { Store } from 'types/filter';
 import { initParameter } from './parameter';
 import { initRoot } from './root';
 

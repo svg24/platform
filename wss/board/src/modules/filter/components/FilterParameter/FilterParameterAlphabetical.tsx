@@ -6,8 +6,8 @@ import {
   FormParameter,
 } from 'src/components';
 import type {
-  FilterParameterAlphabeticalOnClick,
-  FilterParameterAlphabeticalParameter,
+  ParameterAlphabeticalOnClick,
+  ParameterAlphabeticalParameter,
 } from 'types/filter';
 
 const FilterParameterAlphabeticalItem = ({
@@ -101,8 +101,8 @@ export const FilterParameterAlphabetical = ({
   onClick,
   parameter,
 }: {
-  onClick: FilterParameterAlphabeticalOnClick;
-  parameter: FilterParameterAlphabeticalParameter;
+  onClick: ParameterAlphabeticalOnClick;
+  parameter: ParameterAlphabeticalParameter;
 }): JSX.Element => (
   <FormParameter
     className="filter-parameter"

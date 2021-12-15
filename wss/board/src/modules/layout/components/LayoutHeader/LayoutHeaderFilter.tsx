@@ -17,18 +17,18 @@ export function LayoutHeaderFilter(): JSX.Element {
   const counter = deepAssign({
     el: observer(() => (
       <span className="layout-header__counter">
-        {filter.getApplied.length}
+        {filter.applied.length}
       </span>
     )),
     mount() {
       useEffect(() => {
         reaction(() => (
-          filter.getApplied.length && layout.main.filter.isVisible
+          filter.applied.length && layout.main.filter.isVisible
         ), counter.toggle);
       }, []);
     },
     toggle() {
-      if (!filter.getApplied.length || layout.main.filter.isVisible) {
+      if (!filter.applied.length || layout.main.filter.isVisible) {
         if (counter.isDisplay) {
           counter.hide().then(() => {
             counter.isShowed = false;

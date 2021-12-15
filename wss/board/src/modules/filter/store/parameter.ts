@@ -1,17 +1,17 @@
 import { api } from 'src/plugins/api';
 import { initStoreFormParameter } from 'src/utils';
 import type { SimpleIds } from 'types/api';
-import type { FilterStore, FilterStoreParametersIds } from 'types/filter';
+import type { Store, StoreKeysParameters } from 'types/filter';
 
-const methods: { [key in FilterStoreParametersIds]: SimpleIds } = {
+const methods: { [key in StoreKeysParameters]: SimpleIds } = {
   category: 'categories',
   company: 'companies',
   sortBy: 'sortBy',
 };
 
 export function initParameter(
-  this: FilterStore,
-  id: FilterStoreParametersIds,
+  this: Store,
+  id: StoreKeysParameters,
 ): void {
   Object.defineProperty(this, id, {
     enumerable: true,
