@@ -63,6 +63,9 @@ module.exports = {
       }],
       '@typescript-eslint/method-signature-style': ['error', 'property'],
       '@typescript-eslint/no-confusing-void-expression': ['error'],
+      '@typescript-eslint/no-empty-interface': ['error', {
+        allowSingleExtends: true,
+      }],
       '@typescript-eslint/no-explicit-any': ['off'],
       'import/no-extraneous-dependencies': 'off',
       'jsx-a11y/label-has-associated-control': ['error', {
