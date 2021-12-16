@@ -12,6 +12,7 @@ import { Link } from './Link';
 import { List, ListItem } from './List';
 import { Logo } from './Logo';
 import { Modal } from './Modal';
+import { Portal } from './Portal';
 import { PseudoLink } from './PseudoLink';
 import { Spin } from './Spin';
 
@@ -29,6 +30,7 @@ export {
   ListItem,
   Logo,
   Modal,
+  Portal,
   PseudoLink,
   Spin,
 };
