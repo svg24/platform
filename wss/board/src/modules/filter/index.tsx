@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from 'src/store';
-import { deepAssign } from 'src/utils';
+import { deepCopy } from 'src/utils';
 import type { AppliedParameters } from 'types/filter';
 import { FilterApplied } from './components/FilterApplied';
 import {
@@ -13,12 +13,10 @@ import { FilterStore } from './store';
 function Filter(): JSX.Element {
   const { content, filter } = useStore();
 
-  const parameters = [
-    deepAssign(filter.sortBy, { legend: 'Sort by' }),
-  ];
+  const parameters = [deepCopy(filter.sortBy, { legend: 'Sort by' })];
   const parametersAlphabetical = [
-    deepAssign(filter.category, { legend: 'Category' }),
-    deepAssign(filter.company, { legend: 'Company' }),
+    deepCopy(filter.category, { legend: 'Category' }),
+    deepCopy(filter.company, { legend: 'Company' }),
   ];
 
   const applied = {

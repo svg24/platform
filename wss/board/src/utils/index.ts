@@ -1,33 +1,25 @@
 import { getStateAnimation } from './state';
 import { initStoreFormParameter, initStoreVisible } from './store';
 
-export {
-  getStateAnimation,
-  initStoreFormParameter,
-  initStoreVisible,
-};
+function debounce<F extends (...props: any[]) => any>(fn: F, ms: number): any {
+  let timeout: NodeJS.Timeout;
 
-export const debounce = (
-  <F extends (...args: any[]) => any>(fn: F, ms: number): any => {
-    let timeout: NodeJS.Timeout;
+  return (...props: Parameters<F>): Promise<ReturnType<F>> => (
+    new Promise((resolve) => {
+      if (timeout) clearTimeout(timeout);
 
-    return (...args: Parameters<F>): Promise<ReturnType<F>> => (
-      new Promise((resolve) => {
-        if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        resolve(fn(...props));
+      }, ms);
+    })
+  );
+}
 
-        timeout = setTimeout(() => {
-          resolve(fn(...args));
-        }, ms);
-      })
-    );
-  }
-);
+function escapeString(string: string): string {
+  return JSON.stringify(string).slice(1, -1).replace(/\s+/g, ' ');
+}
 
-export const escapeString = (string: string): string => (
-  JSON.stringify(string).slice(1, -1).replace(/\s+/g, ' ')
-);
-
-export const isInViewport = (element: HTMLDivElement): boolean => {
+function isInViewport(element: HTMLDivElement): boolean {
   const rect = element.getBoundingClientRect();
 
   return (
@@ -38,20 +30,38 @@ export const isInViewport = (element: HTMLDivElement): boolean => {
       && rect.height !== 0
       && rect.width !== 0
   );
-};
+}
 
-export function deepAssign<Target, Source>(
-  target: Target,
-  source: Source,
-): Target & Source {
-  const properties = Object.keys(source).reduce((descriptors, key) => {
-    Object.assign(descriptors, {
+function getDescriptorMap<S>(source: S): PropertyDescriptorMap & ThisType<S> {
+  return Object.getOwnPropertyNames(source).reduce((map, key) => {
+    Object.assign(map, {
       [key]: Object.getOwnPropertyDescriptor(source, key),
     });
-    return descriptors;
+    return map;
   }, {});
-
-  Object.defineProperties(target, properties);
-
-  return target as Target & Source;
 }
+
+function deepAssign<T, S>(target: T, source: S): T & S {
+  Object.defineProperties(target, getDescriptorMap(source));
+  return target as T & S;
+}
+
+function deepCopy<T, S>(target: T, source: S): T & S {
+  const obj = {} as T & S;
+
+  Object.defineProperties(obj, getDescriptorMap(target));
+  Object.defineProperties(obj, getDescriptorMap(source));
+
+  return obj;
+}
+
+export {
+  debounce,
+  deepAssign,
+  deepCopy,
+  escapeString,
+  getStateAnimation,
+  initStoreFormParameter,
+  initStoreVisible,
+  isInViewport,
+};

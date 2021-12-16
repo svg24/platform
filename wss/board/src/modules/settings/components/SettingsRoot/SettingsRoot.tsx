@@ -4,14 +4,15 @@ import {
   FormParameter,
 } from 'src/components';
 import { useStore } from 'src/store';
-import { deepAssign } from 'src/utils';
+import { deepCopy } from 'src/utils';
 
 export function SettingsRoot(): JSX.Element {
   const { settings } = useStore();
+  const parameters = [deepCopy(settings.size, { legend: 'Size' })];
 
   return (
     <Form>
-      {[deepAssign(settings.size, { legend: 'Size' })].map((pr) => (
+      {parameters.map((pr) => (
         <FormParameter
           key={pr.id}
           legend={pr.legend}
