@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from 'src/store';
 import { deepCopy } from 'src/utils';
-import type { AppliedParameters } from 'types/filter';
 import { FilterApplied } from './components/FilterApplied';
 import {
   FilterParameter,
@@ -12,18 +11,18 @@ import { FilterStore } from './store';
 
 function Filter(): JSX.Element {
   const { content, filter } = useStore();
-
   const parameters = [deepCopy(filter.sortBy, { legend: 'Sort by' })];
   const parametersAlphabetical = [
     deepCopy(filter.category, { legend: 'Category' }),
     deepCopy(filter.company, { legend: 'Company' }),
   ];
-
-  const applied = {
-    el: observer(() => (
-      <FilterApplied parameters={filter.applied as AppliedParameters} />
-    )),
-  };
+  const FilterAppliedObserved = observer(() => {
+    const filtered = [...parameters, ...parametersAlphabetical]
+      .filter((pr) => pr.isApplied);
+    return (
+      <FilterApplied parameters={filtered} />
+    );
+  });
 
   return (
     <FilterRoot>
@@ -53,7 +52,7 @@ function Filter(): JSX.Element {
             }}
           />
         ))}
-        <applied.el />
+        <FilterAppliedObserved />
       </>
     </FilterRoot>
   );
