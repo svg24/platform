@@ -1,8 +1,8 @@
-import { Store } from 'src/store';
+import { Store as RootStore } from 'src/store';
 import { debounce, escapeString } from 'src/utils';
-import type { SearchStore } from 'types/search';
+import type { Store } from 'types/search';
 
-export function initRoot(this: SearchStore): void {
+export function initRoot(this: Store): void {
   this.value = {
     _default: null,
     _previous: null,
@@ -12,7 +12,7 @@ export function initRoot(this: SearchStore): void {
   this.process = (value) => {
     debounce(() => {
       const prev = this.value._previous;
-      const { isItems } = Store.content.list.result.data;
+      const { isItems } = RootStore.content.list.result.data;
       const trimmed = value.trim();
 
       if (prev === trimmed && value.match(/\s*$/)?.[0]?.length !== 1) return;
@@ -25,7 +25,7 @@ export function initRoot(this: SearchStore): void {
         this.value.current = escapeString(value);
       }
 
-      Store.content.list.reset();
+      RootStore.content.list.reset();
 
       this.value._previous = trimmed;
     }, 300)();

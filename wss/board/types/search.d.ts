@@ -1,13 +1,24 @@
-export interface SearchStore {
-  process: (value: string) => void;
-  reset: () => void;
-  value: SearchStoreValue;
+import type { ItemResponseMetaName } from 'types/api';
+
+declare namespace Search {
+  /**
+   * `search`
+   */
+  type Store = {
+    process: (value: ItemResponseMetaName) => void;
+    reset: () => void;
+    value: StoreValue;
+  };
+  /**
+   * `store.value`
+   */
+  type StoreValue = {
+    _default: StoreValueDefault;
+    _previous: StoreValueDefaultCurrent;
+    current: StoreValueDefaultCurrent;
+  };
+  type StoreValueDefault = null;
+  type StoreValueDefaultCurrent = ItemResponseMetaName | StoreValueDefault;
 }
 
-type SearchStoreValue = {
-  _default: SearchStoreValueDefault;
-  _previous: SearchStoreValueDefaultCurrent;
-  current: SearchStoreValueDefaultCurrent;
-};
-type SearchStoreValueDefault = null;
-type SearchStoreValueDefaultCurrent = string | SearchStoreValueDefault;
+export = Search;

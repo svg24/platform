@@ -1,13 +1,6 @@
 import { ListItem, PseudoLink } from 'src/components';
 import { useStore } from 'src/store';
-import type { SimpleDataItem } from 'types/api';
-import type { StoreKeysParametersAlphabetical } from 'types/filter';
-
-type BagMetaGeneralItem = {
-  id: StoreKeysParametersAlphabetical;
-  label: string;
-  meta?: SimpleDataItem | undefined;
-};
+import type { MetaGeneralItem } from 'types/bag';
 
 export function BagMetaGeneral(): JSX.Element {
   const {
@@ -17,18 +10,18 @@ export function BagMetaGeneral(): JSX.Element {
     layout,
   } = useStore();
 
-  const category: BagMetaGeneralItem = {
+  const category: MetaGeneralItem = {
     id: 'category',
     label: 'Category',
     meta: bag.item.meta?.category,
   };
-  const company: BagMetaGeneralItem = {
+  const company: MetaGeneralItem = {
     id: 'company',
     label: 'Company',
     meta: bag.item.meta?.company,
   };
 
-  function handleOnClick(item: BagMetaGeneralItem): void {
+  function handleOnClick(item: MetaGeneralItem): void {
     if (item.meta) {
       filter[item.id].set(item.meta);
       content.list.reset();

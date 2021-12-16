@@ -1,16 +1,16 @@
 import type {
-  SimpleAlphabeticalData,
-  SimpleData,
-  SimpleDataItem,
+  CategoriesResponseData,
+  CategoriesResponseDataPropertyItem,
+  CompaniesResponseData,
+  CompaniesResponseDataPropertyItem,
+  SortByResponseData,
+  SortByResponseDataItem,
 } from 'types/api';
 import type {
-  FormLabelCompleteOnClick,
-  FormParameterAdditionalProperties,
+  LabelCompleteOnClickParametersIsChecked,
+  ParameterAdditionalProperties,
 } from 'types/form';
-import type {
-  StoreFormParameter,
-  StoreFormParameterOptionsItem,
-} from 'types/store';
+import type { FormParameter, FormParameterOptionsItem } from 'types/store';
 
 declare namespace Filter {
   /**
@@ -39,15 +39,20 @@ declare namespace Filter {
   /**
    * `filter.category`
    */
-  type StoreCategory = StoreParameterAlphabetical;
+  type StoreCategory
+    = StoreParameterBase<CategoriesResponseData,
+    CategoriesResponseDataPropertyItem>;
   /**
    * `filter.company`
    */
-  type StoreCompany = StoreParameterAlphabetical;
+  type StoreCompany
+    = StoreParameterBase<CompaniesResponseData,
+    CompaniesResponseDataPropertyItem>;
   /**
    * `filter.sortBy`
    */
-  type StoreSortBy = StoreParameter;
+  type StoreSortBy
+    = StoreParameterBase<SortByResponseData, SortByResponseDataItem>;
   /**
    * `FilterApplied()`
    */
@@ -56,28 +61,29 @@ declare namespace Filter {
   /**
    * `FilterParameter()`
    */
-  type ParameterOnChange = (item: StoreFormParameterOptionsItem) => void;
-  type ParameterParameter = FormParameterAdditionalProperties & StoreParameter;
+  type ParameterOnChange = (item: FilterParametersOptionsItem) => void;
+  type ParameterParameter = ParameterAdditionalProperties & FilterParameters;
   /**
    * `FilterParameterAlphabetical()`
    */
   type ParameterAlphabeticalOnClick = (
-    option: Parameters<StoreParameterAlphabetical['set']>[0],
-    isChecked: Parameters<FormLabelCompleteOnClick>[0],
+    option: FilterParametersAlphabeticalOptionsItem,
+    isChecked: LabelCompleteOnClickParametersIsChecked,
   ) => void;
   type ParameterAlphabeticalParameter
-    = FormParameterAdditionalProperties & StoreParameterAlphabetical;
+    = ParameterAdditionalProperties & FilterParametersAlphabetical;
 }
 
-type StoreParameterAlphabetical
-  = StoreParameterBase<SimpleAlphabeticalData, SimpleDataItem>;
-
-type StoreParameter = StoreParameterBase<SimpleData, SimpleDataItem>;
+type FilterParameters = Filter.StoreSortBy;
+type FilterParametersOptionsItem = Parameters<FilterParameters['set']>[0];
+type FilterParametersAlphabetical = Filter.StoreCategory | Filter.StoreCompany;
+type FilterParametersAlphabeticalOptionsItem
+  = Parameters<FilterParametersAlphabetical['set']>[0];
 
 interface StoreParameterBase<
   Options,
-  Option extends StoreFormParameterOptionsItem>
-  extends StoreFormParameter<Options, Option> {
+  Option extends FormParameterOptionsItem,
+> extends FormParameter<Options, Option> {
   fetch: () => Promise<void>;
   readonly isApplied: boolean;
 }

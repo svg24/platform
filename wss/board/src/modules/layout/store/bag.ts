@@ -1,7 +1,7 @@
 import { initStoreVisible } from 'src/utils';
-import type { LayoutStore } from 'types/layout';
+import type { Store } from 'types/layout';
 
-export function initBag(this: LayoutStore): void {
+export function initBag(this: Store): void {
   Object.defineProperty(this, 'bag', {
     enumerable: true,
     value: {

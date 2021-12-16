@@ -1,9 +1,13 @@
 import { DotsVerticalIcon } from '@heroicons/react/outline';
 import { useRef, useState } from 'react';
 import { useStore } from 'src/store';
-import type { ListDataItem } from 'types/api';
+import type { StoreListResultDataItemsItem } from 'types/content';
 
-export function ContentItem({ item }: { item: ListDataItem }): JSX.Element {
+export function ContentItem({
+  item,
+}: {
+  item: StoreListResultDataItemsItem;
+}): JSX.Element {
   const { bag, content, layout } = useStore();
 
   const html = {

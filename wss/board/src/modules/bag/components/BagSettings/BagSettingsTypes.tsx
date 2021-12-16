@@ -6,18 +6,18 @@ import type {
   SettingsParameterTypesOptionsItem,
 } from 'types/bag';
 
+const original: SettingsParameterTypesOptionsItem = {
+  id: 'original',
+  name: 'Original',
+  checked: true,
+};
+const square: SettingsParameterTypesOptionsItem = {
+  id: 'square',
+  name: 'Square',
+};
+
 export function BagSettingsTypes(): JSX.Element {
   const { bag } = useStore();
-
-  const original: SettingsParameterTypesOptionsItem = {
-    id: 'original',
-    name: 'Original',
-    checked: true,
-  };
-  const square: SettingsParameterTypesOptionsItem = {
-    id: 'square',
-    name: 'Square',
-  };
   const parameter: SettingsParameterTypes = {
     id: 'types',
     legend: 'Types',

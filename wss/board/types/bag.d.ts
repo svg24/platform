@@ -1,9 +1,16 @@
 import type {
-  ItemDataItem,
-  ItemDataItemContentTypes,
-  ItemMeta,
-  ListDataItemId,
+  ItemResponseDataItem,
+  ItemResponseDataItemContentTypes,
+  ItemResponseMeta,
+  ItemResponseMetaCategory,
+  ItemResponseMetaCompany,
+  ItemResponseMetaId,
 } from 'types/api';
+import type {
+  StoreKeyParameterCategory,
+  StoreKeyParameterCompany,
+} from 'types/filter';
+import type { ParameterAdditionalProperties } from 'types/form';
 
 declare namespace Bag {
   /**
@@ -19,12 +26,12 @@ declare namespace Bag {
   type StoreItem = {
     _data: StoreItemData;
     data: StoreItemData;
-    meta: ItemMeta | null;
-    setData: (data: ItemDataItem) => void;
-    setMeta: (meta: ItemMeta) => void;
+    meta: ItemResponseMeta | null;
+    setData: (data: ItemResponseDataItem) => void;
+    setMeta: (meta: ItemResponseMeta) => void;
     settings: StoreItemSettings;
   };
-  type StoreItemData = ItemDataItem | null;
+  type StoreItemData = ItemResponseDataItem | null;
   type StoreItemSettings = {
     action: StoreItemSettingsAction | null;
     setAction: (action: StoreItemSettingsAction) => void;
@@ -35,11 +42,27 @@ declare namespace Bag {
     content: string;
     file: string;
   }) => Promise<void>;
-  type StoreItemSettingsTypes = ItemDataItemContentTypes;
+  type StoreItemSettingsTypes = ItemResponseDataItemContentTypes;
   /**
    * `bag.list`
    */
-  type StoreList = Set<ListDataItemId | null>;
+  type StoreList = Set<ItemResponseMetaId | null>;
+  /**
+   * `BagMetaGeneral()`
+   */
+  type MetaGeneralItem = {
+    id: (StoreKeyParameterCategory | StoreKeyParameterCompany);
+    label: string;
+    meta?: (ItemResponseMetaCategory | ItemResponseMetaCompany) | undefined;
+  };
+  /**
+   * `BagMetaIndividual()`
+   */
+  type MetaIndividualItem = {
+    id: string;
+    label: string;
+    meta?: string;
+  };
   /**
    * `BagSettingsActions()`
    */
@@ -61,9 +84,10 @@ declare namespace Bag {
   }
 }
 
-interface SettingsParameter<Item extends SettingsParameterOptionsItem> {
+interface SettingsParameter<
+  Item extends SettingsParameterOptionsItem,
+> extends ParameterAdditionalProperties {
   id: string;
-  legend: string;
   onChange: (item: Item) => void;
   options: Item[];
 }

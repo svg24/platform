@@ -6,7 +6,7 @@ import { LayoutStore } from 'src/modules/layout';
 import { SearchStore } from 'src/modules/search';
 import { SettingsStore } from 'src/modules/settings';
 import { UserStore } from 'src/modules/user';
-import type { Store as IStore } from 'types/store';
+import type * as RootStore from 'types/store';
 
 const Store = {
   bag: BagStore,
@@ -20,7 +20,7 @@ const Store = {
 const storeContext = createContext(Store);
 const StoreProvider = storeContext.Provider;
 
-function useStore(): IStore {
+function useStore(): typeof RootStore {
   const context = useContext(storeContext);
   return context;
 }

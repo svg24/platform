@@ -1,4 +1,4 @@
-import type { SearchStore as Store } from 'types/search';
+import type { Store } from 'types/search';
 import { initRoot } from './root';
 
 export const SearchStore = new (function (this: Store) {

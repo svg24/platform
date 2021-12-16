@@ -1,61 +1,47 @@
-import type {
-  Categories,
-  Companies,
-  Item,
-  List,
-  Simple,
-} from 'types/api';
+import type Api from 'types/api';
 
-const simpleMethod = <T>(name: 'categories' | 'companies') => (
-  async (): Promise<T> => {
-    const res = await fetch(`/api/v1/${name}`);
-    const json = await res.json();
-
-    return json;
-  }
-);
-
-export const api = {
-  sortBy: async (): Promise<Simple> => ({
-    data: [{
+const sortBy = {
+  data: [{
+    id: 'date',
+    name: 'Date',
+  }, {
+    id: 'name',
+    name: 'Name',
+  }],
+  meta: {
+    default: {
       id: 'date',
       name: 'Date',
-    }, {
-      id: 'name',
-      name: 'Name',
-    }],
-    meta: {
-      default: {
-        id: 'date',
-        name: 'Date',
-      },
     },
-  }),
-  categories: simpleMethod<Categories>('categories'),
-  companies: simpleMethod<Companies>('companies'),
-  async list(params: {
-    category?: string;
-    company?: string;
-    multiplier?: number;
-    name?: string;
-    page?: number;
-    sortBy?: string;
-  }): Promise<List> {
-    let url = '/api/v1/list?';
+  },
+};
 
-    Object.entries(params).forEach(([key, val]) => {
-      if (val) url += `&${key}=${val}`;
+async function getResponse<T>(method: string): Promise<T> {
+  const res = await fetch(`/api/v1/${method}`);
+  const json = await res.json();
+  return json;
+}
+
+export const api: typeof Api = {
+  async sortBy() {
+    return sortBy;
+  },
+  async categories() {
+    return getResponse('categories');
+  },
+  async companies() {
+    return getResponse('companies');
+  },
+  async list(params) {
+    let url = 'list?';
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) url += `&${key}=${value}`;
     });
 
-    const res = await fetch(url);
-    const json = await res.json();
-
-    return json;
+    return getResponse(url);
   },
-  async item({ id }: { id: string }): Promise<Item> {
-    const res = await fetch(`/api/v1/item?id=${id}`);
-    const json = await res.json();
-
-    return json;
+  async item({ id }) {
+    return getResponse(`item?id=${id}`);
   },
 };

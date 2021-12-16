@@ -1,4 +1,4 @@
-import type { LayoutStore as Store } from 'types/layout';
+import type { Store } from 'types/layout';
 import { initBag } from './bag';
 import { initMain } from './main';
 

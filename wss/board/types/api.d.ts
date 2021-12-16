@@ -1,58 +1,82 @@
 declare namespace Api {
+  function categories(): Promise<CategoriesResponse>;
+  function companies(): Promise<CompaniesResponse>;
+  function item(params: {
+    id: ItemResponseMetaId;
+  }): Promise<ItemResponse>;
+  function list(params: {
+    category?: CategoriesResponseDataPropertyItemId;
+    company?: CompaniesResponseDataPropertyItemId;
+    multiplier?: ListResponseMetaMultiplier;
+    name?: ItemResponseMetaName;
+    page?: ListResponseMetaPageNext;
+    sortBy?: SortByResponseDataItemId;
+  }): Promise<ListResponse>;
+  function sortBy(): Promise<SortByResponse>;
+  type KeysSimpleMethods = 'categories' | 'companies' | 'sortBy';
   /**
    * `api.categories()`
    */
-  type Categories = SimpleAlphabetical;
+  type CategoriesResponse = SimpleAlphabeticalResponse;
+  type CategoriesResponseData = CategoriesResponse['data'];
+  type CategoriesResponseDataPropertyItem = CategoriesResponseData[''][0];
+  type CategoriesResponseDataPropertyItemId
+    = CategoriesResponseDataPropertyItem['id'];
   /**
    * `api.companies()`
    */
-  type Companies = SimpleAlphabetical;
+  type CompaniesResponse = SimpleAlphabeticalResponse;
+  type CompaniesResponseData = CompaniesResponse['data'];
+  type CompaniesResponseDataPropertyItem = CompaniesResponseData[''][0];
+  type CompaniesResponseDataPropertyItemId
+    = CompaniesResponseDataPropertyItem['id'];
   /**
    * `api.list()`
    */
-  type List = {
-    data: ListData;
-    meta: ListMeta;
+  type ListResponse = {
+    data: ListResponseData;
+    meta: ListResponseMeta;
   };
-  type ListData = ListDataItem[];
-  type ListDataItem = {
-    id: string;
+  type ListResponseData = ListResponseDataItem[];
+  type ListResponseDataItem = {
+    id: ItemResponseMetaId;
     isMany: boolean;
     latest: string;
-    name: string;
+    name: ItemResponseMetaName;
   };
-  type ListDataItemId = string;
-  type ListMeta = {
-    length: ListMetaLength;
-    page: ListMetaPage;
+  type ListResponseMeta = {
+    length: ListResponseMetaLength;
+    multiplier?: ListResponseMetaMultiplier;
+    page: ListResponseMetaPage;
   };
-  type ListMetaLength = {
-    current: ListMetaLengthCurrent;
-    total: ListMetaLengthTotal;
+  type ListResponseMetaLength = {
+    current: ListResponseMetaLengthCurrent;
+    total: ListResponseMetaLengthTotal;
   };
-  type ListMetaLengthCurrent = number;
-  type ListMetaLengthTotal = number;
-  type ListMetaPage = {
-    isNext: ListMetaPageIsNext;
-    next: ListMetaPageNext;
+  type ListResponseMetaLengthCurrent = number;
+  type ListResponseMetaLengthTotal = number;
+  type ListResponseMetaMultiplier = number;
+  type ListResponseMetaPage = {
+    isNext: ListResponseMetaPageIsNext;
+    next: ListResponseMetaPageNext;
   };
-  type ListMetaPageIsNext = boolean;
-  type ListMetaPageNext = number;
+  type ListResponseMetaPageIsNext = boolean;
+  type ListResponseMetaPageNext = number;
   /**
    * `api.item()`
    */
-  type Item = {
-    data: ItemData;
-    meta: ItemMeta;
+  type ItemResponse = {
+    data: ItemResponseData;
+    meta: ItemResponseMeta;
   };
-  type ItemData = ItemDataItem[];
-  type ItemDataItem = {
-    content: ItemDataItemContent;
-    file: ItemDataItemFile;
-    version: ItemDataItemVersion;
+  type ItemResponseData = ItemResponseDataItem[];
+  type ItemResponseDataItem = {
+    content: ItemResponseDataItemContent;
+    file: ItemResponseDataItemFile;
+    version: ItemResponseDataItemVersion;
   };
-  type ItemDataItemContent = {
-    [key in ItemDataItemContentTypes]?: {
+  type ItemResponseDataItemContent = {
+    [key in ItemResponseDataItemContentTypes]?: {
       components: {
         react: {
           js: string;
@@ -76,46 +100,52 @@ declare namespace Api {
       };
     };
   };
-  type ItemDataItemContentTypes = 'square' | 'original';
-  type ItemDataItemFile = {
+  type ItemResponseDataItemContentTypes = 'square' | 'original';
+  type ItemResponseDataItemFile = {
     camel: string;
     snake: string;
   };
-  type ItemDataItemVersion = number;
-  type ItemMeta = {
-    category: ItemMetaCategory;
-    company: ItemMetaCompany;
-    id: string;
-    name: string;
+  type ItemResponseDataItemVersion = number;
+  type ItemResponseMeta = {
+    category: ItemResponseMetaCategory;
+    company: ItemResponseMetaCompany;
+    id: ItemResponseMetaId;
+    name: ItemResponseMetaName;
     src: {
       product: string;
       usage: string;
     };
   };
-  type ItemMetaCategory = SimpleDataItem;
-  type ItemMetaCompany = SimpleDataItem;
-
-  type SimpleIds = 'categories' | 'companies' | 'sortBy';
-  type Simple = {
-    data: SimpleData;
-    meta: SimpleMeta;
-  };
-  type SimpleData = SimpleDataItem[];
-  type SimpleDataItem = {
-    id: string;
-    name: string;
-  };
-  type SimpleMeta = {
-    default: SimpleDataItem;
-  };
-
-  type SimpleAlphabetical = {
-    data: SimpleAlphabeticalData;
-    meta: any;
-  };
-  type SimpleAlphabeticalData = {
-    [key: string]: SimpleData;
-  };
+  type ItemResponseMetaCategory = CategoriesResponseDataPropertyItem;
+  type ItemResponseMetaCompany = CompaniesResponseDataPropertyItem;
+  type ItemResponseMetaId = string;
+  type ItemResponseMetaName = string;
+  /**
+   * `api.sortBy()`
+   */
+  type SortByResponse = SimpleResponse;
+  type SortByResponseData = SortByResponse['data'];
+  type SortByResponseDataItem = SortByResponseData[0];
+  type SortByResponseDataItemId = SortByResponseDataItem['id'];
 }
+
+type SimpleResponse = {
+  data: SimpleResponseData;
+  meta: {
+    default: SimpleResponseDataItem;
+  };
+};
+type SimpleResponseData = SimpleResponseDataItem[];
+type SimpleResponseDataItem = {
+  id: string;
+  name: string;
+};
+type SimpleAlphabeticalResponse = {
+  data: SimpleAlphabeticalResponseData;
+  meta: any;
+};
+type SimpleAlphabeticalResponseData = {
+  [key: string]: SimpleResponseData;
+};
 
 export = Api;

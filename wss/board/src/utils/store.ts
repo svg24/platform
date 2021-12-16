@@ -5,12 +5,12 @@ import {
   observable,
 } from 'mobx';
 import type {
-  StoreFormParameter,
-  StoreFormParameterOptionsItem,
-  StoreVisible,
+  FormParameter,
+  FormParameterOptionsItem,
+  Visible,
 } from 'types/store';
 
-export function initStoreVisible<I extends StoreVisible>(this: I): void {
+export function initStoreVisible<I extends Visible>(this: I): void {
   this._isVisible = false;
 
   Object.defineProperty(this, 'isVisible', {
@@ -38,7 +38,7 @@ export function initStoreVisible<I extends StoreVisible>(this: I): void {
 }
 
 export function initStoreFormParameter<
-  I extends StoreFormParameter<any, StoreFormParameterOptionsItem>>(
+  I extends FormParameter<any, FormParameterOptionsItem>>(
   this: I,
 ): void {
   Object.defineProperty(this.value, 'current', {

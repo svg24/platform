@@ -1,21 +1,32 @@
-import type { StoreVisible } from 'types/store';
+import type { Visible } from 'types/store';
 
-export interface LayoutStore {
-  bag: LayoutStoreBag;
-  main: LayoutStoreMain;
+declare namespace Layout {
+  /**
+   * `layout`
+   */
+  type Store = {
+    bag: StoreBag;
+    main: StoreMain;
+  };
+  /**
+   * `layout.bag`
+   */
+  interface StoreBag extends Visible {
+    goBack: (() => void) | null;
+  }
+  /**
+   * `layout.main`
+   */
+  type StoreMain = {
+    content: StoreMainContent;
+    filter: StoreMainFilter;
+  };
+  type StoreMainContent = {
+    goTop: (() => void) | null;
+  };
+  interface StoreMainFilter extends Visible {
+    toggle: () => void;
+  }
 }
 
-interface LayoutStoreBag extends StoreVisible {
-  goBack: (() => void) | null;
-}
-
-type LayoutStoreMain = {
-  content: LayoutStoreMainContent;
-  filter: LayoutStoreMainFilter;
-};
-type LayoutStoreMainContent = {
-  goTop: (() => void) | null;
-};
-interface LayoutStoreMainFilter extends StoreVisible {
-  toggle: () => void;
-}
+export = Layout;

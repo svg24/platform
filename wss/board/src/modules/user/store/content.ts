@@ -1,6 +1,6 @@
-import type { UserStore } from 'types/user';
+import type { Store } from 'types/user';
 
-export function initContent(this: UserStore): void {
+export function initContent(this: Store): void {
   this.content = {
     list: {
       multiplier: {

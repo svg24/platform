@@ -1,11 +1,20 @@
-import type {
-  StoreFormParameter,
-  StoreFormParameterOptionsItem,
-} from 'types/store';
+import type { FormParameter, FormParameterOptionsItem } from 'types/store';
 
-export type FormParameterAdditionalProperties = { legend: string };
+declare namespace Form {
+  /**
+   * `FormParameter()`
+   */
+  type ParameterAdditionalProperties = {
+    legend: string;
+  };
+  /**
+   * `LabelComplete()`
+   */
+  type LabelCompleteOnClick
+    = (isChecked: LabelCompleteOnClickParametersIsChecked) => void;
+  type LabelCompleteOnClickParametersIsChecked = boolean;
+  type LabelCompleteOption = FormParameterOptionsItem;
+  type LabelCompleteParameter = FormParameter<any, FormParameterOptionsItem>;
+}
 
-export type FormLabelCompleteOnClick = (isChecked: boolean) => void;
-export type FormLabelCompleteOption = StoreFormParameterOptionsItem;
-export type FormLabelCompleteParameter
-  = StoreFormParameter<any, StoreFormParameterOptionsItem>;
+export = Form;

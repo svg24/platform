@@ -1,7 +1,7 @@
 import { initStoreVisible } from 'src/utils';
-import type { LayoutStore } from 'types/layout';
+import type { Store } from 'types/layout';
 
-export function initMain(this: LayoutStore): void {
+export function initMain(this: Store): void {
   Object.defineProperty(this, 'main', {
     enumerable: true,
     value: {

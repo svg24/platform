@@ -1,12 +1,12 @@
 import { initStoreFormParameter } from 'src/utils';
-import type { SettingsStore } from 'types/settings';
+import type { Store } from 'types/settings';
 
-export function initRoot(this: SettingsStore): void {
-  const normal = {
-    id: 'normal',
-    name: 'Normal',
-  };
+const normal = {
+  id: 'normal',
+  name: 'Normal',
+};
 
+export function initRoot(this: Store): void {
   Object.defineProperty(this, 'size', {
     enumerable: true,
     value: {

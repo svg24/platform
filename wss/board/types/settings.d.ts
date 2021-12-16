@@ -1,14 +1,21 @@
 import type {
-  StoreFormParameter,
-  StoreFormParameterOptions,
-  StoreFormParameterOptionsItem,
+  FormParameter,
+  FormParameterOptions,
+  FormParameterOptionsItem,
 } from 'types/store';
 
-export interface SettingsStore {
-  size: SettingsStoreSize;
+declare namespace Settings {
+  /**
+   * `settings`
+   */
+  type Store = {
+    size: StoreSize;
+  };
+  /**
+   * `settings.size`
+   */
+  type StoreSize
+    = FormParameter<FormParameterOptions, FormParameterOptionsItem>;
 }
 
-type SettingsStoreSize
-  = StoreFormParameter<
-  StoreFormParameterOptions,
-  StoreFormParameterOptionsItem>;
+export = Settings;

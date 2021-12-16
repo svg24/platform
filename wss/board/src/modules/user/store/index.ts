@@ -1,4 +1,4 @@
-import type { UserStore as Store } from 'types/user';
+import type { Store } from 'types/user';
 import { initContent } from './content';
 
 export const UserStore = new (function (this: Store) {

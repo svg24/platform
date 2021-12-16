@@ -1,48 +1,48 @@
 import type { Store as BagStore } from './bag';
 import type { Store as ContentStore } from './content';
 import type { Store as FilterStore } from './filter';
-import type { LayoutStore } from './layout';
-import type { SearchStore } from './search';
-import type { SettingsStore } from './settings';
-import type { UserStore } from './user';
+import type { Store as LayoutStore } from './layout';
+import type { Store as SearchStore } from './search';
+import type { Store as SettingsStore } from './settings';
+import type { Store as UserStore } from './user';
 
-export interface Store {
-  bag: BagStore;
-  content: ContentStore;
-  filter: FilterStore;
-  layout: LayoutStore;
-  search: SearchStore;
-  settings: SettingsStore;
-  user: UserStore;
+declare namespace Store {
+  const bag: BagStore;
+  const content: ContentStore;
+  const filter: FilterStore;
+  const layout: LayoutStore;
+  const search: SearchStore;
+  const settings: SettingsStore;
+  const user: UserStore;
+
+  type Visible = {
+    _isVisible: VisibleIsVisible;
+    hide: () => void;
+    isVisible: VisibleIsVisible;
+    show: () => void;
+  };
+  type VisibleIsVisible = boolean;
+
+  interface FormParameter<Options, Option extends FormParameterOptionsItem> {
+    id: string;
+    options: Options | undefined;
+    reset: () => void;
+    set: (option: Option) => void;
+    value: FormParameterValue<Option>;
+  }
+
+  type FormParameterOptions = FormParameterOptionsItem[];
+  type FormParameterOptionsItem = {
+    id: string;
+    name: string;
+  };
+
+  type FormParameterValue<Option extends FormParameterOptionsItem> = {
+    _current: Option | undefined;
+    _default: Option | undefined;
+    checkIsCurrent: (id: Option['id']) => boolean;
+    current: Option | undefined;
+  };
 }
 
-export type StoreVisible = {
-  _isVisible: StoreVisibleIsVisible;
-  hide: () => void;
-  isVisible: StoreVisibleIsVisible;
-  show: () => void;
-};
-type StoreVisibleIsVisible = boolean;
-
-export interface StoreFormParameter<
-  Options,
-  Option extends StoreFormParameterOptionsItem> {
-  id: string;
-  options: Options | undefined;
-  reset: () => void;
-  set: (option: Option) => void;
-  value: StoreFormParameterValue<Option>;
-}
-
-type StoreFormParameterOptions = StoreFormParameterOptionsItem[];
-export type StoreFormParameterOptionsItem = {
-  id: string;
-  name: string;
-};
-
-type StoreFormParameterValue<Option extends StoreFormParameterOptionsItem> = {
-  _current: Option | undefined;
-  _default: Option | undefined;
-  checkIsCurrent: (id: Option['id']) => boolean;
-  current: Option | undefined;
-};
+export = Store;

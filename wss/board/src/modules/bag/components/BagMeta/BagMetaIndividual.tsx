@@ -1,16 +1,11 @@
 import { ListItem } from 'src/components';
 import { useStore } from 'src/store';
-
-type BagMetaIndividualItem = {
-  id: string;
-  label: string;
-  meta?: string;
-};
+import type { MetaIndividualItem } from 'types/bag';
 
 export function BagMetaIndividual(): JSX.Element {
   const { bag } = useStore();
 
-  const version: BagMetaIndividualItem = {
+  const version: MetaIndividualItem = {
     id: 'version',
     label: 'Version',
     ...bag.item.data
