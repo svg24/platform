@@ -4,17 +4,14 @@ import type { MetaIndividualItem } from 'types/bag';
 
 export function BagMetaIndividual(): JSX.Element {
   const { bag } = useStore();
-
   const version: MetaIndividualItem = {
     id: 'version',
     label: 'Version',
-    ...bag.item.data
-      ? {
-        meta: new Date(bag.item.data?.version).toLocaleString('en', {
-          year: 'numeric',
-        }),
-      }
-      : {},
+    meta: bag.item.data
+      ? new Date(bag.item.data?.version).toLocaleString('en', {
+        year: 'numeric',
+      })
+      : undefined,
   };
 
   return (

@@ -10,14 +10,7 @@ import {
 import { FilterRoot } from './components/FilterRoot';
 import { FilterStore } from './store';
 
-export {
-  FilterApplied,
-  FilterParameter,
-  FilterParameterAlphabetical,
-  FilterStore,
-};
-
-export function Filter(): JSX.Element {
+function Filter(): JSX.Element {
   const { content, filter } = useStore();
 
   const parameters = [
@@ -67,3 +60,11 @@ export function Filter(): JSX.Element {
     </FilterRoot>
   );
 }
+
+export {
+  Filter,
+  FilterApplied,
+  FilterParameter,
+  FilterParameterAlphabetical,
+  FilterStore,
+};

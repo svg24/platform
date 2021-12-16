@@ -3,7 +3,6 @@ import { useStore } from 'src/store';
 
 export function BagContent(): JSX.Element {
   const { bag } = useStore();
-
   const sections = [{
     id: 'snippets',
     heading: 'Snippets',

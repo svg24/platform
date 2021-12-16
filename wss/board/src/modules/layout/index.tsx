@@ -9,13 +9,11 @@ import { LayoutMain } from './components/LayoutMain';
 import { LayoutRoot } from './components/LayoutRoot';
 import { LayoutStore } from './store';
 
-export { LayoutStore };
-
 const root = {
   ref: createRef<HTMLDivElement>(),
 };
 
-export function Layout({ children }: { children: JSX.Element }): JSX.Element {
+function Layout({ children }: { children: JSX.Element }): JSX.Element {
   const { layout } = useStore();
 
   const bag = deepAssign({
@@ -49,3 +47,5 @@ export function Layout({ children }: { children: JSX.Element }): JSX.Element {
     </LayoutRoot>
   );
 }
+
+export { Layout, LayoutStore };

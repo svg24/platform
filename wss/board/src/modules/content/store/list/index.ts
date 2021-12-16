@@ -1,8 +1,8 @@
 import type { Store } from 'types/content';
-import { initListResult } from './result';
+import { initListResponse } from './response';
 import { initListRoot } from './root';
 
 export function initList(this: Store): void {
   initListRoot.call(this);
-  initListResult.call(this);
+  initListResponse.call(this);
 }

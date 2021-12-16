@@ -27,7 +27,7 @@ declare namespace Content {
   type StoreItem = {
     clear: () => void;
     fetch: () => Promise<void>;
-    result: ItemResponse | null;
+    response: ItemResponse | null;
   };
   /**
    * `content.list`
@@ -35,47 +35,47 @@ declare namespace Content {
   type StoreList = {
     fetch: (multiplier?: ListResponseMetaMultiplier) => Promise<ListResponse>;
     reset: () => Promise<void>;
-    result: StoreListResult;
+    response: StoreListResponse;
     upload: () => Promise<void>;
   };
-  type StoreListResult = {
-    data: StoreListResultData;
-    meta: StoreListResultMeta;
+  type StoreListResponse = {
+    data: StoreListResponseData;
+    meta: StoreListResponseMeta;
   };
-  type StoreListResultData = {
-    _items: StoreListResultDataItems;
+  type StoreListResponseData = {
+    _items: StoreListResponseDataItems;
     add: (data: ListResponseData) => void;
     clear: () => void;
     isItems: boolean;
-    items: StoreListResultDataItems;
+    items: StoreListResponseDataItems;
   };
-  type StoreListResultDataItems = ListResponseData | [];
-  type StoreListResultDataItemsItem = ListResponseDataItem;
-  type StoreListResultMeta = {
-    length: StoreListResultMetaLength;
-    page: StoreListResultMetaPage;
+  type StoreListResponseDataItems = ListResponseData | [];
+  type StoreListResponseDataItemsItem = ListResponseDataItem;
+  type StoreListResponseMeta = {
+    length: StoreListResponseMetaLength;
+    page: StoreListResponseMetaPage;
     set: (meta: ListResponseMeta) => void;
   };
-  type StoreListResultMetaLength = {
-    _current: StoreListResultMetaLengthCurrent;
-    _total: StoreListResultMetaLengthTotal;
-    current: StoreListResultMetaLengthCurrent;
-    setCurrent: (current: StoreListResultMetaLengthCurrent) => void;
-    setTotal: (total: StoreListResultMetaLengthTotal) => void;
-    total: StoreListResultMetaLengthTotal;
+  type StoreListResponseMetaLength = {
+    _current: StoreListResponseMetaLengthCurrent;
+    _total: StoreListResponseMetaLengthTotal;
+    current: StoreListResponseMetaLengthCurrent;
+    setCurrent: (current: StoreListResponseMetaLengthCurrent) => void;
+    setTotal: (total: StoreListResponseMetaLengthTotal) => void;
+    total: StoreListResponseMetaLengthTotal;
   };
-  type StoreListResultMetaLengthCurrent = ListResponseMetaLengthCurrent;
-  type StoreListResultMetaLengthTotal = ListResponseMetaLengthTotal;
-  type StoreListResultMetaPage = {
-    _isNext: StoreListResultMetaPageIsNext;
-    isNext: StoreListResultMetaPageIsNext;
-    next: StoreListResultMetaPageNext;
+  type StoreListResponseMetaLengthCurrent = ListResponseMetaLengthCurrent;
+  type StoreListResponseMetaLengthTotal = ListResponseMetaLengthTotal;
+  type StoreListResponseMetaPage = {
+    _isNext: StoreListResponseMetaPageIsNext;
+    isNext: StoreListResponseMetaPageIsNext;
+    next: StoreListResponseMetaPageNext;
     reset: () => void;
-    setIsNext: (isNext: StoreListResultMetaPageIsNext) => void;
-    setNext: (next: StoreListResultMetaPageNext) => void;
+    setIsNext: (isNext: StoreListResponseMetaPageIsNext) => void;
+    setNext: (next: StoreListResponseMetaPageNext) => void;
   };
-  type StoreListResultMetaPageIsNext = ListResponseMetaPageIsNext;
-  type StoreListResultMetaPageNext = ListResponseMetaPageNext;
+  type StoreListResponseMetaPageIsNext = ListResponseMetaPageIsNext;
+  type StoreListResponseMetaPageNext = ListResponseMetaPageNext;
 }
 
 export = Content;

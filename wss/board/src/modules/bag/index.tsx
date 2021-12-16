@@ -6,9 +6,7 @@ import { BagSettings } from './components/BagSettings';
 import { BagView } from './components/BagView';
 import { BagStore } from './store';
 
-export { BagStore };
-
-export function Bag(): JSX.Element {
+function Bag(): JSX.Element {
   return (
     <BagRoot>
       <BagHeading />
@@ -19,3 +17,5 @@ export function Bag(): JSX.Element {
     </BagRoot>
   );
 }
+
+export { Bag, BagStore };

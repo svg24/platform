@@ -4,14 +4,14 @@ import type { Store } from 'types/content';
 
 export function initItem(this: Store): void {
   this.item = {
-    result: null,
+    response: null,
     async fetch() {
-      this.result = await api.item({
+      this.response = await api.item({
         id: RootStore.bag.list.values().next().value,
       });
     },
     clear() {
-      this.result = null;
+      this.response = null;
     },
   };
 }

@@ -12,7 +12,7 @@ export function initRoot(this: Store): void {
   this.process = (value) => {
     debounce(() => {
       const prev = this.value._previous;
-      const { isItems } = RootStore.content.list.result.data;
+      const { isItems } = RootStore.content.list.response.data;
       const trimmed = value.trim();
 
       if (prev === trimmed && value.match(/\s*$/)?.[0]?.length !== 1) return;
@@ -30,7 +30,6 @@ export function initRoot(this: Store): void {
       this.value._previous = trimmed;
     }, 300)();
   };
-
   this.reset = () => {
     this.value.current = this.value._default;
   };

@@ -53,7 +53,7 @@ declare namespace Bag {
   type MetaGeneralItem = {
     id: (StoreKeyParameterCategory | StoreKeyParameterCompany);
     label: string;
-    meta?: (ItemResponseMetaCategory | ItemResponseMetaCompany) | undefined;
+    meta: (ItemResponseMetaCategory | ItemResponseMetaCompany) | undefined;
   };
   /**
    * `BagMetaIndividual()`
@@ -61,7 +61,7 @@ declare namespace Bag {
   type MetaIndividualItem = {
     id: string;
     label: string;
-    meta?: string;
+    meta: string | undefined;
   };
   /**
    * `BagSettingsActions()`

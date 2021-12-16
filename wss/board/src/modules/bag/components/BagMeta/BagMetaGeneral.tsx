@@ -9,7 +9,6 @@ export function BagMetaGeneral(): JSX.Element {
     filter,
     layout,
   } = useStore();
-
   const category: MetaGeneralItem = {
     id: 'category',
     label: 'Category',

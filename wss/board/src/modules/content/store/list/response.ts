@@ -6,8 +6,8 @@ import {
 } from 'mobx';
 import type { Store } from 'types/content';
 
-export function initListResult(this: Store): void {
-  this.list.result = {
+export function initListResponse(this: Store): void {
+  this.list.response = {
     data: {
       _items: [],
       get items() {
@@ -77,13 +77,13 @@ export function initListResult(this: Store): void {
     },
   };
 
-  makeObservable(this.list.result.data, {
+  makeObservable(this.list.response.data, {
     _items: observable,
     add: action,
     clear: action,
     items: computed,
   });
-  makeObservable(this.list.result.meta.length, {
+  makeObservable(this.list.response.meta.length, {
     _current: observable,
     _total: observable,
     current: computed,
@@ -91,7 +91,7 @@ export function initListResult(this: Store): void {
     setTotal: action,
     total: computed,
   });
-  makeObservable(this.list.result.meta.page, {
+  makeObservable(this.list.response.meta.page, {
     _isNext: observable,
     isNext: computed,
     setIsNext: action,

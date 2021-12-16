@@ -23,43 +23,34 @@ const FilterParameterAlphabeticalItem = ({
     get isCollapsed() {
       return container._isCollapsed[0];
     },
-    set isCollapsed(val) {
-      container._isCollapsed[1](val);
+    get setIsCollapsed() {
+      return container._isCollapsed[1];
     },
     expand() {
       const { current } = container.ref;
 
       if (current) {
         current.style.height = `${current.scrollHeight}px`;
-        container.isCollapsed = false;
+        container.setIsCollapsed(false);
       }
     },
     collapse() {
       requestAnimationFrame(() => {
         if (container.ref.current) {
           container.ref.current.style.height = '';
-          container.isCollapsed = true;
+          container.setIsCollapsed(true);
         }
       });
     },
   };
 
   const btn = {
-    mount() {
-      useEffect(() => {
-        const { current } = container.ref;
-
-        btn.isVisible = current
-          ? current.scrollHeight > current.offsetHeight
-          : false;
-      }, []);
-    },
     _isVisible: useState(false),
     get isVisible() {
       return btn._isVisible[0];
     },
-    set isVisible(val) {
-      btn._isVisible[1](val);
+    get setIsVisible() {
+      return btn._isVisible[1];
     },
     onClick() {
       if (container.isCollapsed) {
@@ -70,7 +61,13 @@ const FilterParameterAlphabeticalItem = ({
     },
   };
 
-  btn.mount();
+  useEffect(() => {
+    const { current } = container.ref;
+
+    btn.setIsVisible(current
+      ? current.scrollHeight > current.offsetHeight
+      : false);
+  }, []);
 
   return (
     <li className="filter-parameter__item">
@@ -97,36 +94,38 @@ const FilterParameterAlphabeticalItem = ({
   );
 };
 
-export const FilterParameterAlphabetical = ({
+export function FilterParameterAlphabetical({
   onClick,
   parameter,
 }: {
   onClick: ParameterAlphabeticalOnClick;
   parameter: ParameterAlphabeticalParameter;
-}): JSX.Element => (
-  <FormParameter
-    className="filter-parameter"
-    legend={parameter.legend}
-  >
-    <ul className="filter-parameter__list">
-      {parameter.options && Object.entries(parameter.options)
-        .map(([key, value]) => (
-          <FilterParameterAlphabeticalItem
-            key={key}
-            letter={key}
-          >
-            {value.map((option) => (
-              <FormLabelComplete
-                key={option.id}
-                option={option}
-                parameter={parameter}
-                onClick={(isChecked) => {
-                  onClick(option, isChecked);
-                }}
-              />
-            ))}
-          </FilterParameterAlphabeticalItem>
-        ))}
-    </ul>
-  </FormParameter>
-);
+}): JSX.Element {
+  return (
+    <FormParameter
+      className="filter-parameter"
+      legend={parameter.legend}
+    >
+      <ul className="filter-parameter__list">
+        {parameter.options && Object.entries(parameter.options)
+          .map(([key, value]) => (
+            <FilterParameterAlphabeticalItem
+              key={key}
+              letter={key}
+            >
+              {value.map((option) => (
+                <FormLabelComplete
+                  key={option.id}
+                  option={option}
+                  parameter={parameter}
+                  onClick={(isChecked) => {
+                    onClick(option, isChecked);
+                  }}
+                />
+              ))}
+            </FilterParameterAlphabeticalItem>
+          ))}
+      </ul>
+    </FormParameter>
+  );
+}

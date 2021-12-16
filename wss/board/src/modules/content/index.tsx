@@ -9,14 +9,13 @@ import { ContentOutput } from './components/ContentOutput';
 import { ContentSentinel } from './components/ContentSentinel';
 import { ContentStore } from './store';
 
-export { ContentStore };
-
-export const Content = (): JSX.Element => {
+function Content(): JSX.Element {
   const { content, user } = useStore();
 
   const noFound = {
     el: observer(() => (
-      content.list.result.data.isItems || content.list.result.meta.page.isNext
+      content.list.response.data.isItems
+      || content.list.response.meta.page.isNext
         ? <></>
         : <ContentNoFound />
     )),
@@ -67,7 +66,7 @@ export const Content = (): JSX.Element => {
               if (
                 entry
                 && entry.isIntersecting
-                && content.list.result.meta.page.isNext
+                && content.list.response.meta.page.isNext
               ) {
                 list.upload().then(() => {
                   resolve();
@@ -90,10 +89,10 @@ export const Content = (): JSX.Element => {
       })
     ),
     el: observer(() => (
-      content.list.result.data.isItems
+      content.list.response.data.isItems
         ? (
           <ContentList>
-            {content.list.result.data.items.map((item) => (
+            {content.list.response.data.items.map((item) => (
               <ContentItem
                 item={item}
                 key={item.id}
@@ -114,4 +113,6 @@ export const Content = (): JSX.Element => {
       <ContentSentinel ref={sentinel.ref} />
     </ContentOutput>
   );
-};
+}
+
+export { Content, ContentStore };

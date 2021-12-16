@@ -7,17 +7,17 @@ export function BagView(): JSX.Element {
   const { bag, content } = useStore();
 
   useEffect(() => {
-    if (content.item.result?.data[0]) {
-      bag.item.setData(content.item.result.data[0]);
+    if (content.item.response?.data[0]) {
+      bag.item.setData(content.item.response.data[0]);
     }
   }, []);
 
   return (
     <section className="bag-view">
-      {content.item.result
+      {content.item.response
         ? (
           <>
-            {content.item.result.data.length > 1
+            {content.item.response.data.length > 1
               ? <BagViewWithThumbs />
               : <BagViewWithoutThumbs />}
           </>

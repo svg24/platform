@@ -44,7 +44,7 @@ function BagViewMain({
       core.navigation.update();
     },
     onSlideChange: (core: SwiperCore) => {
-      const item = content.item.result?.data[core.realIndex];
+      const item = content.item.response?.data[core.realIndex];
       if (item) bag.item.setData(item);
     },
   };
@@ -100,7 +100,7 @@ export function BagViewWithThumbs(): JSX.Element {
   const [thumbs, setThumbs] = useState<SwiperCore | null>(null);
   const slides = [] as JSX.Element[];
 
-  content.item.result?.data.forEach((item) => {
+  content.item.response?.data.forEach((item) => {
     const svg = item.content.original?.snippets.svg;
 
     if (svg) {
