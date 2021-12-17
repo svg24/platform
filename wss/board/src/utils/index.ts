@@ -1,5 +1,7 @@
+import { setRef } from './setRef';
 import { getStateAnimation } from './state';
 import { initStoreFormParameter, initStoreVisible } from './store';
+import { useForkRef } from './useForkRef';
 
 function debounce<F extends (...props: any[]) => any>(fn: F, ms: number): any {
   let timeout: NodeJS.Timeout;
@@ -64,4 +66,6 @@ export {
   initStoreFormParameter,
   initStoreVisible,
   isInViewport,
+  setRef,
+  useForkRef,
 };
