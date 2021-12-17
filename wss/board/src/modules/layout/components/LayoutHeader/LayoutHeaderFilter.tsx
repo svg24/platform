@@ -1,74 +1,66 @@
 import { AdjustmentsIcon, XIcon } from '@heroicons/react/outline';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import type { RefObject } from 'react';
-import { useEffect, useRef } from 'react';
+import { forwardRef, useRef, useState } from 'react';
+import { Transition } from 'src/components';
 import { useStore } from 'src/store';
-import { deepAssign, getStateAnimation } from 'src/utils';
 import { LayoutHeaderButton } from './LayoutHeaderButton';
 import { LayoutHeaderIcon } from './LayoutHeaderIcon';
 
-function LayoutHeaderFilterCounter({
-  rootRef,
-}: {
-  rootRef: RefObject<HTMLDivElement>;
-}): JSX.Element {
-  const { content, filter, layout } = useStore();
+const LayoutHeaderFilterCounter = forwardRef(() => {
+  const { content, filter } = useStore();
   const LayoutHeaderFilterCounterObserved = observer(() => (
     <span className="layout-header__counter">
       {filter.applied.length}
     </span>
   ));
-  const counter = deepAssign({
-    toggle() {
-      if (!filter.applied.length || layout.main.filter.isVisible) {
-        if (counter.isDisplay) {
-          counter.hide().then(() => {
-            counter.isShowed = false;
-          });
-        }
-      } else {
-        counter.isShowed = true;
-        counter.show();
-      }
-    },
-    reset() {
-      filter.reset();
-      content.list.reset();
-    },
-  }, getStateAnimation(rootRef, 'layout-header__filter_counter'));
 
-  useEffect(() => {
-    reaction(() => (
-      filter.applied.length && layout.main.filter.isVisible
-    ), counter.toggle);
-  }, []);
+  const handleClick = (): void => {
+    filter.reset();
+    content.list.reset();
+  };
 
-  return counter.isDisplay
-    ? (
-      <>
-        <LayoutHeaderFilterCounterObserved />
-        <LayoutHeaderButton onClick={counter.reset}>
-          <LayoutHeaderIcon icon={XIcon} />
-        </LayoutHeaderButton>
-      </>
-    )
-    : <></>;
-}
+  return (
+    <>
+      <LayoutHeaderFilterCounterObserved />
+      <LayoutHeaderButton onClick={handleClick}>
+        <LayoutHeaderIcon icon={XIcon} />
+      </LayoutHeaderButton>
+    </>
+  );
+});
 
 export function LayoutHeaderFilter(): JSX.Element {
-  const { layout } = useStore();
-  const ref = useRef<HTMLDivElement>(null);
+  const { filter, layout } = useStore();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [counterIsVisible, setCounterIsVisible] = useState(false);
+
+  reaction(() => filter.applied.length && layout.main.filter.isVisible, () => {
+    if (!filter.applied.length || layout.main.filter.isVisible) {
+      const doneEnter = 'layout-header__filter_counter_done-enter';
+      if (rootRef.current?.classList.contains(doneEnter)) {
+        setCounterIsVisible(false);
+      }
+    } else {
+      setCounterIsVisible(true);
+    }
+  });
 
   return (
     <div
       className="layout-header__filter"
-      ref={ref}
+      ref={rootRef}
     >
       <LayoutHeaderButton onClick={layout.main.filter.toggle}>
         <LayoutHeaderIcon icon={AdjustmentsIcon} />
       </LayoutHeaderButton>
-      <LayoutHeaderFilterCounter rootRef={ref} />
+      <Transition
+        classNames="layout-header__filter_counter"
+        isVisible={counterIsVisible}
+        rootRef={rootRef}
+      >
+        <LayoutHeaderFilterCounter />
+      </Transition>
     </div>
   );
 }

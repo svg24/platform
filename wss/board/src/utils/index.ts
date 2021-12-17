@@ -1,5 +1,4 @@
 import { setRef } from './setRef';
-import { getStateAnimation } from './state';
 import { initStoreFormParameter, initStoreVisible } from './store';
 import { useForkRef } from './useForkRef';
 
@@ -62,7 +61,6 @@ export {
   deepAssign,
   deepCopy,
   escapeString,
-  getStateAnimation,
   initStoreFormParameter,
   initStoreVisible,
   isInViewport,

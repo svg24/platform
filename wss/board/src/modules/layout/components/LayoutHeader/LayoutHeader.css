@@ -29,20 +29,24 @@
   @apply contents;
 }
 
-.layout-header__filter_counter-display {
+.layout-header__filter_counter_active-enter,
+.layout-header__filter_counter_done-enter,
+.layout-header__filter_counter_active-exit {
   @apply relative flex items-center overflow-hidden;
 }
 
-.layout-header__filter_counter-display::before {
+.layout-header__filter_counter_active-enter::before,
+.layout-header__filter_counter_done-enter::before,
+.layout-header__filter_counter_active-exit::before {
   @apply absolute inset-0 rounded-lg bg-neutral-50;
   content: '';
 }
 
-.layout-header__filter_counter-in {
+.layout-header__filter_counter_enter {
   animation: slide-container var(--state-animation-ms) forwards;
 }
 
-.layout-header__filter_counter-out {
+.layout-header__filter_counter_exit {
   animation: slide-container var(--state-animation-ms) forwards reverse;
 }
 
@@ -50,7 +54,9 @@
   @apply p-1.5 rounded-lg;
 }
 
-.layout-header__filter_counter-display .layout-header__button,
+.layout-header__filter_counter_active-enter .layout-header__button,
+.layout-header__filter_counter_done-enter .layout-header__button,
+.layout-header__filter_counter_active-exit .layout-header__button,
 .layout-header__counter {
   @apply z-10;
 }
@@ -60,15 +66,15 @@
   min-width: 1rem;
 }
 
-.layout-header__filter_counter-in::before,
-.layout-header__filter_counter-in .layout-header__button:last-of-type,
-.layout-header__filter_counter-in .layout-header__counter {
+.layout-header__filter_counter_active-enter::before,
+.layout-header__filter_counter_active-enter .layout-header__button:last-of-type,
+.layout-header__filter_counter_active-enter .layout-header__counter {
   animation: fade-0-100 var(--state-animation-ms) forwards;
 }
 
-.layout-header__filter_counter-out::before,
-.layout-header__filter_counter-out .layout-header__button:last-of-type,
-.layout-header__filter_counter-out .layout-header__counter {
+.layout-header__filter_counter_active-exit::before,
+.layout-header__filter_counter_active-exit .layout-header__button:last-of-type,
+.layout-header__filter_counter_active-exit .layout-header__counter {
   animation: fade-0-100 var(--state-animation-ms) forwards reverse;
 }
 
