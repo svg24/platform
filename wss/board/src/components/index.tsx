@@ -15,6 +15,7 @@ import { Modal } from './Modal';
 import { Portal } from './Portal';
 import { PseudoLink } from './PseudoLink';
 import { Spin } from './Spin';
+import { Transition } from './Transition';
 
 export {
   Button,
@@ -33,4 +34,5 @@ export {
   Portal,
   PseudoLink,
   Spin,
+  Transition,
 };
