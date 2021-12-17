@@ -1,14 +1,11 @@
-import { forwardRef } from 'react';
-
-export const LayoutRoot = forwardRef<HTMLDivElement, {
-  children: JSX.Element[];
-}>(({
+export function LayoutRoot({
   children,
-}, ref) => (
-  <div
-    className="layout-root"
-    ref={ref}
-  >
-    {children}
-  </div>
-));
+}: {
+  children: JSX.Element[];
+}): JSX.Element {
+  return (
+    <div className="layout-root">
+      {children}
+    </div>
+  );
+}

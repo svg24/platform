@@ -1,48 +1,18 @@
-import { reaction } from 'mobx';
-import { createRef, useEffect } from 'react';
 import { Bag } from 'src/modules/bag';
-import { useStore } from 'src/store';
-import { deepAssign, getStateAnimation } from 'src/utils';
 import { LayoutFooter } from './components/LayoutFooter';
 import { LayoutHeader } from './components/LayoutHeader';
 import { LayoutMain } from './components/LayoutMain';
 import { LayoutRoot } from './components/LayoutRoot';
 import { LayoutStore } from './store';
 
-const root = {
-  ref: createRef<HTMLDivElement>(),
-};
-
 function Layout({ children }: { children: JSX.Element }): JSX.Element {
-  const { layout } = useStore();
-
-  const bag = deepAssign({
-    mount() {
-      useEffect(() => {
-        reaction(() => layout.bag.isVisible, bag.toggle);
-      }, []);
-    },
-    toggle() {
-      if (layout.bag.isVisible) {
-        bag.isShowed = true;
-        bag.show();
-      } else {
-        bag.hide().then(() => {
-          bag.isShowed = false;
-        });
-      }
-    },
-  }, getStateAnimation(root.ref, 'layout-root_bag'));
-
-  bag.mount();
-
   return (
-    <LayoutRoot ref={root.ref}>
+    <LayoutRoot>
       <LayoutHeader />
       <LayoutMain>
         {children}
       </LayoutMain>
-      {bag.isShowed ? <Bag /> : <></>}
+      <Bag />
       <LayoutFooter />
     </LayoutRoot>
   );

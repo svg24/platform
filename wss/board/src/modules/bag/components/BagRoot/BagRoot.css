@@ -9,7 +9,7 @@
 }
 
 .bag-root {
-  @apply z-20 grid col-start-1 col-end-2 row-start-1 row-end-4;
+  @apply absolute inset-0 grid;
 }
 
 .bag-root::before {
@@ -17,11 +17,11 @@
   content: '';
 }
 
-.layout-root_bag-in .bag-root::before {
+.bag-root_enter::before {
   animation: fade-0-30 var(--state-animation-ms) forwards;
 }
 
-.layout-root_bag-out .bag-root::before {
+.bag-root_exit::before {
   animation: fade-0-30 var(--state-animation-ms) forwards reverse;
 }
 
@@ -30,10 +30,10 @@
   width: 36rem;
 }
 
-.layout-root_bag-in .bag-root__inner {
+.bag-root_enter .bag-root__inner {
   animation: slide-bag var(--state-animation-ms) forwards;
 }
 
-.layout-root_bag-out .bag-root__inner {
+.bag-root_exit .bag-root__inner {
   animation: slide-bag var(--state-animation-ms) forwards reverse;
 }
