@@ -1,13 +1,13 @@
+import { forwardRef } from 'react';
 import { Form } from 'src/components';
 
-export function FilterRoot({
-  children,
-}: {
+export const FilterRoot = forwardRef<HTMLFormElement, {
   children: JSX.Element;
-}): JSX.Element {
-  return (
-    <Form className={`${Form({}).props.className} filter-root`}>
-      {children}
-    </Form>
-  );
-}
+}>((props, ref) => (
+  <Form
+    className="filter-root"
+    ref={ref}
+  >
+    {props.children}
+  </Form>
+));

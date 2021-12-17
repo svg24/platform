@@ -1,4 +1,5 @@
-import { Children, cloneElement, useRef } from 'react';
+import type { RefObject } from 'react';
+import { cloneElement, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 export function Transition({
@@ -6,13 +7,15 @@ export function Transition({
   classNames,
   isVisible,
   ms,
+  rootRef,
 }: {
   children: JSX.Element;
   classNames: string;
   isVisible: boolean;
   ms?: number;
+  rootRef: RefObject<HTMLElement>;
 }): JSX.Element {
-  const ref = useRef(null);
+  const localRef = useRef(null);
 
   return (
     <CSSTransition
@@ -25,11 +28,11 @@ export function Transition({
         exitDone: `${classNames}_done-exit`,
       }}
       in={isVisible}
-      nodeRef={ref}
+      nodeRef={rootRef || localRef}
       timeout={ms || 300}
       unmountOnExit
     >
-      {cloneElement(Children.only(children), { ref })}
+      {cloneElement(children, { ref: localRef })}
     </CSSTransition>
   );
 }

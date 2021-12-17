@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import { setRef } from './setRef';
 
 export function useForkRef<Instance>(
-  refFirst: Ref<Instance> | null,
-  refSecond: Ref<Instance> | null,
+  refFirst: Ref<Instance> | null | undefined,
+  refSecond: Ref<Instance> | null | undefined,
 ): Ref<Instance> | null {
   return useMemo(() => {
     if (refFirst == null && refSecond == null) {

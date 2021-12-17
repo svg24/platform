@@ -2,11 +2,11 @@
   @apply flex flex-col overflow-x-hidden w-60 gap-y-4;
 }
 
-.layout-main_filter-in .filter-root {
+.layout-main_filter_enter .filter-root {
   animation: slide-filter var(--state-animation-ms) forwards;
 }
 
-.layout-main_filter-out .filter-root {
+.layout-main_filter_exit .filter-root {
   animation: slide-filter var(--state-animation-ms) forwards reverse;
 }
 

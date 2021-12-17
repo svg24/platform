@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { forwardRef } from 'react';
 import { useStore } from 'src/store';
 import { deepCopy } from 'src/utils';
 import { FilterApplied } from './components/FilterApplied';
@@ -9,25 +10,27 @@ import {
 import { FilterRoot } from './components/FilterRoot';
 import { FilterStore } from './store';
 
-function Filter(): JSX.Element {
+const Filter = forwardRef<HTMLFormElement>((_, ref) => {
   const { content, filter } = useStore();
-  const parameters = [deepCopy(filter.sortBy, { legend: 'Sort by' })];
-  const parametersAlphabetical = [
+  const params = [
+    deepCopy(filter.sortBy, { legend: 'Sort by' }),
+  ];
+  const paramsAlphabetical = [
     deepCopy(filter.category, { legend: 'Category' }),
     deepCopy(filter.company, { legend: 'Company' }),
   ];
   const FilterAppliedObserved = observer(() => {
-    const filtered = [...parameters, ...parametersAlphabetical]
-      .filter((pr) => pr.isApplied);
-    return (
-      <FilterApplied parameters={filtered} />
-    );
+    const filtered = [
+      ...params,
+      ...paramsAlphabetical,
+    ].filter((pr) => pr.isApplied);
+    return <FilterApplied parameters={filtered} />;
   });
 
   return (
-    <FilterRoot>
+    <FilterRoot ref={ref}>
       <>
-        {parameters.map((pr) => (
+        {params.map((pr) => (
           <FilterParameter
             key={pr.id}
             parameter={pr}
@@ -37,7 +40,7 @@ function Filter(): JSX.Element {
             }}
           />
         ))}
-        {parametersAlphabetical.map((pr) => (
+        {paramsAlphabetical.map((pr) => (
           <FilterParameterAlphabetical
             key={pr.id}
             parameter={pr}
@@ -56,7 +59,7 @@ function Filter(): JSX.Element {
       </>
     </FilterRoot>
   );
-}
+});
 
 export {
   Filter,

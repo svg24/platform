@@ -1,7 +1,9 @@
 import type { MutableRefObject } from 'react';
 
 export function setRef<T>(
-  ref: MutableRefObject<T | null> | ((instance: T | null) => void) | null,
+  ref: MutableRefObject<T | null>
+  | ((instance: T | null) => void)
+  | null | undefined,
   value: T | null,
 ): void {
   if (typeof ref === 'function') {

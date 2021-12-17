@@ -8,12 +8,21 @@ import type {
   ParameterAdditionalProperties,
 } from 'types/form';
 
-export function Form(props: ComponentProps<'form'>): JSX.Element {
-  return createElement('form', {
-    className: 'form',
-    ...props,
-  });
-}
+export const Form = (
+  forwardRef<HTMLFormElement, {
+    className?: string | undefined;
+  } & ComponentProps<'form'>>((props, ref) => (
+    createElement('form', {
+      ...props,
+      ref,
+      className: `form ${props.className || ''}`,
+    })
+  ))
+);
+
+Form.defaultProps = {
+  className: undefined,
+};
 
 export function FormParameter(
   props: ParameterAdditionalProperties & ComponentProps<'fieldset'>,

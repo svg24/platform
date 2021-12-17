@@ -1,50 +1,40 @@
 import { reaction } from 'mobx';
-import { useEffect, useRef } from 'react';
+import { useRef, useState } from 'react';
+import { Transition } from 'src/components';
 import { Filter } from 'src/modules/filter';
 import { useStore } from 'src/store';
-import { deepAssign, getStateAnimation } from 'src/utils';
 import { LayoutMainContainer } from './LayoutMainContainer';
 
-export function LayoutMain({
-  children,
-}: {
-  children: JSX.Element;
-}): JSX.Element {
+function LayoutMain({ children }: { children: JSX.Element }): JSX.Element {
   const { layout } = useStore();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [filterIsVisible, setFilterIsVisible] = useState(false);
 
-  const root = {
-    ref: useRef<HTMLDivElement>(null),
-  };
-
-  const filter = deepAssign({
-    mount() {
-      useEffect(() => {
-        reaction(() => layout.main.filter.isVisible, filter.toggle);
-      }, []);
-    },
-    toggle() {
-      if (layout.main.filter.isVisible) {
-        filter.isShowed = true;
-        filter.show();
-      } else {
-        filter.hide().then(() => {
-          filter.isShowed = false;
-        });
-      }
-    },
-  }, getStateAnimation(root.ref, 'layout-main_filter'));
-
-  filter.mount();
+  reaction(() => layout.main.filter.isVisible, () => {
+    if (layout.main.filter.isVisible) {
+      setFilterIsVisible(true);
+    } else {
+      setFilterIsVisible(false);
+    }
+  });
 
   return (
     <main
       className="layout-main"
-      ref={root.ref}
+      ref={rootRef}
     >
-      {filter.isShowed ? <Filter /> : <></>}
+      <Transition
+        classNames="layout-main_filter"
+        isVisible={filterIsVisible}
+        rootRef={rootRef}
+      >
+        <Filter />
+      </Transition>
       <LayoutMainContainer>
         {children}
       </LayoutMainContainer>
     </main>
   );
 }
+
+export { LayoutMain };

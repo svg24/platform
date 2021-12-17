@@ -13,7 +13,9 @@
   grid-area: main;
 }
 
-.layout-main_filter-display {
+.layout-main_filter_active-enter,
+.layout-main_filter_done-enter,
+.layout-main_filter_active-exit {
   grid-template-columns: min-content 1fr;
 }
 
@@ -22,7 +24,9 @@
   background-image: url('src/assets/images/pattern.svg');
 }
 
-.layout-main_filter-display .layout-main__container {
+.layout-main_filter_active-enter .layout-main__container,
+.layout-main_filter_done-enter .layout-main__container,
+.layout-main_filter_active-exit .layout-main__container {
   @apply col-start-2 col-end-3;
 }
 
