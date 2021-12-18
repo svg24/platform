@@ -1,18 +1,14 @@
-import {
-  Form,
-  FormLabelComplete,
-  FormParameter,
-} from 'src/components';
+import { Form, FormLabelComplete, FormParameter } from 'src/components';
 import { useStore } from 'src/store';
 import { deepCopy } from 'src/utils';
 
 export function SettingsRoot(): JSX.Element {
   const { settings } = useStore();
-  const parameters = [deepCopy(settings.size, { legend: 'Size' })];
+  const params = [deepCopy(settings.size, { legend: 'Size' })];
 
   return (
     <Form>
-      {parameters.map((pr) => (
+      {params.map((pr) => (
         <FormParameter
           key={pr.id}
           legend={pr.legend}

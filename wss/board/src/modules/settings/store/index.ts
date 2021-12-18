@@ -1,6 +1,6 @@
 import type { Store } from 'types/settings';
-import { initRoot } from './root';
+import { initSize } from './size';
 
 export const SettingsStore = new (function (this: Store) {
-  initRoot.call(this);
+  initSize.call(this);
 } as any as { new (): Store })();

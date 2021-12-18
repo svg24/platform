@@ -1,6 +1,7 @@
 import type { RefObject } from 'react';
 import { cloneElement, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { useForkRef } from 'src/utils';
 
 export function Transition({
   children,
@@ -9,13 +10,15 @@ export function Transition({
   ms,
   rootRef,
 }: {
-  children: JSX.Element;
+  children: any;
   classNames: string;
   isVisible: boolean;
   ms?: number;
-  rootRef: RefObject<HTMLElement>;
+  rootRef?: RefObject<HTMLElement>;
 }): JSX.Element {
   const localRef = useRef(null);
+  const foreignRef = useForkRef(children.ref, localRef);
+  const handleRef = useForkRef(foreignRef, localRef);
 
   return (
     <CSSTransition
@@ -32,11 +35,12 @@ export function Transition({
       timeout={ms || 300}
       unmountOnExit
     >
-      {cloneElement(children, { ref: localRef })}
+      {cloneElement(children, { ref: handleRef })}
     </CSSTransition>
   );
 }
 
 Transition.defaultProps = {
   ms: undefined,
+  rootRef: undefined,
 };

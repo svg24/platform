@@ -1,43 +1,42 @@
 import { CogIcon } from '@heroicons/react/outline';
-import { useState } from 'react';
-import { Modal } from 'src/components';
+import { useRef, useState } from 'react';
+import { Popper } from 'src/components';
 import { Settings } from 'src/modules/settings';
 import { LayoutHeaderButton } from './LayoutHeaderButton';
 import { LayoutHeaderIcon } from './LayoutHeaderIcon';
 
 export function LayoutHeaderSettings(): JSX.Element {
-  const settings = {
-    _state: useState(false),
-    get state() {
-      return settings._state[0];
-    },
-    set state(value) {
-      settings._state[1](value);
-    },
-    toggle() {
-      settings.state = !settings.state;
-    },
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [settingsIsVisible, setSettingsIsVisible] = useState(false);
+  const [settingsIsFromPopper, setSettingsIsFromPopper] = useState(false);
+
+  const handleClick = (): void => {
+    if (settingsIsFromPopper) {
+      setSettingsIsFromPopper(false);
+    } else {
+      setSettingsIsVisible(!settingsIsVisible);
+    }
+  };
+  const handleClose = (): void => {
+    setSettingsIsVisible(false);
+    setSettingsIsFromPopper(true);
   };
 
   return (
-    <div className="layout-header__container">
-      <LayoutHeaderButton
-        onClick={() => {
-          settings.toggle();
-        }}
-      >
+    <div
+      className="layout-header__container"
+      ref={rootRef}
+    >
+      <LayoutHeaderButton onClick={handleClick}>
         <LayoutHeaderIcon icon={CogIcon} />
       </LayoutHeaderButton>
-      {settings.state
-        ? (
-          <Modal
-            heading="Settings"
-            onClose={settings.toggle}
-          >
-            <Settings />
-          </Modal>
-        )
-        : <></>}
+      <Popper
+        anchorRef={rootRef}
+        isVisible={settingsIsVisible}
+        onClose={handleClose}
+      >
+        <Settings />
+      </Popper>
     </div>
   );
 }

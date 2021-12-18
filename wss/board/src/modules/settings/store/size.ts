@@ -6,7 +6,7 @@ const normal = {
   name: 'Normal',
 };
 
-export function initRoot(this: Store): void {
+export function initSize(this: Store): void {
   Object.defineProperty(this, 'size', {
     enumerable: true,
     value: {
