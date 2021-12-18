@@ -8,16 +8,14 @@ export function Search(): JSX.Element {
   function checkIsActive(code: string): boolean {
     return code === 'Slash' && document.activeElement !== ref.current;
   }
-  function handleOnKeyup(ev: KeyboardEvent): void {
-    if (checkIsActive(ev.code)) ref.current?.focus();
-  }
-  function handleOnKeydown(ev: KeyboardEvent): void {
-    if (checkIsActive(ev.code)) ev.preventDefault();
-  }
 
   useEffect(() => {
-    document.addEventListener('keyup', handleOnKeyup);
-    document.addEventListener('keydown', handleOnKeydown);
+    document.addEventListener('keyup', (ev) => {
+      if (checkIsActive(ev.code)) ref.current?.focus();
+    });
+    document.addEventListener('keydown', (ev) => {
+      if (checkIsActive(ev.code)) ev.preventDefault();
+    });
   }, []);
 
   return (

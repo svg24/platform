@@ -1,8 +1,4 @@
-export function ContentOutput({
-  children,
-}: {
-  children: JSX.Element[];
-}): JSX.Element {
+function ContentOutput({ children }: { children: JSX.Element[] }): JSX.Element {
   return (
     <output
       className="content-output"
@@ -12,3 +8,5 @@ export function ContentOutput({
     </output>
   );
 }
+
+export { ContentOutput };

@@ -1,43 +1,33 @@
 import { reaction } from 'mobx';
-import type { MutableRefObject } from 'react';
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, useRef } from 'react';
 import { Spin } from 'src/components';
 import { useStore } from 'src/store';
+import { useForkRef } from 'src/utils';
 
 export const ContentSentinel = forwardRef<HTMLDivElement>((_, ref) => {
   const { content } = useStore();
-  const root = {
-    get ls() {
-      return (ref as MutableRefObject<HTMLDivElement | null>)
-        .current?.classList;
-    },
-  };
+  const localRef = useRef<HTMLDivElement>(null);
+  const foreignRef = useForkRef(localRef, ref);
 
-  function toggleHidden(): void {
+  reaction(() => content.list.response.meta.page.isNext, () => {
     if (content.list.response.meta.page.isNext) {
-      root.ls?.remove('content-sentinel_hidden');
+      localRef.current?.classList.remove('content-sentinel_hidden');
     } else {
-      root.ls?.add('content-sentinel_hidden');
+      localRef.current?.classList.add('content-sentinel_hidden');
     }
-  }
-  function toggleVisible(): void {
+  });
+  reaction(() => content.sentinel.isVisible, () => {
     if (content.sentinel.isVisible) {
-      root.ls?.add('content-sentinel_visible');
+      localRef.current?.classList.add('content-sentinel_visible');
     } else {
-      root.ls?.remove('content-sentinel_visible');
+      localRef.current?.classList.remove('content-sentinel_visible');
     }
-  }
-
-  useEffect(() => {
-    toggleHidden();
-    reaction(() => content.list.response.meta.page.isNext, toggleHidden);
-    reaction(() => content.sentinel.isVisible, toggleVisible);
-  }, []);
+  });
 
   return (
     <div
       className="content-sentinel"
-      ref={ref}
+      ref={foreignRef}
     >
       <Spin className="content-sentinel__icon" />
       <span>

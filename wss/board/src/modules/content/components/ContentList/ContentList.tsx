@@ -1,25 +1,20 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from 'src/store';
 
-export function ContentList({
-  children,
-}: {
-  children: JSX.Element[];
-}): JSX.Element {
+function ContentList({ children }: { children: JSX.Element[] }): JSX.Element {
   const { settings } = useStore();
+  const ContentListObserved = observer(() => {
+    const { current } = settings.size.value;
+    const size = current ? `content-list_${current.id}` : '';
 
-  const root = {
-    el: observer(() => (
-      <ol className={`content-list ${root.mod}`}>
+    return (
+      <ol className={`content-list ${size}`}>
         {children}
       </ol>
-    )),
-    get mod() {
-      return settings.size.value.current
-        ? `content-list_${settings.size.value.current.id}`
-        : '';
-    },
-  };
+    );
+  });
 
-  return <root.el />;
+  return <ContentListObserved />;
 }
+
+export { ContentList };
