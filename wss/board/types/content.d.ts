@@ -7,7 +7,7 @@ import type {
   ListResponseMetaLengthCurrent,
   ListResponseMetaLengthTotal,
   ListResponseMetaMultiplier,
-  ListResponseMetaPageIsNext,
+  ListResponseMetaPageHasNext,
   ListResponseMetaPageNext,
 } from 'types/api';
 import type { Visible } from 'types/store';
@@ -67,14 +67,14 @@ declare namespace Content {
   type StoreListResponseMetaLengthCurrent = ListResponseMetaLengthCurrent;
   type StoreListResponseMetaLengthTotal = ListResponseMetaLengthTotal;
   type StoreListResponseMetaPage = {
-    _isNext: StoreListResponseMetaPageIsNext;
-    isNext: StoreListResponseMetaPageIsNext;
+    _hasNext: StoreListResponseMetaPageHasNext;
+    hasNext: StoreListResponseMetaPageHasNext;
     next: StoreListResponseMetaPageNext;
     reset: () => void;
-    setIsNext: (isNext: StoreListResponseMetaPageIsNext) => void;
+    setHasNext: (hasNext: StoreListResponseMetaPageHasNext) => void;
     setNext: (next: StoreListResponseMetaPageNext) => void;
   };
-  type StoreListResponseMetaPageIsNext = ListResponseMetaPageIsNext;
+  type StoreListResponseMetaPageHasNext = ListResponseMetaPageHasNext;
   type StoreListResponseMetaPageNext = ListResponseMetaPageNext;
 }
 

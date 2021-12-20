@@ -1,12 +1,14 @@
 import type http from 'http';
 import type { FastifyInstance } from 'fastify';
 
-export interface Server {
-  beatify: (val: any) => string;
-  inst: FastifyInstance<http.Server, http.IncomingMessage, http.ServerResponse>;
-  listen: () => Promise<void>;
-  opts: {
+declare namespace Server {
+  function beatify(val: any): string;
+  const inst: FastifyInstance<http.Server, http.IncomingMessage, http.ServerResponse>;
+  function listen(): Promise<void>;
+  const options: {
     host: string;
     port: string;
   };
 }
+
+export = Server;

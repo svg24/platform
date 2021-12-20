@@ -34,7 +34,7 @@ export function ContentItem({
           className="content-item__vanilla"
           dangerouslySetInnerHTML={{ __html: item.latest || '' }}
         />
-        {item.isMany
+        {item.hasMore
           ? <DotsVerticalIcon className="content-item__icon" />
           : <></>}
       </div>

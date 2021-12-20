@@ -1,12 +1,23 @@
-import type { ListSchema } from 'types/list';
-import type { Module } from 'types/module';
+import type { RegisterOptions } from 'fastify';
+import type { RouteResponseDataItemContentItemSnippetsSVG } from 'types/item';
+import type { SchemaId } from 'types/list';
+import type Server from 'types/server';
 
-export interface Content {
-  opts: Module<any>['opts'];
-  plugin: Module<any>['plugin'];
+declare namespace Content {
+  const options: RegisterOptions;
+  function plugin(inst: typeof Server.inst): Promise<void>;
+
+  type RouteParameters = {
+    id: RouteParametersId;
+    name: RouteParametersName;
+  };
+  type RouteParametersId = SchemaId;
+  type RouteParametersName = SchemaId;
+
+  function getContent(
+    id: RouteParametersId,
+    name: RouteParametersName,
+  ): Promise<RouteResponseDataItemContentItemSnippetsSVG>;
 }
 
-export type ContentRouteParameters = {
-  id: ListSchema['id'];
-  name: ListSchema['id'];
-};
+export = Content;

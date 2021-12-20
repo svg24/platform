@@ -1,5 +1,6 @@
-import type { List, ListRouteQuery } from 'types/list';
-import { db, server } from '../../../core';
+import type List from 'types/list';
+import type Server from 'types/server';
+import { server } from '../../../core';
 import { toBad } from '../../../utils';
 import schema from './schema.json';
 
@@ -8,8 +9,12 @@ const DEFAULT_SKIP = 0;
 const DEFAULT_SORT_BY = 'name';
 const DEFAULT_SORT_METHOD = 'asc';
 
-export function addRoute(this: List, inst: typeof server.inst): void {
-  inst.route<{ Querystring: ListRouteQuery }>({
+function getFilterRegExp(str: string): RegExp {
+  return new RegExp(str, 'i');
+}
+
+export function addRoute(this: typeof List, inst: typeof Server.inst): void {
+  inst.route<{ Querystring: List.RouteQuery }>({
     ...JSON.parse(JSON.stringify(schema)),
     handler: async (req) => {
       const {
@@ -22,9 +27,9 @@ export function addRoute(this: List, inst: typeof server.inst): void {
       } = req.query;
 
       const filter = {
-        ...category ? { category: new RegExp(category, 'i') } : {},
-        ...name ? { name: new RegExp(name, 'i') } : {},
-        ...company ? { company: new RegExp(company, 'i') } : {},
+        ...category ? { category: getFilterRegExp(category) } : {},
+        ...name ? { name: getFilterRegExp(name) } : {},
+        ...company ? { company: getFilterRegExp(company) } : {},
       };
 
       const options = {
@@ -44,16 +49,15 @@ export function addRoute(this: List, inst: typeof server.inst): void {
             total: await this.model.find(filter, ['_id']).count(),
             get current() {
               const cur = options.skip + options.limit;
-
               return cur > meta.length.total ? meta.length.total : cur;
             },
           },
           page: {
-            get isNext() {
+            get hasNext() {
               return meta.length.total - meta.length.current > 0;
             },
             get next() {
-              return meta.page.isNext
+              return meta.page.hasNext
                 ? Math.ceil(meta.length.current / DEFAULT_LIMIT) + 1
                 : null;
             },
@@ -62,7 +66,7 @@ export function addRoute(this: List, inst: typeof server.inst): void {
 
         const items = await this.model.find(filter, ['id', 'name'], options);
         const data = await Promise.all(items.map(async (item) => ({
-          ...await db.modules.list.getDataItem(item.id),
+          ...await this.getDataItem(item.id),
           id: item.id,
           name: item.name,
         })));

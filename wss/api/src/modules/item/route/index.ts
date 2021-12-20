@@ -1,14 +1,15 @@
-import type { Item, ItemRouteQuery } from 'types/item';
-import { db, server } from '../../../core';
+import type Item from 'types/item';
+import type Server from 'types/server';
+import { server } from '../../../core';
 import { toBad } from '../../../utils';
 import { list } from '../../list';
 import { categories, companies } from '../../simple';
 import schema from './schema.json';
 
-export function addRoute(this: Item, inst: typeof server.inst): void {
-  inst.route<{ Querystring: ItemRouteQuery }>({
+export function addRoute(this: typeof Item, inst: typeof Server.inst): void {
+  inst.route<{ Querystring: Item.RouteQuery }>({
     ...JSON.parse(JSON.stringify(schema)),
-    async handler(req) {
+    handler: async (req) => {
       try {
         const items = await list.model.find({
           id: req.query.id,
@@ -22,9 +23,8 @@ export function addRoute(this: Item, inst: typeof server.inst): void {
         ], {
           lean: true,
         });
-
         const res = await Promise.all(items.map(async (item) => ({
-          data: await db.modules.item.getData(item.id),
+          data: await this.getData(item.id),
           meta: {
             category: (await categories.model.find({
               id: item.category,

@@ -35,11 +35,11 @@
             "items": {
               "type": "object",
               "properties": {
+                "hasMore": {
+                  "type": "boolean"
+                },
                 "id": {
                   "type": "string"
-                },
-                "isMany": {
-                  "type": "boolean"
                 },
                 "name": {
                   "type": "string"
@@ -67,7 +67,7 @@
               "page": {
                 "type": "object",
                 "properties": {
-                  "isNext": {
+                  "hasNext": {
                     "type": "boolean"
                   },
                   "next": {

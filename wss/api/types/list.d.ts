@@ -1,31 +1,50 @@
-import type { ItemDataItemContentType } from 'types/item';
-import type { Module } from 'types/module';
+import type { RegisterOptions } from 'fastify';
+import type { Model, Schema as ModelSchema } from 'mongoose';
+import type { RouteResponseDataItemContentItemSnippetsSVG } from 'types/item';
+import type Server from 'types/server';
 
-export interface List extends Module<ListSchema> {}
+declare namespace List {
+  const model: Model<Schema>;
+  const options: RegisterOptions;
+  function plugin(inst: typeof Server.inst): Promise<void>;
+  const schema: ModelSchema<Schema>;
 
-export type ListSchema = {
-  category: string;
-  company: string;
-  date: string;
-  id: string;
-  name: string;
-  src: string;
-};
+  type Schema = {
+    category: SchemaCategory;
+    company: SchemaCompany;
+    date: string;
+    id: SchemaId;
+    name: SchemaName;
+    src: string;
+  };
+  type SchemaId = string;
+  type SchemaCategory = string;
+  type SchemaCompany = string;
+  type SchemaName = string;
 
-export type ListRouteQuery = {
-  category?: ListSchema['category'];
-  company?: ListSchema['company'];
-  multiplier?: number;
-  name?: ListSchema['name'];
-  page?: number;
-  sortBy?: 'date' | 'name';
-};
+  type RouteQuery = {
+    category?: SchemaCategory;
+    company?: SchemaCompany;
+    multiplier?: number;
+    name?: SchemaName;
+    page?: number;
+    sortBy?: 'date' | 'name';
+  };
+  type RouteResponse = {
+    data: RouteResponseData;
+  };
+  type RouteResponseData = RouteResponseDataItem[];
+  type RouteResponseDataItem = {
+    hasMore: RouteResponseDataItemHasMore;
+    latest: RouteResponseDataItemLatest;
+  };
+  type RouteResponseDataItemHasMore = boolean;
+  type RouteResponseDataItemLatest
+    = RouteResponseDataItemContentItemSnippetsSVG;
 
-type ListDataItem = {
-  isMany: ListDataItemIsMany;
-  latest: ListDataItemLatest;
-};
+  function getDataItem(id: SchemaId): Promise<RouteResponseDataItem>;
+  function getDataItemHasMore(id: SchemaId): Promise<RouteResponseDataItemHasMore>;
+  function getDataItemLatest(id: SchemaId): Promise<RouteResponseDataItemLatest>;
+}
 
-type ListDataItemIsMany = boolean;
-
-type ListDataItemLatest = ItemDataItemContentType['snippets']['svg'];
+export = List;

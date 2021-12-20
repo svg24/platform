@@ -57,21 +57,21 @@ export function initListResponse(this: Store): void {
         reset() {
           this.next = 0;
         },
-        _isNext: true,
-        get isNext() {
-          return this._isNext;
+        _hasNext: true,
+        get hasNext() {
+          return this._hasNext;
         },
-        set isNext(value) {
-          this._isNext = value;
+        set hasNext(value) {
+          this._hasNext = value;
         },
-        setIsNext(value) {
-          this.isNext = value;
+        setHasNext(value) {
+          this.hasNext = value;
         },
       },
       set(meta) {
         this.length.setCurrent(meta.length.current);
         this.length.setTotal(meta.length.total);
-        this.page.setIsNext(meta.page.isNext);
+        this.page.setHasNext(meta.page.hasNext);
         this.page.setNext(meta.page.next);
       },
     },
@@ -92,8 +92,8 @@ export function initListResponse(this: Store): void {
     total: computed,
   });
   makeObservable(this.list.response.meta.page, {
-    _isNext: observable,
-    isNext: computed,
-    setIsNext: action,
+    _hasNext: observable,
+    hasNext: computed,
+    setHasNext: action,
   });
 }

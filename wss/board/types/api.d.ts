@@ -39,8 +39,8 @@ declare namespace Api {
   };
   type ListResponseData = ListResponseDataItem[];
   type ListResponseDataItem = {
+    hasMore: boolean;
     id: ItemResponseMetaId;
-    isMany: boolean;
     latest: string;
     name: ItemResponseMetaName;
   };
@@ -57,10 +57,10 @@ declare namespace Api {
   type ListResponseMetaLengthTotal = number;
   type ListResponseMetaMultiplier = number;
   type ListResponseMetaPage = {
-    isNext: ListResponseMetaPageIsNext;
+    hasNext: ListResponseMetaPageHasNext;
     next: ListResponseMetaPageNext;
   };
-  type ListResponseMetaPageIsNext = boolean;
+  type ListResponseMetaPageHasNext = boolean;
   type ListResponseMetaPageNext = number;
   /**
    * `api.item()`

@@ -6,7 +6,7 @@ server.listen();
 
 Object.values(modules).forEach((module) => {
   server.inst.register(module.plugin, {
-    ...module.opts,
-    prefix: `v1/${module.opts.prefix}`,
+    ...module.options,
+    prefix: `v1/${module.options.prefix}`,
   });
 });

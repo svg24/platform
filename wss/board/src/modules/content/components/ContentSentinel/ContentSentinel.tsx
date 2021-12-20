@@ -9,8 +9,8 @@ export const ContentSentinel = forwardRef<HTMLDivElement>((_, ref) => {
   const localRef = useRef<HTMLDivElement>(null);
   const foreignRef = useForkRef(localRef, ref);
 
-  reaction(() => content.list.response.meta.page.isNext, () => {
-    if (content.list.response.meta.page.isNext) {
+  reaction(() => content.list.response.meta.page.hasNext, () => {
+    if (content.list.response.meta.page.hasNext) {
       localRef.current?.classList.remove('content-sentinel_hidden');
     } else {
       localRef.current?.classList.add('content-sentinel_hidden');

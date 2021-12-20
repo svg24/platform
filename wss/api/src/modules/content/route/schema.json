@@ -5,6 +5,9 @@
     "querystring": {
       "id": {
         "type": "string"
+      },
+      "name": {
+        "type": "string"
       }
     },
     "response": {

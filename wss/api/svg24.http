@@ -35,10 +35,10 @@ GET https://api.svg24.dev/v1/list
 
 {
   "data": [{
+    "hasMore": "",
     "id": "",
-    "isMany": "",
-    "name": "",
     "latest": "",
+    "name": "",
   }],
   "meta": {
     "length": {
@@ -46,7 +46,7 @@ GET https://api.svg24.dev/v1/list
       "total": "",
     },
     "page": {
-      "isNext": "",
+      "hasNext": "",
       "next": "",
     }
   }

@@ -1,11 +1,12 @@
-import type { SimpleModule, SimpleModuleItem } from 'types/simple';
+import type Server from 'types/server';
+import type Simple from 'types/simple';
 import { server } from '../../core';
 import { toBad } from '../../utils';
 
 const DEFAULT_SORT_BY = 'name';
 const DEFAULT_SORT_METHOD = 'asc';
 
-export function addRoute(this: SimpleModule, inst: typeof server.inst): void {
+export function addRoute(this: typeof Simple, inst: typeof Server.inst): void {
   inst.route({
     method: 'GET',
     url: '/',
@@ -54,7 +55,7 @@ export function addRoute(this: SimpleModule, inst: typeof server.inst): void {
           }
 
           return acc;
-        }, {} as { [key: string]: SimpleModuleItem[] });
+        }, {} as { [key: string]: Simple.RouteResponseData });
 
         return server.beatify({
           data,

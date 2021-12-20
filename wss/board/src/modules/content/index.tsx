@@ -15,7 +15,7 @@ function Content(): JSX.Element {
   const noFound = {
     el: observer(() => (
       content.list.response.data.isItems
-      || content.list.response.meta.page.isNext
+      || content.list.response.meta.page.hasNext
         ? <></>
         : <ContentNoFound />
     )),
@@ -66,7 +66,7 @@ function Content(): JSX.Element {
               if (
                 entry
                 && entry.isIntersecting
-                && content.list.response.meta.page.isNext
+                && content.list.response.meta.page.hasNext
               ) {
                 list.upload().then(() => {
                   resolve();
