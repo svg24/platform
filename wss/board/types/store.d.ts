@@ -2,6 +2,7 @@ import type { Store as BagStore } from './bag';
 import type { Store as ContentStore } from './content';
 import type { Store as FilterStore } from './filter';
 import type { Store as LayoutStore } from './layout';
+import type { Store as NotificationStore } from './notification';
 import type { Store as SearchStore } from './search';
 import type { Store as SettingsStore } from './settings';
 import type { Store as UserStore } from './user';
@@ -11,6 +12,7 @@ declare namespace Store {
   const content: ContentStore;
   const filter: FilterStore;
   const layout: LayoutStore;
+  const notification: NotificationStore;
   const search: SearchStore;
   const settings: SettingsStore;
   const user: UserStore;

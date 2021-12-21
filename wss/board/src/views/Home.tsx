@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Content } from 'src/modules/content';
 import { FilterStore } from 'src/modules/filter';
 import { Layout } from 'src/modules/layout';
+import { Notification } from 'src/modules/notification';
 
 export function Home(): JSX.Element {
   const isMounted = useState(false);
@@ -14,9 +15,12 @@ export function Home(): JSX.Element {
 
   return isMounted[0]
     ? (
-      <Layout>
-        <Content />
-      </Layout>
+      <>
+        <Layout>
+          <Content />
+        </Layout>
+        <Notification />
+      </>
     )
     : <></>;
 }

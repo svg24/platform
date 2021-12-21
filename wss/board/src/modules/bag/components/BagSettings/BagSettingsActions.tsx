@@ -6,33 +6,42 @@ import type {
   SettingsParameterActionsOptionsItem,
 } from 'types/bag';
 
-const copy: SettingsParameterActionsOptionsItem = {
-  id: 'copy',
-  name: 'Copy',
-  checked: true,
-  async handler({ content }) {
-    await navigator.clipboard.writeText(content);
-  },
-};
-const download: SettingsParameterActionsOptionsItem = {
-  id: 'download',
-  name: 'Download',
-  async handler({ content, file }) {
-    const blob = new Blob([content]);
-    const link = document.createElement('a');
-
-    Object.assign(link, {
-      href: window.URL.createObjectURL(blob),
-      download: file,
-    });
-
-    link.click();
-    link.remove();
-  },
-};
-
 export function BagSettingsActions(): JSX.Element {
-  const { bag } = useStore();
+  const { bag, notification } = useStore();
+  const copy: SettingsParameterActionsOptionsItem = {
+    id: 'copy',
+    name: 'Copy',
+    checked: true,
+    async handler({ content }) {
+      try {
+        await navigator.clipboard.writeText(content);
+        notification.showPositive('Copied');
+      } catch (error) {
+        notification.showNegative('Copy error');
+      }
+    },
+  };
+  const download: SettingsParameterActionsOptionsItem = {
+    id: 'download',
+    name: 'Download',
+    async handler({ content, file }) {
+      try {
+        const blob = new Blob([content]);
+        const link = document.createElement('a');
+
+        Object.assign(link, {
+          href: window.URL.createObjectURL(blob),
+          download: file,
+        });
+
+        link.click();
+        link.remove();
+        notification.showPositive('Downloaded');
+      } catch (error) {
+        notification.showNegative('Download error');
+      }
+    },
+  };
   const parameter: SettingsParameterActions = {
     id: 'actions',
     legend: 'Actions',

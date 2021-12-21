@@ -1,0 +1,34 @@
+@keyframes fade-0-30 {
+  from {
+    @apply opacity-0;
+  }
+
+  to {
+    @apply opacity-30;
+  }
+}
+
+@keyframes fade-0-100 {
+  from {
+    @apply opacity-0;
+  }
+
+  to {
+    @apply opacity-100;
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    margin-right: -100%;
+  }
+
+  to {
+    @apply mr-0;
+  }
+}
+
+:root {
+  --duration-100: 100ms;
+  --duration-300: 300ms;
+}
