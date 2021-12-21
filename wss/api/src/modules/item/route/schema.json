@@ -54,17 +54,6 @@
                             }
                           }
                         },
-                        "packages": {
-                          "type": "object",
-                          "properties": {
-                            "react": {
-                              "type": "string"
-                            },
-                            "vue": {
-                              "type": "string"
-                            }
-                          }
-                        },
                         "snippets": {
                           "type": "object",
                           "properties": {
@@ -112,17 +101,6 @@
                           "type": "object",
                           "properties": {
                             "url": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "packages": {
-                          "type": "object",
-                          "properties": {
-                            "react": {
-                              "type": "string"
-                            },
-                            "vue": {
                               "type": "string"
                             }
                           }

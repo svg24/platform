@@ -89,10 +89,6 @@ declare namespace Api {
       links: {
         url: string;
       };
-      packages: {
-        react: string;
-        vue: string;
-      };
       snippets: {
         css: string;
         jsx: string;

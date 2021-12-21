@@ -7,11 +7,9 @@ import {
   toComponentName,
   toJSX,
   toReactJS,
-  toReactPackage,
   toReactTS,
   toURL,
   toVueJS,
-  toVuePackage,
 } from '../../utils';
 import { addRoute } from './route';
 
@@ -61,10 +59,6 @@ export const item = new (function (this: typeof Item) {
       },
       links: {
         url: toURL(removeExtension(path)),
-      },
-      packages: {
-        react: toReactPackage(component),
-        vue: toVuePackage(component),
       },
       snippets: {
         css: toCSS(buf.toString('base64')),

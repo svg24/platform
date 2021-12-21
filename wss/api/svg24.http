@@ -71,10 +71,6 @@ GET https://api.svg24.dev/v1/item
       "links": {
         "url": ""
       },
-      "packages": {
-        "react": "",
-        "vue": ""
-      },
       "snippets": {
         "css": "",
         "jsx": "",

@@ -37,10 +37,6 @@ declare namespace Item {
     links: {
       url: string;
     };
-    packages: {
-      react: string;
-      vue: string;
-    };
     snippets: {
       css: string;
       jsx: string;

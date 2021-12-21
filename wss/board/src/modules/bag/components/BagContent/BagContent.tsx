@@ -71,34 +71,6 @@ export function BagContent(): JSX.Element {
       },
       file: `${bag.item.data?.file.snake}.txt`,
     }],
-  }, {
-    id: 'packages',
-    heading: 'Packages',
-    items: [{
-      id: 'react',
-      label: 'React',
-      content: {
-        original: bag.item.data?.content.original?.packages.react,
-        square: bag.item.data?.content.square?.packages.react,
-      },
-      file: `${bag.item.data?.file.camel}.jsx`,
-    }, {
-      id: 'react-ts',
-      label: 'React (ts)',
-      content: {
-        original: bag.item.data?.content.original?.packages.react,
-        square: bag.item.data?.content.square?.packages.react,
-      },
-      file: `${bag.item.data?.file.camel}.tsx`,
-    }, {
-      id: 'vue',
-      label: 'Vue',
-      content: {
-        original: bag.item.data?.content.original?.packages.vue,
-        square: bag.item.data?.content.square?.packages.vue,
-      },
-      file: `${bag.item.data?.file.camel}.vue`,
-    }],
   }];
 
   return (
