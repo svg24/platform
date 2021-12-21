@@ -6,8 +6,8 @@
     "node_modules"
   ],
   "references": [{
-    "path": "wss/api"
+    "path": "packages/api"
   }, {
-    "path": "wss/board"
+    "path": "packages/board"
   }]
 }

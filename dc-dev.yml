@@ -8,7 +8,7 @@ services:
     user: node
     command: npm run dev
     volumes:
-      - ./wss/api:/srv/api
+      - ./packages/api:/srv/api
       - /srv/api/node_modules
     environment:
       - NODE_ENV=development
@@ -21,7 +21,7 @@ services:
     user: node
     command: npm run dev
     volumes:
-      - ./wss/board:/srv/board
+      - ./packages/board:/srv/board
       - /srv/board/node_modules
     environment:
       - NODE_ENV=development

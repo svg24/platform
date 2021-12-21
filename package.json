@@ -2,7 +2,7 @@
   "name": "svg24",
   "private": true,
   "workspaces": [
-    "wss/*"
+    "packages/*"
   ],
   "scripts": {
     "lint:editor": "editorconfig-checker",

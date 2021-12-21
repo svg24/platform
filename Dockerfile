@@ -59,7 +59,7 @@ FROM node:16-alpine3.14 as api-deps
 ARG NODE_ENV
 WORKDIR /srv/api
 
-COPY wss/api .
+COPY packages/api .
 RUN \
   apk add mongodb-tools \
   && if [ "$NODE_ENV" = "production" ]; \
@@ -81,8 +81,8 @@ ARG NODE_ENV
 WORKDIR /srv/api
 
 COPY --from=api-deps /srv/api/dist dist
-COPY wss/api/.nodemon-prod.json .nodemon-prod.json
-COPY wss/api/package.json package.json
+COPY packages/api/.nodemon-prod.json .nodemon-prod.json
+COPY packages/api/package.json package.json
 RUN \
   apk add mongodb-tools \
   && npm i \
@@ -96,7 +96,7 @@ FROM node:16-alpine3.14 as board-deps
 ARG NODE_ENV
 WORKDIR /srv/board
 
-COPY wss/board .
+COPY packages/board .
 RUN \
   if [ "$NODE_ENV" = "production" ]; \
     then \
