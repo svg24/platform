@@ -1,13 +1,3 @@
-@keyframes slide-bag {
-  from {
-    margin-right: -100%;
-  }
-
-  to {
-    @apply mr-0;
-  }
-}
-
 .bag-root {
   @apply absolute inset-0 z-10 grid;
 }
@@ -18,11 +8,11 @@
 }
 
 .bag-root_enter::before {
-  animation: fade-0-30 var(--state-animation-ms) forwards;
+  animation: fade-0-30 var(--duration-300) forwards;
 }
 
 .bag-root_exit::before {
-  animation: fade-0-30 var(--state-animation-ms) forwards reverse;
+  animation: fade-0-30 var(--duration-300) forwards reverse;
 }
 
 .bag-root__inner {
@@ -31,9 +21,9 @@
 }
 
 .bag-root_enter .bag-root__inner {
-  animation: slide-bag var(--state-animation-ms) forwards;
+  animation: slide-from-right-100 var(--duration-300) forwards;
 }
 
 .bag-root_exit .bag-root__inner {
-  animation: slide-bag var(--state-animation-ms) forwards reverse;
+  animation: slide-from-right-100 var(--duration-300) forwards reverse;
 }

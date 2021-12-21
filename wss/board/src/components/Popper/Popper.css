@@ -3,11 +3,11 @@
 }
 
 .popper_enter {
-  animation: fade-0-100 100ms forwards;
+  animation: fade-0-100 var(--duration-100) forwards;
 }
 
 .popper_exit {
-  animation: fade-0-100 100ms forwards reverse;
+  animation: fade-0-100 var(--duration-100) forwards reverse;
 }
 
 .popper__header {

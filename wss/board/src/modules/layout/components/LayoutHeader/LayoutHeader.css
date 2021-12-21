@@ -1,13 +1,3 @@
-@keyframes slide-container {
-  from {
-    max-width: 2rem;
-  }
-
-  to {
-    max-width: 5rem;
-  }
-}
-
 .layout-header {
   @apply flex justify-between px-6 py-4;
   grid-area: header;
@@ -43,11 +33,11 @@
 }
 
 .layout-header__filter_counter_enter {
-  animation: slide-container var(--state-animation-ms) forwards;
+  animation: slide-from-2-to-5 var(--duration-300) forwards;
 }
 
 .layout-header__filter_counter_exit {
-  animation: slide-container var(--state-animation-ms) forwards reverse;
+  animation: slide-from-2-to-5 var(--duration-300) forwards reverse;
 }
 
 .layout-header__button {
@@ -69,13 +59,13 @@
 .layout-header__filter_counter_active-enter::before,
 .layout-header__filter_counter_active-enter .layout-header__button:last-of-type,
 .layout-header__filter_counter_active-enter .layout-header__counter {
-  animation: fade-0-100 var(--state-animation-ms) forwards;
+  animation: fade-0-100 var(--duration-300) forwards;
 }
 
 .layout-header__filter_counter_active-exit::before,
 .layout-header__filter_counter_active-exit .layout-header__button:last-of-type,
 .layout-header__filter_counter_active-exit .layout-header__counter {
-  animation: fade-0-100 var(--state-animation-ms) forwards reverse;
+  animation: fade-0-100 var(--duration-300) forwards reverse;
 }
 
 .layout-header__icon {

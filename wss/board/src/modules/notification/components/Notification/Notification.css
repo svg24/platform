@@ -17,11 +17,11 @@
 }
 
 .notification_top-right.notification_enter {
-  animation: slide-from-right var(--duration-300) forwards;
+  animation: slide-from-right-100 var(--duration-300) forwards;
 }
 
 .notification_top-right.notification_exit {
-  animation: slide-from-right var(--duration-300) forwards reverse;
+  animation: slide-from-right-100 var(--duration-300) forwards reverse;
 }
 
 .notification__content {

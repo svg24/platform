@@ -1,13 +1,3 @@
-@keyframes slide-filter {
-  from {
-    @apply -ml-60;
-  }
-
-  to {
-    @apply -ml-0;
-  }
-}
-
 .layout-main {
   @apply grid px-6 overflow-hidden gap-x-6;
   grid-area: main;

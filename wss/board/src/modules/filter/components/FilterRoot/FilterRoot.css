@@ -3,11 +3,11 @@
 }
 
 .layout-main_filter_enter .filter-root {
-  animation: slide-filter var(--state-animation-ms) forwards;
+  animation: slide-from-left-60 var(--duration-300) forwards;
 }
 
 .layout-main_filter_exit .filter-root {
-  animation: slide-filter var(--state-animation-ms) forwards reverse;
+  animation: slide-from-left-60 var(--duration-300) forwards reverse;
 }
 
 .filter-root .filter-parameter:nth-last-child(2) {

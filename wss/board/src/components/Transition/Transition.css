@@ -18,13 +18,33 @@
   }
 }
 
-@keyframes slide-from-right {
+@keyframes slide-from-right-100 {
   from {
     margin-right: -100%;
   }
 
   to {
     @apply mr-0;
+  }
+}
+
+@keyframes slide-from-left-60 {
+  from {
+    @apply -ml-60;
+  }
+
+  to {
+    @apply ml-0;
+  }
+}
+
+@keyframes slide-from-2-to-5 {
+  from {
+    max-width: 2rem;
+  }
+
+  to {
+    max-width: 5rem;
   }
 }
 
