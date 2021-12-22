@@ -1,7 +1,9 @@
-@import url('./assets/styles/reset.css');
-@import url('./assets/styles/fonts.css');
-@import url('./assets/styles/colors.css');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input,
+button {
+  font-weight: inherit;
+  letter-spacing: inherit;
+}

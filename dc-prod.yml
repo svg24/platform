@@ -7,8 +7,8 @@ services:
         - IS_PROD=true
     volumes:
       - dhparam:/etc/ssl/certs
-      - svg24_certbot-etc:/etc/letsencrypt
-      - svg24_certbot-lib:/var/lib/letsencrypt
+      - platform_certbot-etc:/etc/letsencrypt
+      - platform_certbot-lib:/var/lib/letsencrypt
     ports:
       - '443:443'
 
@@ -19,7 +19,7 @@ volumes:
       type: none
       device: /etc/ssl/certs
       o: bind
-  svg24_certbot-etc:
+  platform_certbot-etc:
     external: true
-  svg24_certbot-lib:
+  platform_certbot-lib:
     external: true

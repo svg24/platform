@@ -2,20 +2,20 @@ version: '3.8'
 
 services:
   certbot:
-    image: certbot/certbot
     container_name: svg24-certbot
+    image: certbot/certbot
+    depends_on:
+      - nginx
     networks:
       nginx:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-lib:/var/lib/letsencrypt
-      - svg24_board-srv:/srv/board
-    depends_on:
-      - nginx
+      - platform_board-srv:/srv/board
     command: certonly --webroot --webroot-path=/srv/board --email vanyauhalin@gmail.com --agree-tos --no-eff-email -d svg24.dev -d board.svg24.dev
 
 volumes:
   certbot-etc:
   certbot-lib:
-  svg24_board-srv:
+  platform_board-srv:
     external: true

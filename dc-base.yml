@@ -2,12 +2,12 @@ version: '3.8'
 
 services:
   db:
+    container_name: platform-db
     build:
       context: .
       target: db
       args:
         - DB_TARBALL=https://github.com/svg24/collection/tarball/main
-    container_name: svg24-db
     restart: unless-stopped
     networks:
       nginx:
@@ -20,12 +20,12 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=app
 
   api:
-    container_name: svg24-api
+    container_name: platform-api
+    depends_on:
+      - db
     restart: unless-stopped
     networks:
       nginx:
-    depends_on:
-      - db
     working_dir: /srv/api
     volumes:
       - db-srv:/srv/db
@@ -37,27 +37,38 @@ services:
       - DB_PORT=27017
       - DB_USER=app
 
+  assets:
+    container_name: platform-assets
+    restart: unless-stopped
+    networks:
+      nginx:
+    working_dir: /srv/assets
+    user: node
+    command: npm run prod
+    environment:
+      - ASSETS_PORT=3000
+
   board:
-    container_name: svg24-board
+    container_name: platform-board
     networks:
       nginx:
     working_dir: /srv/board
 
   nginx:
+    container_name: platform-nginx
     build:
       context: .
       target: nginx
       args:
         - DOMAIN=svg24.dev
-    container_name: svg24-nginx
-    restart: unless-stopped
-    ports:
-      - '80:80'
-    networks:
-      nginx:
     depends_on:
       - api
       - board
+    restart: unless-stopped
+    networks:
+      nginx:
+    ports:
+      - '80:80'
     command: nginx -g 'daemon off;'
 
 networks:

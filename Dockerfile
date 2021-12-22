@@ -4,7 +4,6 @@
 
 FROM alpine:3.14 as db-deps
 ARG DB_TARBALL
-
 RUN \
   apk add --no-cache --virtual .deps curl jq \
   # Download collections
@@ -16,14 +15,9 @@ RUN \
       && for json in $(find . ! -path .); do \
         echo $(jq -r '.[]' $json) > $json; done
 
-#
-# DB
-#
-
 FROM mongo:5.0 as db
 ARG DB_TARBALL
 WORKDIR /srv/db
-
 COPY --from=db-deps /srv/db .
 
 #
@@ -37,10 +31,10 @@ ENV \
   USER_UID=1001 \
   GROUP_NAME=docker \
   GROUP_GID=999
-
 RUN \
   # Create docker group
-  delgroup ping && addgroup -g 998 ping \
+  delgroup ping \
+  && addgroup -g 998 ping \
   && addgroup -g $GROUP_GID $GROUP_NAME \
   # Create app user
   && mkdir -p /home/$USER_NAME \
@@ -52,13 +46,12 @@ RUN \
   && chown -R $USER_NAME:$USER_NAME /srv
 
 #
-# API deps
+# API
 #
 
 FROM node:16-alpine3.14 as api-deps
 ARG NODE_ENV
 WORKDIR /srv/api
-
 COPY packages/api .
 RUN \
   apk add mongodb-tools \
@@ -72,14 +65,9 @@ RUN \
     fi \
   && chown -R node:node .
 
-#
-# API prod
-#
-
 FROM node:16-alpine3.14 as api-prod
 ARG NODE_ENV
 WORKDIR /srv/api
-
 COPY --from=api-deps /srv/api/dist dist
 COPY packages/api/.nodemon-prod.json .nodemon-prod.json
 COPY packages/api/package.json package.json
@@ -89,13 +77,40 @@ RUN \
   && chown -R node:node .
 
 #
-# Board deps
+# Assets
+#
+
+FROM node:16-alpine3.14 as assets-deps
+ARG NODE_ENV
+WORKDIR /srv/assets
+COPY packages/assets .
+RUN \
+  if [ "$NODE_ENV" = "production" ]; \
+    then \
+      npm i --include dev \
+      && npm run test \
+      && npm run build; \
+    else \
+      npm i; \
+    fi \
+  && chown -R node:node .
+
+FROM node:16-alpine3.14 as assets
+ARG NODE_ENV
+WORKDIR /srv/assets
+COPY --from=assets-deps /srv/assets/dist dist
+COPY packages/assets/package.json package.json
+RUN \
+  npm i \
+  && chown -R node:node .
+
+#
+# Board
 #
 
 FROM node:16-alpine3.14 as board-deps
 ARG NODE_ENV
 WORKDIR /srv/board
-
 COPY packages/board .
 RUN \
   if [ "$NODE_ENV" = "production" ]; \
@@ -108,14 +123,9 @@ RUN \
     fi \
   && chown -R node:node .
 
-#
-# Board prod
-#
-
 FROM base as board-prod
 ARG NODE_ENV
 WORKDIR /srv/board
-
 COPY --from=board-deps /srv/board/dist .
 RUN chown -R $USER_NAME:$USER_NAME .
 
@@ -128,7 +138,6 @@ ENV \
   NGINX_VERSION=1.21.3 \
   # NGX_BROTLI_VERSION=1.0.9
   NGX_BROTLI_COMMIT=9aec15e2aa6feea2113119ba06460af70ab3ea62
-
 RUN \
   # Install deps
   apk add --no-cache --virtual .deps \
@@ -145,7 +154,7 @@ RUN \
     && cd ngx_brotli \
       && git checkout $NGX_BROTLI_COMMIT \
       && git reset --hard \
-    # Add module
+      # Add module
       && cd ../nginx-$NGINX_VERSION \
         && ./configure \
           --with-compat \
@@ -163,7 +172,6 @@ ARG IS_DEV
 ARG IS_PREV
 ARG IS_PROD
 WORKDIR /srv/nginx
-
 COPY --from=nginx-brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
 COPY --from=nginx-brotli /usr/local/nginx/modules /usr/local/nginx/modules
 COPY nginx/* .

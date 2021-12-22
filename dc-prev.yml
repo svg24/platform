@@ -7,10 +7,15 @@ services:
       target: api-prod
       args:
         - NODE_ENV=production
-    user: node
-    command: npm run prod
     environment:
       - NODE_ENV=production
+    user: node
+    command: npm run prod
+
+  assets:
+    build:
+      args:
+        - NODE_ENV=production
 
   board:
     build:
@@ -18,11 +23,11 @@ services:
       target: board-prod
       args:
         - NODE_ENV=production
-    user: app
     volumes:
       - board-srv:/srv/board
     environment:
       - NODE_ENV=production
+    user: app
 
   nginx:
     build:

@@ -5,11 +5,21 @@ services:
     build:
       context: .
       target: api-deps
-    user: node
-    command: npm run dev
     volumes:
       - ./packages/api:/srv/api
       - /srv/api/node_modules
+    environment:
+      - NODE_ENV=development
+    user: node
+    command: npm run dev
+
+  assets:
+    build:
+      context: .
+      target: assets-deps
+    volumes:
+      - ./packages/assets:/srv/assets
+      - /srv/assets/node_modules
     environment:
       - NODE_ENV=development
 
@@ -18,8 +28,6 @@ services:
       context: .
       target: board-deps
     restart: unless-stopped
-    user: node
-    command: npm run dev
     volumes:
       - ./packages/board:/srv/board
       - /srv/board/node_modules
@@ -31,6 +39,8 @@ services:
       - BOARD_HMR_PROTOCOL=ws
       - BOARD_HOST=0.0.0.0
       - BOARD_PORT=3000
+    user: node
+    command: npm run dev
 
   nginx:
     build:
