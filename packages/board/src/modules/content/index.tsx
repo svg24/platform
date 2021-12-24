@@ -16,7 +16,7 @@ function Content(): JSX.Element {
     el: observer(() => (
       content.list.response.data.isItems
       || content.list.response.meta.page.hasNext
-        ? <></>
+        ? null
         : <ContentNoFound />
     )),
   };
@@ -100,7 +100,7 @@ function Content(): JSX.Element {
             ))}
           </ContentList>
         )
-        : <></>
+        : null
     )),
   };
 

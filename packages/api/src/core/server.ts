@@ -1,7 +1,7 @@
 import fastify from 'fastify';
-import type Server from 'types/server';
+import type TServer from 'types/server';
 
-export const server = new (function (this: typeof Server) {
+export const server = new (function Server(this: typeof TServer) {
   Object.defineProperties(this, {
     options: {
       enumerable: true,
@@ -25,4 +25,4 @@ export const server = new (function (this: typeof Server) {
     }
   };
   this.beatify = (value) => JSON.stringify(value, null, 2);
-} as any as { new (): typeof Server })();
+} as any as { new (): typeof TServer })();

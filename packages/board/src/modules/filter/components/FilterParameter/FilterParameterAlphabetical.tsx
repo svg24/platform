@@ -10,13 +10,13 @@ import type {
   ParameterAlphabeticalParameter,
 } from 'types/filter';
 
-const FilterParameterAlphabeticalItem = ({
+function FilterParameterAlphabeticalItem({
   children,
   letter,
 }: {
   children: JSX.Element[];
   letter: string;
-}): JSX.Element => {
+}): JSX.Element {
   const container = {
     ref: useRef<HTMLDivElement>(null),
     _isCollapsed: useState(true),
@@ -89,10 +89,10 @@ const FilterParameterAlphabeticalItem = ({
               : ChevronUpIcon)({ className: 'filter-parameter__icon' })}
           </button>
         )
-        : <></>}
+        : null}
     </li>
   );
-};
+}
 
 export function FilterParameterAlphabetical({
   onClick,

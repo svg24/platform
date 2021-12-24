@@ -4,7 +4,7 @@ import { FilterStore } from 'src/modules/filter';
 import { Layout } from 'src/modules/layout';
 import { Notification } from 'src/modules/notification';
 
-export function Home(): JSX.Element {
+export function Home(): JSX.Element | null {
   const isMounted = useState(false);
 
   useEffect(() => {
@@ -22,5 +22,5 @@ export function Home(): JSX.Element {
         <Notification />
       </>
     )
-    : <></>;
+    : null;
 }

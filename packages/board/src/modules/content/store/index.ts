@@ -3,7 +3,7 @@ import { initItem } from './item';
 import { initList } from './list';
 import { initSentinel } from './sentinel';
 
-export const ContentStore = new (function (this: Store) {
+export const ContentStore = new (function ContentStore(this: Store) {
   initList.call(this);
   initItem.call(this);
   initSentinel.call(this);

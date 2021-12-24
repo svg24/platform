@@ -1,6 +1,6 @@
 import { useStore } from 'src/store';
 
-export function BagViewWithoutThumbs(): JSX.Element {
+export function BagViewWithoutThumbs(): JSX.Element | null {
   const { bag } = useStore();
   const svg = bag.item.data?.content.original?.snippets.svg;
 
@@ -11,6 +11,6 @@ export function BagViewWithoutThumbs(): JSX.Element {
         dangerouslySetInnerHTML={{ __html: svg }}
       />
     )
-    : <></>
+    : null
   );
 }

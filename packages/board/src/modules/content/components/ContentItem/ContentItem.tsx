@@ -36,7 +36,7 @@ export function ContentItem({
         />
         {item.hasMore
           ? <DotsVerticalIcon className="content-item__icon" />
-          : <></>}
+          : null}
       </div>
       <h3 className="content-item__heading">
         <button

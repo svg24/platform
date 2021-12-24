@@ -1,9 +1,9 @@
 import { promises as fs } from 'fs';
-import type Content from 'types/content';
+import type TContent from 'types/content';
 import { db } from '../../core';
 import { addRoute } from './route';
 
-export const content = new (function (this: typeof Content) {
+export const content = new (function Content(this: typeof TContent) {
   Object.defineProperty(this, 'options', {
     enumerable: true,
     value: {
@@ -18,4 +18,4 @@ export const content = new (function (this: typeof Content) {
     const buf = await fs.readFile(`${db.options.local}/${id}/${name}.svg`);
     return buf.toString();
   };
-} as any as { new (): typeof Content })();
+} as any as { new (): typeof TContent })();

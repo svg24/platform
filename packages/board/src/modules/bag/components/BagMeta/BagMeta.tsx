@@ -18,7 +18,7 @@ export function BagMeta(): JSX.Element {
             .
           </p>
         )
-        : <></>}
+        : null}
       <List>
         <BagMetaGeneral />
         <BagMetaIndividual />

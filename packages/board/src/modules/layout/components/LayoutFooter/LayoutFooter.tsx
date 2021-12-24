@@ -21,10 +21,12 @@ const links = [{
 
 export function LayoutFooter(): JSX.Element {
   const { content } = useStore();
-  const meta = {
-    showed: observer(() => <>{content.list.response.meta.length.current}</>),
-    total: observer(() => <>{content.list.response.meta.length.total}</>),
-  };
+  const MetaShowedObserved = observer((): any => (
+    content.list.response.meta.length.current
+  ));
+  const MetaTotalObserved = observer((): any => (
+    content.list.response.meta.length.total
+  ));
 
   return (
     <footer className="layout-footer">
@@ -38,9 +40,9 @@ export function LayoutFooter(): JSX.Element {
         </a>
       ))}
       <p className="layout-footer__meta">
-        <meta.showed />
+        <MetaShowedObserved />
         {'\n/\n'}
-        <meta.total />
+        <MetaTotalObserved />
       </p>
     </footer>
   );

@@ -1,10 +1,10 @@
 import { promises as fs } from 'fs';
 import mongoose from 'mongoose';
-import type List from 'types/list';
+import type TList from 'types/list';
 import { db } from '../../core';
 import { addRoute } from './route';
 
-export const list = new (function (this: typeof List) {
+export const list = new (function List(this: typeof TList) {
   Object.defineProperties(this, {
     schema: {
       enumerable: true,
@@ -48,4 +48,4 @@ export const list = new (function (this: typeof List) {
     const buf = await fs.readFile(`${db.options.local}${id}/${id}.svg`);
     return buf.toString();
   };
-} as any as { new (): typeof List })();
+} as any as { new (): typeof TList })();

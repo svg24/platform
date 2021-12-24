@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import type Simple from 'types/simple';
+import type TSimple from 'types/simple';
 import { addRoute } from './route';
 
-const createSimple = (collection: string): typeof Simple => (
-  new (function (this: typeof Simple) {
+const createSimple = (collection: string): typeof TSimple => (
+  new (function Simple(this: typeof TSimple) {
     Object.defineProperty(this, 'schema', {
       enumerable: true,
       value: new mongoose.Schema({
@@ -27,7 +27,7 @@ const createSimple = (collection: string): typeof Simple => (
     this.plugin = async (inst) => {
       addRoute.call(this, inst);
     };
-  } as any as { new (): typeof Simple })()
+  } as any as { new (): typeof TSimple })()
 );
 
 export const categories = createSimple('categories');

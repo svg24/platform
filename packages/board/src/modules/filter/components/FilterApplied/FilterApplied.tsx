@@ -2,11 +2,11 @@ import { XIcon } from '@heroicons/react/outline';
 import { useStore } from 'src/store';
 import type { AppliedParameters } from 'types/filter';
 
-export const FilterApplied = ({
+export function FilterApplied({
   parameters,
 }: {
   parameters: AppliedParameters;
-}): JSX.Element => {
+}): JSX.Element {
   const { content } = useStore();
 
   return (
@@ -46,4 +46,4 @@ export const FilterApplied = ({
         )}
     </fieldset>
   );
-};
+}

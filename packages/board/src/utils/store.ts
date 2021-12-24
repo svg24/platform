@@ -22,10 +22,10 @@ export function initStoreVisible<I extends Visible>(this: I): void {
     },
   });
 
-  this.show = function () {
+  this.show = function show() {
     this.isVisible = true;
   };
-  this.hide = function () {
+  this.hide = function hide() {
     this.isVisible = false;
   };
 
@@ -50,14 +50,14 @@ export function initStoreFormParameter<
     },
   });
 
-  this.value.checkIsCurrent = function (id) {
+  this.value.checkIsCurrent = function checkIsCurrent(id) {
     return this.current?.id === id;
   };
 
-  this.set = function (option) {
+  this.set = function set(option) {
     this.value.current = option;
   };
-  this.reset = function () {
+  this.reset = function reset() {
     this.value.current = this.value._default;
   };
 

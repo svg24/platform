@@ -2,7 +2,7 @@ import { Store as RootStore } from 'src/store';
 import { debounce, escapeString } from 'src/utils';
 import type { Store } from 'types/search';
 
-export const SearchStore = new (function (this: Store) {
+export const SearchStore = new (function SearchStore(this: Store) {
   this.value = {
     _default: null,
     _previous: null,

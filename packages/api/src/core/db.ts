@@ -1,9 +1,9 @@
 import child from 'child_process';
 import util from 'util';
 import mongoose from 'mongoose';
-import type DataBase from 'types/db';
+import type TDataBase from 'types/db';
 
-export const db = new (function (this: typeof DataBase) {
+export const db = new (function DataBase(this: typeof TDataBase) {
   Object.defineProperty(this, 'options', {
     enumerable: true,
     value: {
@@ -55,4 +55,4 @@ export const db = new (function (this: typeof DataBase) {
       }, 3000);
     }
   };
-} as any as { new (): typeof DataBase })();
+} as any as { new (): typeof TDataBase })();

@@ -153,6 +153,10 @@ const overriddenPackageBoard = {
       assert: 'nesting',
       depth: 25,
     }],
+    'react/function-component-definition': ['error', {
+      namedComponents: 'function-declaration',
+      unnamedComponents: 'function-expression',
+    }],
     'react/jsx-filename-extension': [1, {
       extensions: ['tsx'],
     }],

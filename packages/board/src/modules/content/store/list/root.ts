@@ -8,14 +8,14 @@ export function initListRoot(this: Store): void {
     value: {},
   });
 
-  this.list.upload = async function () {
+  this.list.upload = async function upload() {
     const res = await this.fetch();
 
     this.response.meta.set(res.meta);
     this.response.data.add(res.data);
   };
 
-  this.list.reset = async function () {
+  this.list.reset = async function reset() {
     this.response.meta.page.reset();
 
     const res = await this.fetch(
@@ -30,7 +30,7 @@ export function initListRoot(this: Store): void {
     this.response.data.add(res.data);
   };
 
-  this.list.fetch = async function (multiplier) {
+  this.list.fetch = async function fetch(multiplier) {
     const name = RootStore.search.value.current;
     const res = await api.list({
       ...Object.fromEntries([
