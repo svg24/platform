@@ -3,34 +3,33 @@ version: '3.8'
 services:
   api:
     build:
-      context: .
       target: api-deps
     volumes:
-      - ./packages/api:/srv/api
-      - /srv/api/node_modules
+      - ./packages/api:/srv/packages/api
+      - /srv/packages/api/node_modules
     environment:
       - NODE_ENV=development
     user: node
-    command: npm run dev
+    command: npm run dev:api
 
   assets:
     build:
-      context: .
       target: assets-deps
     volumes:
-      - ./packages/assets:/srv/assets
-      - /srv/assets/node_modules
+      - ./packages/assets:/srv/packages/assets
+      - /srv/packages/assets/node_modules
     environment:
       - NODE_ENV=development
+    user: node
+    command: npm run dev:assets
 
   board:
     build:
-      context: .
       target: board-deps
     restart: unless-stopped
     volumes:
-      - ./packages/board:/srv/board
-      - /srv/board/node_modules
+      - ./packages/board:/srv/packages/board
+      - /srv/packages/board/node_modules
     environment:
       - NODE_ENV=development
       - BOARD_HMR_HOST=localhost
@@ -40,9 +39,8 @@ services:
       - BOARD_HOST=0.0.0.0
       - BOARD_PORT=3000
     user: node
-    command: npm run dev
+    command: npm run dev:board
 
   nginx:
     build:
-      args:
-        - IS_DEV=true
+      target: nginx-dev

@@ -1,7 +1,0 @@
-{
-  "exec": "npm run build && node --experimental-specifier-resolution=node --experimental-import-meta-resolve dist/src",
-  "ext": "ts",
-  "watch": [
-    "src"
-  ]
-}

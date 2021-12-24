@@ -1,13 +1,15 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "references": [{
-    "path": "packages/api"
-  }, {
-    "path": "packages/board"
-  }]
+  "extends": "./tsconfig.base.json",
+  "exclude": ["node_modules"],
+  "include": [
+    "packages/api/src/**/*.ts",
+    "packages/api/src/**/*.json",
+    "packages/api/types/*.d.ts",
+    "packages/assets/src/**/*.ts",
+    "packages/assets/types/*.d.ts",
+    "packages/board/src/**/*.ts",
+    "packages/board/src/**/*.tsx",
+    "packages/board/types/*.d.ts",
+    "packages/board/vite.config.ts"
+  ]
 }

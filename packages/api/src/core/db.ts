@@ -7,7 +7,7 @@ export const db = new (function (this: typeof DataBase) {
   Object.defineProperty(this, 'options', {
     enumerable: true,
     value: {
-      local: '/srv/db/packages/vanilla/',
+      local: '/srv/packages/db/packages/vanilla/',
       name: process.env.DB_NAME,
       pass: process.env.DB_PASS,
       uri: `mongodb://db:${process.env.DB_PORT}/?authSource=admin`,
@@ -30,7 +30,7 @@ export const db = new (function (this: typeof DataBase) {
             --password ${this.options.pass} \
             --db ${this.options.name} \
             --collection ${file.replace('.json', '')} \
-            --file /srv/db/data/${file} \
+            --file /srv/packages/db/data/${file} \
             --drop;
         `);
       }));

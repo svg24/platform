@@ -1,76 +1,21 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    /**
-     * Type Checking
-     */
-
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strict": true,
-
-    /**
-     * Modules
-     */
-
     "baseUrl": ".",
-    "module": "es6",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "rootDir": ".",
-    "typeRoots": [
-      "types"
-    ],
     "types": [
       "mocha",
       "node",
       "supertest"
     ],
-
-    /**
-     * Emit
-     */
-
     "outDir": "dist",
     "removeComments": true,
-
-    /**
-     * Interop Constraints
-     */
-
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    /**
-     * Backwards Compatibility
-     */
-
-    "keyofStringsOnly": true,
-
-    /**
-     * Language and Environment
-     */
-
-    "target": "es2021",
-
-    /**
-     * Projects
-     */
-
-    "composite": true
+    "esModuleInterop": true
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.d.ts",
     "src/**/*.json",
-    "tests/*.test.ts",
     "types/*.d.ts"
   ]
 }

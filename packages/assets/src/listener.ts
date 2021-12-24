@@ -10,7 +10,7 @@ export function listener(req: IncomingMessage, res: ServerResponse): void {
     return;
   }
 
-  const path = `data${req.url}`;
+  const path = `packages/assets/data${req.url}`;
 
   if (!existsSync(path)) {
     showForbiddance(res);

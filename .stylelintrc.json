@@ -83,9 +83,7 @@
     "no-eol-whitespace": true,
     "no-missing-end-of-source-newline": true,
     "no-empty-first-line": true,
-    "order/order": [
-      "declarations"
-    ],
+    "order/order": ["declarations"],
     "order/properties-alphabetical-order": true
   }
 }
