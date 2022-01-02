@@ -1,4 +1,6 @@
 import type { ServerResponse } from 'http';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 function showForbiddance(res: ServerResponse): void {
   res.writeHead(403);
@@ -10,7 +12,12 @@ function showRequest(res: ServerResponse, type: string, data: Buffer): void {
   res.end(data, 'utf-8');
 }
 
+function getRootPath(): string {
+  return dirname(fileURLToPath(import.meta.url)).replace('src', '');
+}
+
 export {
+  getRootPath,
   showForbiddance,
   showRequest,
 };

@@ -2,7 +2,7 @@ import { existsSync, readFile, statSync } from 'fs';
 import type { IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'path';
 import { MimeTypes } from './constants';
-import { showForbiddance, showRequest } from './utils';
+import { getRootPath, showForbiddance, showRequest } from './utils';
 
 export function listener(req: IncomingMessage, res: ServerResponse): void {
   if (!req.url) {
@@ -10,7 +10,7 @@ export function listener(req: IncomingMessage, res: ServerResponse): void {
     return;
   }
 
-  const path = `packages/assets/data${req.url}`;
+  const path = `${getRootPath()}/${req.url}`;
 
   if (!existsSync(path)) {
     showForbiddance(res);
@@ -28,8 +28,7 @@ export function listener(req: IncomingMessage, res: ServerResponse): void {
       return;
     }
 
-    const { ext } = parse(path);
-    const type = MimeTypes[ext];
+    const type = MimeTypes[parse(path).ext];
 
     if (!type) {
       showForbiddance(res);

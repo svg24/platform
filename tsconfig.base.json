@@ -11,7 +11,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
-    "module": "es6",
+    "module": "es2020",
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "keyofStringsOnly": true,
