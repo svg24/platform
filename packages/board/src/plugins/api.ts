@@ -17,7 +17,7 @@ const sortBy = {
 };
 
 async function getResponse<T>(method: string): Promise<T> {
-  const res = await fetch(`/api/v1/${method}`);
+  const res = await fetch(`https://api.svg24.dev/v1/${method}`);
   const json = await res.json();
   return json;
 }

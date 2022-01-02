@@ -3,7 +3,7 @@
   font-family: 'Chillax';
   font-style: normal;
   font-weight: 500;
-  src: url('/assets/fonts/Chillax-Medium.woff2') format('woff2');
+  src: url('../fonts/Chillax-Medium.woff2') format('woff2');
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-family: 'Chillax';
   font-style: normal;
   font-weight: 600;
-  src: url('/assets/fonts/Chillax-Semibold.woff2') format('woff2');
+  src: url('../fonts/Chillax-Semibold.woff2') format('woff2');
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-family: 'Chillax';
   font-style: normal;
   font-weight: 700;
-  src: url('/assets/fonts/Chillax-Bold.woff2') format('woff2');
+  src: url('../fonts/Chillax-Bold.woff2') format('woff2');
 }
 
 :root {

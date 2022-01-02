@@ -4,7 +4,7 @@
 
 .bag-view__main {
   @apply mb-2 rounded-lg h-52;
-  background-image: url('/assets/images/pattern.svg');
+  background-image: url('https://assets.svg24.dev/images/pattern.svg');
 }
 
 .bag-view__btn {
@@ -33,7 +33,7 @@
 
 .bag-view > .bag-view__slide {
   @apply rounded-lg h-52;
-  background-image: url('/assets/images/pattern.svg');
+  background-image: url('https://assets.svg24.dev/images/pattern.svg');
 }
 
 .bag-view__main .bag-view__slide {
@@ -42,7 +42,7 @@
 
 .bag-view__thumbs .bag-view__slide {
   @apply h-20 duration-100 border-2 border-transparent rounded-lg cursor-pointer;
-  background-image: url('/assets/images/pattern.svg');
+  background-image: url('https://assets.svg24.dev/images/pattern.svg');
 }
 
 .bag-view > .bag-view__slide > svg,

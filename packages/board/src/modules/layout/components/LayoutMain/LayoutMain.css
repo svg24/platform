@@ -11,7 +11,7 @@
 
 .layout-main__container {
   @apply grid w-full col-start-1 col-end-2 row-start-1 row-end-2 overflow-y-scroll rounded-lg;
-  background-image: url('/assets/images/pattern.svg');
+  background-image: url('https://assets.svg24.dev/images/pattern.svg');
 }
 
 .layout-main_filter_active-enter .layout-main__container,
