@@ -69,6 +69,20 @@ services:
     container_name: platform-board
     build:
       context: .
+    restart: unless-stopped
+    depends_on:
+      - root
+    networks:
+      nginx:
+    working_dir: /srv
+    volumes:
+      - root:/srv
+
+  www:
+    container_name: platform-www
+    build:
+      context: .
+    restart: unless-stopped
     depends_on:
       - root
     networks:

@@ -80,6 +80,7 @@ COPY tsconfig.json tsconfig.json
 COPY packages/api/package.json packages/api/package.json
 COPY packages/assets/package.json packages/assets/package.json
 COPY packages/board/package.json packages/board/package.json
+COPY packages/www/package.json packages/www/package.json
 RUN \
   npm i \
   && rm -rf packages \
@@ -117,7 +118,17 @@ WORKDIR /srv/packages/board
 COPY packages/board .
 RUN \
   mkdir node_modules \
-  && chown -R node:node /srv
+  && chown -R node:node .
+
+#
+# WWW
+#
+
+FROM node-base as www-deps
+ARG NODE_ENV
+WORKDIR /srv/packages/www
+COPY packages/www .
+RUN chown -R node:node .
 
 #
 # Nginx

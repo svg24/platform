@@ -27,7 +27,7 @@ function getParserOptions(pack) {
 
 const overriddenAirbnbRules = {
   'import/no-extraneous-dependencies': ['error', {
-    devDependencies: ['packages/*/*.{cjs,ts}'],
+    devDependencies: ['packages/*/*.{js,cjs,ts}'],
   }],
   'import/order': ['error', {
     alphabetize: {
@@ -42,7 +42,10 @@ const overriddenAirbnbRules = {
 };
 
 const overriddenJS = {
-  files: ['**/*.cjs'],
+  files: ['**/*.js', '**/*.cjs'],
+  parserOptions: {
+    ecmaVersion: 2021,
+  },
   extends: 'airbnb-base',
   rules: overriddenAirbnbRules,
 };

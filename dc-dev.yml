@@ -40,6 +40,17 @@ services:
     user: node
     command: npm run dev:board
 
+  www:
+    build:
+      target: www-deps
+    volumes:
+      - ./packages/www:/srv/packages/www
+      - /srv/packages/www/node_modules
+    environment:
+      - NODE_ENV=development
+    user: node
+    command: npm run dev:www
+
   nginx:
     build:
       target: nginx-dev
