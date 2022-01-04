@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "devDependencies": {
-    "csso": "^5.0.2",
-    "gulp": "^4.0.2",
-    "html-minifier": "^4.0.0"
-  },
   "engines": {
     "node": ">=16",
     "yarn": ">=1"

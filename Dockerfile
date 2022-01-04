@@ -73,6 +73,7 @@ WORKDIR /srv
 COPY .editorconfig .editorconfig
 COPY .eslintignore .eslintignore
 COPY .eslintrc.cjs .eslintrc.cjs
+COPY gulpfile.js gulpfile.js
 COPY package.json package.json
 COPY tsconfig.base.json tsconfig.base.json
 COPY tsconfig.json tsconfig.json
