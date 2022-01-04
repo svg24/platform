@@ -1,5 +1,6 @@
 {
   "name": "@svg24/api",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -12,7 +13,7 @@
     "supertest": "^6.1.6"
   },
   "engines": {
-    "node": ">=16.6.2",
-    "npm": ">=7.20.6"
+    "node": ">=16",
+    "yarn": ">=1"
   }
 }

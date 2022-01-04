@@ -1,33 +1,34 @@
 {
   "name": "svg24",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build:api": "npm run tsc:api",
-    "build:assets": "npm run tsc:assets && gulp --cwd packages/assets build",
-    "build:board": "npm run tsc:board && vite build packages/board",
-    "dev:api": "nodemon --exec 'npm run build:api && npm run node:api' --ext ts --watch packages/api/src",
-    "dev:assets": "npm run build:assets && npm run node:assets",
-    "dev:board": "vite packages/board",
-    "dev:www": "gulp --cwd packages/www serve",
-    "lint:commit": "lint-staged",
-    "lint:css": "npm run lint:css:assets && npm run lint:css:board",
-    "lint:css:assets": "stylelint packages/assets/src/styles/*.css",
-    "lint:css:board": "stylelint packages/board/src/**/*.css",
-    "lint:editor": "editorconfig-checker",
-    "lint:ts": "npm run lint:ts:api && npm run lint:ts:assets && npm run lint:ts:board",
-    "lint:ts:api": "eslint packages/api/**/*.{ts,d.ts}",
-    "lint:ts:assets": "eslint packages/assets/src/*.ts",
-    "lint:ts:board": "eslint packages/board/**/*.{ts,tsx,d.ts}",
-    "node:api": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/api/dist",
-    "node:assets": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/assets/dist",
-    "prod:api": "nodemon --exec 'npm run build:api && npm run node:api' --ext js",
-    "tsc:api": "tsc --project packages/api/tsconfig.json",
-    "tsc:assets": "tsc --project packages/assets/tsconfig.json",
-    "tsc:board": "tsc --project packages/board/tsconfig.json"
+    "build-api": "yarn tsc-api",
+    "build-assets": "yarn tsc-assets && gulp --cwd packages/assets build",
+    "build-board": "yarn tsc-board && vite build packages/board",
+    "dev-api": "nodemon --exec 'yarn build-api && yarn node-api' --ext ts --watch packages/api/src",
+    "dev-assets": "yarn build-assets && yarn node-assets",
+    "dev-board": "vite packages/board",
+    "dev-www": "gulp --cwd packages/www serve",
+    "lint-css": "yarn lint-css-assets && yarn lint-css-board",
+    "lint-css-assets": "stylelint packages/assets/src/styles/*.css",
+    "lint-css-board": "stylelint packages/board/src/**/*.css",
+    "lint-editor": "editorconfig-checker",
+    "lint-staged": "lint-staged",
+    "lint-ts": "yarn lint-ts-api && yarn lint-ts-assets && yarn lint-ts-board",
+    "lint-ts-api": "eslint packages/api/**/*.{ts,d.ts}",
+    "lint-ts-assets": "eslint packages/assets/src/*.ts",
+    "lint-ts-board": "eslint packages/board/**/*.{ts,tsx,d.ts}",
+    "node-api": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/api/dist",
+    "node-assets": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/assets/dist",
+    "prod-api": "nodemon --exec 'yarn build-api && yarn node-api' --ext js",
+    "tsc-api": "tsc --project packages/api/tsconfig.json",
+    "tsc-assets": "tsc --project packages/assets/tsconfig.json",
+    "tsc-board": "tsc --project packages/board/tsconfig.json"
   },
   "devDependencies": {
     "@types/mocha": "^9.0.0",
@@ -49,7 +50,7 @@
     "typescript": "^4.4.4"
   },
   "engines": {
-    "node": ">=16.6.2",
-    "npm": ">=7.20.6"
+    "node": ">=16",
+    "yarn": ">=1"
   }
 }

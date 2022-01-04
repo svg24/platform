@@ -73,17 +73,16 @@ WORKDIR /srv
 COPY .editorconfig .editorconfig
 COPY .eslintignore .eslintignore
 COPY .eslintrc.cjs .eslintrc.cjs
-COPY package-lock.json package-lock.json
 COPY package.json package.json
 COPY tsconfig.base.json tsconfig.base.json
 COPY tsconfig.json tsconfig.json
+COPY yarn.lock yarn.lock
 COPY packages/api/package.json packages/api/package.json
 COPY packages/assets/package.json packages/assets/package.json
 COPY packages/board/package.json packages/board/package.json
 COPY packages/www/package.json packages/www/package.json
 RUN \
-  npm i \
-  && rm -rf packages \
+  yarn install \
   && chown -R node:node .
 
 #
