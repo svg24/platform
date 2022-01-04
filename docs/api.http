@@ -1,4 +1,4 @@
-### get categories alphabetically
+### Get categories alphabetically
 GET https://api.svg24.dev/v1/categories
 
 {
@@ -11,7 +11,7 @@ GET https://api.svg24.dev/v1/categories
   "meta": {}
 }
 
-### get companies alphabetically
+### Get companies alphabetically
 GET https://api.svg24.dev/v1/companies
 
 {
@@ -24,7 +24,7 @@ GET https://api.svg24.dev/v1/companies
   "meta": {}
 }
 
-### find logos by filter
+### Find logos by filter
 GET https://api.svg24.dev/v1/list
   ?category
   &company
@@ -52,7 +52,7 @@ GET https://api.svg24.dev/v1/list
   }
 }
 
-### find logo by id
+### Find logo by id
 GET https://api.svg24.dev/v1/item
   ?id
 
