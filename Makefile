@@ -26,5 +26,3 @@ clear-node:
 
 clear-dev:
 	docker-compose -f dc-base.yml -f dc-dev.yml down
-	make clear-images
-	make clear-output
