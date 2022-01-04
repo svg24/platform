@@ -9,7 +9,6 @@
     "packages/assets/types/*.d.ts",
     "packages/board/src/**/*.ts",
     "packages/board/src/**/*.tsx",
-    "packages/board/types/*.d.ts",
-    "packages/board/vite.config.ts"
+    "packages/board/types/*.d.ts"
   ]
 }

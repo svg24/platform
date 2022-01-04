@@ -1,14 +1,12 @@
 /**
  * @param {String} pack
- * @param {String[] | []} other
  * @returns {String[]}
  */
-function getFiles(pack, ...other) {
+function getFiles(pack) {
   const local = `packages/${pack}/`;
   return [
     `${local}src/**/*.{ts,tsx}`,
     `${local}types/*.d.ts`,
-    ...other.length ? other.map((el) => `${local}${el}`) : [],
   ];
 }
 
@@ -137,7 +135,7 @@ const overriddenPackageAssets = {
 };
 
 const overriddenPackageBoard = {
-  files: getFiles('board', 'vite.config.ts'),
+  files: getFiles('board'),
   parserOptions: getParserOptions('board'),
   env: {
     browser: true,

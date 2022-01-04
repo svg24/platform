@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "resolveJsonModule": true,
-    "rootDir": ".",
+    "rootDir": "src",
     "types": [
       "mocha",
       "node",
