@@ -3,7 +3,8 @@ import { fileURLToPath } from 'url';
 import sync from 'browser-sync';
 import * as csso from 'csso';
 import gulp from 'gulp';
-import minifier from 'html-minifier';
+import htmlMinifier from 'html-minifier';
+import nunjucks from 'nunjucks';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -35,16 +36,33 @@ function copySome(root, output) {
 }
 
 /**
+ * @param {string} content
+ * @returns {string}
+ */
+function minifyHTML(content) {
+  return htmlMinifier.minify(content, { collapseWhitespace: true });
+}
+
+/**
+ * @param {string} content
+ * @returns {string}
+ */
+function minifyCSS(content) {
+  return csso.minify(content).css;
+}
+
+/**
  * @param {string} root
  * @param {string} output
+ * @param {(content: string) => string} minifier
+ * @param {any?} options
  * @returns {NodeJS.ReadWriteStream}
  */
-function transformHTML(root, output) {
+function transformSome(root, output, minifier, options) {
   return gulp.src(root)
     .on('data', (file) => Object.assign(file, {
-      contents: Buffer.from(minifier.minify(file.contents.toString(), {
-        collapseWhitespace: true,
-      })),
+      contents: Buffer.from(minifier(file.contents.toString())),
+      ...options || {},
     }))
     .pipe(gulp.dest(output));
 }
@@ -54,12 +72,29 @@ function transformHTML(root, output) {
  * @param {string} output
  * @returns {NodeJS.ReadWriteStream}
  */
+function transformHTML(root, output) {
+  return transformSome(root, output, minifyHTML);
+}
+
+/**
+ * @param {string} root
+ * @param {string} output
+ * @returns {NodeJS.ReadWriteStream}
+ */
 function transformCSS(root, output) {
-  return gulp.src(root)
-    .on('data', (file) => Object.assign(file, {
-      contents: Buffer.from(csso.minify(file.contents.toString()).css),
-    }))
-    .pipe(gulp.dest(output));
+  return transformSome(root, output, minifyCSS);
+}
+
+/**
+ * @param {string} root
+ * @param {string} output
+ * @returns {NodeJS.ReadWriteStream}
+ */
+function transformNJK(root, output) {
+  const loader = new nunjucks.FileSystemLoader(root.match(/.+\//)[0]);
+  const env = new nunjucks.Environment(loader);
+  const minifier = (content) => minifyHTML(env.renderString(content));
+  return transformSome(root, output, minifier, { extname: '.html' });
 }
 
 const ASSETS_ROOT = getRoot('assets');
@@ -91,15 +126,18 @@ gulp.task('build-assets', gulp.series(
 
 const WWW_ROOT = getRoot('www');
 const WWW_OUTPUT = getOutput('www');
-const WWW_HTML_ROOT = `${WWW_ROOT}/*.html`;
+const WWW_NJK_ROOT = `${WWW_ROOT}/*.njk`;
 const WWW_CSS_ROOT = `${WWW_ROOT}/*.css`;
 
 const www = {
-  transformHTML() {
-    return transformHTML(WWW_HTML_ROOT, WWW_OUTPUT).pipe(sync.stream());
+  transformNJK() {
+    return transformNJK(WWW_NJK_ROOT, WWW_OUTPUT);
+  },
+  streamNJK() {
+    return www.transformNJK().pipe(sync.stream());
   },
   watchHTML() {
-    return gulp.watch(WWW_HTML_ROOT, www.transformHTML);
+    return gulp.watch(WWW_NJK_ROOT, www.streamNJK);
   },
   transformCSS() {
     return transformCSS(WWW_CSS_ROOT, WWW_OUTPUT);
@@ -116,6 +154,7 @@ const www = {
 };
 
 gulp.task('serve-www', gulp.series(
-  gulp.parallel(www.transformHTML, www.transformCSS),
+  gulp.parallel(www.streamNJK, www.transformCSS),
   gulp.parallel(www.watchHTML, www.initSync),
 ));
+gulp.task('build-www', gulp.parallel(www.transformNJK, www.transformCSS));
