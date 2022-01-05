@@ -26,13 +26,15 @@ function BagRoot({ children }: { children: JSX.Element[] }): JSX.Element {
     rootRef.current?.addEventListener('focusout', handleFocusout);
   }, [bagIsVisible]);
 
-  reaction(() => layout.bag.isVisible, () => {
-    if (layout.bag.isVisible) {
-      setBagIsVisible(true);
-    } else {
-      setBagIsVisible(false);
-    }
-  });
+  useEffect(() => {
+    reaction(() => layout.bag.isVisible, () => {
+      if (layout.bag.isVisible) {
+        setBagIsVisible(true);
+      } else {
+        setBagIsVisible(false);
+      }
+    });
+  }, []);
 
   return (
     <Transition

@@ -1,5 +1,5 @@
 import { reaction } from 'mobx';
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import { Spin } from 'src/components';
 import { useStore } from 'src/store';
 import { useForkRef } from 'src/utils';
@@ -9,20 +9,25 @@ export const ContentSentinel = forwardRef<HTMLDivElement>((_, ref) => {
   const localRef = useRef<HTMLDivElement>(null);
   const foreignRef = useForkRef(localRef, ref);
 
-  reaction(() => content.list.response.meta.page.hasNext, () => {
-    if (content.list.response.meta.page.hasNext) {
-      localRef.current?.classList.remove('content-sentinel_hidden');
-    } else {
-      localRef.current?.classList.add('content-sentinel_hidden');
-    }
-  });
-  reaction(() => content.sentinel.isVisible, () => {
-    if (content.sentinel.isVisible) {
-      localRef.current?.classList.add('content-sentinel_visible');
-    } else {
-      localRef.current?.classList.remove('content-sentinel_visible');
-    }
-  });
+  useEffect(() => {
+    reaction(() => content.list.response.meta.page.hasNext, () => {
+      if (content.list.response.meta.page.hasNext) {
+        localRef.current?.classList.remove('content-sentinel_hidden');
+      } else {
+        localRef.current?.classList.add('content-sentinel_hidden');
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    reaction(() => content.sentinel.isVisible, () => {
+      if (content.sentinel.isVisible) {
+        localRef.current?.classList.add('content-sentinel_visible');
+      } else {
+        localRef.current?.classList.remove('content-sentinel_visible');
+      }
+    });
+  }, []);
 
   return (
     <div

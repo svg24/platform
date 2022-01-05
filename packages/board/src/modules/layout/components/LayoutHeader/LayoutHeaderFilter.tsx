@@ -1,7 +1,12 @@
 import { AdjustmentsIcon, XIcon } from '@heroicons/react/outline';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { forwardRef, useRef, useState } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Transition } from 'src/components';
 import { useStore } from 'src/store';
 import { LayoutHeaderButton } from './LayoutHeaderButton';
@@ -35,16 +40,18 @@ export function LayoutHeaderFilter(): JSX.Element {
   const rootRef = useRef<HTMLDivElement>(null);
   const [counterIsVisible, setCounterIsVisible] = useState(false);
 
-  reaction(() => filter.applied.length && layout.main.filter.isVisible, () => {
-    if (!filter.applied.length || layout.main.filter.isVisible) {
-      const doneEnter = 'layout-header__filter_counter_done-enter';
-      if (rootRef.current?.classList.contains(doneEnter)) {
-        setCounterIsVisible(false);
+  useEffect(() => {
+    reaction(() => filter.applied.length && layout.main.filter.isVisible, () => {
+      if (!filter.applied.length || layout.main.filter.isVisible) {
+        const doneEnter = 'layout-header__filter_counter_done-enter';
+        if (rootRef.current?.classList.contains(doneEnter)) {
+          setCounterIsVisible(false);
+        }
+      } else {
+        setCounterIsVisible(true);
       }
-    } else {
-      setCounterIsVisible(true);
-    }
-  });
+    });
+  }, []);
 
   return (
     <div

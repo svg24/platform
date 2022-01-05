@@ -1,5 +1,5 @@
 import { reaction } from 'mobx';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Transition } from 'src/components';
 import { Filter } from 'src/modules/filter';
 import { useStore } from 'src/store';
@@ -10,13 +10,15 @@ function LayoutMain({ children }: { children: JSX.Element }): JSX.Element {
   const rootRef = useRef<HTMLDivElement>(null);
   const [filterIsVisible, setFilterIsVisible] = useState(false);
 
-  reaction(() => layout.main.filter.isVisible, () => {
-    if (layout.main.filter.isVisible) {
-      setFilterIsVisible(true);
-    } else {
-      setFilterIsVisible(false);
-    }
-  });
+  useEffect(() => {
+    reaction(() => layout.main.filter.isVisible, () => {
+      if (layout.main.filter.isVisible) {
+        setFilterIsVisible(true);
+      } else {
+        setFilterIsVisible(false);
+      }
+    });
+  }, []);
 
   return (
     <main
