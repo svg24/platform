@@ -1,10 +1,4 @@
-const path = require('path');
-
 module.exports = {
-  purge: [
-    path.resolve(__dirname, 'index.html'),
-    path.resolve(__dirname, 'src/**/*.{ts,tsx}'),
-  ],
   theme: {
     colors: {
       transparent: 'var(--color-transparent)',

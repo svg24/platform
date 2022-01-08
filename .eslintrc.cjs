@@ -24,9 +24,6 @@ function getParserOptions(pack) {
 }
 
 const overriddenAirbnbRules = {
-  'import/no-extraneous-dependencies': ['error', {
-    devDependencies: ['./*.js', 'packages/*/*.{js,cjs,ts}'],
-  }],
   'import/order': ['error', {
     alphabetize: {
       order: 'asc',
@@ -45,12 +42,17 @@ module.exports = {
     es2021: true,
   },
   overrides: [{
-    files: ['**/*.js', '**/*.cjs'],
+    files: ['**/*.{cjs,js}'],
     parserOptions: {
       ecmaVersion: 2021,
     },
     extends: 'airbnb-base',
-    rules: overriddenAirbnbRules,
+    rules: {
+      ...overriddenAirbnbRules,
+      'import/no-extraneous-dependencies': ['error', {
+        devDependencies: ['./*.{cjs,js}'],
+      }],
+    },
   }, {
     files: getFiles('*'),
     parser: '@typescript-eslint/parser',

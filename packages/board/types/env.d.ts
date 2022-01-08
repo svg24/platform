@@ -2,11 +2,11 @@
 
 declare namespace NodeJS {
   export interface ProcessEnv {
-    BOARD_HMR_HOST: string;
-    BOARD_HMR_PATH: string;
-    BOARD_HMR_PORT: string;
-    BOARD_HMR_PROTOCOL: string;
-    BOARD_HOST: string;
-    BOARD_PORT: string;
+    VITE_SERVER_HMR_HOST: string;
+    VITE_SERVER_HMR_PATH: string;
+    VITE_SERVER_HMR_PORT: string;
+    VITE_SERVER_HMR_PROTOCOL: string;
+    VITE_SERVER_HOST: string;
+    VITE_SERVER_PORT: string;
   }
 }

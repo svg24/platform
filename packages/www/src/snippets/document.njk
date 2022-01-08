@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% include 'meta.njk' %}
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+    {% include 'assets.njk' %}
+  </head>
+  <body>
+    {% include 'header.njk' %}
+    {% block content %}{% endblock %}
+    {% include 'footer.njk' %}
+  </body>
+</html>
