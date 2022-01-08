@@ -201,8 +201,8 @@ const www = {
   },
   async clearOutput() {
     return fs.unlink(`${www.output}/rev.json`);
-  },
-}
+  }
+};
 
 gulp.task('serve-www', gulp.series(
   gulp.parallel(www.buildPages, www.buildStyles),
