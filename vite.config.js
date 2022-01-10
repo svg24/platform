@@ -38,7 +38,7 @@ function defineBoard() {
           autoprefixer,
           tailwindcss({
             ...tailwindConfig,
-            purge: [`${PACKAGE}/index.html`, `${ROOT}/**/*.{ts,tsx}`],
+            content: [`${PACKAGE}/index.html`, `${ROOT}/**/*.{ts,tsx}`],
           }),
         ],
       },
