@@ -1,6 +1,6 @@
 /**
  * @param {String} pack
- * @returns {String[]}
+ * @returns {import('eslint').Linter.ConfigOverride['files']}
  */
 function getFiles(pack) {
   const local = `packages/${pack}/`;
@@ -12,7 +12,7 @@ function getFiles(pack) {
 
 /**
  * @param {String=} pack
- * @returns {any}
+ * @returns {import('eslint').Linter.BaseConfig['parserOptions']}
  */
 function getParserOptions(pack) {
   const config = 'tsconfig.json';
@@ -23,6 +23,9 @@ function getParserOptions(pack) {
   };
 }
 
+/**
+ * @type {import('eslint').Linter.BaseConfig['rules']}
+ */
 const overriddenAirbnbRules = {
   'import/order': ['error', {
     alphabetize: {
@@ -36,6 +39,9 @@ const overriddenAirbnbRules = {
   }],
 };
 
+/**
+ * @type {import('eslint').Linter.BaseConfig}
+ */
 module.exports = {
   root: true,
   env: {
