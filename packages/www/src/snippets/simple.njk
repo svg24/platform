@@ -1,0 +1,14 @@
+{% extends 'document.njk' %}
+
+{% block content %}
+  <main class="main">
+    <div class="main__inner main__section">
+      <h1 class="heading heading_first">
+        {{ document.heading }}
+      </h1>
+      <p class="description description_first">
+        {% block description %}{% endblock %}
+      </p>
+    </div>
+  </main>
+{% endblock %}

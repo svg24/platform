@@ -1,12 +1,35 @@
 <header class="header">
   <div class="header__inner">
-    <div class="header__logo">
-      <img src="https://assets.svg24.dev/images/logo.svg" alt="SVG24">
-    </div>
+    {% include 'company.njk' %}
     <nav class="header__navigation">
-      <a href="">
-        About, Support, Policy, GitHub
-      </a>
+      {% set navigation = [{
+        label: 'About',
+        slug: 'about',
+        url: 'https://svg24.dev/about.html'
+      }, {
+        label: 'Support',
+        slug: 'support',
+        url: 'https://svg24.dev/support.html'
+      }, {
+        label: 'Policy',
+        slug: 'policy',
+        url: 'https://svg24.dev/policy.html'
+      }, {
+        label: 'GitHub',
+        url: 'https://github.com/svg24/collection'
+      }] %}
+      {% for item in navigation %}
+        <a
+          href="{{ item.url }}"
+          {% if item.slug and item.slug == document.slug %}
+            class="header__link header__link_active"
+          {% else %}
+            class="header__link"
+          {% endif %}
+        >
+          {{ item.label }}
+        </a>
+      {% endfor %}
     </nav>
   </div>
 </header>

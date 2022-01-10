@@ -1,13 +1,13 @@
-{% extends 'document.njk' %}
+{% extends 'simple.njk' %}
 
-{% block title %}
-  About | SVG24
-{% endblock %}
+{% set document = {
+  description: 'A few words about the project',
+  heading: 'About',
+  slug: 'about'
+} %}
 
-{% block content %}
-  <main class="main">
-    <h1>
-      About
-    </h1>
-  </main>
+{% block description %}
+  The main goal is to allow you not to think about the sizes
+  of the logos due to the fact that the elements of the collection
+  are kept in the same sizes.
 {% endblock %}

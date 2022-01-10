@@ -1,13 +1,14 @@
-{% extends 'document.njk' %}
+{% extends 'simple.njk' %}
 
-{% block title %}
-  404 | SVG24
-{% endblock %}
+{% set document = {
+  description: '404 not found',
+  heading: '404',
+  slug: '404'
+} %}
 
-{% block content %}
-  <main class="main">
-    <h1>
-      404
-    </h1>
-  </main>
+{% block description %}
+  Yo, that «404 not found»,
+  <a class="link" href="https://svg24.dev/">let's go home</a>.
+  <br>
+  :(
 {% endblock %}

@@ -1,3 +1,15 @@
 {
-
+  "name": "SVG24",
+  "lang": "en",
+  "start_url": "/",
+  "display": "browser",
+  "orientation": "any",
+  "background_color": "white",
+  "theme_color": "white",
+  "description": "A collection of logos, optimized to be rendered at 24x24*",
+  "icons": [{
+    "src": "https://assets.svg24.dev/images/logo.svg",
+    "sizes": "any",
+    "type": "image/svg+xml"
+  }]
 }

@@ -1,5 +1,56 @@
-/* footer */
-
 .footer {
-  color: hsl(0, 100%, 50%);
+  @apply py-16 bg-neutral-100;
+}
+
+.footer__inner {
+  @apply flex flex-wrap justify-between px-6 mx-auto;
+  max-width: 1200px;
+}
+
+.footer__description {
+  @apply text-sm;
+  max-width: 220px;
+}
+
+.footer__column {
+  @apply mb-6;
+}
+
+@media screen and (width < 520px) {
+  .footer__column {
+    flex-basis: 100%;
+  }
+}
+
+.footer__row {
+  flex-basis: 100%;
+}
+
+.footer__list {
+  @apply flex gap-x-12;
+}
+
+.footer__title {
+  @apply block mb-2 text-sm font-semibold;
+}
+
+.footer__link {
+  @apply block text-sm;
+}
+
+.footer__link:focus,
+.footer__link:hover {
+  @apply underline;
+}
+
+.footer__link:not(:last-child) {
+  @apply mb-2;
+}
+
+.footer__line {
+  @apply mb-4 text-neutral-200;
+}
+
+.footer__footnote {
+  @apply text-xs text-neutral-400;
 }

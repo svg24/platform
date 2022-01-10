@@ -1,3 +1,11 @@
+*:focus {
+  @apply outline-2 outline-accent-400 outline-offset-2;
+}
+
+*::selection {
+  @apply bg-accent-200;
+}
+
 body {
-  margin: 0;
+  @apply flex flex-col min-h-screen;
 }

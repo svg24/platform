@@ -1,10 +1,22 @@
+{% set meta = {
+  card: 'summary_large_image',
+  name: 'svg24.dev',
+  type: 'website'
+} %}
+
+{% macro getMetaTitle() -%}
+  {% if document.isHome %}SVG24{% else %}{{ document.heading }} | SVG24{% endif %}
+{%- endmacro %}
+
+{% macro getMetaUrl() -%}
+  https://svg24.dev/{% if not document.isHome %}{{ document.slug }}.html{% endif %}
+{%- endmacro %}
+
+{% macro getMetaImage() -%}
+  https://svg24.dev/assets/images/{{ document.slug }}.webp"
+{%- endmacro %}
+
 <meta charset="utf-8">
-<link
-  href="https://assets.svg24.dev/images/logo.svg"
-  rel="icon"
-  sizes="any"
-  type="image/svg+xml"
-/>
 <meta
   content="IE=edge"
   http-equiv="X-UA-Compatible"
@@ -13,3 +25,68 @@
   content="width=device-width, initial-scale=1.0"
   name="viewport"
 >
+<title>
+  {{ getMetaTitle() }}
+</title>
+<meta
+  content="{{ getMetaTitle() }}"
+  name="title"
+>
+<meta
+  content="{{ document.description }}"
+  name="description"
+>
+<meta
+  content="{{ meta.type }}"
+  property="og:type"
+>
+<meta
+  content="{{ getMetaTitle() }}"
+  property="og:title"
+>
+<meta
+  content="{{ meta.name }}"
+  property="og:site_name"
+>
+<meta
+  content="{{ document.description }}"
+  property="og:description"
+>
+<meta
+  content="{{ getMetaUrl() }}"
+  property="og:url"
+>
+<meta
+  content="{{ getMetaImage() }}"
+  property="og:image"
+>
+<meta
+  content="{{ meta.card }}"
+  name="twitter:card"
+>
+<meta
+  content="{{ getMetaTitle() }}"
+  name="twitter:title"
+>
+<meta
+  content="{{ document.description }}"
+  name="twitter:description"
+>
+<meta
+  content="{{ getMetaUrl() }}"
+  name="twitter:site"
+>
+<meta
+  content="{{ getMetaImage() }}"
+  name="twitter:image"
+>
+<link
+  href="/manifest.json"
+  rel="manifest"
+>
+<link
+  href="https://assets.svg24.dev/images/logo.svg"
+  rel="icon"
+  sizes="any"
+  type="image/svg+xml"
+/>

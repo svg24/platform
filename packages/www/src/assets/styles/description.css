@@ -1,0 +1,27 @@
+.description {
+  @apply text-center;
+}
+
+.description_first {
+  max-width: 420px;
+}
+
+.description_second {
+  max-width: 210px;
+}
+
+.description_sm {
+  @apply text-sm;
+}
+
+@media screen and (width >= 480px) {
+  .description_mb {
+    @apply mb-6;
+  }
+}
+
+@media screen and (width < 480px) {
+  .description_mb {
+    @apply mb-4;
+  }
+}

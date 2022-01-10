@@ -1,16 +1,61 @@
 <footer class="footer">
   <div class="footer__inner">
-    <div class="footer__container">
-      <img
-        class="footer__logo"
-        src="https://assets.svg24.dev/images/logo.svg"
-        alt="SVG24"
-      >
+    <div class="footer__column">
+      {% include 'company.njk' %}
+      <p class="footer__description">
+        A collection of logos, optimized to be rendered at 24x24*
+      </p>
     </div>
-    <nav class="footer__navigation">
-      <a href="">
-        About, Support, Policy, GitHub
-      </a>
+    <nav class="footer__column">
+      <ul class="footer__list">
+        {% set navigation = [{
+          title: 'Project',
+          links: [{
+            label: 'About',
+            url: 'https://svg24.dev/about.html'
+          }, {
+            label: 'Policy',
+            url: 'https://svg24.dev/policy.html'
+          }, {
+            label: 'Sources',
+            url: 'https://github.com/svg24'
+          }, {
+            label: 'Changelog',
+            url: 'https://svg24.dev/changelog.html'
+          }]
+        }, {
+          title: 'Contact',
+          links: [{
+            label: 'Support',
+            url: 'https://svg24.dev/support.html'
+          }, {
+            label: 'Issue',
+            url: 'https://github.com/svg24/collection/issues'
+          }, {
+            label: 'Email',
+            url: 'mailto:vanyauhalin@gmail.com'
+          }]
+        }] %}
+        {% for item in navigation %}
+          <li>
+            <span class="footer__title">
+              {{ item.title }}
+            </span>
+            {% for subitem in item.links %}
+              <a
+                class="footer__link"
+                href="{{ subitem.url }}"
+              >
+                {{ subitem.label }}
+              </a>
+            {% endfor %}
+          </li>
+        {% endfor %}
+      </ul>
     </nav>
+    <hr class="footer__row footer__line">
+    <p class="footer__row footer__footnote">
+      Made by <a class="link" href="https://github.com/vanyauhalin">@vanyauhlin</a> for people with &#x3C;3.
+    </p>
   </div>
 </footer>

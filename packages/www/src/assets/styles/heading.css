@@ -1,0 +1,56 @@
+.heading {
+  @apply font-semibold text-center;
+}
+
+.heading_first {
+  @apply text-4xl;
+  line-height: 3rem;
+}
+
+@media screen and (width >= 720px) {
+  .heading_first {
+    @apply text-4xl;
+  }
+}
+
+@media screen and (width < 720px) {
+  .heading_first {
+    @apply text-2xl;
+  }
+}
+
+@media screen and (width >= 480px) {
+  .heading_first {
+    @apply mb-8;
+  }
+}
+
+@media screen and (width < 480px) {
+  .heading_first {
+    @apply mb-6;
+  }
+}
+
+@media screen and (width >= 480px) {
+  .heading_second {
+    @apply mb-6 text-2xl;
+  }
+}
+
+@media screen and (width < 480px) {
+  .heading_second {
+    @apply mb-4 text-xl;
+  }
+}
+
+@media screen and (width >= 480px) {
+  .heading_third {
+    @apply mb-4 text-lg;
+  }
+}
+
+@media screen and (width < 480px) {
+  .heading_third {
+    @apply mb-2;
+  }
+}

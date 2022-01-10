@@ -4,6 +4,7 @@ import { Transform } from 'stream';
 import { fileURLToPath } from 'url';
 import autoprefixer from 'autoprefixer';
 import browserSync from 'browser-sync';
+import esbuild from 'esbuild';
 import gulp from 'gulp';
 import gulpPostcss from 'gulp-postcss';
 import gulpRev from 'gulp-rev';
@@ -13,10 +14,22 @@ import htmlMinifier from 'html-minifier';
 import nunjucks from 'nunjucks';
 import postcssCsso from 'postcss-csso';
 import postcssImport from 'postcss-import';
+import postcssMediaMinmax from 'postcss-media-minmax';
+import tailwindcss from 'tailwindcss';
+import Vinyl from 'vinyl';
+import tailwindConfig from './tailwind.config.cjs';
 
 const FILENAME = fileURLToPath(import.meta.url);
 const DIRNAME = dirname(FILENAME);
 const PACKAGES = resolve(DIRNAME, 'packages');
+
+/**
+ * @param {string} pack
+ * @returns {string}
+ */
+function getTSConfig(pack) {
+  return `${PACKAGES}/${pack}/tsconfig.json`;
+}
 
 /**
  * @param {string} pack
@@ -40,25 +53,72 @@ function getOutput(pack) {
  * @returns {Transform}
  */
 function transformBy(minifier, options) {
-  const stream = new Transform({ objectMode: true });
+  return new Transform({
+    objectMode: true,
+    transform(chunk, _, cb) {
+      if (chunk.isNull()) throw new Error('Chunk is null');
+      if (chunk.isStream()) throw new Error('Streaming not supported');
 
-  stream._transform = function transform(chunk, _, cb) {
-    if (chunk.isNull()) throw new Error('File is null');
-    if (chunk.isStream()) throw new Error('Streaming not supported');
+      try {
+        Object.assign(chunk, {
+          contents: Buffer.from(minifier(chunk.contents.toString())),
+          ...options || {},
+        });
+      } catch (err) {
+        throw new Error(err);
+      }
 
-    try {
-      Object.assign(chunk, {
-        contents: Buffer.from(minifier(chunk.contents.toString())),
-        ...options || {},
-      });
-    } catch (err) {
-      throw new Error(err);
-    }
+      cb(null, chunk);
+    },
+  });
+}
 
-    cb(null, chunk);
-  };
+/**
+ * @param {import('esbuild').BuildOptions} options
+ * @returns {Transform}
+ */
+function transformTS(options) {
+  /**
+   * @type {Buffer[]}
+   */
+  const chunks = [];
 
-  return stream;
+  return new Transform({
+    objectMode: true,
+    transform(chunk, _, cb) {
+      if (!chunk.isBuffer()) throw new Error('Chunk is not Buffer');
+      if (chunk.isNull()) throw new Error('Chunk is null');
+      if (chunk.isStream()) throw new Error('Streaming not supported');
+
+      chunks.push(chunk);
+      cb(null);
+    },
+    async flush(cb) {
+      try {
+        const minifier = await esbuild.build({
+          bundle: true,
+          entryPoints: chunks.map((chunk) => chunk.path),
+          format: 'esm',
+          minify: true,
+          outdir: '.',
+          sourcemap: false,
+          write: false,
+          ...options,
+        });
+
+        minifier.outputFiles.forEach((file) => {
+          this.push(new Vinyl({
+            path: file.path,
+            contents: Buffer.from(file.contents),
+          }));
+        });
+      } catch (err) {
+        throw new Error(err);
+      }
+
+      cb(null);
+    },
+  });
 }
 
 /**
@@ -93,14 +153,13 @@ function transformNJK(searchPath) {
  * @returns {Transform}
  */
 function unlinkFiles() {
-  const stream = new Transform({ objectMode: true });
-
-  stream._transform = async function transform(chunk, _, cb) {
-    if (!chunk.isDirectory()) await fs.unlink(chunk.path);
-    cb(null, chunk);
-  };
-
-  return stream;
+  return new Transform({
+    objectMode: true,
+    async transform(chunk, _, cb) {
+      if (!chunk.isDirectory()) await fs.unlink(chunk.path);
+      cb(null, chunk);
+    },
+  });
 }
 
 const assets = {
@@ -129,6 +188,7 @@ gulp.task('build-assets', gulp.series(
 ));
 
 const www = {
+  tsconfig: getTSConfig('www'),
   root: getRoot('www'),
   output: getOutput('www'),
   sync: browserSync.create(),
@@ -140,6 +200,39 @@ const www = {
         baseDir: www.output,
       },
     });
+  },
+  copyManifest() {
+    return gulp.src(`${www.root}/manifest.json`).pipe(gulp.dest(www.output));
+  },
+  copyImages() {
+    return gulp.src(`${www.root}/assets/images/*.webp`)
+      .pipe(gulp.dest(`${www.output}/assets/images`));
+  },
+  buildScripts() {
+    return gulp.src(`${www.root}/assets/scripts/core.ts`)
+      .pipe(transformTS({ tsconfig: www.tsconfig }))
+      .pipe(gulp.dest(`${www.output}/assets/scripts`));
+  },
+  watchScripts() {
+    return gulp.watch(`${www.root}/assets/scripts/*.ts`, () => (
+      www.buildScripts().pipe(www.sync.stream())
+    ));
+  },
+  buildStyles() {
+    return gulp.src(`${www.root}/assets/styles/core.css`)
+      .pipe(gulpPostcss([
+        postcssImport,
+        tailwindcss(tailwindConfig),
+        autoprefixer,
+        postcssMediaMinmax,
+        postcssCsso,
+      ]))
+      .pipe(gulp.dest(`${www.output}/assets/styles`));
+  },
+  watchStyles() {
+    return gulp.watch(`${www.root}/assets/styles/*.css`, () => (
+      www.buildStyles().pipe(www.sync.stream())
+    ));
   },
   buildPages() {
     return gulp.src(`${www.root}/pages/*.njk`)
@@ -153,23 +246,6 @@ const www = {
     ], () => (
       www.buildPages().pipe(www.sync.stream())
     ));
-  },
-  buildStyles() {
-    return gulp.src(`${www.root}/assets/styles/core.css`)
-      .pipe(gulpPostcss([postcssImport, autoprefixer, postcssCsso]))
-      .pipe(gulp.dest(`${www.output}/assets/styles`));
-  },
-  watchStyles() {
-    return gulp.watch(`${www.root}/assets/styles/*.css`, () => (
-      www.buildStyles().pipe(www.sync.stream())
-    ));
-  },
-  copyManifest() {
-    return gulp.src(`${www.root}/manifest.json`).pipe(gulp.dest(www.output));
-  },
-  copyImages() {
-    return gulp.src(`${www.root}/assets/images/*.webp`)
-      .pipe(gulp.dest(`${www.output}/assets/images`));
   },
   createHash() {
     return gulp.src([
@@ -205,17 +281,29 @@ const www = {
 };
 
 gulp.task('serve-www', gulp.series(
-  gulp.parallel(www.buildPages, www.buildStyles),
-  gulp.parallel(www.watchPages, www.initSync),
+  gulp.parallel(
+    www.copyManifest,
+    www.copyImages,
+    www.buildScripts,
+    www.buildStyles,
+    www.buildPages,
+  ),
+  gulp.parallel(
+    www.watchScripts,
+    www.watchStyles,
+    www.watchPages,
+    www.initSync,
+  ),
 ));
 
 gulp.task('build-www', gulp.series(
-  www.buildPages,
-  www.buildStyles,
   www.copyManifest,
   www.copyImages,
+  www.buildScripts,
+  www.buildStyles,
+  www.buildPages,
+  www.createSitemap,
   www.createHash,
   www.replaceHash,
-  www.createSitemap,
   www.clearOutput,
 ));

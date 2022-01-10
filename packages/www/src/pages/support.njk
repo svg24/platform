@@ -1,13 +1,15 @@
-{% extends 'document.njk' %}
+{% extends 'simple.njk' %}
 
-{% block title %}
-  Support | SVG24
-{% endblock %}
+{% set document = {
+  description: 'Help wanted',
+  heading: 'Support',
+  slug: 'support'
+} %}
 
-{% block content %}
-  <main class="main">
-    <h1>
-      Support
-    </h1>
-  </main>
+{% block description %}
+  <p class="description description_first">
+    Feel free suggest any logos to add to the collection
+    via <a class="link" href="mailto:vanyauhalin@gmail.com?subject=SVG24%20|%20Support">email</a>
+    or <a class="link" href="https://github.com/svg24/collection/issues">issue</a>.
+  </p>
 {% endblock %}

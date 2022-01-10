@@ -1,66 +1,107 @@
 {% extends 'document.njk' %}
 
-{% block title %}
-  SVG24 | A collection of logos, optimized to be rendered at 24x24*
-{% endblock %}
+{% set document = {
+  description: 'A collection of logos, optimized to be rendered at 24x24*',
+  isHome: true,
+  slug: 'home'
+} %}
 
 {% block content %}
   <main class="main">
-    <div class="main__inner">
-      <section>
-        <h1 class="heading heading_first">
-          A collection of logos, optimized to be rendered at 24x24*
-        </h1>
+    <section class="main__section">
+      <div class="main__inner">
+        <div class="main__container">
+          <h1 class="heading heading_first">
+            A collection of logos,
+            <br>
+            optimized to be rendered at 24x24*
+          </h1>
+          <a
+            class="button button_mb"
+            href="https://board.svg24.dev/"
+          >
+            Open collection
+          </a>
+          <p class="description description_first description_sm">
+            Requires the
+            <a class="link" href="https://github.com/browserslist/browserslist">latest browser's</a>
+            versions. Absolutely free.
+          </p>
+        </div>
+        <img
+          alt="Board preview"
+          class="main__preview"
+          src="/assets/images/board-preview.webp"
+        >
+      </div>
+    </section>
+    <section class="main__section main__section_colored">
+      <div class="main__inner">
+        <h2 class="heading heading_second">
+          Optimization
+        </h2>
+        <p class="description description_first">
+          The first step is to optimize the logo using SVGO — this is necessary
+          in order to make the subsequent manual work more comfortable.
+          The next step is manual optimization in the vector editor
+          of what was not processed in the previous step. And finally,
+          the logo once again optimize using SVGO with more gentle plugins.
+        </p>
+      </div>
+    </section>
+    <section class="main__section">
+      <div class="main__inner">
+        <h2 class="heading heading_second">
+          Types
+        </h2>
+        <p class="description description_first">
+          For convenience, in the collection,
+          each logo is presented in two types.
+        </p>
+        <div class="main__columns">
+          {% set types = [{
+            name: 'Original',
+            image: 'original',
+            description: 'The logo retains its original width, height is 24 units, padding is 2.'
+          }, {
+            name: '24x24',
+            image: '24x24',
+            description: 'Width as well as height is 24 units, padding is 2.'
+          }] %}
+          {% for item in types %}
+            <div class="main__column">
+              <h3 class="heading heading_third">
+                {{ item.name }}
+              </h3>
+              <img
+                class="main__type"
+                src="/assets/images/type-{{ item.image }}.webp"
+              >
+              <p class="description description_second">
+                {{ item.description }}
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <section class="main__section main__section_colored">
+      <div class="main__inner">
+        <h2 class="heading heading_second">
+          Are you a designer? Developer?
+          <br>
+          It does not matter
+        </h2>
+        <p class="description description_first description_mb">
+          Logos available as files, snippets and frameworks components.
+        </p>
         <a
-          class="main__link"
+          class="button"
           href="https://board.svg24.dev/"
         >
           Open collection
         </a>
-        <p>
-          required last 2 versions
-        </p>
-        <img
-          src="assets/images/home-preview.png"
-          alt="Preview home page"
-        >
-      </section>
-      <section>
-        <p>
-          One place for more logos
-        </p>
-      </section>
-      <section>
-        <h2>
-          Types
-        </h2>
-        <div>
-          <img
-            src=""
-            alt=""
-          >
-          <p>
-            24x24
-          </p>
-        </div>
-        <div>
-          <img
-            src=""
-            alt=""
-          >
-          <p>
-            source x 24
-          </p>
-        </div>
-      </section>
-      <section>
-        <h2>
-          Open collection
-        </h2>
-        <button type="button">
-          Open collection
-        </button>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 {% endblock %}

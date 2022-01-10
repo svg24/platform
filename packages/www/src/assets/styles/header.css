@@ -1,5 +1,30 @@
-/* header */
-
 .header {
-  color: hsl(0, 100%, 50%);
+  @apply py-4 bg-white border-b-2 border-transparent;
+}
+
+.header_fixed {
+  @apply fixed inset-x-0 z-20 duration-300 bg-white-a70 border-neutral-100 backdrop-blur-lg;
+}
+
+.header__inner {
+  @apply flex items-center justify-between px-6 mx-auto;
+  max-width: 1200px;
+}
+
+.header__navigation {
+  @apply inline-flex;
+}
+
+.header__link {
+  @apply text-sm duration-100 text-neutral-400;
+}
+
+.header__link:focus,
+.header__link:hover,
+.header__link_active {
+  @apply text-black;
+}
+
+.header__link:not(:last-of-type) {
+  @apply mr-2;
 }

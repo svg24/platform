@@ -1,0 +1,20 @@
+.button {
+  @apply block px-6 py-2 text-white duration-300 border-2 shadow rounded-xl bg-accent-600 border-accent-100;
+}
+
+.button:focus,
+.button:hover {
+  @apply shadow-md border-accent-200;
+}
+
+@media screen and (width >= 480px) {
+  .button_mb {
+    @apply mb-8;
+  }
+}
+
+@media screen and (width < 480px) {
+  .button_mb {
+    @apply mb-6;
+  }
+}

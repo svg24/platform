@@ -1,0 +1,23 @@
+.company {
+  @apply inline-flex items-center select-none;
+}
+
+.footer .company {
+  @apply block mb-2;
+}
+
+.company__name {
+  @apply text-sm font-semibold;
+}
+
+.company__logo {
+  @apply inline mr-1;
+}
+
+.header .company__logo {
+  @apply w-8 h-8;
+}
+
+.footer .company__logo {
+  @apply w-6 h-6;
+}

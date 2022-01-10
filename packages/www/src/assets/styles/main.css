@@ -1,0 +1,100 @@
+.main {
+  @apply flex-1;
+}
+
+.main__section {
+  @apply bg-white;
+}
+
+@media screen and (width >= 480px) {
+  .main__section {
+    @apply py-16;
+  }
+}
+
+@media screen and (width < 480px) {
+  .main__section {
+    @apply relative py-10 overflow-hidden;
+  }
+}
+
+.main__section_colored {
+  @apply bg-neutral-50;
+}
+
+.main__inner {
+  @apply flex flex-col items-center px-6 mx-auto;
+  max-width: 1200px;
+}
+
+.main__container {
+  @apply flex flex-col items-center mb-2;
+}
+
+@media screen and (width < 480px) {
+  .main__container {
+    @apply z-10;
+  }
+}
+
+@media screen and (width >= 848px) {
+  .main__preview {
+    max-width: 800px;
+  }
+}
+
+@media screen and (width >= 648px) and (width < 848px) {
+  .main__preview {
+    max-width: 600px;
+  }
+}
+
+@media screen and (width < 648px) {
+  .main__preview {
+    max-width: 420px;
+  }
+}
+
+@media screen and (width < 480px) {
+  .main__preview {
+    @apply absolute opacity-20;
+    left: 20%;
+    top: 26%;
+  }
+}
+
+.main__columns {
+  @apply flex w-full;
+}
+
+@media screen and (width >= 720px) {
+  .main__columns {
+    @apply justify-around;
+  }
+}
+
+@media screen and (width < 720px) {
+  .main__columns {
+    @apply flex-col;
+  }
+}
+
+.main__column {
+  @apply flex flex-col items-center;
+}
+
+.main__type {
+  @apply -order-1;
+}
+
+@media screen and (width >= 480px) {
+  .main__type {
+    max-width: 320px;
+  }
+}
+
+@media screen and (width < 480px) {
+  .main__type {
+    max-width: 220px;
+  }
+}
