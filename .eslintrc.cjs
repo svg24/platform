@@ -24,6 +24,14 @@ function getParserOptions(pack) {
 }
 
 /**
+ * @type {import('eslint').Linter.BaseConfig['extends']}
+ */
+const extendsTSBase = [
+  'airbnb-base',
+  'airbnb-typescript/base',
+];
+
+/**
  * @type {import('eslint').Linter.BaseConfig['rules']}
  */
 const overriddenAirbnbRules = {
@@ -120,10 +128,7 @@ module.exports = {
     env: {
       node: true,
     },
-    extends: [
-      'airbnb-base',
-      'airbnb-typescript/base',
-    ],
+    extends: extendsTSBase,
     rules: overriddenAirbnbRules,
   }, {
     files: getFiles('api'),
@@ -131,10 +136,7 @@ module.exports = {
     env: {
       node: true,
     },
-    extends: [
-      'airbnb-base',
-      'airbnb-typescript/base',
-    ],
+    extends: extendsTSBase,
     rules: {
       ...overriddenAirbnbRules,
       'no-console': 'off',
@@ -175,5 +177,13 @@ module.exports = {
       }],
       'react/no-danger': 'off',
     },
+  }, {
+    files: getFiles('www'),
+    parserOptions: getParserOptions('www'),
+    env: {
+      browser: true,
+    },
+    extends: extendsTSBase,
+    rules: overriddenAirbnbRules,
   }],
 };
