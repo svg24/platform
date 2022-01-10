@@ -4,9 +4,6 @@
     "baseUrl": ".",
     "resolveJsonModule": true,
     "rootDir": "src",
-    "typeRoots": [
-      "types"
-    ],
     "types": [
       "node"
     ],
