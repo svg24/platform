@@ -1,7 +1,7 @@
 import { existsSync, readFile, statSync } from 'fs';
 import type { IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'path';
-import { MimeTypes } from './constants';
+import { MIME_TYPES } from './constants';
 import { getRootPath, showForbiddance, showRequest } from './utils';
 
 export function listener(req: IncomingMessage, res: ServerResponse): void {
@@ -28,7 +28,7 @@ export function listener(req: IncomingMessage, res: ServerResponse): void {
       return;
     }
 
-    const type = MimeTypes[parse(path).ext];
+    const type = MIME_TYPES[parse(path).ext];
 
     if (!type) {
       showForbiddance(res);

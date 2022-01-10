@@ -1,4 +1,4 @@
-export const MimeTypes: { [key: string]: string } = {
+export const MIME_TYPES: { [key: string]: string } = {
   '.css': 'text/css',
   '.ico': 'image/x-icon',
   '.svg': 'image/svg+xml',
