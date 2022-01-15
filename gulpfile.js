@@ -179,9 +179,13 @@ const assets = {
       .pipe(gulp.dest(`${assets.output}/fonts`));
   },
   buildImages() {
-    return gulp.src(`${assets.root}/images/*.svg`)
-      .pipe(transformHTML())
-      .pipe(gulp.dest(`${assets.output}/images`));
+    return [
+      () => gulp.src(`${assets.root}/images/*.svg`)
+        .pipe(transformHTML())
+        .pipe(gulp.dest(`${assets.output}/images`)),
+      () => gulp.src(`${assets.root}/images/*.webp`)
+        .pipe(gulp.dest(`${assets.output}/images`)),
+    ];
   },
   buildCSS() {
     return gulp.src(`${assets.root}/styles/core.css`)
@@ -192,7 +196,7 @@ const assets = {
 
 gulp.task('build-assets', gulp.series(
   assets.copyFonts,
-  assets.buildImages,
+  ...assets.buildImages(),
   assets.buildCSS,
 ));
 
