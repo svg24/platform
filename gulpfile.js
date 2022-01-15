@@ -15,6 +15,7 @@ import nunjucks from 'nunjucks';
 import postcssCsso from 'postcss-csso';
 import postcssImport from 'postcss-import';
 import postcssMediaMinmax from 'postcss-media-minmax';
+import svgo from 'svgo';
 import tailwindcss from 'tailwindcss';
 import Vinyl from 'vinyl';
 import tailwindConfig from './tailwind.config.cjs';
@@ -150,6 +151,14 @@ function transformNJK(searchPath) {
 }
 
 /**
+ * @param {import('svgo').OptimizeOptions} options
+ * @returns {string}
+ */
+function transformSVG(options) {
+  return transformBy((content) => svgo.optimize(content, options).data);
+}
+
+/**
  * @returns {Transform}
  */
 function unlinkFiles() {
@@ -186,6 +195,86 @@ gulp.task('build-assets', gulp.series(
   assets.buildImages,
   assets.buildCSS,
 ));
+
+const collection = {
+  root: getRoot('collection'),
+  output: getOutput('collection'),
+  dev() {
+    return gulp.src(`${collection.root}/**/*.svg`)
+      .pipe(transformSVG({
+        plugins: [
+          'cleanupAttrs',
+          'cleanupEnableBackground',
+          'cleanupIDs',
+          'cleanupNumericValues',
+          'collapseGroups',
+          'convertColors',
+          'convertEllipseToCircle',
+          'convertPathData',
+          'convertShapeToPath',
+          'convertShapeToPath',
+          'mergePaths',
+          'moveGroupAttrsToElems',
+          'removeComments',
+          'removeDesc',
+          'removeDimensions',
+          'removeDoctype',
+          'removeEditorsNSData',
+          'removeEmptyAttrs',
+          'removeEmptyContainers',
+          'removeEmptyText',
+          'removeHiddenElems',
+          'removeMetadata',
+          'removeNonInheritableGroupAttrs',
+          'removeTitle',
+          'removeUnknownsAndDefaults',
+          'removeUnusedNS',
+          'removeUselessDefs',
+          'removeUselessStrokeAndFill',
+          'removeViewBox',
+          'removeXMLProcInst',
+          'sortAttrs',
+          'sortDefsChildren',
+        ],
+      }))
+      .pipe(gulp.dest(collection.output));
+  },
+  build() {
+    return gulp.src(`${collection.output}/**/*.svg`)
+      .pipe(transformSVG({
+        js2svg: {
+          indent: 2,
+          pretty: true,
+        },
+        plugins: [
+          'cleanupIDs',
+          'cleanupNumericValues',
+          'convertColors',
+          'removeDesc',
+          'removeDimensions',
+          'removeEditorsNSData',
+          'removeUnknownsAndDefaults',
+          'removeUnusedNS',
+          'removeUselessStrokeAndFill',
+          'removeXMLProcInst',
+          'sortAttrs',
+          'sortDefsChildren',
+          {
+            name: 'addAttributesToSVGElement',
+            params: {
+              attributes: [{
+                'aria-hidden': 'true',
+              }],
+            },
+          },
+        ],
+      }))
+      .pipe(gulp.dest(collection.output));
+  },
+};
+
+gulp.task('dev-collection', collection.dev);
+gulp.task('build-collection', collection.build);
 
 const www = {
   tsconfig: getTSConfig('www'),
