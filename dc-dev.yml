@@ -48,6 +48,8 @@ services:
       - /srv/packages/www/node_modules
     environment:
       - NODE_ENV=development
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=3000
     user: node
     command: yarn dev-www
 
