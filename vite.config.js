@@ -48,13 +48,13 @@ function defineBoard() {
   // if (command === 'serve-board') {
   Object.assign(config, {
     server: {
-      host: process.env.VITE_SERVER_HOST,
-      port: parseInt(process.env.VITE_SERVER_PORT, 10),
+      host: process.env.SERVER_HOST,
+      port: parseInt(process.env.SERVER_PORT, 10),
       hmr: {
-        host: process.env.VITE_SERVER_HMR_HOST,
-        path: process.env.VITE_SERVER_HMR_PATH,
-        port: parseInt(process.env.VITE_SERVER_HMR_PORT, 10),
-        protocol: process.env.VITE_SERVER_HMR_PROTOCOL,
+        host: process.env.SERVER_HMR_HOST,
+        path: process.env.SERVER_HMR_PATH,
+        port: parseInt(process.env.SERVER_HMR_PORT, 10),
+        protocol: process.env.SERVER_HMR_PROTOCOL,
       },
     },
   });
