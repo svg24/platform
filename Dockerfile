@@ -78,7 +78,6 @@ COPY gulpfile.js gulpfile.js
 COPY package.json package.json
 COPY tailwind.config.cjs tailwind.config.cjs
 COPY tsconfig.base.json tsconfig.base.json
-COPY tsconfig.json tsconfig.json
 COPY vite.config.js vite.config.js
 COPY yarn.lock yarn.lock
 COPY packages/api/package.json packages/api/package.json
