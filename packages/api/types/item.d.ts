@@ -29,6 +29,9 @@ declare namespace Item {
   };
   type RouteResponseDataItemContentTypes = 'original' | 'square';
   type RouteResponseDataItemContentItem = {
+    api: {
+      content: string;
+    };
     components: {
       react: {
         js: string;
@@ -38,9 +41,6 @@ declare namespace Item {
         js: string;
         ts: string;
       };
-    };
-    links: {
-      url: string;
     };
     snippets: {
       css: string;

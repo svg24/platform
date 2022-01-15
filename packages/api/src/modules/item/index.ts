@@ -6,10 +6,10 @@ import {
   removeExtension,
   toCSS,
   toComponentName,
+  toContent,
   toJSX,
   toReactJS,
   toReactTS,
-  toURL,
   toVueJS,
   toVueTS,
 } from '../../utils';
@@ -46,7 +46,7 @@ export const item = new (function Item(this: Constructor) {
     const svg = buf.toString();
     const css = toCSS(buf.toString('base64'));
     const jsx = toJSX(svg);
-    const url = toURL(removeExtension(local));
+    const content = toContent(removeExtension(local));
     const reactJS = await toReactJS(componentName, svg);
     const reactTS = toReactTS(reactJS);
     const vueJS = toVueJS(svg);
@@ -55,6 +55,9 @@ export const item = new (function Item(this: Constructor) {
     return {
       content: {
         original: {
+          api: {
+            content,
+          },
           components: {
             react: {
               js: reactJS,
@@ -64,10 +67,6 @@ export const item = new (function Item(this: Constructor) {
               js: vueJS,
               ts: vueTS,
             },
-          },
-          // api
-          links: {
-            url,
           },
           snippets: {
             css,

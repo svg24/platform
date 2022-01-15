@@ -60,14 +60,14 @@ export function BagContent(): JSX.Element {
       file: `${bag.item.data?.file.camel}.vue`,
     }],
   }, {
-    id: 'links',
-    heading: 'Links',
+    id: 'api',
+    heading: 'Api',
     items: [{
-      id: 'url',
-      label: 'URL',
+      id: 'content',
+      label: 'Content',
       content: {
-        original: bag.item.data?.content.original?.links.url,
-        square: bag.item.data?.content.square?.links.url,
+        original: bag.item.data?.content.original?.api.content,
+        square: bag.item.data?.content.square?.api.content,
       },
       file: `${bag.item.data?.file.snake}.txt`,
     }],
