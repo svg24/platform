@@ -1,17 +1,23 @@
 .company {
-  @apply inline-flex items-center select-none;
+  @apply inline-flex items-center select-none gap-x-1;
 }
 
 .footer .company {
-  @apply block mb-2;
+  @apply mb-2;
 }
 
 .company__name {
   @apply text-sm font-semibold;
 }
 
+@media screen and (width < 360px) {
+  .header .company__name {
+    @apply hidden;
+  }
+}
+
 .company__logo {
-  @apply inline mr-1;
+  @apply inline;
 }
 
 .header .company__logo {
