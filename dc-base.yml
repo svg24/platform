@@ -6,8 +6,6 @@ services:
     build:
       context: .
       target: db
-      args:
-        - DB_TARBALL=https://github.com/svg24/collection/tarball/main
     restart: unless-stopped
     networks:
       nginx:

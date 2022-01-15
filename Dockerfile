@@ -28,12 +28,11 @@ RUN \
 
 FROM alpine-base as db-deps
 WORKDIR /srv
-ARG DB_TARBALL
 RUN \
   apk add --no-cache --virtual .deps curl jq \
   && mkdir packages \
   && cd packages \
-    && curl -LSso db.tar.gz $DB_TARBALL \
+    && curl -LSso db.tar.gz https://github.com/svg24/collection/tarball/main \
     && mkdir db \
     && tar xf db.tar.gz -C db --strip-components 1 \
     && cd db/data \
@@ -41,7 +40,6 @@ RUN \
         echo $(jq -r '.[]' $json) > $json; done
 
 FROM mongo:5.0 as db
-ARG DB_TARBALL
 WORKDIR /srv/packages/db
 COPY --from=db-deps /srv/packages/db .
 
