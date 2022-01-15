@@ -61,7 +61,7 @@ services:
     volumes:
       - root:/srv
     environment:
-      - ASSETS_PORT=3000
+      - SERVER_PORT=3000
 
   board:
     container_name: platform-board
