@@ -1,7 +1,8 @@
 import { promises as fs } from 'fs';
+import type { Content } from 'types';
 import type { Constructor } from 'types/content';
-import { db } from '../../core';
-import { addRoute } from './route';
+import { db, server } from '../../core';
+import schema from './schema.json';
 
 export const content = new (function Content(this: Constructor) {
   this.options = {
@@ -9,10 +10,19 @@ export const content = new (function Content(this: Constructor) {
   };
 
   this.plugin = async (inst) => {
-    addRoute.call(this, inst);
-  };
-  this.getContent = async (id, name) => {
-    const buf = await fs.readFile(`${db.options.logos}/${id}/${name}.svg`);
-    return buf.toString();
+    inst.route<{ Params: Content.RouteParameters }>({
+      ...JSON.parse(JSON.stringify(schema)),
+      handler: async ({ params }, rep) => {
+        try {
+          const buf = await fs
+            .readFile(`${db.options.logos}/${params.id}/${params.name}.svg`);
+
+          rep.header('Content-Type', 'text/html; charset=utf-8');
+          rep.send(buf.toString());
+        } catch (error) {
+          rep.send(server.ruin(error));
+        }
+      },
+    });
   };
 } as any as { new (): Constructor })();
