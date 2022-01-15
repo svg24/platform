@@ -16,54 +16,73 @@
             "items": {
               "type": "object",
               "properties": {
-                "content": {
+                "data": {
                   "type": "object",
                   "properties": {
                     "original": {
                       "type": "object",
                       "properties": {
-                        "components": {
+                        "data": {
                           "type": "object",
                           "properties": {
-                            "react": {
+                            "api": {
                               "type": "object",
                               "properties": {
-                                "js": {
+                                "content": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "components": {
+                              "type": "object",
+                              "properties": {
+                                "react": {
+                                  "type": "object",
+                                  "properties": {
+                                    "js": {
+                                      "type": "string"
+                                    },
+                                    "ts": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "vue": {
+                                  "type": "object",
+                                  "properties": {
+                                    "js": {
+                                      "type": "string"
+                                    },
+                                    "ts": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "snippets": {
+                              "type": "object",
+                              "properties": {
+                                "css": {
                                   "type": "string"
                                 },
-                                "ts": {
+                                "jsx": {
                                   "type": "string"
-                                }
-                              }
-                            },
-                            "vue": {
-                              "type": "object",
-                              "properties": {
-                                "js": {
+                                },
+                                "svg": {
                                   "type": "string"
                                 }
                               }
                             }
                           }
                         },
-                        "links": {
+                        "meta": {
                           "type": "object",
                           "properties": {
-                            "url": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "snippets": {
-                          "type": "object",
-                          "properties": {
-                            "css": {
+                            "componentName": {
                               "type": "string"
                             },
-                            "jsx": {
-                              "type": "string"
-                            },
-                            "svg": {
+                            "fileName": {
                               "type": "string"
                             }
                           }
@@ -73,48 +92,67 @@
                     "square": {
                       "type": "object",
                       "properties": {
-                        "components": {
+                        "data": {
                           "type": "object",
                           "properties": {
-                            "react": {
+                            "api": {
                               "type": "object",
                               "properties": {
-                                "js": {
+                                "content": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "components": {
+                              "type": "object",
+                              "properties": {
+                                "react": {
+                                  "type": "object",
+                                  "properties": {
+                                    "js": {
+                                      "type": "string"
+                                    },
+                                    "ts": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "vue": {
+                                  "type": "object",
+                                  "properties": {
+                                    "js": {
+                                      "type": "string"
+                                    },
+                                    "ts": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "snippets": {
+                              "type": "object",
+                              "properties": {
+                                "css": {
                                   "type": "string"
                                 },
-                                "ts": {
+                                "jsx": {
                                   "type": "string"
-                                }
-                              }
-                            },
-                            "vue": {
-                              "type": "object",
-                              "properties": {
-                                "js": {
+                                },
+                                "svg": {
                                   "type": "string"
                                 }
                               }
                             }
                           }
                         },
-                        "links": {
+                        "meta": {
                           "type": "object",
                           "properties": {
-                            "url": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "snippets": {
-                          "type": "object",
-                          "properties": {
-                            "css": {
+                            "componentName": {
                               "type": "string"
                             },
-                            "jsx": {
-                              "type": "string"
-                            },
-                            "svg": {
+                            "fileName": {
                               "type": "string"
                             }
                           }
@@ -123,19 +161,13 @@
                     }
                   }
                 },
-                "file": {
+                "meta": {
                   "type": "object",
                   "properties": {
-                    "camel": {
-                      "type": "string"
-                    },
-                    "snake": {
-                      "type": "string"
+                    "version": {
+                      "type": "number"
                     }
                   }
-                },
-                "version": {
-                  "type": "number"
                 }
               }
             }
