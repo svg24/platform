@@ -70,10 +70,10 @@ RUN \
 
 FROM node-base as root
 WORKDIR /srv
+COPY .browserslistrc .browserslistrc
 COPY .editorconfig .editorconfig
 COPY .eslintignore .eslintignore
 COPY .eslintrc.cjs .eslintrc.cjs
-COPY .browserslistrc .browserslistrc
 COPY gulpfile.js gulpfile.js
 COPY package.json package.json
 COPY tailwind.config.cjs tailwind.config.cjs
