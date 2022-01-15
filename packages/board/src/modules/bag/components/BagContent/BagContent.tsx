@@ -10,35 +10,35 @@ export function BagContent(): JSX.Element {
     items: [{
       id: 'css',
       label: 'CSS',
-      content: {
-        original: bag.item.data?.data.original?.data.snippets.css,
-        square: bag.item.data?.data.square?.data.snippets.css,
+      original: {
+        content: bag.item.data?.data.original?.data.snippets.css,
+        file: `${bag.item.data?.data.original?.meta.fileName}.css`,
       },
-      file: {
-        original: `${bag.item.data?.data.original?.meta.fileName}.css`,
-        square: `${bag.item.data?.data.square?.meta.fileName}.css`,
+      square: {
+        content: bag.item.data?.data.square?.data.snippets.css,
+        file: `${bag.item.data?.data.square?.meta.fileName}.css`,
       },
     }, {
       id: 'jsx',
       label: 'JSX',
-      content: {
-        original: bag.item.data?.data.original?.data.snippets.jsx,
-        square: bag.item.data?.data.square?.data.snippets.jsx,
+      original: {
+        content: bag.item.data?.data.original?.data.snippets.jsx,
+        file: `${bag.item.data?.data.original?.meta.fileName}.jsx`,
       },
-      file: {
-        original: `${bag.item.data?.data.original?.meta.fileName}.jsx`,
-        square: `${bag.item.data?.data.square?.meta.fileName}.jsx`,
+      square: {
+        content: bag.item.data?.data.square?.data.snippets.jsx,
+        file: `${bag.item.data?.data.square?.meta.fileName}.jsx`,
       },
     }, {
       id: 'svg',
       label: 'SVG',
-      content: {
-        original: bag.item.data?.data.original?.data.snippets.svg,
-        square: bag.item.data?.data.square?.data.snippets.svg,
+      original: {
+        content: bag.item.data?.data.original?.data.snippets.svg,
+        file: `${bag.item.data?.data.original?.meta.fileName}.svg`,
       },
-      file: {
-        original: `${bag.item.data?.data.original?.meta.fileName}.svg`,
-        square: `${bag.item.data?.data.square?.meta.fileName}.svg`,
+      square: {
+        content: bag.item.data?.data.square?.data.snippets.svg,
+        file: `${bag.item.data?.data.square?.meta.fileName}.svg`,
       },
     }],
   }, {
@@ -47,46 +47,46 @@ export function BagContent(): JSX.Element {
     items: [{
       id: 'react',
       label: 'React',
-      content: {
-        original: bag.item.data?.data.original?.data.components.react.js,
-        square: bag.item.data?.data.square?.data.components.react.js,
+      original: {
+        content: bag.item.data?.data.original?.data.components.react.js,
+        file: `${bag.item.data?.data.original?.meta.componentName}.jsx`,
       },
-      file: {
-        original: `${bag.item.data?.data.original?.meta.componentName}.jsx`,
-        square: `${bag.item.data?.data.square?.meta.componentName}.jsx`,
+      square: {
+        content: bag.item.data?.data.square?.data.components.react.js,
+        file: `${bag.item.data?.data.square?.meta.componentName}.jsx`,
       },
     }, {
       id: 'react-ts',
       label: 'React (ts)',
-      content: {
-        original: bag.item.data?.data.original?.data.components.react.ts,
-        square: bag.item.data?.data.square?.data.components.react.ts,
+      original: {
+        content: bag.item.data?.data.original?.data.components.react.ts,
+        file: `${bag.item.data?.data.original?.meta.componentName}.jsx`,
       },
-      file: {
-        original: `${bag.item.data?.data.original?.meta.componentName}.jsx`,
-        square: `${bag.item.data?.data.square?.meta.componentName}.jsx`,
+      square: {
+        content: bag.item.data?.data.square?.data.components.react.ts,
+        file: `${bag.item.data?.data.square?.meta.componentName}.jsx`,
       },
     }, {
       id: 'vue',
       label: 'Vue',
-      content: {
-        original: bag.item.data?.data.original?.data.components.vue.js,
-        square: bag.item.data?.data.square?.data.components.vue.js,
+      original: {
+        content: bag.item.data?.data.original?.data.components.vue.js,
+        file: `${bag.item.data?.data.original?.meta.componentName}.vue`,
       },
-      file: {
-        original: `${bag.item.data?.data.original?.meta.componentName}.vue`,
-        square: `${bag.item.data?.data.square?.meta.componentName}.vue`,
+      square: {
+        content: bag.item.data?.data.square?.data.components.vue.js,
+        file: `${bag.item.data?.data.square?.meta.componentName}.vue`,
       },
     }, {
       id: 'vue-ts',
       label: 'Vue (ts)',
-      content: {
-        original: bag.item.data?.data.original?.data.components.vue.ts,
-        square: bag.item.data?.data.square?.data.components.vue.ts,
+      original: {
+        content: bag.item.data?.data.original?.data.components.vue.ts,
+        file: `${bag.item.data?.data.original?.meta.componentName}.vue`,
       },
-      file: {
-        original: `${bag.item.data?.data.original?.meta.componentName}.vue`,
-        square: `${bag.item.data?.data.square?.meta.componentName}.vue`,
+      square: {
+        content: bag.item.data?.data.square?.data.components.vue.ts,
+        file: `${bag.item.data?.data.square?.meta.componentName}.vue`,
       },
     }],
   }, {
@@ -95,13 +95,13 @@ export function BagContent(): JSX.Element {
     items: [{
       id: 'content',
       label: 'Content',
-      content: {
-        original: bag.item.data?.data.original?.data.api.content,
-        square: bag.item.data?.data.square?.data.api.content,
+      original: {
+        content: bag.item.data?.data.original?.data.api.content,
+        file: `${bag.item.data?.data.original?.meta.fileName}.txt`,
       },
-      file: {
-        original: `${bag.item.data?.data.original?.meta.fileName}.txt`,
-        square: `${bag.item.data?.data.square?.meta.fileName}.txt`,
+      square: {
+        content: bag.item.data?.data.square?.data.api.content,
+        file: `${bag.item.data?.data.square?.meta.fileName}.txt`,
       },
     }],
   }];
@@ -113,25 +113,21 @@ export function BagContent(): JSX.Element {
           <HeadingLevel3>
             {sec.heading}
           </HeadingLevel3>
-          {sec.items.map((item) => (
-            <Button
-              key={item.id}
-              onClick={() => {
-                if (bag.item.settings.action && bag.item.settings.type) {
-                  const content = item.content[bag.item.settings.type];
-
-                  if (content) {
-                    bag.item.settings.action({
-                      content,
-                      file: item.file[bag.item.settings.type],
-                    });
+          <div className="bag-content__container">
+            {sec.items.map((item) => (
+              <Button
+                key={item.id}
+                onClick={() => {
+                  if (bag.item.settings.action && bag.item.settings.type) {
+                    const { content, file } = item[bag.item.settings.type];
+                    if (content) bag.item.settings.action({ content, file });
                   }
-                }
-              }}
-            >
-              {item.label}
-            </Button>
-          ))}
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </div>
         </div>
       ))}
     </section>
