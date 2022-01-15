@@ -2,25 +2,37 @@
  * @param {String} pack
  * @returns {import('eslint').Linter.ConfigOverride['files']}
  */
-function getFiles(pack) {
-  const local = `packages/${pack}/`;
-  return [
-    `${local}src/**/*.{ts,tsx}`,
-    `${local}types/*.d.ts`,
-  ];
+function getSourceTSFiles(pack) {
+  return [`packages/${pack}/src/**/*.{ts,tsx}`];
 }
+
+/**
+ * @param {String} pack
+ * @returns {import('eslint').Linter.ConfigOverride['files']}
+ */
+function getTypeTSFiles(pack) {
+  return [`packages/${pack}/types/*.d.ts`];
+}
+
+/**
+ * @param {String} pack
+ * @returns {import('eslint').Linter.ConfigOverride['files']}
+ */
+function getTSFiles(pack) {
+  return [...getSourceTSFiles(pack), ...getTypeTSFiles(pack)];
+}
+
+/**
+ * @type {import('eslint').Linter.ConfigOverride['files']}
+ */
+const JSFiles = ['**/*.{cjs,js}'];
 
 /**
  * @param {String=} pack
  * @returns {import('eslint').Linter.BaseConfig['parserOptions']}
  */
 function getParserOptions(pack) {
-  const config = 'tsconfig.json';
-  return {
-    ecmaVersion: 2021,
-    project: [pack ? `packages/${pack}/${config}` : config],
-    sourceType: 'module',
-  };
+  return { project: `packages/${pack}/tsconfig.json` };
 }
 
 /**
@@ -32,22 +44,6 @@ const extendsTSBase = [
 ];
 
 /**
- * @type {import('eslint').Linter.BaseConfig['rules']}
- */
-const overriddenAirbnbRules = {
-  'import/order': ['error', {
-    alphabetize: {
-      order: 'asc',
-    },
-  }],
-  'import/prefer-default-export': 'off',
-  'no-underscore-dangle': 'off',
-  'sort-imports': ['warn', {
-    ignoreDeclarationSort: true,
-  }],
-};
-
-/**
  * @type {import('eslint').Linter.BaseConfig}
  */
 module.exports = {
@@ -56,24 +52,92 @@ module.exports = {
     es2021: true,
   },
   overrides: [{
-    files: ['**/*.{cjs,js}'],
-    parserOptions: {
-      ecmaVersion: 2021,
+    files: getTSFiles('assets'),
+    parserOptions: getParserOptions('assets'),
+    env: {
+      node: true,
     },
+    extends: extendsTSBase,
+  }, {
+    files: getTSFiles('api'),
+    parserOptions: getParserOptions('api'),
+    env: {
+      node: true,
+    },
+    extends: extendsTSBase,
+  }, {
+    files: getTSFiles('board'),
+    parserOptions: getParserOptions('board'),
+    env: {
+      browser: true,
+    },
+    extends: [
+      'airbnb',
+      'airbnb-typescript',
+      'plugin:react/jsx-runtime',
+    ],
+    rules: {
+      'jsx-a11y/label-has-associated-control': ['error', {
+        labelComponents: [],
+        labelAttributes: [],
+        controlComponents: [],
+        assert: 'nesting',
+        depth: 25,
+      }],
+      'react/function-component-definition': ['error', {
+        namedComponents: 'function-declaration',
+        unnamedComponents: 'function-expression',
+      }],
+      'react/jsx-filename-extension': [1, {
+        extensions: ['tsx'],
+      }],
+      'react/jsx-max-props-per-line': [1, {
+        maximum: 1,
+      }],
+      'react/jsx-sort-props': [1, {
+        callbacksLast: true,
+        shorthandLast: true,
+      }],
+      'react/no-danger': 'off',
+    },
+  }, {
+    files: getTSFiles('www'),
+    parserOptions: getParserOptions('www'),
+    env: {
+      browser: true,
+    },
+    extends: extendsTSBase,
+  }, {
+    files: JSFiles,
     extends: 'airbnb-base',
     rules: {
-      ...overriddenAirbnbRules,
       'import/no-extraneous-dependencies': ['error', {
         devDependencies: ['./*.{cjs,js}'],
       }],
     },
   }, {
-    files: getFiles('*'),
+    files: [...JSFiles, ...getTSFiles('*')],
+    parserOptions: {
+      ecmaVersion: 2021,
+      sourceType: 'module',
+    },
+    rules: {
+      'import/order': ['error', {
+        alphabetize: {
+          order: 'asc',
+        },
+      }],
+      'import/prefer-default-export': 'off',
+      'no-underscore-dangle': 'off',
+      'sort-imports': ['warn', {
+        ignoreDeclarationSort: true,
+      }],
+    },
+  }, {
+    files: getTSFiles('*'),
     parser: '@typescript-eslint/parser',
-    parserOptions: getParserOptions(),
     extends: 'plugin:@typescript-eslint/recommended',
     rules: {
-      ...overriddenAirbnbRules,
       '@typescript-eslint/array-type': ['error', {
         default: 'array',
       }],
@@ -115,7 +179,7 @@ module.exports = {
           order: 'alphabetically',
         },
       }],
-      '@typescript-eslint/method-signature-style': ['error', 'property'],
+      '@typescript-eslint/method-signature-style': ['error', 'method'],
       '@typescript-eslint/no-confusing-void-expression': ['error'],
       '@typescript-eslint/no-empty-interface': ['error', {
         allowSingleExtends: true,
@@ -123,67 +187,26 @@ module.exports = {
       '@typescript-eslint/no-explicit-any': ['off'],
     },
   }, {
-    files: getFiles('assets'),
-    parserOptions: getParserOptions('assets'),
-    env: {
-      node: true,
-    },
-    extends: extendsTSBase,
-    rules: overriddenAirbnbRules,
-  }, {
-    files: getFiles('api'),
-    parserOptions: getParserOptions('api'),
-    env: {
-      node: true,
-    },
-    extends: extendsTSBase,
+    files: getSourceTSFiles('*'),
     rules: {
-      ...overriddenAirbnbRules,
-      'no-console': 'off',
+      'max-len': ['error', 80, 2, {
+        ignoreUrls: true,
+        ignoreComments: false,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+      }],
     },
   }, {
-    files: getFiles('board'),
-    parserOptions: getParserOptions('board'),
-    env: {
-      browser: true,
-    },
-    extends: [
-      'airbnb',
-      'airbnb-typescript',
-      'plugin:react/jsx-runtime',
-    ],
+    files: getTypeTSFiles('*'),
     rules: {
-      ...overriddenAirbnbRules,
-      'jsx-a11y/label-has-associated-control': ['error', {
-        labelComponents: [],
-        labelAttributes: [],
-        controlComponents: [],
-        assert: 'nesting',
-        depth: 25,
+      'max-len': ['error', 120, 2, {
+        ignoreUrls: true,
+        ignoreComments: false,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
       }],
-      'react/function-component-definition': ['error', {
-        namedComponents: 'function-declaration',
-        unnamedComponents: 'function-expression',
-      }],
-      'react/jsx-filename-extension': [1, {
-        extensions: ['tsx'],
-      }],
-      'react/jsx-max-props-per-line': [1, {
-        maximum: 1,
-      }],
-      'react/jsx-sort-props': [1, {
-        callbacksLast: true,
-        shorthandLast: true,
-      }],
-      'react/no-danger': 'off',
     },
-  }, {
-    files: getFiles('www'),
-    parserOptions: getParserOptions('www'),
-    env: {
-      browser: true,
-    },
-    extends: extendsTSBase,
-    rules: overriddenAirbnbRules,
   }],
 };
