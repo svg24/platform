@@ -57,6 +57,9 @@ function defineBoard() {
         protocol: process.env.SERVER_HMR_PROTOCOL,
       },
     },
+    preview: {
+      port: parseInt(process.env.SERVER_PORT, 10),
+    },
   });
 
   return config;

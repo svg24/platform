@@ -9,7 +9,7 @@
   "scripts": {
     "build-api": "yarn tsc-api",
     "build-assets": "yarn tsc-assets && gulp build-assets",
-    "build-board": "yarn tsc-board && vite build",
+    "build-board": "vite build",
     "build-collection": "gulp build-collection",
     "build-www": "gulp build-www",
     "dev-api": "nodemon --exec 'yarn build-api && yarn node-api' --ext ts --watch packages/api/src",
@@ -31,6 +31,7 @@
     "lint-ts-www": "eslint packages/www",
     "node-api": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/api/dist",
     "node-assets": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/assets/dist",
+    "preview-board": "yarn build-board && vite preview",
     "prod-api": "nodemon --exec 'yarn build-api && yarn node-api' --ext js",
     "tsc-api": "tsc -p packages/api/tsconfig.json",
     "tsc-assets": "tsc -p packages/assets/tsconfig.json",
