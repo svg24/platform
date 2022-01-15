@@ -7,12 +7,13 @@ import { addRoute } from './route';
 
 export const list = new (function List(this: Constructor) {
   this.schema = new mongoose.Schema({
+    category: { type: String, required: true },
+    company: { type: String, required: true },
+    date: { type: String, required: true },
     id: { type: String, required: true },
     name: { type: String, required: true },
-    company: { type: String, required: true },
-    category: { type: String, required: true },
-    date: { type: String, required: true },
-    src: { type: String, required: true },
+    product: { type: String, required: true },
+    usage: { type: String, required: true },
   }, {
     collection: 'logos',
   });

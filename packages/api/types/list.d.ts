@@ -17,12 +17,15 @@ declare namespace List {
     date: string;
     id: SchemaId;
     name: SchemaName;
-    src: string;
+    product: SchemaProduct;
+    usage: SchemaUsage;
   };
   type SchemaId = string;
   type SchemaCategory = string;
   type SchemaCompany = string;
   type SchemaName = string;
+  type SchemaProduct = string;
+  type SchemaUsage = string;
   type RouteQuery = {
     category?: SchemaCategory;
     company?: SchemaCompany;

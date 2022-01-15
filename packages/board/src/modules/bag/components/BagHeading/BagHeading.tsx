@@ -12,7 +12,7 @@ export function BagHeading(): JSX.Element {
       <a
         aria-label={`Go to ${bag.item.meta?.name} website`}
         className="bag-heading__link"
-        href={bag.item.meta?.src.product}
+        href={bag.item.meta?.product}
       >
         <ExternalLinkIcon
           aria-hidden="true"

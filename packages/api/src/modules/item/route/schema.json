@@ -203,16 +203,11 @@
               "name": {
                 "type": "string"
               },
-              "src": {
-                "type": "object",
-                "properties": {
-                  "product": {
-                    "type": "string"
-                  },
-                  "usage": {
-                    "type": "string"
-                  }
-                }
+              "product": {
+                "type": "string"
+              },
+              "usage": {
+                "type": "string"
               }
             }
           }

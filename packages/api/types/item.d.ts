@@ -1,5 +1,10 @@
 import type { RegisterOptions } from 'fastify';
-import type { SchemaId, SchemaName } from './list';
+import type {
+  SchemaId,
+  SchemaName,
+  SchemaProduct,
+  SchemaUsage,
+} from './list';
 import type { ConstructorInstance } from './server';
 import type { Schema } from './simple';
 
@@ -57,19 +62,13 @@ declare namespace Item {
   };
   type RouteResponseDataItemDataItemDataSnippetsSVG = string;
   type RouteResponseDataItemMetaVersion = number;
-  // type RouteResponseDataItemContent = {
-  //   [key in RouteResponseDataItemContentTypes]?: RouteResponseDataItemContentItem;
-  // };
-  // type RouteResponseDataItemContentTypes = 'original' | 'square';
   type RouteResponseMeta = {
     category: RouteResponseMetaCategory;
     company: RouteResponseMetaCompany;
     id: RouteResponseMetaId;
     name: RouteResponseMetaName;
-    src: {
-      product: string;
-      usage: string;
-    };
+    product: SchemaProduct;
+    usage: SchemaUsage;
   };
   type RouteResponseMetaCategory = Schema;
   type RouteResponseMetaCompany = Schema;

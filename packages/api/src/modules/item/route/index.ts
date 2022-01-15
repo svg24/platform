@@ -32,10 +32,8 @@ export function addRoute(
             company: await companies.find(item.company),
             id: item.id,
             name: item.name,
-            src: {
-              product: item.src,
-              usage: '',
-            },
+            product: item.product,
+            usage: item.usage,
           },
         })));
 

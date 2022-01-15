@@ -8,11 +8,11 @@ export function BagMeta(): JSX.Element {
 
   return (
     <section>
-      {bag.item.meta?.src.usage
+      {bag.item.meta?.usage
         ? (
           <p>
             {'Before use, it is recommended to read the '}
-            <Link href={bag.item.meta.src.usage}>
+            <Link href={bag.item.meta.usage}>
               usage guide
             </Link>
             .
