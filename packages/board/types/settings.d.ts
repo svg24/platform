@@ -14,8 +14,7 @@ declare namespace Settings {
   /**
    * `settings.size`
    */
-  type StoreSize
-    = FormParameter<FormParameterOptions, FormParameterOptionsItem>;
+  type StoreSize = FormParameter<FormParameterOptions, FormParameterOptionsItem>;
 }
 
 export = Settings;

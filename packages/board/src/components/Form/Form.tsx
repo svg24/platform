@@ -79,7 +79,7 @@ export function FormLabelComplete({
   option,
   parameter,
 }: {
-  onChange?: () => void;
+  onChange?(): void;
   onClick?: LabelCompleteOnClick;
   option: LabelCompleteOption;
   parameter: LabelCompleteParameter;

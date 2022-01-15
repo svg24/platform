@@ -79,7 +79,7 @@ function BagViewThumbs({
   onSwiper,
 }: {
   children: JSX.Element[];
-  onSwiper: (swiper: SwiperCore) => void;
+  onSwiper(swiper: SwiperCore): void;
 }): JSX.Element {
   return (
     <Swiper

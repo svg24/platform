@@ -5,8 +5,8 @@ declare namespace Search {
    * `search`
    */
   type Store = {
-    process: (value: ItemResponseMetaName) => void;
-    reset: () => void;
+    process(value: ItemResponseMetaName): void;
+    reset(): void;
     value: StoreValue;
   };
   /**

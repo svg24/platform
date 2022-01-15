@@ -10,8 +10,7 @@ declare namespace Form {
   /**
    * `LabelComplete()`
    */
-  type LabelCompleteOnClick
-    = (isChecked: LabelCompleteOnClickParametersIsChecked) => void;
+  type LabelCompleteOnClick = (isChecked: LabelCompleteOnClickParametersIsChecked) => void;
   type LabelCompleteOnClickParametersIsChecked = boolean;
   type LabelCompleteOption = FormParameterOptionsItem;
   type LabelCompleteParameter = FormParameter<any, FormParameterOptionsItem>;

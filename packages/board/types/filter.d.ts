@@ -20,15 +20,12 @@ declare namespace Filter {
     readonly applied: StoreApplied;
     category: StoreCategory;
     company: StoreCompany;
-    mount: () => Promise<void>;
-    reset: () => void;
+    mount(): Promise<void>;
+    reset(): void;
     sortBy: StoreSortBy;
   };
-  type StoreKeysParameters
-    = StoreKeyParameterCategory
-    | StoreKeyParameterCompany | StoreKeyParameterSortBy;
-  type StoreKeysParametersAlphabetical
-    = StoreKeyParameterCategory | StoreKeyParameterCompany;
+  type StoreKeysParameters = StoreKeyParameterCategory | StoreKeyParameterCompany | StoreKeyParameterSortBy;
+  type StoreKeysParametersAlphabetical = StoreKeyParameterCategory | StoreKeyParameterCompany;
   type StoreKeyParameterCategory = 'category';
   type StoreKeyParameterCompany = 'company';
   type StoreKeyParameterSortBy = 'sortBy';
@@ -39,25 +36,19 @@ declare namespace Filter {
   /**
    * `filter.category`
    */
-  type StoreCategory
-    = StoreParameterBase<CategoriesResponseData,
-    CategoriesResponseDataPropertyItem>;
+  type StoreCategory = StoreParameterBase<CategoriesResponseData, CategoriesResponseDataPropertyItem>;
   /**
    * `filter.company`
    */
-  type StoreCompany
-    = StoreParameterBase<CompaniesResponseData,
-    CompaniesResponseDataPropertyItem>;
+  type StoreCompany = StoreParameterBase<CompaniesResponseData, CompaniesResponseDataPropertyItem>;
   /**
    * `filter.sortBy`
    */
-  type StoreSortBy
-    = StoreParameterBase<SortByResponseData, SortByResponseDataItem>;
+  type StoreSortBy = StoreParameterBase<SortByResponseData, SortByResponseDataItem>;
   /**
    * `FilterApplied()`
    */
-  type AppliedParameters
-    = (ParameterParameter | ParameterAlphabeticalParameter)[] | [];
+  type AppliedParameters = (ParameterParameter | ParameterAlphabeticalParameter)[] | [];
   /**
    * `FilterParameter()`
    */
@@ -70,21 +61,16 @@ declare namespace Filter {
     option: FilterParametersAlphabeticalOptionsItem,
     isChecked: LabelCompleteOnClickParametersIsChecked,
   ) => void;
-  type ParameterAlphabeticalParameter
-    = ParameterAdditionalProperties & FilterParametersAlphabetical;
+  type ParameterAlphabeticalParameter = ParameterAdditionalProperties & FilterParametersAlphabetical;
 }
 
 type FilterParameters = Filter.StoreSortBy;
 type FilterParametersOptionsItem = Parameters<FilterParameters['set']>[0];
 type FilterParametersAlphabetical = Filter.StoreCategory | Filter.StoreCompany;
-type FilterParametersAlphabeticalOptionsItem
-  = Parameters<FilterParametersAlphabetical['set']>[0];
+type FilterParametersAlphabeticalOptionsItem = Parameters<FilterParametersAlphabetical['set']>[0];
 
-interface StoreParameterBase<
-  Options,
-  Option extends FormParameterOptionsItem,
-> extends FormParameter<Options, Option> {
-  fetch: () => Promise<void>;
+interface StoreParameterBase<Options, Option extends FormParameterOptionsItem> extends FormParameter<Options, Option> {
+  fetch(): Promise<void>;
   readonly isApplied: boolean;
 }
 

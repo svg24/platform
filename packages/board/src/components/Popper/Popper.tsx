@@ -13,7 +13,7 @@ export function Popper({
   anchorRef: RefObject<HTMLElement>;
   children: JSX.Element;
   isVisible: boolean;
-  onClose: () => void;
+  onClose(): void;
 }): JSX.Element {
   const rootRef = useRef<HTMLDivElement>(null);
 

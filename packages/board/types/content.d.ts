@@ -25,18 +25,18 @@ declare namespace Content {
    * `content.item`
    */
   type StoreItem = {
-    clear: () => void;
-    fetch: () => Promise<void>;
+    clear(): void;
+    fetch(): Promise<void>;
     response: ItemResponse | null;
   };
   /**
    * `content.list`
    */
   type StoreList = {
-    fetch: (multiplier?: ListResponseMetaMultiplier) => Promise<ListResponse>;
-    reset: () => Promise<void>;
+    fetch(multiplier?: ListResponseMetaMultiplier): Promise<ListResponse>;
+    reset(): Promise<void>;
     response: StoreListResponse;
-    upload: () => Promise<void>;
+    upload(): Promise<void>;
   };
   type StoreListResponse = {
     data: StoreListResponseData;
@@ -44,8 +44,8 @@ declare namespace Content {
   };
   type StoreListResponseData = {
     _items: StoreListResponseDataItems;
-    add: (data: ListResponseData) => void;
-    clear: () => void;
+    add(data: ListResponseData): void;
+    clear(): void;
     isItems: boolean;
     items: StoreListResponseDataItems;
   };
@@ -54,14 +54,14 @@ declare namespace Content {
   type StoreListResponseMeta = {
     length: StoreListResponseMetaLength;
     page: StoreListResponseMetaPage;
-    set: (meta: ListResponseMeta) => void;
+    set(meta: ListResponseMeta): void;
   };
   type StoreListResponseMetaLength = {
     _current: StoreListResponseMetaLengthCurrent;
     _total: StoreListResponseMetaLengthTotal;
     current: StoreListResponseMetaLengthCurrent;
-    setCurrent: (current: StoreListResponseMetaLengthCurrent) => void;
-    setTotal: (total: StoreListResponseMetaLengthTotal) => void;
+    setCurrent(current: StoreListResponseMetaLengthCurrent): void;
+    setTotal(total: StoreListResponseMetaLengthTotal): void;
     total: StoreListResponseMetaLengthTotal;
   };
   type StoreListResponseMetaLengthCurrent = ListResponseMetaLengthCurrent;
@@ -70,9 +70,9 @@ declare namespace Content {
     _hasNext: StoreListResponseMetaPageHasNext;
     hasNext: StoreListResponseMetaPageHasNext;
     next: StoreListResponseMetaPageNext;
-    reset: () => void;
-    setHasNext: (hasNext: StoreListResponseMetaPageHasNext) => void;
-    setNext: (next: StoreListResponseMetaPageNext) => void;
+    reset(): void;
+    setHasNext(hasNext: StoreListResponseMetaPageHasNext): void;
+    setNext(next: StoreListResponseMetaPageNext): void;
   };
   type StoreListResponseMetaPageHasNext = ListResponseMetaPageHasNext;
   type StoreListResponseMetaPageNext = ListResponseMetaPageNext;

@@ -2,17 +2,17 @@ declare namespace Notification {
   type Store = {
     _isVisible: StoreIsVisible;
     description: StoreDescription;
-    hide: () => void;
+    hide(): void;
     isVisible: StoreIsVisible;
-    show: () => void;
-    showNegative: (description: string) => void;
-    showPositive: (description: string) => void;
+    show(): void;
+    showNegative(description: string): void;
+    showPositive(description: string): void;
     type: StoreType;
   };
   type StoreIsVisible = boolean;
   type StoreDescription = {
-    reset: () => void;
-    set: (value: StoreDescriptionValueCurrent) => void;
+    reset(): void;
+    set(value: StoreDescriptionValueCurrent): void;
     value: StoreDescriptionValue;
   };
   type StoreDescriptionValue = {
@@ -22,8 +22,8 @@ declare namespace Notification {
   type StoreDescriptionValueDefault = null;
   type StoreDescriptionValueCurrent = string;
   type StoreType = {
-    reset: () => void;
-    set: (value: StoreTypeValueCurrent) => void;
+    reset(): void;
+    set(value: StoreTypeValueCurrent): void;
     value: StoreTypeValue;
   };
   type StoreTypeValue = {

@@ -27,15 +27,15 @@ declare namespace Bag {
     _data: StoreItemData;
     data: StoreItemData;
     meta: ItemResponseMeta | null;
-    setData: (data: ItemResponseDataItem) => void;
-    setMeta: (meta: ItemResponseMeta) => void;
+    setData(data: ItemResponseDataItem): void;
+    setMeta(meta: ItemResponseMeta): void;
     settings: StoreItemSettings;
   };
   type StoreItemData = ItemResponseDataItem | null;
   type StoreItemSettings = {
     action: StoreItemSettingsAction | null;
-    setAction: (action: StoreItemSettingsAction) => void;
-    setType: (type: StoreItemSettingsTypes) => void;
+    setAction(action: StoreItemSettingsAction): void;
+    setType(type: StoreItemSettingsTypes): void;
     type: StoreItemSettingsTypes | null;
   };
   type StoreItemSettingsAction = (props: {
@@ -66,29 +66,23 @@ declare namespace Bag {
   /**
    * `BagSettingsActions()`
    */
-  interface SettingsParameterActions
-    extends SettingsParameter<SettingsParameterActionsOptionsItem> {}
-  interface SettingsParameterActionsOptionsItem
-    extends SettingsParameterOptionsItem {
+  interface SettingsParameterActions extends SettingsParameter<SettingsParameterActionsOptionsItem> {}
+  interface SettingsParameterActionsOptionsItem extends SettingsParameterOptionsItem {
     handler: StoreItemSettingsAction;
     id: string;
   }
   /**
    * `BagSettingsTypes()`
    */
-  interface SettingsParameterTypes
-    extends SettingsParameter<SettingsParameterTypesOptionsItem> {}
-  interface SettingsParameterTypesOptionsItem
-    extends SettingsParameterOptionsItem {
+  interface SettingsParameterTypes extends SettingsParameter<SettingsParameterTypesOptionsItem> {}
+  interface SettingsParameterTypesOptionsItem extends SettingsParameterOptionsItem {
     id: StoreItemSettingsTypes;
   }
 }
 
-interface SettingsParameter<
-  Item extends SettingsParameterOptionsItem,
-> extends ParameterAdditionalProperties {
+interface SettingsParameter<Item extends SettingsParameterOptionsItem> extends ParameterAdditionalProperties {
   id: string;
-  onChange: (item: Item) => void;
+  onChange(item: Item): void;
   options: Item[];
 }
 type SettingsParameterOptionsItem = {

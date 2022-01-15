@@ -1,147 +1,59 @@
+import type { Item, List, Simple } from '@svg24/api/types';
+
 declare namespace Api {
   function categories(): Promise<CategoriesResponse>;
   function companies(): Promise<CompaniesResponse>;
-  function item(params: {
-    id: ItemResponseMetaId;
-  }): Promise<ItemResponse>;
-  function list(params: {
-    category?: CategoriesResponseDataPropertyItemId;
-    company?: CompaniesResponseDataPropertyItemId;
-    multiplier?: ListResponseMetaMultiplier;
-    name?: ItemResponseMetaName;
-    page?: ListResponseMetaPageNext;
-    sortBy?: SortByResponseDataItemId;
-  }): Promise<ListResponse>;
+  function item(params: Item.RouteQuery): Promise<ItemResponse>;
+  function list(params: List.RouteQuery): Promise<ListResponse>;
   function sortBy(): Promise<SortByResponse>;
   type KeysSimpleMethods = 'categories' | 'companies' | 'sortBy';
   /**
    * `api.categories()`
    */
-  type CategoriesResponse = SimpleAlphabeticalResponse;
-  type CategoriesResponseData = CategoriesResponse['data'];
-  type CategoriesResponseDataPropertyItem = CategoriesResponseData[''][0];
-  type CategoriesResponseDataPropertyItemId
-    = CategoriesResponseDataPropertyItem['id'];
+  type CategoriesResponse = Simple.RouteResponse;
+  type CategoriesResponseData = Simple.RouteResponseData;
+  type CategoriesResponseDataPropertyItem = Simple.RouteResponseDataPropertyItem;
   /**
    * `api.companies()`
    */
-  type CompaniesResponse = SimpleAlphabeticalResponse;
-  type CompaniesResponseData = CompaniesResponse['data'];
-  type CompaniesResponseDataPropertyItem = CompaniesResponseData[''][0];
-  type CompaniesResponseDataPropertyItemId
-    = CompaniesResponseDataPropertyItem['id'];
+  type CompaniesResponse = Simple.RouteResponse;
+  type CompaniesResponseData = Simple.RouteResponseData;
+  type CompaniesResponseDataPropertyItem = Simple.RouteResponseDataPropertyItem;
   /**
    * `api.list()`
    */
-  type ListResponse = {
-    data: ListResponseData;
-    meta: ListResponseMeta;
-  };
-  type ListResponseData = ListResponseDataItem[];
-  type ListResponseDataItem = {
-    hasMore: boolean;
-    id: ItemResponseMetaId;
-    latest: string;
-    name: ItemResponseMetaName;
-  };
-  type ListResponseMeta = {
-    length: ListResponseMetaLength;
-    multiplier?: ListResponseMetaMultiplier;
-    page: ListResponseMetaPage;
-  };
-  type ListResponseMetaLength = {
-    current: ListResponseMetaLengthCurrent;
-    total: ListResponseMetaLengthTotal;
-  };
-  type ListResponseMetaLengthCurrent = number;
-  type ListResponseMetaLengthTotal = number;
-  type ListResponseMetaMultiplier = number;
-  type ListResponseMetaPage = {
-    hasNext: ListResponseMetaPageHasNext;
-    next: ListResponseMetaPageNext;
-  };
-  type ListResponseMetaPageHasNext = boolean;
-  type ListResponseMetaPageNext = number;
+  type ListResponse = List.RouteResponse;
+  type ListResponseData = List.RouteResponseData;
+  type ListResponseDataItem = List.RouteResponseDataItem;
+  type ListResponseMeta = List.RouteResponseMeta;
+  type ListResponseMetaLengthCurrent = List.RouteResponseMetaLengthCurrent;
+  type ListResponseMetaLengthTotal = List.RouteResponseMetaLengthTotal;
+  type ListResponseMetaMultiplier = List.RouteResponseMetaMultiplier;
+  type ListResponseMetaPageHasNext = List.RouteResponseMetaPageHasNext;
+  type ListResponseMetaPageNext = List.RouteResponseMetaPageNext;
   /**
    * `api.item()`
    */
-  type ItemResponse = {
-    data: ItemResponseData;
-    meta: ItemResponseMeta;
-  };
-  type ItemResponseData = ItemResponseDataItem[];
-  type ItemResponseDataItem = {
-    content: ItemResponseDataItemContent;
-    file: ItemResponseDataItemFile;
-    version: ItemResponseDataItemVersion;
-  };
-  type ItemResponseDataItemContent = {
-    [key in ItemResponseDataItemContentTypes]?: {
-      components: {
-        react: {
-          js: string;
-          ts: string;
-        };
-        vue: {
-          js: string;
-        };
-      };
-      links: {
-        url: string;
-      };
-      snippets: {
-        css: string;
-        jsx: string;
-        svg: string;
-      };
-    };
-  };
-  type ItemResponseDataItemContentTypes = 'square' | 'original';
-  type ItemResponseDataItemFile = {
-    camel: string;
-    snake: string;
-  };
-  type ItemResponseDataItemVersion = number;
-  type ItemResponseMeta = {
-    category: ItemResponseMetaCategory;
-    company: ItemResponseMetaCompany;
-    id: ItemResponseMetaId;
-    name: ItemResponseMetaName;
-    src: {
-      product: string;
-      usage: string;
-    };
-  };
-  type ItemResponseMetaCategory = CategoriesResponseDataPropertyItem;
-  type ItemResponseMetaCompany = CompaniesResponseDataPropertyItem;
-  type ItemResponseMetaId = string;
-  type ItemResponseMetaName = string;
+  type ItemResponse = Item.RouteResponse;
+  type ItemResponseDataItem = Item.RouteResponseDataItem;
+  type ItemResponseDataItemContent = Item.RouteResponseDataItemContent;
+  type ItemResponseDataItemContentTypes = Item.RouteResponseDataItemContentTypes;
+  type ItemResponseMeta = Item.RouteResponseMeta;
+  type ItemResponseMetaCategory = Item.RouteResponseMetaCategory;
+  type ItemResponseMetaCompany = Item.RouteResponseMetaCompany;
+  type ItemResponseMetaId = Item.RouteResponseMetaId;
+  type ItemResponseMetaName = Item.RouteResponseMetaName;
   /**
    * `api.sortBy()`
    */
-  type SortByResponse = SimpleResponse;
-  type SortByResponseData = SortByResponse['data'];
-  type SortByResponseDataItem = SortByResponseData[0];
-  type SortByResponseDataItemId = SortByResponseDataItem['id'];
-}
-
-type SimpleResponse = {
-  data: SimpleResponseData;
-  meta: {
-    default: SimpleResponseDataItem;
+  type SortByResponse = {
+    data: SortByResponseData;
+    meta: {
+      default: SortByResponseDataItem;
+    };
   };
-};
-type SimpleResponseData = SimpleResponseDataItem[];
-type SimpleResponseDataItem = {
-  id: string;
-  name: string;
-};
-type SimpleAlphabeticalResponse = {
-  data: SimpleAlphabeticalResponseData;
-  meta: any;
-};
-type SimpleAlphabeticalResponseData = {
-  [key: string]: SimpleResponseData;
-};
+  type SortByResponseData = SortByResponseDataItem[];
+  type SortByResponseDataItem = Simple.RouteResponseDataPropertyItem;
+}
 
 export = Api;

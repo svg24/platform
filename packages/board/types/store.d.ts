@@ -19,17 +19,17 @@ declare namespace Store {
 
   type Visible = {
     _isVisible: VisibleIsVisible;
-    hide: () => void;
+    hide(): void;
     isVisible: VisibleIsVisible;
-    show: () => void;
+    show(): void;
   };
   type VisibleIsVisible = boolean;
 
   interface FormParameter<Options, Option extends FormParameterOptionsItem> {
     id: string;
     options: Options | undefined;
-    reset: () => void;
-    set: (option: Option) => void;
+    reset(): void;
+    set(option: Option): void;
     value: FormParameterValue<Option>;
   }
 
@@ -42,7 +42,7 @@ declare namespace Store {
   type FormParameterValue<Option extends FormParameterOptionsItem> = {
     _current: Option | undefined;
     _default: Option | undefined;
-    checkIsCurrent: (id: Option['id']) => boolean;
+    checkIsCurrent(id: Option['id']): boolean;
     current: Option | undefined;
   };
 }

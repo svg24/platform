@@ -25,7 +25,7 @@ declare namespace Layout {
     goTop: (() => void) | null;
   };
   interface StoreMainFilter extends Visible {
-    toggle: () => void;
+    toggle(): void;
   }
 }
 

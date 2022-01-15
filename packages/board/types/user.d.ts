@@ -25,7 +25,7 @@ declare namespace User {
    */
   type StoreDocument = {
     _fontSize: number;
-    toRem: (value: number) => number;
+    toRem(value: number): number;
   };
 }
 

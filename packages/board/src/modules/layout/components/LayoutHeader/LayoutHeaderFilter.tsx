@@ -41,16 +41,19 @@ export function LayoutHeaderFilter(): JSX.Element {
   const [counterIsVisible, setCounterIsVisible] = useState(false);
 
   useEffect(() => {
-    reaction(() => filter.applied.length && layout.main.filter.isVisible, () => {
-      if (!filter.applied.length || layout.main.filter.isVisible) {
-        const doneEnter = 'layout-header__filter_counter_done-enter';
-        if (rootRef.current?.classList.contains(doneEnter)) {
-          setCounterIsVisible(false);
+    reaction(
+      () => filter.applied.length && layout.main.filter.isVisible,
+      () => {
+        if (!filter.applied.length || layout.main.filter.isVisible) {
+          const doneEnter = 'layout-header__filter_counter_done-enter';
+          if (rootRef.current?.classList.contains(doneEnter)) {
+            setCounterIsVisible(false);
+          }
+        } else {
+          setCounterIsVisible(true);
         }
-      } else {
-        setCounterIsVisible(true);
-      }
-    });
+      },
+    );
   }, []);
 
   return (
