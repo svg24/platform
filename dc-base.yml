@@ -12,9 +12,11 @@ services:
     volumes:
       - db:/srv/packages/db
     environment:
-      - DB_NAME=svg24
-      - MONGO_INITDB_ROOT_USERNAME=app
+      - DATABASE_NAME=svg24
+      - DATABASE_PASS=app
+      - DATABASE_USER=app
       - MONGO_INITDB_ROOT_PASSWORD=app
+      - MONGO_INITDB_ROOT_USERNAME=app
 
   root:
     container_name: platform-root
@@ -41,12 +43,14 @@ services:
       - root:/srv
       - db:/srv/packages/db
     environment:
-      - API_HOST=0.0.0.0
-      - API_PORT=3000
-      - DB_NAME=svg24
-      - DB_PASS=app
-      - DB_PORT=27017
-      - DB_USER=app
+      - DATABASE_DATA=/srv/packages/db/data
+      - DATABASE_LOGOS=/srv/packages/db/logos
+      - DATABASE_NAME=svg24
+      - DATABASE_PASS=app
+      - DATABASE_PORT=27017
+      - DATABASE_USER=app
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=3000
 
   assets:
     container_name: platform-assets

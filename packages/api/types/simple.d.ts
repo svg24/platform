@@ -1,19 +1,27 @@
 import type { RegisterOptions } from 'fastify';
 import type { Model, Schema as ModelSchema } from 'mongoose';
-import type Server from 'types/server';
+import type { ConstructorInstance } from './server';
 
 declare namespace Simple {
-  const model: Model<Schema>;
-  const options: RegisterOptions;
-  function plugin(inst: typeof Server.inst): Promise<void>;
-  const schema: ModelSchema<Schema>;
-
+  interface Constructor {
+    find(filter: any): Promise<Schema>;
+    model: Model<Schema>;
+    options: RegisterOptions;
+    plugin(inst: ConstructorInstance): Promise<void>;
+    schema: ModelSchema<Schema>;
+  }
   type Schema = {
     id: string;
     name: string;
   };
-
-  type RouteResponseData = Schema[];
+  type RouteResponse = {
+    data: RouteResponseData;
+    meta: any;
+  };
+  type RouteResponseData = {
+    [key: string]: RouteResponseDataPropertyItem[];
+  };
+  type RouteResponseDataPropertyItem = Schema;
 }
 
 export = Simple;

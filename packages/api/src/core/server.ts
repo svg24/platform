@@ -1,28 +1,25 @@
 import fastify from 'fastify';
-import type TServer from 'types/server';
+import type { Constructor } from 'types/server';
 
-export const server = new (function Server(this: typeof TServer) {
-  Object.defineProperties(this, {
-    options: {
-      enumerable: true,
-      value: {
-        host: process.env.API_HOST,
-        port: process.env.API_PORT,
-      },
-    },
-    inst: {
-      enumerable: true,
-      value: fastify({ logger: false }),
-    },
-  });
+export const server = new (function Server(this: Constructor) {
+  this.options = {
+    host: process.env.SERVER_HOST,
+    port: process.env.SERVER_PORT,
+  };
+  this.inst = fastify({ logger: false });
 
   this.listen = async () => {
     try {
       await this.inst.listen(this.options.port, this.options.host);
     } catch (err) {
-      console.error(err);
-      process.exit(0);
+      throw new Error(err as string);
     }
   };
+
   this.beatify = (value) => JSON.stringify(value, null, 2);
-} as any as { new (): typeof TServer })();
+
+  this.ruin = (error) => this.beatify({
+    error,
+    docs: 'https://github.com/svg24/platform/blob/main/docs/api.http',
+  });
+} as any as { new (): Constructor })();

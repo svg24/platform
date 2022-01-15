@@ -1,28 +1,24 @@
-import child from 'child_process';
-import util from 'util';
+import { exec } from 'child_process';
+import { promises as fs } from 'fs';
+import { promisify } from 'util';
 import mongoose from 'mongoose';
-import type TDataBase from 'types/db';
+import type { Constructor } from 'types/database';
 
-export const db = new (function DataBase(this: typeof TDataBase) {
-  Object.defineProperty(this, 'options', {
-    enumerable: true,
-    value: {
-      local: '/srv/packages/db/packages/vanilla/',
-      name: process.env.DB_NAME,
-      pass: process.env.DB_PASS,
-      uri: `mongodb://db:${process.env.DB_PORT}/?authSource=admin`,
-      user: process.env.DB_USER,
-    },
-  });
+export const db = new (function Database(this: Constructor) {
+  this.options = {
+    data: process.env.DATABASE_DATA,
+    logos: process.env.DATABASE_LOGOS,
+    name: process.env.DATABASE_NAME,
+    pass: process.env.DATABASE_PASS,
+    uri: `mongodb://db:${process.env.DATABASE_PORT}/?authSource=admin`,
+    user: process.env.DATABASE_USER,
+  };
 
   this.init = async () => {
     try {
-      await Promise.all([
-        'categories.json',
-        'companies.json',
-        'logos.json',
-      ].map(async (file) => {
-        await util.promisify(child.exec)(`
+      const data = await fs.readdir(this.options.data);
+      await Promise.all(data.map(async (file) => {
+        await promisify(exec)(`
           mongoimport \
             --host db \
             --authenticationDatabase admin \
@@ -30,13 +26,12 @@ export const db = new (function DataBase(this: typeof TDataBase) {
             --password ${this.options.pass} \
             --db ${this.options.name} \
             --collection ${file.replace('.json', '')} \
-            --file /srv/packages/db/data/${file} \
+            --file ${this.options.data}/${file} \
             --drop;
         `);
       }));
     } catch (err) {
-      console.error(err);
-      process.exit(0);
+      throw new Error(err as string);
     }
   };
 
@@ -47,12 +42,8 @@ export const db = new (function DataBase(this: typeof TDataBase) {
         user: this.options.user,
         pass: this.options.pass,
       });
-      await this.init();
     } catch (err) {
-      console.error(err);
-      setTimeout(() => {
-        this.connect();
-      }, 3000);
+      throw new Error(err as string);
     }
   };
-} as any as { new (): typeof TDataBase })();
+} as any as { new (): Constructor })();

@@ -1,20 +1,19 @@
-import type Content from 'types/content';
-import type Server from 'types/server';
+import type { Content, Server } from 'types';
 import { server } from '../../../core';
-import { toBad } from '../../../utils';
 import schema from './schema.json';
 
-export function addRoute(this: typeof Content, inst: typeof Server.inst): void {
+export function addRoute(
+  this: Content.Constructor,
+  inst: Server.ConstructorInstance,
+): void {
   inst.route<{ Params: Content.RouteParameters }>({
     ...JSON.parse(JSON.stringify(schema)),
-    handler: async (req, rep) => {
+    handler: async ({ params }, rep) => {
       try {
-        const content = await this.getContent(req.params.id, req.params.name);
-
         rep.header('Content-Type', 'text/html; charset=utf-8');
-        rep.send(content);
+        rep.send(await this.getContent(params.id, params.name));
       } catch (error) {
-        rep.send(server.beatify(toBad(error)));
+        rep.send(server.ruin(error));
       }
     },
   });

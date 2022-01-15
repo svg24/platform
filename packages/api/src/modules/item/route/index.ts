@@ -1,12 +1,14 @@
-import type Item from 'types/item';
-import type Server from 'types/server';
+import type { Item, Server } from 'types';
 import { server } from '../../../core';
-import { toBad } from '../../../utils';
+import { categories } from '../../categories';
+import { companies } from '../../companies';
 import { list } from '../../list';
-import { categories, companies } from '../../simple';
 import schema from './schema.json';
 
-export function addRoute(this: typeof Item, inst: typeof Server.inst): void {
+export function addRoute(
+  this: Item.Constructor,
+  inst: Server.ConstructorInstance,
+): void {
   inst.route<{ Querystring: Item.RouteQuery }>({
     ...JSON.parse(JSON.stringify(schema)),
     handler: async (req) => {
@@ -26,12 +28,8 @@ export function addRoute(this: typeof Item, inst: typeof Server.inst): void {
         const res = await Promise.all(items.map(async (item) => ({
           data: await this.getData(item.id),
           meta: {
-            category: (await categories.model.find({
-              id: item.category,
-            }, ['id', 'name']))[0],
-            company: (await companies.model.find({
-              id: item.company,
-            }, ['id', 'name']))[0],
+            category: await categories.find(item.category),
+            company: await companies.find(item.company),
             id: item.id,
             name: item.name,
             src: {
@@ -43,7 +41,7 @@ export function addRoute(this: typeof Item, inst: typeof Server.inst): void {
 
         return server.beatify(res[0]);
       } catch (error) {
-        return server.beatify(toBad(error));
+        return server.ruin(error);
       }
     },
   });

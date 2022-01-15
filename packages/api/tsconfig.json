@@ -5,6 +5,7 @@
     "resolveJsonModule": true,
     "rootDir": "src",
     "types": [
+      "babel__core",
       "node"
     ],
     "outDir": "dist",

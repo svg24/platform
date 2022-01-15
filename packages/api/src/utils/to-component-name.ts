@@ -1,4 +1,4 @@
-import { removeExtension } from './removeExtension';
+import { removeExtension } from './remove-extension';
 
 export function toComponentName(name: string): string {
   return `${name[0]?.toUpperCase()}${removeExtension(name

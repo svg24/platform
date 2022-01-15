@@ -1,18 +1,22 @@
 import type { RegisterOptions } from 'fastify';
-import type { SchemaId } from 'types/list';
-import type Server from 'types/server';
+import type { SchemaId, SchemaName } from './list';
+import type { ConstructorInstance } from './server';
+import type { Schema } from './simple';
 
 declare namespace Item {
-  const options: RegisterOptions;
-  function plugin(inst: typeof Server.inst): Promise<void>;
-
+  interface Constructor {
+    getData(id: RouteQueryId): Promise<RouteResponseData>;
+    getDataItem(id: RouteQueryId, name: string): Promise<RouteResponseDataItem>;
+    options: RegisterOptions;
+    plugin(inst: ConstructorInstance): Promise<void>;
+  }
   type RouteQuery = {
     id: RouteQueryId;
   };
   type RouteQueryId = SchemaId;
-
   type RouteResponse = {
     data: RouteResponseData;
+    meta: RouteResponseMeta;
   };
   type RouteResponseData = RouteResponseDataItem[];
   type RouteResponseDataItem = {
@@ -23,7 +27,7 @@ declare namespace Item {
   type RouteResponseDataItemContent = {
     [key in RouteResponseDataItemContentTypes]?: RouteResponseDataItemContentItem;
   };
-  type RouteResponseDataItemContentTypes = 'square' | 'original';
+  type RouteResponseDataItemContentTypes = 'original' | 'square';
   type RouteResponseDataItemContentItem = {
     components: {
       react: {
@@ -32,6 +36,7 @@ declare namespace Item {
       };
       vue: {
         js: string;
+        ts: string;
       };
     };
     links: {
@@ -49,23 +54,20 @@ declare namespace Item {
     snake: string;
   };
   type RouteResponseDataItemVersion = number;
-
-  function getData(id: RouteQueryId): Promise<RouteResponseData>;
-  function getDataItem(
-    id: RouteQueryId,
-    name: string,
-  ): Promise<RouteResponseDataItem>;
-  function getDataItemContent(
-    path: string,
-    component: string,
-  ): Promise<RouteResponseDataItemContent>;
-  function getDataItemFile(
-    name: string,
-    component: string,
-  ): RouteResponseDataItemFile;
-  function getDataItemVersion(name: string): (
-    Promise<RouteResponseDataItemVersion>
-  );
+  type RouteResponseMeta = {
+    category: RouteResponseMetaCategory;
+    company: RouteResponseMetaCompany;
+    id: RouteResponseMetaId;
+    name: RouteResponseMetaName;
+    src: {
+      product: string;
+      usage: string;
+    };
+  };
+  type RouteResponseMetaCategory = Schema;
+  type RouteResponseMetaCompany = Schema;
+  type RouteResponseMetaId = SchemaId;
+  type RouteResponseMetaName = SchemaName;
 }
 
 export = Item;

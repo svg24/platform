@@ -1,23 +1,20 @@
 import type { RegisterOptions } from 'fastify';
-import type { RouteResponseDataItemContentItemSnippetsSVG } from 'types/item';
-import type { SchemaId } from 'types/list';
-import type Server from 'types/server';
+import type { RouteResponseDataItemContentItemSnippetsSVG } from './item';
+import type { SchemaId } from './list';
+import type { ConstructorInstance } from './server';
 
 declare namespace Content {
-  const options: RegisterOptions;
-  function plugin(inst: typeof Server.inst): Promise<void>;
-
+  interface Constructor {
+    getContent(id: RouteParametersId, name: RouteParametersName): Promise<RouteResponseDataItemContentItemSnippetsSVG>;
+    options: RegisterOptions;
+    plugin(inst: ConstructorInstance): Promise<void>;
+  }
   type RouteParameters = {
     id: RouteParametersId;
     name: RouteParametersName;
   };
   type RouteParametersId = SchemaId;
   type RouteParametersName = SchemaId;
-
-  function getContent(
-    id: RouteParametersId,
-    name: RouteParametersName,
-  ): Promise<RouteResponseDataItemContentItemSnippetsSVG>;
 }
 
 export = Content;

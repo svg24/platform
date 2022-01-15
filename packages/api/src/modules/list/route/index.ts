@@ -1,7 +1,5 @@
-import type List from 'types/list';
-import type Server from 'types/server';
+import type { List, Server } from 'types';
 import { server } from '../../../core';
-import { toBad } from '../../../utils';
 import schema from './schema.json';
 
 const DEFAULT_LIMIT = 20;
@@ -13,7 +11,10 @@ function getFilterRegExp(str: string): RegExp {
   return new RegExp(str, 'i');
 }
 
-export function addRoute(this: typeof List, inst: typeof Server.inst): void {
+export function addRoute(
+  this: List.Constructor,
+  inst: Server.ConstructorInstance,
+): void {
   inst.route<{ Querystring: List.RouteQuery }>({
     ...JSON.parse(JSON.stringify(schema)),
     handler: async (req) => {
@@ -25,55 +26,46 @@ export function addRoute(this: typeof List, inst: typeof Server.inst): void {
         page,
         sortBy,
       } = req.query;
-
       const filter = {
         ...category ? { category: getFilterRegExp(category) } : {},
         ...name ? { name: getFilterRegExp(name) } : {},
         ...company ? { company: getFilterRegExp(company) } : {},
       };
-
-      const options = {
-        lean: true,
-        limit: multiplier ? multiplier * DEFAULT_LIMIT : DEFAULT_LIMIT,
-        get skip() {
-          return page ? (page - 1) * options.limit : DEFAULT_SKIP;
-        },
-        sort: {
-          [sortBy || DEFAULT_SORT_BY]: DEFAULT_SORT_METHOD,
-        },
-      };
+      const limit = multiplier ? multiplier * DEFAULT_LIMIT : DEFAULT_LIMIT;
+      const skip = page ? (page - 1) * limit : DEFAULT_SKIP;
+      const sort = { [sortBy || DEFAULT_SORT_BY]: DEFAULT_SORT_METHOD };
 
       try {
-        const meta = {
-          length: {
-            total: await this.model.find(filter, ['_id']).count(),
-            get current() {
-              const cur = options.skip + options.limit;
-              return cur > meta.length.total ? meta.length.total : cur;
+        const total = await this.model.find(filter).count();
+        const current = skip + limit > total ? total : skip + limit;
+        const hasNext = total - current > 0;
+        const next = hasNext ? Math.ceil(current / DEFAULT_LIMIT) + 1 : null;
+        const items = await this.model.find(filter, ['id', 'name'], {
+          limit,
+          skip,
+          sort,
+          lean: true,
+        });
+        const data = await Promise.all(items.map(async (item) => {
+          const res = await this.getDataItem(item);
+          return res;
+        }));
+
+        return server.beatify({
+          data,
+          meta: {
+            length: {
+              total,
+              current,
+            },
+            page: {
+              hasNext,
+              next,
             },
           },
-          page: {
-            get hasNext() {
-              return meta.length.total - meta.length.current > 0;
-            },
-            get next() {
-              return meta.page.hasNext
-                ? Math.ceil(meta.length.current / DEFAULT_LIMIT) + 1
-                : null;
-            },
-          },
-        };
-
-        const items = await this.model.find(filter, ['id', 'name'], options);
-        const data = await Promise.all(items.map(async (item) => ({
-          ...await this.getDataItem(item.id),
-          id: item.id,
-          name: item.name,
-        })));
-
-        return server.beatify({ data, meta });
+        });
       } catch (error) {
-        return server.beatify(toBad(error));
+        return server.ruin(error);
       }
     },
   });

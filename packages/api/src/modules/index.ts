@@ -1,7 +1,8 @@
+import { categories } from './categories';
+import { companies } from './companies';
 import { content } from './content';
 import { item } from './item';
 import { list } from './list';
-import { categories, companies } from './simple';
 
 export {
   content,

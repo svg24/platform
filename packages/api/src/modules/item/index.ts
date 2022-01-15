@@ -1,7 +1,8 @@
 import { promises as fs } from 'fs';
-import type TItem from 'types/item';
+import type { Constructor, RouteResponseData } from 'types/item';
 import { db } from '../../core';
 import {
+  getVersion,
   removeExtension,
   toCSS,
   toComponentName,
@@ -10,24 +11,24 @@ import {
   toReactTS,
   toURL,
   toVueJS,
+  toVueTS,
 } from '../../utils';
 import { addRoute } from './route';
 
-export const item = new (function Item(this: typeof TItem) {
-  Object.defineProperty(this, 'options', {
-    enumerable: true,
-    value: {
-      prefix: 'item',
-    },
-  });
+export const item = new (function Item(this: Constructor) {
+  this.options = {
+    prefix: 'item',
+  };
+
   this.plugin = async (inst) => {
     addRoute.call(this, inst);
   };
 
   this.getData = async (id) => {
-    const root = `${db.options.local}${id}`;
-    const dirents = await fs.readdir(root, { withFileTypes: true });
-    const data = [] as TItem.RouteResponseData;
+    const dirents = await fs.readdir(`${db.options.logos}/${id}`, {
+      withFileTypes: true,
+    });
+    const data = [] as RouteResponseData;
 
     await Promise.all(dirents.map(async (dirent) => {
       if (!dirent.isSymbolicLink()) {
@@ -37,43 +38,49 @@ export const item = new (function Item(this: typeof TItem) {
 
     return data;
   };
+
   this.getDataItem = async (id, name) => {
-    const component = toComponentName(name);
+    const componentName = toComponentName(name);
+    const local = `${id}/${name}`;
+    const buf = await fs.readFile(`${db.options.logos}/${local}`);
+    const svg = buf.toString();
+    const css = toCSS(buf.toString('base64'));
+    const jsx = toJSX(svg);
+    const url = toURL(removeExtension(local));
+    const reactJS = await toReactJS(componentName, svg);
+    const reactTS = toReactTS(reactJS);
+    const vueJS = toVueJS(svg);
+    const vueTS = toVueTS(svg);
+
     return {
-      content: await this.getDataItemContent(`${id}/${name}`, component),
-      file: this.getDataItemFile(name, component),
-      version: await this.getDataItemVersion(name),
+      content: {
+        original: {
+          components: {
+            react: {
+              js: reactJS,
+              ts: reactTS,
+            },
+            vue: {
+              js: vueJS,
+              ts: vueTS,
+            },
+          },
+          // api
+          links: {
+            url,
+          },
+          snippets: {
+            css,
+            jsx,
+            svg,
+          },
+        },
+      },
+      file: {
+        camel: componentName,
+        snake: removeExtension(name),
+      },
+      version: getVersion(name),
     };
   };
-  this.getDataItemContent = async (path, component) => {
-    const buf = await fs.readFile(`${db.options.local}${path}`);
-    const original = {
-      components: {
-        react: {
-          get js() { return toReactJS(component, original.snippets.jsx); },
-          get ts() { return toReactTS(component, original.snippets.jsx); },
-        },
-        vue: {
-          get js() { return toVueJS(component, original.snippets.svg); },
-        },
-      },
-      links: {
-        url: toURL(removeExtension(path)),
-      },
-      snippets: {
-        css: toCSS(buf.toString('base64')),
-        get jsx() { return toJSX(original.snippets.svg); },
-        svg: buf.toString(),
-      },
-    };
-    return { original };
-  };
-  this.getDataItemFile = (name, component) => ({
-    camel: component,
-    snake: removeExtension(name),
-  });
-  this.getDataItemVersion = async (name) => {
-    const match = name.match(/.+-v(.*).svg/);
-    return match && match[1] ? (new Date(match[1])).getTime() : 0;
-  };
-} as any as { new (): typeof TItem })();
+} as any as { new (): Constructor })();
