@@ -1,6 +1,6 @@
 import { createSimpleModule } from './create-simple-module';
-import { getType } from './get-type';
-import { getVersion } from './get-version';
+import { getPreview } from './get-preview';
+import { getVersionAndType } from './get-version';
 import { removeExtension } from './remove-extension';
 import { toComponentName } from './to-component-name';
 import { toContent } from './to-content';
@@ -13,8 +13,8 @@ import { toVueTS } from './to-vue-ts';
 
 export {
   createSimpleModule,
-  getType,
-  getVersion,
+  getPreview,
+  getVersionAndType,
   removeExtension,
   toComponentName,
   toCSS,

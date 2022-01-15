@@ -6,7 +6,6 @@ import type { Schema } from './simple';
 declare namespace Item {
   interface Constructor {
     getData(id: RouteQueryId): Promise<RouteResponseData>;
-    getDataItem(id: RouteQueryId, name: string): Promise<RouteResponseDataItem>;
     options: RegisterOptions;
     plugin(inst: ConstructorInstance): Promise<void>;
   }
@@ -20,15 +19,23 @@ declare namespace Item {
   };
   type RouteResponseData = RouteResponseDataItem[];
   type RouteResponseDataItem = {
-    content: RouteResponseDataItemContent;
-    file: RouteResponseDataItemFile;
-    version: RouteResponseDataItemVersion;
+    data: RouteResponseDataItemData;
+    meta: {
+      version: RouteResponseDataItemMetaVersion;
+    };
   };
-  type RouteResponseDataItemContent = {
-    [key in RouteResponseDataItemContentTypes]?: RouteResponseDataItemContentItem;
+  type RouteResponseDataItemData = {
+    [key in RouteResponseDataItemDataTypes]?: RouteResponseDataItemDataItem;
   };
-  type RouteResponseDataItemContentTypes = 'original' | 'square';
-  type RouteResponseDataItemContentItem = {
+  type RouteResponseDataItemDataTypes = 'original' | 'square';
+  type RouteResponseDataItemDataItem = {
+    data: RouteResponseDataItemDataItemData;
+    meta: {
+      componentName: string;
+      fileName: string;
+    };
+  };
+  type RouteResponseDataItemDataItemData = {
     api: {
       content: string;
     };
@@ -45,15 +52,15 @@ declare namespace Item {
     snippets: {
       css: string;
       jsx: string;
-      svg: RouteResponseDataItemContentItemSnippetsSVG;
+      svg: RouteResponseDataItemDataItemDataSnippetsSVG;
     };
   };
-  type RouteResponseDataItemContentItemSnippetsSVG = string;
-  type RouteResponseDataItemFile = {
-    camel: string;
-    snake: string;
-  };
-  type RouteResponseDataItemVersion = number;
+  type RouteResponseDataItemDataItemDataSnippetsSVG = string;
+  type RouteResponseDataItemMetaVersion = number;
+  // type RouteResponseDataItemContent = {
+  //   [key in RouteResponseDataItemContentTypes]?: RouteResponseDataItemContentItem;
+  // };
+  // type RouteResponseDataItemContentTypes = 'original' | 'square';
   type RouteResponseMeta = {
     category: RouteResponseMetaCategory;
     company: RouteResponseMetaCompany;

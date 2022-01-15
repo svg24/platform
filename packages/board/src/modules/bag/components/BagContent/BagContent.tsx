@@ -3,6 +3,7 @@ import { useStore } from 'src/store';
 
 export function BagContent(): JSX.Element {
   const { bag } = useStore();
+
   const sections = [{
     id: 'snippets',
     heading: 'Snippets',
@@ -10,26 +11,35 @@ export function BagContent(): JSX.Element {
       id: 'css',
       label: 'CSS',
       content: {
-        original: bag.item.data?.content.original?.snippets.css,
-        square: bag.item.data?.content.square?.snippets.css,
+        original: bag.item.data?.data.original?.data.snippets.css,
+        square: bag.item.data?.data.square?.data.snippets.css,
       },
-      file: `${bag.item.data?.file.snake}.css`,
+      file: {
+        original: `${bag.item.data?.data.original?.meta.fileName}.css`,
+        square: `${bag.item.data?.data.square?.meta.fileName}.css`,
+      },
     }, {
       id: 'jsx',
       label: 'JSX',
       content: {
-        original: bag.item.data?.content.original?.snippets.jsx,
-        square: bag.item.data?.content.square?.snippets.jsx,
+        original: bag.item.data?.data.original?.data.snippets.jsx,
+        square: bag.item.data?.data.square?.data.snippets.jsx,
       },
-      file: `${bag.item.data?.file.snake}.jsx`,
+      file: {
+        original: `${bag.item.data?.data.original?.meta.fileName}.jsx`,
+        square: `${bag.item.data?.data.square?.meta.fileName}.jsx`,
+      },
     }, {
       id: 'svg',
       label: 'SVG',
       content: {
-        original: bag.item.data?.content.original?.snippets.svg,
-        square: bag.item.data?.content.square?.snippets.svg,
+        original: bag.item.data?.data.original?.data.snippets.svg,
+        square: bag.item.data?.data.square?.data.snippets.svg,
       },
-      file: `${bag.item.data?.file.snake}.svg`,
+      file: {
+        original: `${bag.item.data?.data.original?.meta.fileName}.svg`,
+        square: `${bag.item.data?.data.square?.meta.fileName}.svg`,
+      },
     }],
   }, {
     id: 'components',
@@ -38,26 +48,46 @@ export function BagContent(): JSX.Element {
       id: 'react',
       label: 'React',
       content: {
-        original: bag.item.data?.content.original?.components.react.js,
-        square: bag.item.data?.content.square?.components.react.js,
+        original: bag.item.data?.data.original?.data.components.react.js,
+        square: bag.item.data?.data.square?.data.components.react.js,
       },
-      file: `${bag.item.data?.file.camel}.jsx`,
+      file: {
+        original: `${bag.item.data?.data.original?.meta.componentName}.jsx`,
+        square: `${bag.item.data?.data.square?.meta.componentName}.jsx`,
+      },
     }, {
       id: 'react-ts',
       label: 'React (ts)',
       content: {
-        original: bag.item.data?.content.original?.components.react.ts,
-        square: bag.item.data?.content.square?.components.react.ts,
+        original: bag.item.data?.data.original?.data.components.react.ts,
+        square: bag.item.data?.data.square?.data.components.react.ts,
       },
-      file: `${bag.item.data?.file.camel}.tsx`,
+      file: {
+        original: `${bag.item.data?.data.original?.meta.componentName}.jsx`,
+        square: `${bag.item.data?.data.square?.meta.componentName}.jsx`,
+      },
     }, {
       id: 'vue',
       label: 'Vue',
       content: {
-        original: bag.item.data?.content.original?.components.vue.js,
-        square: bag.item.data?.content.square?.components.vue.js,
+        original: bag.item.data?.data.original?.data.components.vue.js,
+        square: bag.item.data?.data.square?.data.components.vue.js,
       },
-      file: `${bag.item.data?.file.camel}.vue`,
+      file: {
+        original: `${bag.item.data?.data.original?.meta.componentName}.vue`,
+        square: `${bag.item.data?.data.square?.meta.componentName}.vue`,
+      },
+    }, {
+      id: 'vue-ts',
+      label: 'Vue (ts)',
+      content: {
+        original: bag.item.data?.data.original?.data.components.vue.ts,
+        square: bag.item.data?.data.square?.data.components.vue.ts,
+      },
+      file: {
+        original: `${bag.item.data?.data.original?.meta.componentName}.vue`,
+        square: `${bag.item.data?.data.square?.meta.componentName}.vue`,
+      },
     }],
   }, {
     id: 'api',
@@ -66,10 +96,13 @@ export function BagContent(): JSX.Element {
       id: 'content',
       label: 'Content',
       content: {
-        original: bag.item.data?.content.original?.api.content,
-        square: bag.item.data?.content.square?.api.content,
+        original: bag.item.data?.data.original?.data.api.content,
+        square: bag.item.data?.data.square?.data.api.content,
       },
-      file: `${bag.item.data?.file.snake}.txt`,
+      file: {
+        original: `${bag.item.data?.data.original?.meta.fileName}.txt`,
+        square: `${bag.item.data?.data.square?.meta.fileName}.txt`,
+      },
     }],
   }];
 
@@ -90,7 +123,7 @@ export function BagContent(): JSX.Element {
                   if (content) {
                     bag.item.settings.action({
                       content,
-                      file: item.file,
+                      file: item.file[bag.item.settings.type],
                     });
                   }
                 }

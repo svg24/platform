@@ -1,8 +1,13 @@
 import { promises as fs } from 'fs';
-import type { Constructor, RouteResponseData } from 'types/item';
+import type {
+  Constructor,
+  RouteResponseDataItem,
+  RouteResponseDataItemMetaVersion,
+} from 'types/item';
 import { db } from '../../core';
 import {
-  getVersion,
+  getPreview,
+  getVersionAndType,
   removeExtension,
   toCSS,
   toComponentName,
@@ -25,61 +30,66 @@ export const item = new (function Item(this: Constructor) {
   };
 
   this.getData = async (id) => {
-    const dirents = await fs.readdir(`${db.options.logos}/${id}`, {
-      withFileTypes: true,
-    });
-    const data = [] as RouteResponseData;
+    const local = `${db.options.logos}/${id}`;
+    const files = await fs.readdir(local);
+    const sorted = {} as {
+      [key: RouteResponseDataItemMetaVersion]: RouteResponseDataItem;
+    };
 
-    await Promise.all(dirents.map(async (dirent) => {
-      if (!dirent.isSymbolicLink()) {
-        data.push(await this.getDataItem(id, dirent.name));
+    await Promise.all(files.map(async (file) => {
+      const fileName = removeExtension(file);
+      const { type, version } = getVersionAndType(fileName);
+
+      if (type && version) {
+        const componentName = toComponentName(fileName);
+        const buf = await fs.readFile(`${local}/${file}`);
+        const svg = buf.toString();
+        const css = toCSS(buf);
+        const jsx = toJSX(svg);
+        const content = toContent(`${id}/${fileName}`);
+        const preview = getPreview(componentName, svg);
+        const reactJS = await toReactJS(preview, componentName, svg);
+        const reactTS = toReactTS(reactJS);
+        const vueJS = toVueJS(preview, svg);
+        const vueTS = toVueTS(vueJS);
+
+        sorted[version] = {
+          data: {
+            ...sorted[version]?.data,
+            [type]: {
+              data: {
+                api: {
+                  content,
+                },
+                components: {
+                  react: {
+                    js: reactJS,
+                    ts: reactTS,
+                  },
+                  vue: {
+                    js: vueJS,
+                    ts: vueTS,
+                  },
+                },
+                snippets: {
+                  css,
+                  jsx,
+                  svg,
+                },
+              },
+              meta: {
+                componentName,
+                fileName,
+              },
+            },
+          },
+          meta: {
+            version,
+          },
+        };
       }
     }));
 
-    return data;
-  };
-
-  this.getDataItem = async (id, name) => {
-    const componentName = toComponentName(name);
-    const local = `${id}/${name}`;
-    const buf = await fs.readFile(`${db.options.logos}/${local}`);
-    const svg = buf.toString();
-    const css = toCSS(buf.toString('base64'));
-    const jsx = toJSX(svg);
-    const content = toContent(removeExtension(local));
-    const reactJS = await toReactJS(componentName, svg);
-    const reactTS = toReactTS(reactJS);
-    const vueJS = toVueJS(svg);
-    const vueTS = toVueTS(svg);
-
-    return {
-      content: {
-        original: {
-          api: {
-            content,
-          },
-          components: {
-            react: {
-              js: reactJS,
-              ts: reactTS,
-            },
-            vue: {
-              js: vueJS,
-              ts: vueTS,
-            },
-          },
-          snippets: {
-            css,
-            jsx,
-            svg,
-          },
-        },
-      },
-      file: {
-        camel: componentName,
-        snake: removeExtension(name),
-      },
-      version: getVersion(name),
-    };
+    return Object.values(sorted);
   };
 } as any as { new (): Constructor })();

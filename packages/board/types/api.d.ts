@@ -36,8 +36,7 @@ declare namespace Api {
    */
   type ItemResponse = Item.RouteResponse;
   type ItemResponseDataItem = Item.RouteResponseDataItem;
-  type ItemResponseDataItemContent = Item.RouteResponseDataItemContent;
-  type ItemResponseDataItemContentTypes = Item.RouteResponseDataItemContentTypes;
+  type ItemResponseDataItemDataTypes = Item.RouteResponseDataItemDataTypes;
   type ItemResponseMeta = Item.RouteResponseMeta;
   type ItemResponseMetaCategory = Item.RouteResponseMetaCategory;
   type ItemResponseMetaCompany = Item.RouteResponseMetaCompany;

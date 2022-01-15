@@ -101,7 +101,7 @@ export function BagViewWithThumbs(): JSX.Element {
   const slides = [] as JSX.Element[];
 
   content.item.response?.data.forEach((item) => {
-    const svg = item.content.original?.snippets.svg;
+    const svg = item.data.original?.data.snippets.svg;
 
     if (svg) {
       slides.push((

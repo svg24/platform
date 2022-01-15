@@ -23,7 +23,7 @@ export function BagSettingsTypes(): JSX.Element {
     legend: 'Types',
     options: [
       original,
-      ...bag.item.data?.content.square ? [square] : [],
+      ...bag.item.data?.data.square ? [square] : [],
     ],
     onChange(item) {
       bag.item.settings.setType(item.id);

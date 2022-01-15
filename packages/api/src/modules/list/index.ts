@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import mongoose from 'mongoose';
 import type { Constructor } from 'types/list';
 import { db } from '../../core';
-import { getVersion } from '../../utils';
+import { getVersionAndType, removeExtension } from '../../utils';
 import { addRoute } from './route';
 
 export const list = new (function List(this: Constructor) {
@@ -29,8 +29,8 @@ export const list = new (function List(this: Constructor) {
     const dir = `${db.options.logos}/${item.id}`;
     const files = await fs.readdir(dir);
     const latest = files.reduce((acc, cur) => {
-      const version = getVersion(cur);
-      return version > acc.version
+      const { version } = getVersionAndType(removeExtension(cur));
+      return version && version > acc.version
         ? {
           version,
           id: cur,

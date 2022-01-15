@@ -3,8 +3,8 @@ export function toReactTS(reactJS: string): string {
     + 'import type '
     + '{ ComponentProps, ForwardedRef, ReactSVGElement } from \'react\';';
   const propsTypes = ''
-    + '(props: ComponentProps<\'svg\'>, svgRef: ForwardedRef<SVGElement>): '
+    + '(props: ComponentProps<\'svg\'>, ref: ForwardedRef<SVGElement>): '
     + 'ReactSVGElement';
 
-  return `${importTypes}\n${reactJS.replace('(props, svgRef)', propsTypes)}`;
+  return `${importTypes}\n${reactJS.replace('(props, ref)', propsTypes)}`;
 }

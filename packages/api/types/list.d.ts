@@ -1,6 +1,6 @@
 import type { RegisterOptions } from 'fastify';
 import type { Model, Schema as ModelSchema } from 'mongoose';
-import type { RouteResponseDataItemContentItemSnippetsSVG } from './item';
+import type { RouteResponseDataItemDataItemDataSnippetsSVG } from './item';
 import type { ConstructorInstance } from './server';
 
 declare namespace List {
@@ -43,7 +43,7 @@ declare namespace List {
     name: SchemaName;
   };
   type RouteResponseDataItemHasMore = boolean;
-  type RouteResponseDataItemLatest = RouteResponseDataItemContentItemSnippetsSVG;
+  type RouteResponseDataItemLatest = RouteResponseDataItemDataItemDataSnippetsSVG;
   type RouteResponseMeta = {
     length: {
       current: RouteResponseMetaLengthCurrent;

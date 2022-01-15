@@ -1,6 +1,6 @@
 import type {
   ItemResponseDataItem,
-  ItemResponseDataItemContentTypes,
+  ItemResponseDataItemDataTypes,
   ItemResponseMeta,
   ItemResponseMetaCategory,
   ItemResponseMetaCompany,
@@ -42,7 +42,7 @@ declare namespace Bag {
     content: string;
     file: string;
   }) => Promise<void>;
-  type StoreItemSettingsTypes = ItemResponseDataItemContentTypes;
+  type StoreItemSettingsTypes = ItemResponseDataItemDataTypes;
   /**
    * `bag.list`
    */

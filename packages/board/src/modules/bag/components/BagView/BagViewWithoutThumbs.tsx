@@ -2,7 +2,7 @@ import { useStore } from 'src/store';
 
 export function BagViewWithoutThumbs(): JSX.Element | null {
   const { bag } = useStore();
-  const svg = bag.item.data?.content.original?.snippets.svg;
+  const svg = bag.item.data?.data.original?.data.snippets.svg;
 
   return (svg
     ? (

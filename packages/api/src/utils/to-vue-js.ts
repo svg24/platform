@@ -1,6 +1,6 @@
 import { compile } from '@vue/compiler-dom';
 
-export function toVueJS(html: string): string {
-  const res = compile(html, { mode: 'module' });
-  return res.code;
+export function toVueJS(preview: string, html: string): string {
+  return compile(html, { mode: 'module' }).code
+    .replace('export', `${preview}export`);
 }
