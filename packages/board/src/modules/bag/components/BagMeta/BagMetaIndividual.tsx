@@ -8,7 +8,7 @@ export function BagMetaIndividual(): JSX.Element {
     id: 'version',
     label: 'Version',
     meta: bag.item.data
-      ? new Date(bag.item.data?.version).toLocaleString('en', {
+      ? new Date(bag.item.data?.meta.version).toLocaleString('en', {
         year: 'numeric',
       })
       : undefined,
