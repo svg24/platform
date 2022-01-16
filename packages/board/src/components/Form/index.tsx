@@ -5,6 +5,7 @@ import {
   FormLabel,
   FormLabelComplete,
   FormParameter,
+  FormParameterWithoutContainer,
 } from './Form';
 import './Form.css';
 
@@ -15,4 +16,5 @@ export {
   FormLabel,
   FormLabelComplete,
   FormParameter,
+  FormParameterWithoutContainer,
 };

@@ -6,6 +6,7 @@ import {
   FormLabel,
   FormLabelComplete,
   FormParameter,
+  FormParameterWithoutContainer,
 } from './Form';
 import { HeadingLevel3 } from './Heading';
 import { Link } from './Link';
@@ -25,6 +26,7 @@ export {
   FormLabel,
   FormLabelComplete,
   FormParameter,
+  FormParameterWithoutContainer,
   HeadingLevel3,
   Link,
   List,

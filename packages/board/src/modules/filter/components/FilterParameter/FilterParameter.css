@@ -9,21 +9,9 @@
 
 .filter-parameter__item {
   @apply grid items-start gap-x-1;
-  grid-template-columns: 1.75rem 1fr 1rem;
+  grid-template-columns: 1.75rem 1fr;
 }
 
 .filter-parameter__letter {
-  @apply px-2 py-1 text-sm text-center duration-100 rounded-lg;
-}
-
-.filter-parameter__letter + .form__container {
-  @apply overflow-hidden duration-100 gap-y-1 h-7;
-}
-
-.filter-parameter__toggle {
-  @apply mt-1 justify-self-end;
-}
-
-.filter-parameter__icon {
-  @apply w-4 h-4;
+  @apply px-2 py-1 text-sm text-center rounded-lg;
 }

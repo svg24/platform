@@ -35,5 +35,5 @@
 }
 
 .filter-applied__input {
-  @apply col-start-1 col-end-3 appearance-none row-span-full;
+  @apply h-full col-start-1 col-end-3 appearance-none row-span-full;
 }

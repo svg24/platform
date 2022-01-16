@@ -1,5 +1,5 @@
 .filter-root {
-  @apply flex flex-col overflow-x-hidden w-60 gap-y-4;
+  @apply flex flex-col overflow-hidden w-60 gap-y-4;
 }
 
 .layout-main_filter_enter .filter-root {

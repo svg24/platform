@@ -38,6 +38,18 @@ export function FormParameter(
   }, children));
 }
 
+export function FormParameterWithoutContainer(
+  props: ParameterAdditionalProperties & ComponentProps<'fieldset'>,
+): JSX.Element {
+  const { children, className, legend } = props;
+
+  return createElement('fieldset', {
+    className: `form__parameter ${className || ''}`,
+  }, createElement('legend', {
+    className: 'form__legend',
+  }, legend), children);
+}
+
 export const FormContainer = (
   forwardRef<HTMLDivElement, ComponentProps<'div'>>((props, ref) => (
     createElement('div', {

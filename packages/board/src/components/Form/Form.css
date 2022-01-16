@@ -3,7 +3,7 @@
 }
 
 .form__container {
-  @apply flex flex-wrap gap-x-1;
+  @apply flex flex-wrap gap-1;
 }
 
 .form__label {
