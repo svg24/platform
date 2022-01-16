@@ -187,7 +187,7 @@ module.exports = {
       '@typescript-eslint/no-explicit-any': ['off'],
     },
   }, {
-    files: getSourceTSFiles('*'),
+    files: [...JSFiles, ...getSourceTSFiles('*')],
     rules: {
       'max-len': ['error', 80, 2, {
         ignoreUrls: true,
