@@ -2,21 +2,21 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from 'src/store';
 
 const links = [{
+  id: 'support',
+  label: 'Support',
+  url: 'https://svg24.dev/support.html',
+}, {
+  id: 'policy',
+  label: 'Policy',
+  url: 'https://svg24.dev/policy.html',
+}, {
   id: 'github',
   label: 'GitHub',
   url: 'https://github.com/svg24',
 }, {
-  id: 'policy',
-  label: 'Policy',
-  url: '/',
-}, {
-  id: 'support',
-  label: 'Support',
-  url: '/',
-}, {
   id: 'changelog',
   label: 'Changelog',
-  url: '/',
+  url: 'https://svg24.dev/changelog.html',
 }];
 
 export function LayoutFooter(): JSX.Element {
@@ -35,6 +35,8 @@ export function LayoutFooter(): JSX.Element {
           className="layout-footer__link"
           href={link.url}
           key={link.id}
+          rel="noreferrer"
+          target="_blank"
         >
           {link.label}
         </a>
