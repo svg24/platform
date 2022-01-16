@@ -13,7 +13,7 @@ export function Popper({
   anchorRef: RefObject<HTMLElement>;
   children: JSX.Element;
   isVisible: boolean;
-  onClose(): void;
+  onClose(ev: FocusEvent): void;
 }): JSX.Element {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +48,7 @@ export function Popper({
   function setFocus(): void {
     rootRef.current?.focus();
     rootRef.current?.addEventListener('focusout', (ev: FocusEvent) => {
-      if (!rootRef.current?.contains(ev.relatedTarget as Node)) onClose();
+      if (!rootRef.current?.contains(ev.relatedTarget as Node)) onClose(ev);
     });
   }
 

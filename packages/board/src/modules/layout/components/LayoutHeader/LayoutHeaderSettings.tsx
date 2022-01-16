@@ -7,19 +7,18 @@ import { LayoutHeaderIcon } from './LayoutHeaderIcon';
 
 export function LayoutHeaderSettings(): JSX.Element {
   const rootRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
   const [settingsIsVisible, setSettingsIsVisible] = useState(false);
-  const [settingsIsFromPopper, setSettingsIsFromPopper] = useState(false);
 
   const handleClick = (): void => {
-    if (settingsIsFromPopper) {
-      setSettingsIsFromPopper(false);
+    if (settingsIsVisible) {
+      setSettingsIsVisible(false);
     } else {
-      setSettingsIsVisible(!settingsIsVisible);
+      setSettingsIsVisible(true);
     }
   };
-  const handleClose = (): void => {
-    setSettingsIsVisible(false);
-    setSettingsIsFromPopper(true);
+  const handleClose = (ev: FocusEvent): void => {
+    if (btnRef.current !== ev.relatedTarget) setSettingsIsVisible(false);
   };
 
   return (
@@ -27,7 +26,10 @@ export function LayoutHeaderSettings(): JSX.Element {
       className="layout-header__container"
       ref={rootRef}
     >
-      <LayoutHeaderButton onClick={handleClick}>
+      <LayoutHeaderButton
+        ref={btnRef}
+        onClick={handleClick}
+      >
         <LayoutHeaderIcon icon={CogIcon} />
       </LayoutHeaderButton>
       <Popper

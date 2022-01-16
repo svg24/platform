@@ -1,12 +1,12 @@
 import type { ComponentProps } from 'react';
-import { createElement } from 'react';
+import { createElement, forwardRef } from 'react';
 
-export function LayoutHeaderButton(
-  props: ComponentProps<'button'>,
-): JSX.Element {
-  return createElement('button', {
-    className: 'layout-header__button',
-    type: 'button',
-    ...props,
-  });
-}
+export const LayoutHeaderButton = (
+  forwardRef<HTMLButtonElement, ComponentProps<'button'>>((props, ref) => (
+    createElement('button', {
+      ref,
+      className: 'layout-header__button',
+      type: 'button',
+      ...props,
+    })))
+);
