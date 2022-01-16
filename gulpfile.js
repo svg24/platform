@@ -189,7 +189,12 @@ const assets = {
   },
   buildCSS() {
     return gulp.src(`${assets.root}/styles/core.css`)
-      .pipe(gulpPostcss([postcssImport, autoprefixer, postcssCsso]))
+      .pipe(gulpPostcss([
+        postcssImport,
+        tailwindcss(tailwindConfig),
+        autoprefixer,
+        postcssCsso,
+      ]))
       .pipe(gulp.dest(`${assets.output}/styles`));
   },
 };
