@@ -6,8 +6,17 @@ export function initType(this: Store): void {
       _default: null,
       current: null,
     },
-    set(value) {
-      this.value.current = value;
+    setNegative() {
+      this.value.current = 'negative';
+    },
+    get isNegative() {
+      return this.value.current === 'negative';
+    },
+    setPositive() {
+      this.value.current = 'positive';
+    },
+    get isPositive() {
+      return this.value.current === 'positive';
     },
     reset() {
       this.value.current = this.value._default;

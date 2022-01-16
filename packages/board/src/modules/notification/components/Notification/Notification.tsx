@@ -3,61 +3,54 @@ import {
   InformationCircleIcon,
   XCircleIcon,
 } from '@heroicons/react/outline';
-import { observer } from 'mobx-react-lite';
-import { forwardRef } from 'react';
+import { reaction } from 'mobx';
+import { useEffect, useState } from 'react';
 import { Transition } from 'src/components';
 import { Portal } from 'src/components/Portal';
 import { useStore } from 'src/store';
 
-const NotificationRoot = forwardRef<HTMLDivElement>((_, ref) => {
+const NotificationIcon = (): JSX.Element => {
   const { notification } = useStore();
-  const NotificationIconObserved = observer(() => {
-    const { current } = notification.type.value;
-    const block = 'notification__icon';
-    const className = `notification__icon ${block}_${current}`;
+  const { isNegative, isPositive, value } = notification.type;
+  const className = `notification__icon notification__icon_${value.current}`;
 
-    if (current === 'negative') return XCircleIcon({ className });
-    if (current === 'positive') return CheckCircleIcon({ className });
+  if (isNegative) return XCircleIcon({ className });
+  if (isPositive) return CheckCircleIcon({ className });
 
-    return InformationCircleIcon({ className });
-  });
-  const NotificationDescriptionObserved = observer(() => (
-    <p className="notification__description">
-      {notification.description.value.current}
-    </p>
-  ));
-
-  return (
-    <div
-      className="notification notification_top-right"
-      ref={ref}
-      tabIndex={-1}
-    >
-      <div className="notification__content">
-        <NotificationIconObserved />
-        <NotificationDescriptionObserved />
-      </div>
-    </div>
-  );
-});
+  return InformationCircleIcon({ className });
+};
 
 export function Notification(): JSX.Element {
   const { notification } = useStore();
-  const NotificationTransitionObserved = observer(({ children }) => (
-    <Transition
-      classNames="notification"
-      isVisible={notification.isVisible}
-      ms={300}
-    >
-      {children}
-    </Transition>
-  ));
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    reaction(() => notification.isVisible, () => {
+      if (notification.isVisible) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    });
+  }, []);
 
   return (
     <Portal>
-      <NotificationTransitionObserved>
-        <NotificationRoot />
-      </NotificationTransitionObserved>
+      <Transition
+        classNames="notification"
+        isVisible={isVisible}
+        ms={300}
+      >
+        <div
+          className="notification notification_top-right"
+          tabIndex={-1}
+        >
+          <NotificationIcon />
+          <p className="notification__description">
+            {notification.description.value.current}
+          </p>
+        </div>
+      </Transition>
     </Portal>
   );
 }

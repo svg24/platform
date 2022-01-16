@@ -29,14 +29,26 @@ export function initRoot(this: Store): void {
     this.isVisible = false;
   };
   this.showNegative = (value) => {
-    this.type.set('negative');
-    this.description.set(value);
-    this.show();
+    if (!(
+      this.isVisible
+      && this.type.isNegative
+      && value === this.description.value.current
+    )) {
+      this.type.setNegative();
+      this.description.set(value);
+      this.show();
+    }
   };
   this.showPositive = (value) => {
-    this.type.set('positive');
-    this.description.set(value);
-    this.show();
+    if (!(
+      this.isVisible
+      && this.type.isPositive
+      && value === this.description.value.current
+    )) {
+      this.type.setPositive();
+      this.description.set(value);
+      this.show();
+    }
   };
 
   makeObservable(this, {

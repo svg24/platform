@@ -22,16 +22,18 @@ declare namespace Notification {
   type StoreDescriptionValueDefault = null;
   type StoreDescriptionValueCurrent = string;
   type StoreType = {
+    isNegative: boolean;
+    isPositive: boolean;
     reset(): void;
-    set(value: StoreTypeValueCurrent): void;
+    setNegative(): void;
+    setPositive(): void;
     value: StoreTypeValue;
   };
   type StoreTypeValue = {
     _default: StoreTypeValueDefault;
-    current: StoreTypeValueCurrent | StoreTypeValueDefault;
+    current: 'negative' | 'positive' | StoreTypeValueDefault;
   };
   type StoreTypeValueDefault = null;
-  type StoreTypeValueCurrent = 'negative' | 'positive';
 }
 
 export = Notification;
