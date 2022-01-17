@@ -1,4 +1,4 @@
-import type Api from 'types/api';
+import type { Plugin } from 'types/api';
 
 const sortBy = {
   data: [{
@@ -22,7 +22,7 @@ async function getResponse<T>(method: string): Promise<T> {
   return json;
 }
 
-export const api: typeof Api = {
+export const api: Plugin = {
   async sortBy() {
     return sortBy;
   },

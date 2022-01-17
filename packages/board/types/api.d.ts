@@ -1,11 +1,13 @@
 import type { Item, List, Simple } from '@svg24/api/types';
 
 declare namespace Api {
-  function categories(): Promise<CategoriesResponse>;
-  function companies(): Promise<CompaniesResponse>;
-  function item(params: Item.RouteQuery): Promise<ItemResponse>;
-  function list(params: List.RouteQuery): Promise<ListResponse>;
-  function sortBy(): Promise<SortByResponse>;
+  type Plugin = {
+    categories(): Promise<CategoriesResponse>;
+    companies(): Promise<CompaniesResponse>;
+    item(params: Item.RouteQuery): Promise<ItemResponse>;
+    list(params: List.RouteQuery): Promise<ListResponse>;
+    sortBy(): Promise<SortByResponse>;
+  };
   type KeysSimpleMethods = 'categories' | 'companies' | 'sortBy';
   /**
    * `api.categories()`
