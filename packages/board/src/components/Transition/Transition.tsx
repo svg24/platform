@@ -1,5 +1,10 @@
 import type { RefObject } from 'react';
-import { cloneElement, useEffect, useRef } from 'react';
+import {
+  cloneElement,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { useForkRef } from 'src/utils';
 
@@ -27,12 +32,28 @@ export function Transition({
     exitActive: `${classNames}_active-exit`,
     exitDone: `${classNames}_done-exit`,
   };
+  const { enterDone, exit } = transitionClassNames;
+  const [isMountedVisible, setIsMountedVisible] = useState(false);
 
   useEffect(() => {
-    if (rootRef && isVisible) {
-      rootRef.current?.classList.add(transitionClassNames.enterDone);
+    if (rootRef?.current && isVisible) {
+      rootRef.current.classList.add(enterDone);
+      setIsMountedVisible(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (rootRef?.current && isMountedVisible) {
+      if (
+        !isVisible
+        && rootRef.current.classList.contains(enterDone)
+        && rootRef.current.classList.contains(exit)
+      ) {
+        rootRef.current.classList.remove(enterDone);
+        setIsMountedVisible(false);
+      }
+    }
+  });
 
   return (
     <CSSTransition
