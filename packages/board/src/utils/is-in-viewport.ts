@@ -1,6 +1,5 @@
 export function isInViewport(element: HTMLDivElement): boolean {
   const rect = element.getBoundingClientRect();
-
   return (
     rect.top >= 0
       && rect.left >= 0

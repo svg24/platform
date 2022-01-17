@@ -1,6 +1,6 @@
 import type { Ref } from 'react';
 import { useMemo } from 'react';
-import { setRef } from './setRef';
+import { setRef } from './set-ref';
 
 export function useForkRef<Instance>(
   refFirst: Ref<Instance> | null | undefined,

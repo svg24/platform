@@ -1,11 +1,11 @@
 import { debounce } from './debounce';
-import { deepCopy } from './deepCopy';
-import { escapeString } from './escapeString';
-import { isInViewport } from './isInViewport';
-import { setRef } from './setRef';
+import { deepCopy } from './deep-copy';
+import { escapeString } from './escape-string';
+import { isInViewport } from './is-in-viewport';
+import { setRef } from './set-ref';
 import { initSettingsParameter } from './settings';
 import { initStoreFormParameter, initStoreVisible } from './store';
-import { useForkRef } from './useForkRef';
+import { useForkRef } from './use-fork-ref';
 
 export {
   debounce,
