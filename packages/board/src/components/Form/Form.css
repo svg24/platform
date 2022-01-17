@@ -1,3 +1,7 @@
+.form {
+  @apply flex flex-col gap-y-4;
+}
+
 .form__legend {
   @apply mb-2 text-xs font-bold uppercase text-neutral-400;
 }

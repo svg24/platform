@@ -1,20 +1,35 @@
-import type {
-  FormParameter,
-  FormParameterOptions,
-  FormParameterOptionsItem,
-} from 'types/store';
-
 declare namespace Settings {
   /**
    * `settings`
    */
   type Store = {
-    size: StoreSize;
+    filter: SettingsParameter;
+    mount(): Promise<void>;
+    size: SettingsParameter;
   };
-  /**
-   * `settings.size`
-   */
-  type StoreSize = FormParameter<FormParameterOptions, FormParameterOptionsItem>;
+  interface SettingsParameter {
+    fetch(): void;
+    id: string;
+    options: {
+      [key: string]: SettingsParameterOptionsItem;
+    };
+    reset(): void;
+    set(option: SettingsParameterOptionsItem): void;
+    value: SettingsParameterValue;
+  }
 }
+
+type SettingsParameterOptionsItem = {
+  id: SettingsParameterOptionsItemId;
+  index: number;
+  name: string;
+};
+type SettingsParameterOptionsItemId = string;
+type SettingsParameterValue = {
+  _current: SettingsParameterOptionsItem;
+  _default: SettingsParameterOptionsItem;
+  checkIsCurrent(id: SettingsParameterOptionsItemId): boolean;
+  current: SettingsParameterOptionsItem;
+};
 
 export = Settings;

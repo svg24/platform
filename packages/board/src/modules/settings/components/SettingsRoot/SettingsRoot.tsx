@@ -4,7 +4,10 @@ import { deepCopy } from 'src/utils';
 
 export function SettingsRoot(): JSX.Element {
   const { settings } = useStore();
-  const params = [deepCopy(settings.size, { legend: 'Size' })];
+  const params = [
+    deepCopy(settings.filter, { legend: 'Filter' }),
+    deepCopy(settings.size, { legend: 'Size' }),
+  ];
 
   return (
     <Form>
@@ -13,16 +16,18 @@ export function SettingsRoot(): JSX.Element {
           key={pr.id}
           legend={pr.legend}
         >
-          {pr.options?.map((opt) => (
-            <FormLabelComplete
-              key={opt.id}
-              option={opt}
-              parameter={pr}
-              onChange={() => {
-                pr.set(opt);
-              }}
-            />
-          ))}
+          {Object.values(pr.options)
+            .sort((a, b) => a.index - b.index)
+            .map((opt) => (
+              <FormLabelComplete
+                key={opt.id}
+                option={opt}
+                parameter={pr}
+                onChange={() => {
+                  pr.set(opt);
+                }}
+              />
+            ))}
         </FormParameter>
       ))}
     </Form>

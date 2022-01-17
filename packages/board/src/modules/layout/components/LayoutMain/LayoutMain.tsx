@@ -6,17 +6,25 @@ import { useStore } from 'src/store';
 import { LayoutMainContainer } from './LayoutMainContainer';
 
 function LayoutMain({ children }: { children: JSX.Element }): JSX.Element {
-  const { layout } = useStore();
+  const { layout, settings } = useStore();
+  const { filter } = layout.main;
   const rootRef = useRef<HTMLDivElement>(null);
-  const [filterIsVisible, setFilterIsVisible] = useState(false);
+  const [filterIsVisible, setFilterIsVisible] = useState(filter.isVisible);
+
+  function mount(): void {
+    if (filter.isVisible) {
+      setFilterIsVisible(true);
+    } else {
+      setFilterIsVisible(false);
+    }
+  }
 
   useEffect(() => {
-    reaction(() => layout.main.filter.isVisible, () => {
-      if (layout.main.filter.isVisible) {
-        setFilterIsVisible(true);
-      } else {
-        setFilterIsVisible(false);
-      }
+    mount();
+    reaction(() => filter.isVisible, mount);
+    reaction(() => settings.filter.value.current, () => {
+      filter.mount();
+      mount();
     });
   }, []);
 

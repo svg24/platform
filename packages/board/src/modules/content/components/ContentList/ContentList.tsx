@@ -1,20 +1,26 @@
-import { observer } from 'mobx-react-lite';
+import { reaction } from 'mobx';
+import { useEffect, useState } from 'react';
 import { useStore } from 'src/store';
 
 function ContentList({ children }: { children: JSX.Element[] }): JSX.Element {
   const { settings } = useStore();
-  const ContentListObserved = observer(() => {
-    const { current } = settings.size.value;
-    const size = current ? `content-list_${current.id}` : '';
+  const { value } = settings.size;
+  const [sizeValue, setSizeValue] = useState(value.current.id);
 
-    return (
-      <ol className={`content-list ${size}`}>
-        {children}
-      </ol>
-    );
-  });
+  function mount(): void {
+    setSizeValue(`content-list_${value.current.id}`);
+  }
 
-  return <ContentListObserved />;
+  useEffect(() => {
+    mount();
+    reaction(() => value.current, mount);
+  }, []);
+
+  return (
+    <ol className={`content-list ${sizeValue}`}>
+      {children}
+    </ol>
+  );
 }
 
 export { ContentList };

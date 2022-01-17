@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Content } from 'src/modules/content';
 import { FilterStore } from 'src/modules/filter';
-import { Layout } from 'src/modules/layout';
+import { Layout, LayoutStore } from 'src/modules/layout';
 import { Notification } from 'src/modules/notification';
+import { SettingsStore } from 'src/modules/settings';
 
 export function Home(): JSX.Element | null {
-  const isMounted = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  async function mount(): Promise<void> {
+    await Promise.all([SettingsStore.mount(), FilterStore.mount()]);
+  }
 
   useEffect(() => {
-    FilterStore.mount().then(() => {
-      isMounted[1](true);
+    mount().then(() => {
+      LayoutStore.main.filter.mount();
+      setIsMounted(true);
     });
   }, []);
 
-  return isMounted[0]
+  return isMounted
     ? (
       <>
         <Layout>
