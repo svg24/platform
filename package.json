@@ -7,13 +7,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build-api": "yarn tsc-api",
-    "build-assets": "yarn tsc-assets && gulp build-assets",
+    "build-api": "tsc -p packages/api/tsconfig.json",
+    "build-assets": "tsc -p packages/assets/tsconfig.json && gulp build-assets",
     "build-board": "vite build",
     "build-collection": "gulp build-collection",
     "build-www": "gulp build-www",
-    "dev-api": "nodemon --exec 'yarn build-api && yarn node-api' --ext ts --watch packages/api/src",
-    "dev-assets": "yarn build-assets && yarn node-assets",
+    "dev-api": "nodemon --exec 'yarn build-api && node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/api/dist' --ext ts --watch packages/api/src",
+    "dev-assets": "yarn build-assets && node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/assets/dist",
     "dev-board": "vite",
     "dev-collection": "gulp dev-collection",
     "dev-www": "gulp serve-www",
@@ -29,13 +29,8 @@
     "lint-ts-assets": "eslint packages/assets",
     "lint-ts-board": "eslint packages/board",
     "lint-ts-www": "eslint packages/www",
-    "node-api": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/api/dist",
-    "node-assets": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve packages/assets/dist",
-    "preview-board": "yarn build-board && vite preview",
-    "prod-api": "nodemon --exec 'yarn build-api && yarn node-api' --ext js",
-    "tsc-api": "tsc -p packages/api/tsconfig.json",
-    "tsc-assets": "tsc -p packages/assets/tsconfig.json",
-    "tsc-board": "tsc -p packages/board/tsconfig.json"
+    "prod-api": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve api",
+    "prod-assets": "node --experimental-specifier-resolution=node --experimental-import-meta-resolve assets"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.18",

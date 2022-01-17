@@ -1,32 +1,49 @@
 version: '3.8'
 
 services:
+  root:
+    container_name: platform-root
+    build:
+      context: .
+      target: root-dev
+    networks:
+      nginx:
+    volumes:
+      - root:/srv
+    environment:
+      - NODE_ENV=development
+
   api:
     build:
-      target: api-deps
+      target: api-dev
+    depends_on:
+      - root
     volumes:
+      - root:/srv
       - ./packages/api:/srv/packages/api
       - /srv/packages/api/node_modules
     environment:
       - NODE_ENV=development
-    user: node
-    command: yarn dev-api
 
   assets:
     build:
-      target: assets-deps
+      target: assets-dev
+    depends_on:
+      - root
     volumes:
+      - root:/srv
       - ./packages/assets:/srv/packages/assets
       - /srv/packages/assets/node_modules
     environment:
       - NODE_ENV=development
-    user: node
-    command: yarn dev-assets
 
   board:
     build:
-      target: board-deps
+      target: board-dev
+    depends_on:
+      - root
     volumes:
+      - root:/srv
       - ./packages/board:/srv/packages/board
       - /srv/packages/board/node_modules
     environment:
@@ -37,22 +54,24 @@ services:
       - SERVER_HMR_PROTOCOL=wss
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
-    user: node
-    command: yarn dev-board
 
   www:
     build:
-      target: www-deps
+      target: www-dev
+    depends_on:
+      - root
     volumes:
+      - root:/srv
       - ./packages/www:/srv/packages/www
       - /srv/packages/www/node_modules
     environment:
       - NODE_ENV=development
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
-    user: node
-    command: yarn dev-www
 
   nginx:
     build:
       target: nginx-dev
+
+volumes:
+  root:

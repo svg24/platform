@@ -30,18 +30,16 @@ FROM alpine-base as db-deps
 WORKDIR /srv
 RUN \
   apk add --no-cache --virtual .deps curl jq \
-  && mkdir packages \
-  && cd packages \
-    && curl -LSso db.tar.gz https://github.com/svg24/collection/tarball/main \
-    && mkdir db \
-    && tar xf db.tar.gz -C db --strip-components 1 \
-    && cd db/data \
-      && for json in $(find . ! -path .); do \
-        echo $(jq -r '.[]' $json) > $json; done
+  && curl -LSso db.tar.gz https://github.com/svg24/collection/tarball/main \
+  && mkdir db \
+  && tar xf db.tar.gz -C db --strip-components 1 \
+  && cd db/data \
+    && for json in $(find . ! -path .); do \
+      echo $(jq -r '.[]' $json) > $json; done
 
 FROM mongo:5.0 as db
-WORKDIR /srv/packages/db
-COPY --from=db-deps /srv/packages/db .
+WORKDIR /srv
+COPY --from=db-deps /srv/db db
 
 #
 # Node
@@ -66,69 +64,153 @@ RUN \
 # Root
 #
 
-FROM node-base as root
+FROM node-base as root-base
 WORKDIR /srv
 COPY .browserslistrc .browserslistrc
 COPY .editorconfig .editorconfig
 COPY .eslintignore .eslintignore
 COPY .eslintrc.cjs .eslintrc.cjs
+COPY .stylelintignore .stylelintignore
+COPY .stylelintrc.json .stylelintrc.json
 COPY gulpfile.js gulpfile.js
 COPY package.json package.json
 COPY tailwind.config.cjs tailwind.config.cjs
 COPY tsconfig.base.json tsconfig.base.json
 COPY vite.config.js vite.config.js
 COPY yarn.lock yarn.lock
+
+FROM root-base as root-dev
+ENV NODE_ENV=development
+WORKDIR /srv
 COPY packages/api/package.json packages/api/package.json
 COPY packages/assets/package.json packages/assets/package.json
 COPY packages/board/package.json packages/board/package.json
 COPY packages/www/package.json packages/www/package.json
 RUN \
-  yarn install \
+  yarn \
   && chown -R node:node .
 
 #
 # API
 #
 
-FROM node-base as api-deps
-ARG NODE_ENV
-WORKDIR /srv/packages/api
-COPY packages/api .
+FROM node-base as api-dev
+ENV NODE_ENV=development
+WORKDIR /srv
+COPY packages/api packages/api
 RUN \
   apk add mongodb-tools \
   && chown -R node:node .
+CMD yarn dev-api
+
+FROM root-base as api-build
+ENV NODE_ENV=production
+WORKDIR /srv
+COPY --from=api-dev /srv .
+RUN \
+  yarn install --production=false \
+  # && yarn lint-editor \
+  && yarn lint-ts-api \
+  && yarn build-api
+
+FROM node-base as api-prod
+ENV NODE_ENV=production
+WORKDIR /srv
+COPY --from=api-build /srv/package.json package.json
+COPY --from=api-build /srv/packages/api/dist api
+COPY --from=api-build /srv/packages/api/package.json api/package.json
+RUN \
+  apk add mongodb-tools \
+  && cd api \
+  && yarn \
+  && chown -R node:node .
+CMD yarn prod-api
 
 #
 # Assets
 #
 
-FROM node-base as assets-deps
-ARG NODE_ENV
-WORKDIR /srv/packages/assets
-COPY packages/assets .
+FROM node-base as assets-dev
+ENV NODE_ENV=development
+WORKDIR /srv
+COPY packages/assets packages/assets
 RUN chown -R node:node .
+CMD yarn dev-assets
+
+FROM root-base as assets-build
+ENV NODE_ENV=production
+WORKDIR /srv
+COPY --from=assets-dev /srv .
+RUN \
+  yarn install --production=false \
+  # && yarn lint-editor \
+  && yarn lint-css-assets \
+  && yarn lint-ts-assets \
+  && yarn build-assets
+
+FROM node-base as assets-prod
+ENV NODE_ENV=production
+WORKDIR /srv
+COPY --from=assets-build /srv/package.json package.json
+COPY --from=assets-build /srv/packages/assets/dist assets
+RUN chown -R node:node .
+CMD yarn prod-assets
 
 #
 # Board
 #
 
-FROM node-base as board-deps
-ARG NODE_ENV
-WORKDIR /srv/packages/board
-COPY packages/board .
+FROM node-base as board-dev
+ENV NODE_ENV=development
+WORKDIR /srv
+COPY packages/board packages/board
 RUN \
   mkdir node_modules \
   && chown -R node:node .
+CMD yarn dev-board
+
+FROM root-base as board-build
+ENV NODE_ENV=production
+WORKDIR /srv
+COPY --from=board-dev /srv .
+RUN \
+  yarn install --production=false \
+  # && yarn lint-editor \
+  && yarn lint-css-board \
+  && yarn lint-ts-board \
+  && yarn build-board
+
+FROM alpine-base as board-prod
+WORKDIR /srv
+COPY --from=board-build /srv/packages/board/dist board
+RUN chown -R app:app .
 
 #
 # WWW
 #
 
-FROM node-base as www-deps
-ARG NODE_ENV
-WORKDIR /srv/packages/www
-COPY packages/www .
+FROM node-base as www-dev
+ENV NODE_ENV=development
+WORKDIR /srv
+COPY packages/www packages/www
 RUN chown -R node:node .
+CMD yarn dev-www
+
+FROM root-base as www-build
+ENV NODE_ENV=production
+WORKDIR /srv
+COPY --from=www-dev /srv .
+RUN \
+  yarn install --production=false \
+  # && yarn lint-editor \
+  && yarn lint-css-www \
+  && yarn lint-ts-www \
+  && yarn build-www
+
+FROM alpine-base as www-prod
+WORKDIR /srv
+COPY --from=www-build /srv/packages/www/dist www
+RUN chown -R app:app .
 
 #
 # Nginx
@@ -178,8 +260,5 @@ COPY etc/ssl/privkey.pem /etc/ssl/private/$DOMAIN.pem
 FROM nginx-base as nginx-preview
 ARG DOMAIN
 COPY etc/nginx/preview.conf /etc/nginx/sites/$DOMAIN.conf
-
-FROM nginx-base as nginx-prod
-ARG DOMAIN
-COPY etc/nginx/prod.conf /etc/nginx/sites/$DOMAIN.conf
-COPY etc/nginx/ssl.conf /etc/nginx/snippets/ssl.conf
+COPY etc/ssl/cert.pem /etc/ssl/certs/$DOMAIN.pem
+COPY etc/ssl/privkey.pem /etc/ssl/private/$DOMAIN.pem

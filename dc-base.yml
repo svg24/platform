@@ -10,7 +10,7 @@ services:
     networks:
       nginx:
     volumes:
-      - db:/srv/packages/db
+      - db:/srv/db
     environment:
       - DATABASE_NAME=svg24
       - DATABASE_PASS=app
@@ -18,33 +18,19 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=app
       - MONGO_INITDB_ROOT_USERNAME=app
 
-  root:
-    container_name: platform-root
-    build:
-      context: .
-      target: root
-    networks:
-      nginx:
-    volumes:
-      - root:/srv
-
   api:
     container_name: platform-api
     build:
       context: .
     depends_on:
       - db
-      - root
-    restart: unless-stopped
     networks:
       nginx:
-    working_dir: /srv
     volumes:
-      - root:/srv
-      - db:/srv/packages/db
+      - db:/srv/db
     environment:
-      - DATABASE_DATA=/srv/packages/db/data
-      - DATABASE_LOGOS=/srv/packages/db/logos
+      - DATABASE_DATA=/srv/db/data
+      - DATABASE_LOGOS=/srv/db/logos
       - DATABASE_NAME=svg24
       - DATABASE_PASS=app
       - DATABASE_PORT=27017
@@ -57,13 +43,8 @@ services:
     build:
       context: .
     restart: unless-stopped
-    depends_on:
-      - root
     networks:
       nginx:
-    working_dir: /srv
-    volumes:
-      - root:/srv
     environment:
       - SERVER_PORT=3000
 
@@ -71,27 +52,15 @@ services:
     container_name: platform-board
     build:
       context: .
-    restart: unless-stopped
-    depends_on:
-      - root
     networks:
       nginx:
-    working_dir: /srv
-    volumes:
-      - root:/srv
 
   www:
     container_name: platform-www
     build:
       context: .
-    restart: unless-stopped
-    depends_on:
-      - root
     networks:
       nginx:
-    working_dir: /srv
-    volumes:
-      - root:/srv
 
   nginx:
     container_name: platform-nginx
@@ -102,7 +71,6 @@ services:
     depends_on:
       - api
       - board
-    restart: unless-stopped
     networks:
       nginx:
     ports:
@@ -114,4 +82,3 @@ networks:
 
 volumes:
   db:
-  root:

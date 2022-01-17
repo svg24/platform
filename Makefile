@@ -6,8 +6,8 @@ dev:
 	docker-compose -f dc-base.yml -f dc-dev.yml up -d
 
 preview:
-	docker-compose -f dc-base.yml -f dc-dev.yml -f dc-preview.yml build
-	docker-compose -f dc-base.yml -f dc-dev.yml -f dc-preview.yml up -d
+	docker-compose -f dc-base.yml -f dc-preview.yml build
+	docker-compose -f dc-base.yml -f dc-preview.yml up -d
 
 rs-dev:
 	docker-compose -f dc-base.yml -f dc-dev.yml restart
@@ -32,4 +32,4 @@ clear-dev:
 	docker-compose -f dc-base.yml -f dc-dev.yml down
 
 clear-preview:
-	docker-compose -f dc-base.yml -f dc-dev.yml -f dc-preview.yml down
+	docker-compose -f dc-base.yml -f dc-preview.yml down
