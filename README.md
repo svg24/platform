@@ -56,13 +56,13 @@ Before considering each workspace, it should be noted that the project is built 
 ```sh
 $ docker images   |   $ docker ps
 REPOSITORY        |   NAMES
-platform_nginx    |   platform-nginx
-platform_root     |   platform-root
 platform_api      |   platform-api
 platform_assets   |   platform-assets
 platform_board    |   platform-board
-platform_www      |   platform-www
 platform_db       |   platform-db
+platform_nginx    |   platform-nginx
+platform_root     |   platform-root
+platform_www      |   platform-www
 ```
 
 Let's take a look at the docker-compose (next as dc) files. Each stage has its own dc file (besides the [`dc-base`](./dc-base.yml), it is used, as you might guess, as the basis):
