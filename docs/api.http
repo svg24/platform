@@ -58,39 +58,49 @@ GET https://api.svg24.dev/v1/item
 
 {
   "data": [{
-    "content": {
-      "components": {
-        "js": {
-          "react": "",
-          "vue": ""
+    "data": {
+      "original": {
+        "data": {
+          "api": "",
+          "components": {
+            "react": {
+              "js": "",
+              "ts": ""
+            },
+            "vue": {
+              "js": "",
+              "ts": ""
+            }
+          },
+          "snippets": {
+            "css": "",
+            "jsx": "",
+            "svg": ""
+          }
         },
-        "ts": {
-          "react": ""
+        "meta": {
+          "componentName": "",
+          "fileName": ""
         }
-      },
-      "links": {
-        "url": ""
-      },
-      "snippets": {
-        "css": "",
-        "jsx": "",
-        "svg": ""
-      },
+      }
     },
-    "version": {
-      "date": "",
-      "type": ""
+    "meta": {
+      "version": 0
     }
   }],
   "meta": {
-    "category": "",
-    "company": "",
+    "category": {
+      "id": "",
+      "name": ""
+    },
+    "company": {
+      "id": "",
+      "name": ""
+    },
     "date": "",
     "id": "",
     "name": "",
-    "src": {
-      "product": "",
-      "usage": ""
-    }
+    "product": "",
+    "usage": ""
   }
 }

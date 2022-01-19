@@ -41,10 +41,10 @@
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "latest": {
                   "type": "string"
                 },
-                "latest": {
+                "name": {
                   "type": "string"
                 }
               }

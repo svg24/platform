@@ -1,5 +1,7 @@
 dist
-etc/ssl
+etc/ssl/*
+!etc/ssl/README.md
 node_modules
 tsconfig.tsbuildinfo
-packages/collection/src
+packages/collection/src/*
+!packages/collection/src/README.md
