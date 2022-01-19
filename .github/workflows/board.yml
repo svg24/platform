@@ -1,0 +1,46 @@
+name: board
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/board/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: [16]
+      - name: remove other package.json's
+        uses: |
+          rm packages/api/package.json
+          rm packages/assets/package.json
+          rm packages/collection/package.json
+          rm packages/www/package.json
+      - name: install deps
+        uses: yarn
+      - name: lint
+        uses: |
+          yarn lint-css-board
+          yarn lint-ts-board
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: [16]
+      - name: remove other package.json's
+        uses: |
+          rm packages/api/package.json
+          rm packages/assets/package.json
+          rm packages/collection/package.json
+          rm packages/www/package.json
+      - name: install deps
+        uses: yarn
+      - name: build
+        uses: yarn build-board

@@ -1,0 +1,44 @@
+name: api
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/api/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: [16]
+      - name: remove other package.json's
+        uses: |
+          rm packages/assets/package.json
+          rm packages/board/package.json
+          rm packages/collection/package.json
+          rm packages/www/package.json
+      - name: install deps
+        uses: yarn
+      - name: lint
+        uses: yarn lint-ts-api
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: [16]
+      - name: remove other package.json's
+        uses: |
+          rm packages/assets/package.json
+          rm packages/board/package.json
+          rm packages/collection/package.json
+          rm packages/www/package.json
+      - name: install deps
+        uses: yarn
+      - name: build
+        uses: yarn build-api
