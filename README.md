@@ -54,15 +54,15 @@ For the `.css` files, stylelint is used with custom rules. It should also be not
 Before considering each workspace, it should be noted that the project is built like monorepo and all is done in docker containers.
 
 ```sh
-$ docker images   |   $ docker ps
-REPOSITORY        |   NAMES
-platform_api      |   platform-api
-platform_assets   |   platform-assets
-platform_board    |   platform-board
-platform_db       |   platform-db
-platform_nginx    |   platform-nginx
-platform_root     |   platform-root
-platform_www      |   platform-www
+$ docker images   |   $ docker ps       |   $ docker network ls
+REPOSITORY        |   NAMES             |   NAME
+platform_api      |   platform-api      |   platform_nginx
+platform_assets   |   platform-assets   |
+platform_board    |   platform-board    |
+platform_db       |   platform-db       |
+platform_nginx    |   platform-nginx    |
+platform_root     |   platform-root     |
+platform_www      |   platform-www      |
 ```
 
 Let's take a look at the docker-compose (next as dc) files. Each stage has its own dc file (besides the [`dc-base`](./dc-base.yml), it is used, as you might guess, as the basis):
