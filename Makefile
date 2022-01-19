@@ -51,35 +51,47 @@ clear-preview:
 	docker-compose -f dc-base.yml -f dc-preview.yml down
 
 staging-certbot:
-	docker-compose -f dc-prod.yml run certbot certonly \
-		--agree-tos \
-		--email vanyauhalin@gmail.com \
-		--no-eff-email \
-		--staging \
-		--webroot \
-		--webroot-path=/var/www/certbot \
-		-d svg24.dev \
-		-d api.svg24.dev \
-		-d assets.svg24.dev \
-		-d board.svg24.dev \
-		-d www.svg24.dev
+	docker-compose \
+		-f dc-base.yml \
+		-f dc-preview.yml \
+		-f dc-prod.yml \
+		run certbot certonly \
+			--agree-tos \
+			--email vanyauhalin@gmail.com \
+			--no-eff-email \
+			--staging \
+			--webroot \
+			--webroot-path=/var/www/certbot \
+			-d svg24.dev \
+			-d api.svg24.dev \
+			-d assets.svg24.dev \
+			-d board.svg24.dev \
+			-d www.svg24.dev
 	make rs-nginx
 
 force-certbot:
-	docker-compose -f dc-prod.yml run certbot certonly \
-		--agree-tos \
-		--email vanyauhalin@gmail.com \
-		--force-renewal \
-		--no-eff-email \
-		--webroot \
-		--webroot-path=/var/www/certbot \
-		-d svg24.dev \
-		-d api.svg24.dev \
-		-d assets.svg24.dev \
-		-d board.svg24.dev \
-		-d www.svg24.dev
+	docker-compose \
+		-f dc-base.yml \
+		-f dc-preview.yml \
+		-f dc-prod.yml \
+		run certbot certonly \
+			--agree-tos \
+			--email vanyauhalin@gmail.com \
+			--force-renewal \
+			--no-eff-email \
+			--webroot \
+			--webroot-path=/var/www/certbot \
+			-d svg24.dev \
+			-d api.svg24.dev \
+			-d assets.svg24.dev \
+			-d board.svg24.dev \
+			-d www.svg24.dev
 	make rs-nginx
 
 renew-certbot:
-	docker-compose -f dc-prod.yml run certbot renew --dry-run
+	docker-compose \
+		-f dc-base.yml \
+		-f dc-preview.yml \
+		-f dc-prod.yml \
+		run certbot renew --dry-run
 	make rs-nginx
