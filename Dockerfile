@@ -249,16 +249,21 @@ FROM nginx:1.21.3-alpine as nginx-base
 COPY --from=nginx-brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
 COPY --from=nginx-brotli /usr/local/nginx/modules /usr/local/nginx/modules
 COPY etc/nginx/base.conf /etc/nginx/nginx.conf
-RUN mkdir -p /etc/nginx/sites
+COPY etc/nginx/snippets/server.conf /etc/nginx/snippets/server.conf
+CMD nginx -g 'daemon off;'
 
 FROM nginx-base as nginx-dev
 ARG DOMAIN
 COPY etc/nginx/dev.conf /etc/nginx/sites/$DOMAIN.conf
+COPY etc/nginx/snippets/ssl/dev.conf /etc/nginx/snippets/ssl.conf
 COPY etc/ssl/cert.pem /etc/ssl/certs/$DOMAIN.pem
 COPY etc/ssl/privkey.pem /etc/ssl/private/$DOMAIN.pem
 
-FROM nginx-base as nginx-preview
+FROM nginx-dev as nginx-preview
 ARG DOMAIN
-COPY etc/nginx/preview.conf /etc/nginx/sites/$DOMAIN.conf
-COPY etc/ssl/cert.pem /etc/ssl/certs/$DOMAIN.pem
-COPY etc/ssl/privkey.pem /etc/ssl/private/$DOMAIN.pem
+COPY etc/nginx/prod.conf /etc/nginx/sites/$DOMAIN.conf
+
+FROM nginx-base as nginx-prod
+ARG DOMAIN
+COPY etc/nginx/prod.conf /etc/nginx/sites/$DOMAIN.conf
+COPY etc/nginx/snippets/ssl/prod.conf /etc/nginx/snippets/ssl.conf

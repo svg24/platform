@@ -22,6 +22,7 @@ services:
     container_name: platform-api
     build:
       context: .
+    restart: unless-stopped
     depends_on:
       - db
     networks:
@@ -68,14 +69,15 @@ services:
       context: .
       args:
         - DOMAIN=svg24.dev
+    restart: unless-stopped
     depends_on:
       - api
       - board
     networks:
       nginx:
     ports:
+      - '80:80'
       - '443:443'
-    command: nginx -g 'daemon off;'
 
 networks:
   nginx:
