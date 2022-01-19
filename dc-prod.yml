@@ -1,43 +1,22 @@
 version: '3.8'
 
 services:
-  api:
-    build:
-      target: api-prod
-    environment:
-      - NODE_ENV=production
-
-  assets:
-    build:
-      target: assets-prod
-    environment:
-      - NODE_ENV=production
-
-  board:
-    build:
-      target: board-prod
+  certbot:
+    container_name: platform-certbot
+    image: certbot/certbot
+    networks:
+      nginx:
     volumes:
-      - board:/srv/board
-    environment:
-      - NODE_ENV=production
-
-  www:
-    build:
-      target: www-prod
-    volumes:
-      - www:/srv/www
-    environment:
-      - NODE_ENV=production
+      - certbot-www:/var/www/certbot
+      - letsencrypt:/etc/letsencrypt
 
   nginx:
     build:
       target: nginx-prod
     volumes:
-      - board:/srv/board
-      - www:/srv/www
-    environment:
-      - NODE_ENV=production
+      - certbot-www:/var/www/certbot
+      - letsencrypt:/etc/letsencrypt
 
 volumes:
-  board:
-  www:
+  certbot-www:
+  letsencrypt:

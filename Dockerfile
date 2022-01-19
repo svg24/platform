@@ -250,7 +250,6 @@ COPY --from=nginx-brotli /usr/lib/nginx/modules /usr/lib/nginx/modules
 COPY --from=nginx-brotli /usr/local/nginx/modules /usr/local/nginx/modules
 COPY etc/nginx/base.conf /etc/nginx/nginx.conf
 COPY etc/nginx/snippets/server.conf /etc/nginx/snippets/server.conf
-CMD nginx -g 'daemon off;'
 
 FROM nginx-base as nginx-dev
 ARG DOMAIN

@@ -1,6 +1,43 @@
 version: '3.8'
 
 services:
+  api:
+    build:
+      target: api-prod
+    environment:
+      - NODE_ENV=production
+
+  assets:
+    build:
+      target: assets-prod
+    environment:
+      - NODE_ENV=production
+
+  board:
+    build:
+      target: board-prod
+    volumes:
+      - board:/srv/board
+    environment:
+      - NODE_ENV=production
+
+  www:
+    build:
+      target: www-prod
+    volumes:
+      - www:/srv/www
+    environment:
+      - NODE_ENV=production
+
   nginx:
     build:
       target: nginx-preview
+    volumes:
+      - board:/srv/board
+      - www:/srv/www
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  board:
+  www:
