@@ -9,21 +9,13 @@ services:
     networks:
       nginx:
     volumes:
-      - certbot:/var/www/certbot
       - letsencrypt:/etc/letsencrypt
 
   nginx:
     build:
       target: nginx-prod
     volumes:
-      - certbot:/var/www/certbot
       - letsencrypt:/etc/letsencrypt
 
 volumes:
-  certbot:
-    driver: local
-    driver_opts:
-      type: none
-      device: /var/www/certbot
-      o: bind
   letsencrypt:
