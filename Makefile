@@ -23,7 +23,7 @@ CERTBOT_CMD = certonly \
 	--webroot
 
 ps:
-	docker ps --format 'table {{.Status}}\t{{.Ports}}\t{{.Names}}' -a
+	docker ps --format 'table {{.Status}}\t{{.Names}}' -a
 
 dev:
 	$(DC) $(DC_DEV) build
@@ -76,12 +76,9 @@ clear-preview:
 
 staging-certbot:
 	docker run $(CERTBOT_DATA) $(CERTBOT_CMD) --staging
-	make rs-nginx
 
 force-certbot:
-	docker run $(CERTBOT_DATA) $(CERTBOT_CMD) --force-renewal --no-deps
-	make rs-nginx
+	docker run $(CERTBOT_DATA) $(CERTBOT_CMD) --force-renewal
 
 renew-certbot:
 	docker run $(CERTBOT_DATA) renew --dry-run
-	make rs-nginx
