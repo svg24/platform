@@ -1,23 +1,47 @@
+DC = docker-compose
+DC_BASE = -f dc-base.yml
+DC_DEV = $(DC_BASE) -f dc-dev.yml
+DC_PREVIEW = $(DC_BASE) -f dc-preview.yml
+DC_PROD = $(DC_PREVIEW) -f dc-prod.yml
+CERTBOT_DATA = \
+	--name platform-certbot \
+	--network nginx \
+	-v certbot:/var/www/html \
+	-v letsencrypt:/etc/letsencrypt \
+	--rm \
+	certbot/certbot:1.7.0
+CERTBOT_CMD = certonly \
+	--email vanyauhalin@gmail.com \
+	--webroot-path /var/www/html \
+	-d svg24.dev \
+	-d api.svg24.dev \
+	-d assets.svg24.dev \
+	-d board.svg24.dev \
+	-d www.svg24.dev \
+	--agree-tos \
+	--no-eff-email \
+	--webroot
+
 ps:
-	docker ps -a --format 'table {{.Status}}\t{{.Ports}}\t{{.Names}}'
+	docker ps --format 'table {{.Status}}\t{{.Ports}}\t{{.Names}}' -a
 
 dev:
-	docker-compose -f dc-base.yml -f dc-dev.yml build
-	docker-compose -f dc-base.yml -f dc-dev.yml up -d
+	$(DC) $(DC_DEV) build
+	$(DC) $(DC_DEV) up -d
 
 preview:
-	docker-compose -f dc-base.yml -f dc-preview.yml build
-	docker-compose -f dc-base.yml -f dc-preview.yml up -d
+	$(DC) $(DC_PREVIEW) build
+	$(DC) $(DC_PREVIEW) up -d
 
 prod:
-	docker-compose -f dc-base.yml -f dc-preview.yml -f dc-prod.yml build
-	docker-compose -f dc-base.yml -f dc-preview.yml -f dc-prod.yml up -d
+	$(DC) $(DC_PROD) build
+	$(DC) $(DC_PROD) up -d
 
 rs-dev:
-	docker-compose -f dc-base.yml -f dc-dev.yml restart
+	$(DC) $(DC_DEV) restart
 
 rs-nginx:
-	docker-compose -f dc-base.yml kill -s SIGHUP nginx
+	$(DC) $(DC_PROD) kill -s SIGHUP nginx
 
 clear-images:
 	docker image rm \
@@ -45,53 +69,19 @@ clear-node:
 	rm -rf packages/www/node_modules
 
 clear-dev:
-	docker-compose -f dc-base.yml -f dc-dev.yml down
+	$(DC) $(DC_DEV) down
 
 clear-preview:
-	docker-compose -f dc-base.yml -f dc-preview.yml down
+	$(DC) $(DC_PREVIEW) down
 
 staging-certbot:
-	docker-compose \
-		-f dc-base.yml \
-		-f dc-preview.yml \
-		-f dc-prod.yml \
-		run certbot certonly \
-			--agree-tos \
-			--email vanyauhalin@gmail.com \
-			--no-eff-email \
-			--staging \
-			--webroot \
-			--webroot-path=/var/www/certbot \
-			-d svg24.dev \
-			-d api.svg24.dev \
-			-d assets.svg24.dev \
-			-d board.svg24.dev \
-			-d www.svg24.dev
+	docker run $(CERTBOT_DATA) $(CERTBOT_CMD) --staging
 	make rs-nginx
 
 force-certbot:
-	docker-compose \
-		-f dc-base.yml \
-		-f dc-preview.yml \
-		-f dc-prod.yml \
-		run certbot certonly \
-			--agree-tos \
-			--email vanyauhalin@gmail.com \
-			--force-renewal \
-			--no-eff-email \
-			--webroot \
-			--webroot-path=/var/www/certbot \
-			-d svg24.dev \
-			-d api.svg24.dev \
-			-d assets.svg24.dev \
-			-d board.svg24.dev \
-			-d www.svg24.dev
+	docker run $(CERTBOT_DATA) $(CERTBOT_CMD) --force-renewal --no-deps
 	make rs-nginx
 
 renew-certbot:
-	docker-compose \
-		-f dc-base.yml \
-		-f dc-preview.yml \
-		-f dc-prod.yml \
-		run certbot renew --dry-run
+	docker run $(CERTBOT_DATA) renew --dry-run
 	make rs-nginx
