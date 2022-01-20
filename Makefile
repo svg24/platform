@@ -5,11 +5,11 @@ DC_PREVIEW = $(DC_BASE) -f dc-preview.yml
 DC_PROD = $(DC_PREVIEW) -f dc-prod.yml
 CERTBOT_DATA = \
 	--name platform-certbot \
-	--network nginx \
+	--network platform_nginx \
 	-v certbot:/var/www/html \
 	-v letsencrypt:/etc/letsencrypt \
 	--rm \
-	certbot/certbot:1.7.0
+	certbot/certbot:v1.7.0
 CERTBOT_CMD = certonly \
 	--email vanyauhalin@gmail.com \
 	--webroot-path /var/www/html \
