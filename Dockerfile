@@ -266,3 +266,10 @@ FROM nginx-base as nginx-prod
 ARG DOMAIN
 COPY etc/nginx/prod.conf /etc/nginx/sites/$DOMAIN.conf
 COPY etc/nginx/snippets/ssl/prod.conf /etc/nginx/snippets/ssl.conf
+RUN \
+  mkdir /etc/letsencrypt \
+  && cd /etc/letsencrypt \
+    && curl -o options-ssl-nginx.conf \
+      https://raw.githubusercontent.com/certbot/certbot/afc5be5abeeee60560113c5eda0abfeaf1e04be8/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf \
+    && curl -o ssl-dhparams.pem \
+      https://raw.githubusercontent.com/certbot/certbot/afc5be5abeeee60560113c5eda0abfeaf1e04be8/certbot/certbot/ssl-dhparams.pem
