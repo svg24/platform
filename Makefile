@@ -3,24 +3,6 @@ DC_BASE = -f dc-base.yml
 DC_DEV = $(DC_BASE) -f dc-dev.yml
 DC_PREVIEW = $(DC_BASE) -f dc-preview.yml
 DC_PROD = $(DC_PREVIEW) -f dc-prod.yml
-CERTBOT_DATA = \
-	--name platform-certbot \
-	--network platform_nginx \
-	-v certbot:/var/www/html \
-	-v letsencrypt:/etc/letsencrypt \
-	--rm \
-	certbot/certbot:v1.7.0
-CERTBOT_CMD = certonly \
-	--email vanyauhalin@gmail.com \
-	--webroot-path /var/www/html \
-	-d svg24.dev \
-	-d api.svg24.dev \
-	-d assets.svg24.dev \
-	-d board.svg24.dev \
-	-d www.svg24.dev \
-	--agree-tos \
-	--no-eff-email \
-	--webroot
 
 ps:
 	docker ps --format 'table {{.Status}}\t{{.Names}}' -a
@@ -41,7 +23,7 @@ rs-dev:
 	$(DC) $(DC_DEV) restart
 
 rs-nginx:
-	$(DC) $(DC_PROD) kill -s SIGHUP nginx
+	$(DC) $(DC_BASE) restart nginx
 
 clear-images:
 	docker image rm \
@@ -75,10 +57,7 @@ clear-preview:
 	$(DC) $(DC_PREVIEW) down
 
 staging-certbot:
-	docker run $(CERTBOT_DATA) $(CERTBOT_CMD) --staging
+	sh scripts/init-certbot.sh staging
 
 force-certbot:
-	docker run $(CERTBOT_DATA) $(CERTBOT_CMD) --force-renewal
-
-renew-certbot:
-	docker run $(CERTBOT_DATA) renew --dry-run
+	sh scripts/init-certbot.sh force
