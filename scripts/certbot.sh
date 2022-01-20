@@ -1,3 +1,5 @@
+#!/bin/bash
+
 mode=$1
 cerbot_data="\
   --name platform-certbot \
@@ -34,7 +36,7 @@ if [ $mode = "staging" ]; then
     if [ ! -e "$(get_cert $domain)" ]; then
       root=$(get_root $domain)
       mkdir -p $root
-      docker run $cerbot_data openssl req \
+      openssl req \
         -days 1 \
         -keyout "$root/privkey.pem" \
         -newkey rsa:1024 \

@@ -57,7 +57,7 @@ clear-preview:
 	$(DC) $(DC_PREVIEW) down
 
 staging-certbot:
-	sh scripts/init-certbot.sh staging
+	bash scripts/certbot.sh staging
 
 force-certbot:
-	sh scripts/init-certbot.sh force
+	bash scripts/certbot.sh force
