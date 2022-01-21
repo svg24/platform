@@ -1,17 +1,17 @@
 #!/bin/bash
 
 mode=$1
+letsencrypt="/etc/letsencrypt"
 cerbot_data="\
   --name platform-certbot \
 	--network platform_nginx \
-	-v certbot:/var/www/html \
-	-v letsencrypt:/etc/letsencrypt \
+	-v platform_letsencrypt:$letsencrypt \
 	--rm \
 	certbot/certbot:v1.7.0"
 certbot_cmd="\
   certonly \
     --email vanyauhalin@gmail.com \
-    --webroot-path /var/www/html \
+    -w $letsencrypt \
     --agree-tos \
     --no-eff-email \
     --webroot"
@@ -23,17 +23,19 @@ domains=(
   "www.svg24.dev")
 
 get_root() {
-  echo "/etc/letsencrypt/live/$1"
+  echo "$letsencrypt/live/$1"
 }
 
 get_cert() {
-  echo "/etc/letsencrypt/live/$1/cert.pem"
+  echo "$letsencrypt/live/$1/cert.pem"
 }
 
 if [ $mode = "staging" ]; then
-  # Dummy certificates
   for domain in ${domains[*]}; do
-    if [ ! -e "$(get_cert $domain)" ]; then
+    if [ -e "$(get_cert $domain)" ]; then
+      echo "Error: certificate already exist (see $domain)"
+      exit 1
+    else
       root=$(get_root $domain)
       mkdir -p $root
       openssl req \
@@ -49,12 +51,9 @@ if [ $mode = "staging" ]; then
 
   make rs-nginx
 
-  # Real certificates
   for domain in ${domains[*]}; do
-    if [ ! -e "$(get_cert $domain)" ]; then
-      rm -rf $(get_root $domain)
-      docker run $cerbot_data $certbot_cmd -d $domain --staging
-    fi
+    rm -rf $(get_root $domain)
+    docker run $cerbot_data $certbot_cmd -d $domain --staging
   done
 fi
 
@@ -62,6 +61,9 @@ if [ $mode = "force" ]; then
   for domain in ${domains[*]}; do
     if [ -e "$(get_cert $domain)" ]; then
       docker run $cerbot_data $certbot_cmd -d $domain --force-renewal
+    else
+      echo "Error: certificate not found (see $domain)"
+      exit 1
     fi
   done
 fi

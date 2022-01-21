@@ -5,16 +5,9 @@ services:
     build:
       target: nginx-prod
     volumes:
-      - certbot:/var/www/html
       - letsencrypt:/etc/letsencrypt
 
 volumes:
-  certbot:
-    driver: local
-    driver_opts:
-      type: none
-      device: /srv/certbot
-      o: bind
   letsencrypt:
     driver: local
     driver_opts:
