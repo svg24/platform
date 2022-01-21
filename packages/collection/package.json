@@ -5,6 +5,6 @@
   "type": "module",
   "engines": {
     "node": ">=16",
-    "yarn": ">=1",
+    "yarn": ">=1"
   }
 }
