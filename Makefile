@@ -61,3 +61,6 @@ staging-certbot:
 
 force-certbot:
 	bash scripts/certbot.sh force
+
+renew-certbot:
+	bash scripts/certbot.sh renew
