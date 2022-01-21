@@ -17,7 +17,7 @@ Source files that make the collection interactive.
 
 ## Development
 
-### Intro
+### Intro to development
 
 Before starting development, we need to add project domains to the `/etc/hosts` file.
 
@@ -87,7 +87,49 @@ Let's take a look at the docker-compose (next as dc) files. Each stage has its o
 
 ## Production
 
-Coming soon...
+Further instructions will be carried out on the Ubuntu 20.04 LTS as VPS.
+
+### Intro to production
+
+Once we have completed the basic server setup (new user, ssh, etc.), we install the necessary packages, [docker](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script) and [docker-compose](https://docs.docker.com/compose/install/#install-compose-on-linux-systems).
+
+```sh
+apt install curl make nodejs yarn
+addgroup user docker
+```
+
+Next, we clone the repository.
+
+```sh
+git clone https://github.com/svg24/platform /srv/platform
+chown -R user:user /srv/platform
+```
+
+Since the development uses self hosted certificate, we need to create dummy files in order not to get errors when creating production images.
+
+```sh
+echo >> /srv/platform/etc/ssl/cert.pem
+echo >> /srv/platform/etc/ssl/privkey.pem
+```
+
+In addition, we need to create directory for the real certificate, which is used as a volume in the containers.
+
+```sh
+mkdir /etc/letsencrypt
+```
+
+Finally, we create production images and containers.
+
+```sh
+make prod
+```
+
+It should be noted that if there are no previously created real certificates, it is necessary to run the script to create them.
+
+```sh
+make staging-certbot
+make force-certbot
+```
 
 ## Policy
 
