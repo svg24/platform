@@ -1,4 +1,5 @@
 import babel from '@babel/core';
+import reactJSX from '@babel/plugin-transform-react-jsx';
 import { transform } from '@svgr/core';
 
 export async function toReactJS(
@@ -8,7 +9,7 @@ export async function toReactJS(
 ): Promise<string> {
   const component = await transform(html, { ref: true }, { componentName });
   const res = await babel.transformAsync(component, {
-    plugins: [['@babel/plugin-transform-react-jsx', { useBuiltIns: true }]],
+    plugins: [[reactJSX, { useBuiltIns: true }]],
   });
 
   return res && res.code

@@ -10,3 +10,7 @@ declare namespace NodeJS {
     SERVER_PORT: string;
   }
 }
+
+declare module '@babel/plugin-transform-react-jsx' {
+  // This plugin has no types.
+}
